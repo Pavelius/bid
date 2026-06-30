@@ -17,7 +17,6 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -53,36 +52,37 @@
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Label="Shared" >
+  <ImportGroup Label="Shared">
   </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    </ImportGroup>
-
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(ProjectDir);</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -130,8 +130,64 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adat.h" />
+    <ClInclude Include="answers.h" />
+    <ClInclude Include="array.h" />
+    <ClInclude Include="bsdata.h" />
+    <ClInclude Include="bstream.h" />
+    <ClInclude Include="collection.h" />
+    <ClInclude Include="collectiona.h" />
+    <ClInclude Include="color.h" />
+    <ClInclude Include="dice.h" />
+    <ClInclude Include="draw.h" />
+    <ClInclude Include="draw_atg.h" />
+    <ClInclude Include="flagable.h" />
+    <ClInclude Include="io_stream.h" />
+    <ClInclude Include="math.h" />
+    <ClInclude Include="message.h" />
+    <ClInclude Include="point.h" />
+    <ClInclude Include="print.h" />
+    <ClInclude Include="pushvalue.h" />
+    <ClInclude Include="rand.h" />
+    <ClInclude Include="rect.h" />
+    <ClInclude Include="slice.h" />
+    <ClInclude Include="stringbuilder.h" />
+    <ClInclude Include="stringlocale.h" />
+    <ClInclude Include="stringvar.h" />
+    <ClInclude Include="win.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="answers.cpp" />
+    <ClCompile Include="array.cpp" />
+    <ClCompile Include="bstream.cpp" />
+    <ClCompile Include="collection.cpp" />
+    <ClCompile Include="collectiona.cpp" />
+    <ClCompile Include="color.cpp" />
+    <ClCompile Include="dice.cpp" />
+    <ClCompile Include="draw.cpp" />
+    <ClCompile Include="draw_answers.cpp" />
+    <ClCompile Include="draw_atg.cpp" />
+    <ClCompile Include="draw_res.cpp" />
+    <ClCompile Include="draw_surface.cpp" />
+    <ClCompile Include="draw_text.cpp" />
+    <ClCompile Include="draw_textf.cpp" />
+    <ClCompile Include="draw_theme.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="io_stream.cpp" />
+    <ClCompile Include="locale_ru.cpp" />
+    <ClCompile Include="math.cpp" />
+    <ClCompile Include="png.cpp" />
+    <ClCompile Include="point.cpp" />
+    <ClCompile Include="print.cpp" />
+    <ClCompile Include="stringbuilder.cpp" />
+    <ClCompile Include="stringvar.cpp" />
+    <ClCompile Include="szdup.cpp" />
+    <ClCompile Include="win_draw.cpp" />
+    <ClCompile Include="win_io_file.cpp" />
+    <ClCompile Include="win_time.cpp" />
+    <ClCompile Include="zip.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

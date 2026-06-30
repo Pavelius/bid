@@ -1,17 +1,183 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Исходные файлы">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <ClInclude Include="adat.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="answers.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="array.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="bsdata.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="bstream.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="collection.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="collectiona.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="color.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="dice.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="draw.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_atg.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="flagable.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="io_stream.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="math.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="point.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="print.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="pushvalue.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="rand.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="rect.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="slice.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="stringbuilder.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="stringvar.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="win.h">
+      <Filter>Platform\Win</Filter>
+    </ClInclude>
+    <ClInclude Include="stringlocale.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="message.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="answers.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="array.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="bstream.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="collection.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="collectiona.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="color.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="dice.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_answers.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_atg.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_res.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_surface.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_text.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_textf.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_theme.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="io_stream.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="math.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="png.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="point.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="stringbuilder.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="stringvar.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="szdup.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="zip.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="win_draw.cpp">
+      <Filter>Platform\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="win_io_file.cpp">
+      <Filter>Platform\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="win_time.cpp">
+      <Filter>Platform\Win</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="locale_ru.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Support">
+      <UniqueIdentifier>{35cea018-a546-4ccd-823c-ab03f1d50585}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{fc5136e6-f295-4916-8738-2ed552f88c02}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы ресурсов">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Platform\Win">
+      <UniqueIdentifier>{d18e4f0b-92bd-4f67-a2e2-824375f3031e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{d8e0e678-cf4c-488e-9885-7683e7735d72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
