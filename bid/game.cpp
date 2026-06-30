@@ -12,7 +12,7 @@ static unsigned char choose(collection& source, const char** names, const char* 
 	return (unsigned char)an.choose(title, cancel);
 }
 
-unsigned char choose_enum(unsigned long t1, unsigned long t2, const char** names, const char* title = 0, const char* cancel = 0) {
+unsigned char choosev(unsigned long t1, unsigned long t2, const char** names, const char* title = 0, const char* cancel = 0) {
 	an.clear();
 	for(auto i=t1; i<t2; i++)
 		an.add(i, names[i]);

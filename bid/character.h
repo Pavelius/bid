@@ -1,5 +1,8 @@
 #pragma once
 
+enum actionn : unsigned char {
+	Attune, Command, Consort, Finesse, Hunt, Prowl, Skirmish, Study, Survey, Sway, Tinker, Wreck,
+};
 enum charactern : unsigned char {
 	Cutter, Hound, Leech, Lurk, Slide, Spider, Whisper,
 };
@@ -13,11 +16,16 @@ enum vicen : unsigned char {
 	Faith, Gambling, Luxury, Obligation, Pleasure, Stupor, Weird,
 };
 
-struct character {
+struct actiona {
+	char		actions[Wreck + 1];
+};
+struct character : actiona {
 	charactern	type;
 	heiretagen	heiretage;
 	backgroundn	background;
 	vicen		vice;
+	actiona		base;
+	int			get(actionn v) const { return actions[v]; }
 };
 extern character* player;
 extern character players[3];

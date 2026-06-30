@@ -2,5 +2,5 @@
 
 enum messagen : unsigned char {
 	AppTitle,
-	ChoosePlaybook, ChooseHeiretage, ChooseBackground,
+	ChoosePlaybook, ChooseHeiretage, ChooseBackground, ChooseActionDot,
 };
