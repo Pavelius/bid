@@ -76,6 +76,12 @@
     <ClInclude Include="message.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="character.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="answers.cpp">
@@ -163,6 +169,9 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="locale_ru.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="character.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>

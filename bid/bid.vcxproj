@@ -136,6 +136,7 @@
     <ClInclude Include="array.h" />
     <ClInclude Include="bsdata.h" />
     <ClInclude Include="bstream.h" />
+    <ClInclude Include="character.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="collectiona.h" />
     <ClInclude Include="color.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="draw.h" />
     <ClInclude Include="draw_atg.h" />
     <ClInclude Include="flagable.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="io_stream.h" />
     <ClInclude Include="math.h" />
     <ClInclude Include="message.h" />
@@ -161,6 +163,7 @@
     <ClCompile Include="answers.cpp" />
     <ClCompile Include="array.cpp" />
     <ClCompile Include="bstream.cpp" />
+    <ClCompile Include="character.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="collectiona.cpp" />
     <ClCompile Include="color.cpp" />

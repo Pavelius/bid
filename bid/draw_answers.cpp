@@ -14,7 +14,7 @@ void answers::paintanswers(fnabutton paintcell, int columns, const char* cancel_
 	pushfore push;
 	for(auto& e : elements) {
 		fore = push.fore;
-		if(e.value <= 0)
+		if(e.value < 0)
 			fore = fore.mix(colors::header, 128);
 		paintcell(index, e.value, e.text);
 		caret.y += height + metrics::padding;
