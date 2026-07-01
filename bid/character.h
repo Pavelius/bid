@@ -27,7 +27,6 @@ struct character : actiona {
 	heiretagen	heiretage;
 	backgroundn	background;
 	vicen		vice;
-	actiona		base;
 	int			get(actionn v) const { return actions[v]; }
 };
 extern character* player;

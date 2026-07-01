@@ -9,8 +9,8 @@ character	players[3];
 
 static void add_actions(actiona& source, int bonus, int maximum) {
 	actiona base = source;
-	an.clear();
 	while(bonus > 0) {
+		an.clear();
 		for(auto i = Attune; i <= Wreck; i = (actionn)(i + 1)) {
 			if(source.actions[i] >= maximum)
 				continue;
@@ -38,7 +38,8 @@ static void add_player() {
 	player->type = (charactern)choosev(0, Whisper, bsenum<charactern>::names, getname(ChoosePlaybook));
 	player->heiretage = (heiretagen)choosev(0, Weird, bsenum<heiretagen>::names, getname(ChooseHeiretage));
 	player->background = (backgroundn)choosev(0, Underworld, bsenum<backgroundn>::names, getname(ChooseBackground));
-	add_start_actions(player->base, player->type);
+	add_start_actions(*player, player->type);
+	add_actions(*player, 4, 2);
 }
 
 void add_players() {

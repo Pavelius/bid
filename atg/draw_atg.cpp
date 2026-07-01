@@ -242,7 +242,7 @@ bool allow_paint() {
 	return caret.in(clipping);
 }
 
-void paint_button(const char* format, const void* object, bool choose) {
+void paint_button(const char* format, long param, bool choose, int padding) {
 	if(!format || format[0] == 0)
 		return;
 	if(!allow_paint())
@@ -250,16 +250,16 @@ void paint_button(const char* format, const void* object, bool choose) {
 	auto push_width = width;
 	textfs(format);
 	width = push_width;
-	height += metrics::padding * 2;
+	if(padding == -1)
+		padding = metrics::padding * 2;
+	height += padding;
 	button_check(0);
 	paint_hilite();
-	caret.y += metrics::padding;
+	caret.y += padding / 2;
 	textf(format);
-	if(button_hilited)
-		hilite_object = object;
 	if(button_executed && choose)
-		execute(buttonparam, (long)object);
-	caret.y += metrics::padding;
+		execute(buttonparam, param);
+	caret.y += padding / 2;
 }
 
 static int find_avatars(void** source, int count, void* current) {
@@ -404,6 +404,15 @@ void fixclear() {
 void fixmsg(messagen id) {
 	sb.addsep('\n');
 	sb.addv(getname(id), 0);
+}
+
+void set_hilite_state(const char* format) {
+	if(!button_hilited)
+		return;
+	if(tips_text[0])
+		return;
+	stringbuilder sb(tips_text);
+	sb.addv(format, 0);
 }
 
 void initialize_png();

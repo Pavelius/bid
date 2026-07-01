@@ -28,25 +28,51 @@ static int get_hits(const void* object) {
 	return 100;
 }
 
+static void paint_cicle(int size, int value, int maximum) {
+	pushrect push;
+	pushfore push_fore;
+	caret.x += 2 + size / 2;
+	caret.y += 6 + size / 2;
+	for(int i = 0; i < maximum; i++) {
+		fore = push_fore.fore;
+		if(i < value)
+			circlef(size - 1);
+		fore = push_fore.fore.mix(colors::form);
+		circle(size - 1);
+		caret.x += size * 2;
+	}
+}
+
 static void paint_avatars() {
 	paint_avatars((void**)player_avatars, lenghtof(players), get_avatar, player, get_hits);
 }
 
-static void paint_value(actionn v) {
+static void paint_value(attributen v) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.add("/x 120 text %2i\n%1", getname(v), player->actions[v]);
-	auto object = &player->actions[v];
-	paint_button(temp, object, false);
-	if(button_hilited && tips_text[0] == 0) {
-		stringbuilder sb(tips_text);
-		// sb.add(bsenum<actionn>::info[v]);
-	}
+	sb.add("/cb fill ct\n%1", getname(v));
+	paint_button(temp, 0, false, 2);
+}
+
+static void paint_value(actionn v) {
+	pushrect push;
+	// char temp[260]; stringbuilder sb(temp);
+	// sb.add("/x 120 text %2i\n%1", getname(v), player->actions[v]);
+	// paint_button(temp, 0, false, 0);
+	height = texth();
+	button_check(0);
+	paint_hilite();
+	set_hilite_state(getinfo(v));
+	paint_cicle(6, player->actions[v], 4);
+	caret.x += 64;
+	text(getname(v));
+	push.caret.y += texth() + 1;
 }
 
 static void page_characters() {
 	paint_avatars();
 	pushvalue push(player, (character*)current_avatar);
 	for(auto i = Insight; i <= Resolve; i = (attributen)(i + 1)) {
+		paint_value(i);
 		for(auto v : attributes[i])
 			paint_value(v);
 	}

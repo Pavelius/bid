@@ -24,7 +24,7 @@ void main_util(); // External function
 void next_scene(fnevent v);
 void paint_avatars(void** source, int count, fnstatus getname, void* current_player, fnvalue gethits);
 void paint_bar(const char* name, fnevent proc);
-void paint_button(const char* format, const void* object, bool choose = false);
+void paint_button(const char* format, long param, bool choose = false, int padding = -1);
 void paint_hilite();
 void paint_separator();
 void paint_status_bar();
@@ -32,4 +32,5 @@ void paint_status_text();
 void paint_window_center(const char* format);
 void paint_window_info(const char* format);
 bool running_scene();
+void set_hilite_state(const char* format);
 void stringbuilder_custom(stringbuilder& sb, const char* id);
