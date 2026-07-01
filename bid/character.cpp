@@ -7,6 +7,12 @@
 character*	player;
 character	players[3];
 
+actionn attributes[3][4] = {
+	{Hunt, Study, Survey, Tinker},
+	{Finesse, Prowl, Skirmish, Wreck},
+	{Attune, Command, Consort, Sway},
+};
+
 static void add_actions(actiona& source, int bonus, int maximum) {
 	actiona base = source;
 	while(bonus > 0) {
@@ -47,4 +53,13 @@ void add_players() {
 		player = players + i;
 		add_player();
 	}
+}
+
+int character::get(attributen i) const {
+	auto result = 0;
+	for(auto v : attributes[i]) {
+		if(actions[v])
+			result++;
+	}
+	return result;
 }

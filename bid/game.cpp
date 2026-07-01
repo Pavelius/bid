@@ -6,17 +6,14 @@
 #include "collection.h"
 #include "message.h"
 #include "pushvalue.h"
+#include "rand.h"
+#include "scene.h"
 #include "stringvar.h"
 
 static character* player_avatars[3] = {players, players + 1, players + 2};
-static actionn attributes[3][4] = {
-	{Hunt, Study, Survey, Tinker},
-	{Finesse, Prowl, Skirmish, Wreck},
-	{Attune, Command, Consort, Sway},
-};
 
 static const char* get_avatar(charactern type) {
-	return "ca";
+	return "caf";
 }
 
 static void get_avatar(const void* object, stringbuilder& sb) {
@@ -33,12 +30,14 @@ static void paint_cicle(int size, int value, int maximum) {
 	pushfore push_fore;
 	caret.x += 2 + size / 2;
 	caret.y += 6 + size / 2;
+	auto fore_half = push_fore.fore.mix(colors::form, 64);
 	for(int i = 0; i < maximum; i++) {
-		fore = push_fore.fore;
 		if(i < value)
-			circlef(size - 1);
-		fore = push_fore.fore.mix(colors::form);
-		circle(size - 1);
+			fore = push_fore.fore;
+		else
+			fore = fore_half;
+		circlef(size - 1);
+		// circle(size - 1);
 		caret.x += size * 2;
 	}
 }
@@ -55,9 +54,6 @@ static void paint_value(attributen v) {
 
 static void paint_value(actionn v) {
 	pushrect push;
-	// char temp[260]; stringbuilder sb(temp);
-	// sb.add("/x 120 text %2i\n%1", getname(v), player->actions[v]);
-	// paint_button(temp, 0, false, 0);
 	height = texth();
 	button_check(0);
 	paint_hilite();
@@ -88,9 +84,17 @@ static void paint_main_menu() {
 	paint_bar(getname(PageItems), page_items);
 }
 
+static void test_game() {
+	auto n = make_roll(4);
+	if(n == BadOutcome)
+		return;
+}
+
 void game_run() {
 	answers::resid = "Wasteland";
 	atg_menu = paint_main_menu;
+	srand(13123);
+	test_game();
 	add_players();
 }
 

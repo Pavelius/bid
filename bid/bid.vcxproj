@@ -135,11 +135,13 @@
     <ClInclude Include="character.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="message.h" />
+    <ClInclude Include="scene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="character.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="locale_ru.cpp" />
+    <ClCompile Include="scene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\atg\atg.vcxproj">

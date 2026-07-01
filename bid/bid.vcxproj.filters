@@ -10,6 +10,9 @@
     <ClInclude Include="game.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="scene.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game.cpp">
@@ -19,6 +22,9 @@
       <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="character.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="scene.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>

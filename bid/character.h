@@ -27,9 +27,12 @@ struct character : actiona {
 	heiretagen	heiretage;
 	backgroundn	background;
 	vicen		vice;
+	int			stress;
 	int			get(actionn v) const { return actions[v]; }
+	int			get(attributen i) const;
 };
 extern character* player;
 extern character players[3];
+extern actionn attributes[3][4];
 
 void add_players();
