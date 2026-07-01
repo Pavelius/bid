@@ -406,6 +406,8 @@ void fixmsg(messagen id) {
 	sb.addv(getname(id), 0);
 }
 
+void initialize_png();
+
 static int atg_initialize() {
 	set_dark_theme();
 	metrics::h1 = (sprite*)loadb("fonts/h1.pma");
@@ -426,6 +428,7 @@ static int atg_initialize() {
 }
 
 int main(int argc, char* argv[]) {
+	initialize_png();
 	auto r = atg_initialize();
 	if(r)
 		return r;

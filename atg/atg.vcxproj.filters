@@ -170,5 +170,11 @@
     <ClCompile Include="choose.cpp">
       <Filter>Strings</Filter>
     </ClCompile>
+    <ClCompile Include="zip.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="png.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

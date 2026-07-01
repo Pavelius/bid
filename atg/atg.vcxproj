@@ -64,6 +64,7 @@
     <ClCompile Include="draw_theme.cpp" />
     <ClCompile Include="io_stream.cpp" />
     <ClCompile Include="math.cpp" />
+    <ClCompile Include="png.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="print.cpp" />
     <ClCompile Include="stringbuilder.cpp" />
@@ -72,6 +73,7 @@
     <ClCompile Include="win_draw.cpp" />
     <ClCompile Include="win_io_file.cpp" />
     <ClCompile Include="win_time.cpp" />
+    <ClCompile Include="zip.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

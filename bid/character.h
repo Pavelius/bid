@@ -1,5 +1,8 @@
 #pragma once
 
+enum attributen : unsigned char {
+	Insight, Prowess, Resolve,
+};
 enum actionn : unsigned char {
 	Attune, Command, Consort, Finesse, Hunt, Prowl, Skirmish, Study, Survey, Sway, Tinker, Wreck,
 };
