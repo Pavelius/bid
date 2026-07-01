@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Support">
+      <UniqueIdentifier>{17e3d8df-db3e-4843-8cc1-0614c1bb53cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{944bc113-fcfd-4f73-ab6d-8dcc2423ccf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interface">
+      <UniqueIdentifier>{3e65350a-5348-4890-b731-682d218dc3fc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="adat.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="answers.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="array.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="win.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="collection.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="collectiona.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="color.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="dice.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="draw.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_atg.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="flagable.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="io_stream.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="math.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="point.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="print.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="pushvalue.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="rand.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="rect.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="slice.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="stringbuilder.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="stringlocale.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="stringvar.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="bsdata.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="answers.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="array.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="win_draw.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="win_io_file.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="win_time.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="collection.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="collectiona.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="color.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="dice.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="draw.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_answers.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_atg.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_res.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_surface.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_text.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_textf.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_theme.cpp">
+      <Filter>Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="io_stream.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="math.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="point.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="stringbuilder.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="stringvar.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="szdup.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -3,8 +3,8 @@
 #include "game.h"
 #include "message.h"
 
-character* player;
-character players[3];
+character*	player;
+character	players[3];
 
 static void add_actions(actiona& source, int bonus, int maximum) {
 	actiona base = source;
