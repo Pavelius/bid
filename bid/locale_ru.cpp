@@ -10,20 +10,20 @@ BSENUM(messagen) = {
 	"Откуда вы родом?",
 	"Кем вы были в прошлом?",
 };
-BAENUM(ChooseBackground)
+assert_enum(bsenum<messagen>::names, ChooseBackground)
 BSENUM(charactern) = {
 	"Головорез", "Ищейка", "Умелец", "Проныра", "Артист", "Кукловод", "Мистик"
 };
-BAENUM(Whisper)
+assert_enum(bsenum<charactern>::names, Whisper)
 BSENUM(heiretagen) = {
 	"Акорос", "Ирувия", "Кинжальные острова", "Сиверос", "Сковлан", "Тихерос"
 };
-BAENUM(Tycheros)
+assert_enum(bsenum<heiretagen>::names, Tycheros)
 BSENUM(vicen) = {
 	"Религия", "Азартные игры", "Роскошь", "Долг", "Удовольствие", "Беспамятство", "Потустороннее",
 };
-BAENUM(Weird)
+assert_enum(bsenum<vicen>::names, Weird)
 BSENUM(backgroundn) = {
 	"Ученный", "Рабочий", "Законник", "Торговец", "Военный", "Аристократ", "Шпана",
 };
-BAENUM(Underworld)
+assert_enum(bsenum<backgroundn>::names, Underworld)

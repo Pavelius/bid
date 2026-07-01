@@ -27,7 +27,7 @@ struct answers {
 	void				addv(long value, const char* name, const char* format);
 	const element*		begin() const { return elements.data; }
 	element*			begin() { return elements.data; }
-	long				choose(const char* title = 0, const char* cancel_text = 0, int cancel_mode = 0) const;
+	long				choose(const char* title = 0, const char* cancel_text = 0) const;
 	void				clear();
 	static int			compare(const void* v1, const void* v2);
 	const element*		end() const { return elements.end(); }

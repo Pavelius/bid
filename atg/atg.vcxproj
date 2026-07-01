@@ -23,6 +23,8 @@
     <ClInclude Include="answers.h" />
     <ClInclude Include="array.h" />
     <ClInclude Include="bsdata.h" />
+    <ClInclude Include="bstream.h" />
+    <ClInclude Include="choose.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="collectiona.h" />
     <ClInclude Include="color.h" />
@@ -46,6 +48,8 @@
   <ItemGroup>
     <ClCompile Include="answers.cpp" />
     <ClCompile Include="array.cpp" />
+    <ClCompile Include="bstream.cpp" />
+    <ClCompile Include="choose.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="collectiona.cpp" />
     <ClCompile Include="color.cpp" />

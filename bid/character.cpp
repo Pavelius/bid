@@ -1,5 +1,6 @@
 #include "answers.h"
 #include "character.h"
+#include "choose.h"
 #include "game.h"
 #include "message.h"
 

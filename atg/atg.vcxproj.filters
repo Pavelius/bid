@@ -10,12 +10,12 @@
     <Filter Include="Interface">
       <UniqueIdentifier>{3e65350a-5348-4890-b731-682d218dc3fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Strings">
+      <UniqueIdentifier>{3ab28e07-5d11-4dc3-9693-9884e2b067ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adat.h">
-      <Filter>Support</Filter>
-    </ClInclude>
-    <ClInclude Include="answers.h">
       <Filter>Support</Filter>
     </ClInclude>
     <ClInclude Include="array.h">
@@ -54,9 +54,6 @@
     <ClInclude Include="point.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="print.h">
-      <Filter>Support</Filter>
-    </ClInclude>
     <ClInclude Include="pushvalue.h">
       <Filter>Support</Filter>
     </ClInclude>
@@ -69,23 +66,32 @@
     <ClInclude Include="slice.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="stringbuilder.h">
-      <Filter>Support</Filter>
-    </ClInclude>
-    <ClInclude Include="stringlocale.h">
-      <Filter>Support</Filter>
-    </ClInclude>
-    <ClInclude Include="stringvar.h">
-      <Filter>Support</Filter>
-    </ClInclude>
     <ClInclude Include="bsdata.h">
       <Filter>Support</Filter>
     </ClInclude>
+    <ClInclude Include="stringbuilder.h">
+      <Filter>Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="stringlocale.h">
+      <Filter>Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="stringvar.h">
+      <Filter>Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="answers.h">
+      <Filter>Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="print.h">
+      <Filter>Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="bstream.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="choose.h">
+      <Filter>Strings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="answers.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="array.cpp">
       <Filter>Support</Filter>
     </ClCompile>
@@ -143,17 +149,26 @@
     <ClCompile Include="point.cpp">
       <Filter>Support</Filter>
     </ClCompile>
-    <ClCompile Include="print.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="stringbuilder.cpp">
-      <Filter>Support</Filter>
+      <Filter>Strings</Filter>
     </ClCompile>
     <ClCompile Include="stringvar.cpp">
-      <Filter>Support</Filter>
+      <Filter>Strings</Filter>
     </ClCompile>
     <ClCompile Include="szdup.cpp">
+      <Filter>Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="answers.cpp">
+      <Filter>Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
+      <Filter>Strings</Filter>
+    </ClCompile>
+    <ClCompile Include="bstream.cpp">
       <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="choose.cpp">
+      <Filter>Strings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
