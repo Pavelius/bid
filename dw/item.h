@@ -2,6 +2,10 @@
 
 #include "flagable.h"
 
+enum wearn : unsigned char {
+	Hands, Body,
+	Backpack, WearLast = Backpack + 15,
+};
 enum itemn : unsigned char {
 	NoItem,
 	RaggedBow, FineBow, HuntersBow, Crossbow,
@@ -41,4 +45,7 @@ struct item {
 	int			cost;
 	const char*	name() const;
 	bool		is(itemfn v) const { return flags.is(v); }
+};
+struct wearable {
+	item		wears[WearLast + 1];
 };

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "dice.h"
+#include "item.h"
+
 enum classn : unsigned char {
 	Cleric, Fighter, Mage, Theif,
 };
@@ -36,7 +39,8 @@ enum moven : unsigned char {
 	Parley, SpoutLore, DiscernRealities, Supply,
 };
 enum monstern : unsigned char {
-	Bandit, Goblin, Kobold, Zombie,
+	Bandit, Goblin, Kobold,
+	Skeleton, Zombie,
 	LastMonster = Zombie,
 };
 enum monsterfn : unsigned char {
@@ -50,20 +54,30 @@ enum sizen : unsigned char {
 enum organizationn : unsigned char {
 	Horde, Group, Solitary
 };
-struct monsteri {
-	gendern		gender;
-	racen		race;
-	char		hits_maximum, damage;
-	char		count_maximum;
-	char		hits, count;
-	explicit operator bool() const { return isalive(); }
-	const char*	getname() const { return "Name"; }
-	bool		isalive() const { return hits > 0 && count > 0; }
-	bool		iswounded() const { return hits < hits_maximum; }
-	void		heal(int value, int* result_value = 0);
-	int			rolldamage() const;
-	void		sufferharm(int value, int pierce = 0, int* result_value = 0, int* killed = 0);
+enum rolln : unsigned char {
+	D3, D4, D6, D8, D10, D12, D20,
 };
-struct playeri : monsteri {
-	classn		type;
+
+struct monsteri {
+	monstern		type;
+	organizationn	organization;
+	gendern			gender;
+	char			hits_maximum;
+	rolln			damage_dice;
+	itemf			flags;
+	racen			race;
+	char			count_maximum;
+	char			hits, count;
+	explicit operator bool() const { return isalive(); }
+	dice			damage() const;
+	const char*		getname() const { return "Name"; }
+	bool			isalive() const { return hits > 0 && count > 0; }
+	bool			iswounded() const { return hits < hits_maximum; }
+	void			heal(int value, int* result_value = 0);
+	void			sufferharm(int value, int pierce = 0, int* result_value = 0, int* killed = 0);
+};
+extern monsteri enemy;
+
+struct character : monsteri, wearable {
+	classn			type;
 };

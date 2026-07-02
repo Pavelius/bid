@@ -15,6 +15,9 @@
     <ClCompile Include="item.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="monster.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="message.h">
@@ -27,6 +30,9 @@
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="item.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
