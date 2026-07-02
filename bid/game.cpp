@@ -29,7 +29,7 @@ static void paint_cicle(int size, int value, int maximum) {
 	pushrect push;
 	pushfore push_fore;
 	caret.x += 2 + size / 2;
-	caret.y += 6 + size / 2;
+	caret.y += 5 + size / 2;
 	auto fore_half = push_fore.fore.mix(colors::form, 64);
 	for(int i = 0; i < maximum; i++) {
 		if(i < value)
@@ -54,14 +54,14 @@ static void paint_value(attributen v) {
 
 static void paint_value(actionn v) {
 	pushrect push;
-	height = texth();
+	height = texth() - 1;
 	button_check(0);
 	paint_hilite();
 	set_hilite_state(getinfo(v));
 	paint_cicle(6, player->actions[v], 4);
 	caret.x += 64;
 	text(getname(v));
-	push.caret.y += texth() + 1;
+	push.caret.y += texth();
 }
 
 static void page_characters() {
@@ -72,7 +72,6 @@ static void page_characters() {
 		for(auto v : attributes[i])
 			paint_value(v);
 	}
-	paint_separator();
 }
 
 static void page_items() {
@@ -85,9 +84,9 @@ static void paint_main_menu() {
 }
 
 static void test_game() {
-	auto n = make_roll(4);
-	if(n == BadOutcome)
-		return;
+	player = players;
+	player->apply(Cutter);
+	action_roll(Skirmish);
 }
 
 void game_run() {

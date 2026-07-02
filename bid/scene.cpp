@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "draw_atg.h"
 #include "bsdata.h"
 #include "character.h"
@@ -11,7 +12,7 @@ static int compare_char(const void* v1, const void* v2) {
 
 rolln roll_result;
 positionn roll_position;
-int roll_number;
+int roll_number, roll_dices;
 
 rolln make_roll(int dices) {
 	char result[10] = {};
@@ -33,9 +34,33 @@ rolln make_roll(int dices) {
 	return roll_result;
 }
 
+static void ally_help(actionn action, messagen command) {
+	for(auto& e : players) {
+		if(&e == player)
+			continue;
+		if(!e.apply(action, command, false))
+			continue;
+		an.add(command * 4 + (&e - players), getname(command), e.getname());
+	}
+}
+
+static character* get_player(int result) {
+	return players + (result % 4);
+}
+
 void action_roll(actionn type) {
-	auto number = player->get(type);
-	make_roll(number);
+	roll_dices = player->get(type);
+	while(running_scene()) {
+		an.clear();
+		ally_help(type, ActionRollHelp);
+		int result = an.choose(str(getname(ActionRollHeader), player->getname(), getname(type), roll_dices), getname(MakeRoll));
+		auto a = (messagen)(result / 4);
+		auto p = get_player(result);
+		if(p->apply(type, a, true))
+			continue;
+		break;
+	}
+	make_roll(roll_dices);
 }
 
 void fortune_roll() {
