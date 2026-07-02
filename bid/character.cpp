@@ -75,10 +75,11 @@ void actiona::apply(charactern type) {
 }
 
 static void add_player() {
+	player->clear();
 	player->type = (charactern)choosev(0, Whisper, allow_character, bsenum<charactern>::names, getname(ChoosePlaybook));
+	player->apply(player->type);
 	player->heiretage = (heiretagen)choosev(0, Weird, bsenum<heiretagen>::names, getname(ChooseHeiretage));
 	player->background = (backgroundn)choosev(0, Underworld, bsenum<backgroundn>::names, getname(ChooseBackground));
-	player->apply(player->type);
 	add_actions(*player, 4, 2);
 }
 
@@ -87,6 +88,10 @@ void add_players() {
 		player = players + i;
 		add_player();
 	}
+}
+
+void character::clear() {
+	memset(this, 0, sizeof(*this));
 }
 
 int character::get(attributen i) const {

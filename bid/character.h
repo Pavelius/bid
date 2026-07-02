@@ -39,6 +39,7 @@ struct character : npci, actiona {
 	void		apply(charactern type) { actiona::apply(type); }
 	bool		apply(actionn action, messagen command, bool run);
 	bool		canstress(int v) const { return 6 - stress; }
+	void		clear();
 	int			get(actionn v) const { return actions[v]; }
 	int			get(attributen i) const;
 	int			getindex() const;
