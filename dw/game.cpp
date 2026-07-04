@@ -3,9 +3,10 @@
 #include "game.h"
 #include "rand.h"
 
-itemfn		scene_range;
+itemfn scene_range;
 
 void game_run() {
 	answers::resid = "Wasteland";
+	enemy.create(Skeleton);
 	srand(13123);
 }

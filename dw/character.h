@@ -65,12 +65,18 @@ struct monsteri {
 	char			hits_maximum;
 	rolln			damage_dice;
 	itemf			flags;
+	flag32			flags_monsters;
 	racen			race;
 	char			count_maximum;
 	char			hits, count;
 	explicit operator bool() const { return isalive(); }
+	void			create(monstern type);
 	dice			damage() const;
 	const char*		getname() const { return "Name"; }
+	bool			is(itemfn v) const { return flags.is(v); }
+	bool			is(monsterfn v) const { return flags_monsters.is(v); }
+	bool			is(organizationn v) const { return organization == v; }
+	bool			is(racen v) const { return race == v; }
 	bool			isalive() const { return hits > 0 && count > 0; }
 	bool			iswounded() const { return hits < hits_maximum; }
 	void			heal(int value, int* result_value = 0);
