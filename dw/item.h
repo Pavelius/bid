@@ -53,4 +53,7 @@ struct item {
 struct wearable {
 	item		wears[WearLast + 1];
 	slice<item> equipments() const { return slice<item>(const_cast<item*>(wears) + Backpack, wears + WearLast); }
+	slice<item> items() const { return slice<item>(const_cast<item*>(wears), wears + WearLast); }
+	bool haveitem(itemfn range) const;
+	bool wearitem(itemfn range) const { return wears[Hands].range(range) || haveitem(range); }
 };

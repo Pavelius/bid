@@ -2,4 +2,4 @@
 
 #include "character.h"
 
-extern itemfn		scene_range;
+extern itemfn	scene_range;

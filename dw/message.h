@@ -2,5 +2,5 @@
 
 enum messagen : unsigned char {
 	AppTitle,
-	MsgReadyWeapon,
+	MsgReadyWeapon, MsgVolleyHit,
 };

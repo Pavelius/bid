@@ -56,7 +56,7 @@ enum sizen : unsigned char {
 enum organizationn : unsigned char {
 	Horde, Group, Solitary
 };
-enum rolln : unsigned char {
+enum dicen : unsigned char {
 	D3, D4, D6, D8, D10, D12, D20,
 };
 
@@ -65,7 +65,7 @@ struct monsteri {
 	organizationn	organization;
 	gendern			gender;
 	char			hits_maximum;
-	rolln			damage_dice;
+	dicen			damage_dice;
 	itemf			flags;
 	flag32			flags_monsters;
 	racen			race;
@@ -92,6 +92,7 @@ struct character : monsteri, wearable {
 	void			act(messagen m) const;
 	int				get(statn v) const { return abilities[v]; }
 	int				getbonus(statn v) const;
+	bool			haveitem(itemfn range) const;
 	bool			is(classn v) const { return type == v; }
 	bool			is(racen v) const { return race == v; }
 };

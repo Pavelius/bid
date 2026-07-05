@@ -26,3 +26,11 @@ bool item::range(itemfn start) const {
 	}
 	return false;
 }
+
+bool wearable::haveitem(itemfn range) const {
+	for(auto& e : items()) {
+		if(e.range(range))
+			return true;
+	}
+	return false;
+}

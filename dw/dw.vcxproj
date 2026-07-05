@@ -142,12 +142,14 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="locale_ru.cpp" />
     <ClCompile Include="monster.cpp" />
+    <ClCompile Include="roll.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="message.h" />
+    <ClInclude Include="roll.h" />
     <ClInclude Include="spell.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
