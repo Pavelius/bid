@@ -1,5 +1,7 @@
 #include "bsdata.h"
 #include "character.h"
+#include "draw_atg.h"
+#include "pushvalue.h"
 #include "rand.h"
 
 BSDATA(monsteri) = {
@@ -8,7 +10,6 @@ BSDATA(monsteri) = {
 	{Kobold},
 	{Skeleton, Horde, Male, 7, D6, {Armor1, Close}},
 };
-
 monsteri enemy;
 
 void monsteri::create(monstern v) {

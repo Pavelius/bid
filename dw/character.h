@@ -3,6 +3,8 @@
 #include "dice.h"
 #include "item.h"
 
+enum messagen : unsigned char;
+
 enum classn : unsigned char {
 	Cleric, Fighter, Mage, Theif,
 };
@@ -87,6 +89,7 @@ extern monsteri enemy;
 struct character : monsteri, wearable {
 	classn			type;
 	char			abilities[Charisma + 1];
+	void			act(messagen m) const;
 	int				get(statn v) const { return abilities[v]; }
 	int				getbonus(statn v) const;
 	bool			is(classn v) const { return type == v; }

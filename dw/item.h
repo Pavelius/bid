@@ -1,6 +1,7 @@
 #pragma once
 
 #include "flagable.h"
+#include "slice.h"
 
 enum wearn : unsigned char {
 	Hands, Body,
@@ -26,7 +27,7 @@ enum itemn : unsigned char {
 	SilverCoins, GoldCoins
 };
 enum itemfn : unsigned char {
-	Hand, Close, Reach, Near, Far,
+	Intimate, Close, Reach, Near, Far,
 	Awkward, Clumsy, Messy, Ration, Reloaded, Precise, Slow, Thrown, TwoHanded,
 	Armor1, Armor2, Armor4,
 	ArmorP1,
@@ -43,9 +44,13 @@ struct item {
 	itemn		type;
 	itemf		flags;
 	int			cost;
+	constexpr explicit operator bool() const { return type != (itemn)0; }
 	const char*	name() const;
 	bool		is(itemfn v) const { return flags.is(v); }
+	bool		isweapon() const { return is(Intimate) || is(Close) || is(Near) || is(Far) || is(Reach); }
+	bool		range(itemfn start) const;
 };
 struct wearable {
 	item		wears[WearLast + 1];
+	slice<item> equipments() const { return slice<item>(const_cast<item*>(wears) + Backpack, wears + WearLast); }
 };

@@ -18,3 +18,11 @@ assert_enum(bsdata<item>::elements, Club)
 const char* item::name() const {
 	return getname(type);
 }
+
+bool item::range(itemfn start) const {
+	for(auto v = start; v <= Far; v = (itemfn)(v + 1)) {
+		if(is(v))
+			return true;
+	}
+	return false;
+}

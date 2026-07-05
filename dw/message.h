@@ -2,4 +2,5 @@
 
 enum messagen : unsigned char {
 	AppTitle,
+	MsgReadyWeapon,
 };

@@ -6,8 +6,9 @@
 
 BSENUM(messagen) = {
 	"Мир подземелий",
+	"%Player достал%а %Hands.",
 };
-assert_enum(bsenum<messagen>::names, AppTitle)
+assert_enum(bsenum<messagen>::names, MsgReadyWeapon)
 
 BSENUM(itemn) = {
 	"Пусто",
