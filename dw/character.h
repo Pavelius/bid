@@ -86,4 +86,14 @@ extern monsteri enemy;
 
 struct character : monsteri, wearable {
 	classn			type;
+	char			abilities[Charisma + 1];
+	int				get(statn v) const { return abilities[v]; }
+	int				getbonus(statn v) const;
+	bool			is(classn v) const { return type == v; }
+	bool			is(racen v) const { return race == v; }
 };
+extern character* player;
+extern character* party[4];
+
+bool allow_class(int v);
+void generate_character();
