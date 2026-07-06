@@ -11,26 +11,38 @@
 
 itemfn scene_range;
 
+item* wearable::chooseitem(const char* title, const char* cancel, fnvisible proc, bool keep) {
+	an.clear();
+	for(auto& e : wears) {
+		if(!e)
+			continue;
+		if(proc && proc(&e) != keep)
+			continue;
+		an.add((long)&e, e.name());
+	}
+	an.sort();
+	return (item*)an.choose(title, cancel);
+}
+
 static void stringbuilder_custom(stringbuilder& sb, const char* id) {
 	if(stringvar_identifier(sb, id))
 		return;
 	default_string(sb, id);
 }
 
-static bool choose_weapon() {
+static void change_weapon() {
 	an.clear();
-	for(auto& e : player->wears) {
-		if(e && e.isweapon() && e.range(scene_range))
+	for(auto& e : slice(player->wears + Hands + 1, player->wears + WearLast + 1)) {
+		if(e && e.isweapon())
 			an.add((long)&e, e.name());
 	}
 	if(!an)
-		return false;
+		return;
 	auto pi = (item*)an.choose();
 	if(!pi)
-		return false;
+		return;
 	iswap(player->wears[Hands], *pi);
 	player->act(MsgReadyWeapon);
-	return true;
 }
 
 static void prepare_to_worse() {
@@ -52,19 +64,19 @@ static bool make_roll(statn stat) {
 }
 
 static bool move_volley(bool run) {
-	if(!player->wearitem(scene_range))
+	if(!enemy)
+		return false;
+	if(!player->is(scene_range))
 		return false;
 	if(run) {
-		if(!choose_weapon())
-			return false;
 		make_roll(Dexterity);
-		if(roll_effect<=Fail) {
+		if(roll_effect <= Fail) {
 			if(enemy.is(scene_range))
 				enemy_deal_damage();
 			else
 				game_master_move();
 		} else if(roll_effect == PartialSuccess) {
-
+			an.clear();
 		} else {
 			fixmsg(MsgVolleyHit);
 			deal_damage();

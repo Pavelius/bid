@@ -39,6 +39,7 @@ enum moven : unsigned char {
 	HackAndSlash, Volley,
 	DefyDangerStreght, DefyDangerDexterity, DefyDangerConstitution, DefyDangerIntellegence, DefyDangerWisdow, DefyDangerCharisma,
 	Parley, SpoutLore, DiscernRealities, Supply,
+	EnemyCatchMelee,
 };
 enum monstern : unsigned char {
 	Bandit, Goblin, Kobold,
@@ -59,6 +60,8 @@ enum organizationn : unsigned char {
 enum dicen : unsigned char {
 	D3, D4, D6, D8, D10, D12, D20,
 };
+
+typedef flagable<(EnemyCatchMelee + 31) / 32, unsigned> movef;
 
 struct monsteri {
 	monstern		type;
@@ -88,13 +91,19 @@ extern monsteri enemy;
 
 struct character : monsteri, wearable {
 	classn			type;
+	movef			moves;
 	char			abilities[Charisma + 1];
 	void			act(messagen m) const;
 	int				get(statn v) const { return abilities[v]; }
 	int				getbonus(statn v) const;
 	bool			haveitem(itemfn range) const;
 	bool			is(classn v) const { return type == v; }
+	bool			is(itemn v) const { return wearable::is(v); }
+	bool			is(itemfn v) const { return wears[Hands].is(v); }
+	bool			is(moven v) const { return moves.is(v); }
 	bool			is(racen v) const { return race == v; }
+	void			remove(moven v) { moves.remove(v); }
+	void			set(moven v) { moves.set(v); }
 };
 extern character* player;
 extern character* party[4];

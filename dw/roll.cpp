@@ -2,7 +2,7 @@
 #include "rand.h"
 
 rolln roll_effect;
-char roll_result;
+int roll_result, roll_bonus;
 
 void make_roll_raw(int bonus) {
 	bonus += d6() + d6();
