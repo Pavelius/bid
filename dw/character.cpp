@@ -32,3 +32,7 @@ bool allow_class(int v) {
 int	character::getbonus(statn v) const {
 	return maptbl(ability_bonus, v);
 }
+
+bool character::use(itemfn v) {
+	return false;
+}

@@ -56,6 +56,6 @@ struct wearable {
 	slice<item> backpack() const { return slice<item>(const_cast<item*>(wears) + Backpack, wears + WearLast); }
 	item* chooseitem(const char* title, const char* cancel, fnvisible proc, bool keep);
 	bool is(itemn type) const;
-	bool is(itemfn range) const;
+	bool is(itemfn v) const;
 	bool is(fnvisible proc, bool keep) const;
 };

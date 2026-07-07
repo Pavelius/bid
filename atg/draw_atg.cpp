@@ -397,10 +397,6 @@ long choose_answers(const char* title, const char* cancel_text, int columns) {
 	return getresult();
 }
 
-void fixclear() {
-	sb.clear();
-}
-
 void fixmsg(messagen id) {
 	sb.addsep('\n');
 	sb.addv(getname(id), 0);

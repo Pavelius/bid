@@ -1,6 +1,9 @@
 #pragma once
 
 enum messagen : unsigned char {
-	AppTitle,
-	MsgReadyWeapon, MsgVolleyHit,
+	AppTitle, Next,
+	ChooseOption, ChooseOptionLeftCount,
+	MsgReadyWeapon, MsgButSomethingHappen,
+	MsgHackAndSlashHit, MsgEvadeEnemyAttack, MsgApplyAdditionalDamage,
+	MsgVolleyHit, MsgVolleyUseAmmo, MsgVolleyWeak, MsgVolleyEnemyMove,
 };

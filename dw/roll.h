@@ -5,6 +5,6 @@ enum rolln : unsigned char {
 };
 
 extern rolln roll_effect;
-extern int roll_result, roll_bonus;
+extern int roll_dices_result, roll_result, roll_bonus;
 
-void make_roll_raw(int bonus);
+void make_roll_raw();

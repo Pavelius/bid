@@ -96,14 +96,16 @@ struct character : monsteri, wearable {
 	void			act(messagen m) const;
 	int				get(statn v) const { return abilities[v]; }
 	int				getbonus(statn v) const;
-	bool			haveitem(itemfn range) const;
+	bool			haveitem(itemfn v) const { return wearable::is(v); }
 	bool			is(classn v) const { return type == v; }
 	bool			is(itemn v) const { return wearable::is(v); }
 	bool			is(itemfn v) const { return wears[Hands].is(v); }
 	bool			is(moven v) const { return moves.is(v); }
 	bool			is(racen v) const { return race == v; }
+	void			markexperience() {}
 	void			remove(moven v) { moves.remove(v); }
 	void			set(moven v) { moves.set(v); }
+	bool			use(itemfn v);
 };
 extern character* player;
 extern character* party[4];
