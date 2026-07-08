@@ -212,7 +212,12 @@ static void print_player(stringbuilder& sb) {
 	sb.add(player->getname());
 }
 
+static void print_enemy(stringbuilder& sb) {
+	sb.add(enemy.getname());
+}
+
 BSDATA(stringvari) = {
+	{"Enemy", print_enemy},
 	{"Hands", print_hands},
 	{"Player", print_player}
 };
