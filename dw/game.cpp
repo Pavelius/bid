@@ -11,6 +11,7 @@
 
 itemfn scene_range;
 int	bonus_damage, bonus_enemy_damage;
+int player_defend;
 
 static void fixpause() {
 	an.choose(0, getname(Next));
@@ -66,6 +67,13 @@ static void enemy_deal_damage() {
 }
 
 static void game_master_move() {
+}
+
+static void enemy_worst_outcome() {
+	if(enemy.is(scene_range))
+		enemy_deal_damage();
+	else
+		game_master_move();
 }
 
 static void add_option(messagen move) {
@@ -177,12 +185,9 @@ static bool move_volley(bool run) {
 		return false;
 	if(run) {
 		make_roll(Dexterity);
-		if(roll_effect <= Fail) {
-			if(enemy.is(scene_range))
-				enemy_deal_damage();
-			else
-				game_master_move();
-		} else if(roll_effect == PartialSuccess) {
+		if(roll_effect <= Fail)
+			enemy_worst_outcome();
+		else if(roll_effect == PartialSuccess) {
 			fixmsg(MsgVolleyHit);
 			choose_options(options, 1);
 			deal_damage();
@@ -190,6 +195,24 @@ static bool move_volley(bool run) {
 			fixmsg(MsgVolleyHit);
 			deal_damage();
 		}
+	}
+	return true;
+}
+
+static bool move_defend(bool run) {
+	static messagen options[] = {MsgVolleyUseAmmo, MsgVolleyWeak, MsgVolleyEnemyMove};
+	if(!enemy)
+		return false;
+	if(!player->is(scene_range))
+		return false;
+	if(run) {
+		make_roll(Constitution);
+		if(roll_effect <= Fail)
+			enemy_worst_outcome();
+		else if(roll_effect == PartialSuccess)
+			player_defend = 1;
+		else
+			player_defend = 3;
 	}
 	return true;
 }
