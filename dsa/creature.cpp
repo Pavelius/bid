@@ -15,10 +15,6 @@
 #include "rand.h"
 #include "stringbuilder.h"
 
-#pragma section("items$m", read)
-
-_declspec(allocate("items$m")) const char* str_s3 = "Test3";
-
 creature* player;
 creature* opponent;
 creature* party[4];

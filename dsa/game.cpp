@@ -165,6 +165,8 @@ static void consume_food() {
 		return;
 	if(consume(Mushrooms))
 		return;
+	if(consume(Berry))
+		return;
 	player->act(PlayerSufferStarvation);
 	player->starvation += d6();
 }
@@ -194,7 +196,7 @@ static void night_encounter() {
 }
 
 static void adventure_move() {
-	answers::header = "%AreaName";
+	pushvalue push_header(answers::header, "%AreaName");
 	answers::resid = "Wasteland";
 	while(true) {
 		sb.adds(getinfo(last_area->type));

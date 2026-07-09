@@ -35,7 +35,6 @@ union variant {
 	constexpr variant(racen v) : value(v), type(Race) {}
 	constexpr variant(spelln v) : value(v), type(Spell) {}
 	variant(creature* v);
-	//constexpr bool operator==(short unsigned v) { return v == u; }
 	constexpr bool operator==(const variant& v) { return v.u == u; }
 	constexpr bool operator!=(const variant& v) { return v.u != u; }
 	constexpr void operator++() { value++; }
