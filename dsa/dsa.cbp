@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="dsa" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="../bin/Debug/dsa" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../bin/Debug/" />
+				<Option object_output="../obj/Debug/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../atg" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="../bin/Release/dsa" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Linker>
+			<Add library="X11" />
+		</Linker>
+		<Unit filename="../atg/ability.h" />
+		<Unit filename="../atg/action.h" />
+		<Unit filename="../atg/adat.h" />
+		<Unit filename="../atg/answers.cpp" />
+		<Unit filename="../atg/answers.h" />
+		<Unit filename="../atg/array.cpp" />
+		<Unit filename="../atg/array.h" />
+		<Unit filename="../atg/bsdata.h" />
+		<Unit filename="../atg/bstream.cpp" />
+		<Unit filename="../atg/bstream.h" />
+		<Unit filename="../atg/collection.cpp" />
+		<Unit filename="../atg/collection.h" />
+		<Unit filename="../atg/collectiona.cpp" />
+		<Unit filename="../atg/collectiona.h" />
+		<Unit filename="../atg/color.cpp" />
+		<Unit filename="../atg/color.h" />
+		<Unit filename="../atg/customname.h" />
+		<Unit filename="../atg/dice.cpp" />
+		<Unit filename="../atg/dice.h" />
+		<Unit filename="../atg/draw.cpp" />
+		<Unit filename="../atg/draw.h" />
+		<Unit filename="../atg/draw_answers.cpp" />
+		<Unit filename="../atg/draw_atg.cpp" />
+		<Unit filename="../atg/draw_atg.h" />
+		<Unit filename="../atg/draw_res.cpp" />
+		<Unit filename="../atg/draw_surface.cpp" />
+		<Unit filename="../atg/draw_text.cpp" />
+		<Unit filename="../atg/draw_textf.cpp" />
+		<Unit filename="../atg/draw_theme.cpp" />
+		<Unit filename="../atg/flagable.h" />
+		<Unit filename="../atg/io_stream.cpp" />
+		<Unit filename="../atg/io_stream.h" />
+		<Unit filename="../atg/math.cpp" />
+		<Unit filename="../atg/math.h" />
+		<Unit filename="../atg/nix_draw3x.cpp" />
+		<Unit filename="../atg/nix_io_file.cpp" />
+		<Unit filename="../atg/nix_time.cpp" />
+		<Unit filename="../atg/png.cpp" />
+		<Unit filename="../atg/point.cpp" />
+		<Unit filename="../atg/point.h" />
+		<Unit filename="../atg/print.cpp" />
+		<Unit filename="../atg/print.h" />
+		<Unit filename="../atg/pushvalue.h" />
+		<Unit filename="../atg/rand.h" />
+		<Unit filename="../atg/rect.h" />
+		<Unit filename="../atg/slice.h" />
+		<Unit filename="../atg/stringbuilder.cpp" />
+		<Unit filename="../atg/stringbuilder.h" />
+		<Unit filename="../atg/stringvar.cpp" />
+		<Unit filename="../atg/stringvar.h" />
+		<Unit filename="../atg/szdup.cpp" />
+		<Unit filename="../atg/zip.cpp" />
+		<Unit filename="ability.h" />
+		<Unit filename="alignment.h" />
+		<Unit filename="area.cpp" />
+		<Unit filename="area.h" />
+		<Unit filename="calendar.cpp" />
+		<Unit filename="calendar.h" />
+		<Unit filename="class.h" />
+		<Unit filename="creature.cpp" />
+		<Unit filename="creature.h" />
+		<Unit filename="damage.h" />
+		<Unit filename="feat.h" />
+		<Unit filename="game.cpp" />
+		<Unit filename="game.h" />
+		<Unit filename="gender.h" />
+		<Unit filename="information.cpp" />
+		<Unit filename="item.cpp" />
+		<Unit filename="item.h" />
+		<Unit filename="locale_ru.cpp" />
+		<Unit filename="localize.cpp" />
+		<Unit filename="message.h" />
+		<Unit filename="npc.cpp" />
+		<Unit filename="npc.h" />
+		<Unit filename="reaction.h" />
+		<Unit filename="spell.cpp" />
+		<Unit filename="spell.h" />
+		<Unit filename="stringact.cpp" />
+		<Unit filename="variant.cpp" />
+		<Unit filename="variant.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

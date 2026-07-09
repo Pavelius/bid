@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="ability.h" />
+    <ClInclude Include="action.h" />
+    <ClInclude Include="alignment.h" />
+    <ClInclude Include="area.h" />
+    <ClInclude Include="calendar.h" />
+    <ClInclude Include="class.h" />
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="damage.h" />
+    <ClInclude Include="feat.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="gender.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="message.h" />
+    <ClInclude Include="npc.h" />
+    <ClInclude Include="reaction.h" />
+    <ClInclude Include="spell.h" />
+    <ClInclude Include="stringlocale.h" />
+    <ClInclude Include="variant.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="area.cpp" />
+    <ClCompile Include="calendar.cpp" />
+    <ClCompile Include="creature.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="information.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="locale_ru.cpp" />
+    <ClCompile Include="npc.cpp" />
+    <ClCompile Include="spell.cpp" />
+    <ClCompile Include="stringact.cpp" />
+    <ClCompile Include="variant.cpp" />
+  </ItemGroup>
+</Project>

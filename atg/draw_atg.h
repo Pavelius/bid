@@ -17,7 +17,7 @@ void* make_player_move(const char* id, int count_left, int cancel_mode);
 void* choose_record(const char* id, const char* source_id, fnvisible allow = 0);
 
 bool allow_paint();
-void fixclear();
+//void fixclear();
 void fixmsg(messagen id);
 void game_run(); // Main game entry point
 void main_util(); // External function
