@@ -13,6 +13,9 @@
     <Filter Include="Strings">
       <UniqueIdentifier>{3ab28e07-5d11-4dc3-9693-9884e2b067ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Information">
+      <UniqueIdentifier>{22a1ae5b-8ccb-4dd7-91c9-4feeda826b86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adat.h">
@@ -176,5 +179,15 @@
     <ClCompile Include="png.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\LICENSE.txt">
+      <Filter>Information</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Filter>Information</Filter>
+    </None>
   </ItemGroup>
 </Project>
