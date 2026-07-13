@@ -36,7 +36,7 @@ rolln make_roll(int dices) {
 
 static void ally_help(actionn action, messagen command) {
 	for(auto& e : players) {
-		if(&e == player)
+		if(!e || &e == player)
 			continue;
 		if(!e.apply(action, command, false))
 			continue;

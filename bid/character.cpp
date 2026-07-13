@@ -3,6 +3,7 @@
 #include "choose.h"
 #include "game.h"
 #include "message.h"
+#include "rand.h"
 #include "scene.h"
 
 character*	player;
@@ -76,6 +77,7 @@ void actiona::apply(charactern type) {
 
 static void add_player() {
 	player->clear();
+	player->setname();
 	player->type = (charactern)choosev(0, Whisper, allow_character, bsenum<charactern>::names, getname(ChoosePlaybook));
 	player->apply(player->type);
 	player->heiretage = (heiretagen)choosev(0, Weird, bsenum<heiretagen>::names, getname(ChooseHeiretage));
@@ -88,6 +90,14 @@ void add_players() {
 		player = players + i;
 		add_player();
 	}
+}
+
+const char* npci::getname() const {
+	return ::getname(name);
+}
+
+void npci::setname() {
+	name = namen((rand() % 50) * 2 + gender);
 }
 
 void character::clear() {

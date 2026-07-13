@@ -84,7 +84,13 @@ static void paint_main_menu() {
 }
 
 static void test_game() {
-	player = players;
+	player = players+1;
+	player->setname();
+	player->apply(Leech);
+	player = players + 2;
+	player->setname();
+	player->apply(Slide);
+	player->setname();
 	player->apply(Cutter);
 	action_roll(Skirmish);
 }
