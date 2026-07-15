@@ -775,7 +775,7 @@ static void addleft(stringbuilder& sb, int current, int maximum) {
 }
 
 static void modify_spells(messagen id, spellable& e, int level) {
-	char temp[128]; stringbuilder sb(temp);
+	char temp[128]; stringbuilder sbn(temp);
 	while(true) {
 		auto prepare_spells = e.total(records);
 		auto maximum_spells = player->getspells(level);
@@ -790,8 +790,8 @@ static void modify_spells(messagen id, spellable& e, int level) {
 		an.sort();
 		an.add(-2, getname(ClearAllList));
 		an.add(-1, getname(Confirm));
-		sb.clear(); sb.add(getname(AskMemorizeSpells), level);
-		addleft(sb, prepare_spells, maximum_spells);
+		sbn.clear(); sbn.add(getname(AskMemorizeSpells), level);
+		addleft(sbn, prepare_spells, maximum_spells);
 		auto result = an.choose(temp);
 		if(result == -1)
 			break;
