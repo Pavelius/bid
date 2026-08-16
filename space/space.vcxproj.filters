@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="galactic.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="locale_ru.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="galactic.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="message.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="ship.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{f28521e6-268c-4b48-b001-71de0075d046}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
