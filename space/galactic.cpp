@@ -1,6 +1,5 @@
 #include "bsdata.h"
-#include "item.h"
-#include "galactic.h"
+#include "game.h"
 
 bool is_import(itemn resource, govermentn v) {
 	switch(v) {

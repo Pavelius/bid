@@ -1,6 +1,7 @@
 #include "answers.h"
 #include "bsdata.h"
 #include "draw_atg.h"
+#include "game.h"
 #include "math.h"
 #include "rand.h"
 #include "stringvar.h"

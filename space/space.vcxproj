@@ -72,6 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)atg</IncludePath>
+    <ExternalIncludePath />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -138,12 +139,13 @@
     <ClCompile Include="galactic.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="locale_ru.cpp" />
+    <ClCompile Include="cargo.cpp" />
+    <ClCompile Include="location.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="galactic.h" />
-    <ClInclude Include="item.h" />
+    <ClInclude Include="contract.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="message.h" />
-    <ClInclude Include="ship.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

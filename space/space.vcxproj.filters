@@ -10,18 +10,21 @@
     <ClCompile Include="locale_ru.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="cargo.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="location.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="galactic.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="item.h">
+    <ClInclude Include="game.h">
       <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="message.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="ship.h">
+    <ClInclude Include="contract.h">
       <Filter>Logic</Filter>
     </ClInclude>
   </ItemGroup>
