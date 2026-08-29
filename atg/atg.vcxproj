@@ -40,6 +40,7 @@
     <ClInclude Include="rand.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="slice.h" />
+    <ClInclude Include="sprite_util.h" />
     <ClInclude Include="stringbuilder.h" />
     <ClInclude Include="stringlocale.h" />
     <ClInclude Include="stringvar.h" />
@@ -67,6 +68,7 @@
     <ClCompile Include="png.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="print.cpp" />
+    <ClCompile Include="sprite_util.cpp" />
     <ClCompile Include="stringbuilder.cpp" />
     <ClCompile Include="stringvar.cpp" />
     <ClCompile Include="szdup.cpp" />

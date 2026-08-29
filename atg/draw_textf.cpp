@@ -86,8 +86,8 @@ static const char* skip_line(const char* p) {
 	return skipcr(p);
 }
 
-static void paint_image(const char* name, int id, const char* folder) {
-	auto ps = gres(name, folder);
+static void paint_image(int id) {
+	auto ps = metrics::images;
 	if(!ps)
 		return;
 	width = ps->get(id).sx;
@@ -389,10 +389,8 @@ static const char* parse_widget_command(const char* p) {
 			continue;
 		} else if(equaln(p, "image")) {
 			sb.clear();
-			auto name = getparam(p, sb);
 			auto id = getparam(p);
-			auto folder = getparam(p, sb);
-			paint_image(name, id, folder);
+			paint_image(id);
 		} else if(equaln(p, "text")) {
 			sb.clear();
 			p = read_lf(p, sb);

@@ -4,8 +4,7 @@
 
 const char* answers::header;
 const char* answers::string;
-const char* answers::resid;
-
+picturen answers::picture;
 bool answers::show_tips = true;
 bool answers::interactive = true;
 int answers::column_count = 1;

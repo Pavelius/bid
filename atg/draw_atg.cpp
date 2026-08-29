@@ -107,12 +107,10 @@ static void atg_paintcell(int index, long value, const char* title) {
 
 static void paint_picture() {
 #ifndef NOART
-	if(!answers::resid || !answers::resid[0])
-		return;
-	auto p = gres(answers::resid, "images");
+	auto p = metrics::images;
 	if(!p)
 		return;
-	image(caret.x, caret.y, p, 0, 0);
+	image(caret.x, caret.y, p, answers::picture, 0);
 	caret.y += p->get(0).sy + metrics::border + metrics::padding;
 #endif // NOART
 }
@@ -421,6 +419,7 @@ static int atg_initialize() {
 	metrics::font = (sprite*)loadb("fonts/font.pma");
 	metrics::small = (sprite*)loadb("fonts/small.pma");
 	metrics::icons = (sprite*)loadb("fonts/icons.pma");
+	metrics::images = (sprite*)loadb("fonts/images.pma");
 	font = metrics::font;
 	fore = colors::text;
 	fore_stroke = colors::border;

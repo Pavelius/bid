@@ -187,7 +187,7 @@ static void check_movement() {
 }
 
 static void night_encounter() {
-	pushvalue push_header(answers::resid, "WastelandNight");
+	pushvalue push_header(answers::picture, ImageWastelandNight);
 	sb.clear();
 	sb.add(getname(PlayerHearNoiseOnWatch));
 	pause();
@@ -195,7 +195,7 @@ static void night_encounter() {
 
 static void adventure_move() {
 	pushvalue push_header(answers::header, "%AreaName");
-	answers::resid = "Wasteland";
+	answers::picture = ImageWasteland;
 	while(true) {
 		sb.adds(getinfo(last_area->type));
 		addan(MakeCamp);
@@ -321,9 +321,14 @@ static void test_game() {
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);
 
+void main_util();
+
 void game_run() {
 	srand(11299);
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
+#ifdef _DEBUG
+	main_util();
+#endif
 	test_game();
 }

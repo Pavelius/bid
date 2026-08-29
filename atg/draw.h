@@ -5,6 +5,8 @@
 
 typedef void(*fnevent)();
 
+enum picturen : unsigned char;
+
 enum dweventf : unsigned {
 	KeyBackspace = 8, KeyTab = 9, KeyEnter = 10, KeyEscape = 0x1B, KeySpace = 0x20, KeyDelete = 0x7F,
 	// input events
@@ -109,6 +111,7 @@ extern sprite* h1;
 extern sprite* h2;
 extern sprite* h3;
 extern sprite* icons;
+extern sprite* images;
 extern int border, padding;
 }
 

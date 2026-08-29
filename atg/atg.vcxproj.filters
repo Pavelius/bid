@@ -16,6 +16,9 @@
     <Filter Include="Information">
       <UniqueIdentifier>{22a1ae5b-8ccb-4dd7-91c9-4feeda826b86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{3b5c5223-22fa-4263-bd27-3c9bc2899686}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adat.h">
@@ -92,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="choose.h">
       <Filter>Strings</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite_util.h">
+      <Filter>Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="png.cpp">
       <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite_util.cpp">
+      <Filter>Util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

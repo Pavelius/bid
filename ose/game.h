@@ -18,6 +18,9 @@ enum reactionn : unsigned char {
 enum globalvarn : unsigned char {
 	Turns, Blessing,
 };
+enum picturen : unsigned char {
+	ImageWasteland, ImageWastelandNight,
+};
 
 struct gamei {
 	unsigned variables[Blessing+1];
