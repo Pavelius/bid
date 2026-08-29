@@ -144,6 +144,7 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="locale_ru.cpp" />
     <ClCompile Include="main_util.cpp" />
+    <ClCompile Include="monster.cpp" />
     <ClCompile Include="portrait.cpp" />
     <ClCompile Include="spell.cpp" />
   </ItemGroup>

@@ -10,6 +10,7 @@
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="main_util.cpp" />
     <ClCompile Include="portrait.cpp" />
+    <ClCompile Include="monster.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />

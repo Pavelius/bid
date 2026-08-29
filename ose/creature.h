@@ -25,8 +25,12 @@ enum alignmentn : unsigned char {
 	Lawful, Neutrality, Chaotic
 };
 enum classn : unsigned char {
+	Animal,
 	Fighter, Cleric, Theif, MagicUser,
 	Human, Halfling, Dwarf, Elf,
+	BearGrizzly, Boar, CatPanther, CatTiger, DogWild, FrogMutant, FrogPoison, Hawk,
+	LizardGecko, LizardTuatara, SnakePitViper, SpiderCrab, SpiderPhase, ToadPoisonous, Unicorn,
+	Wolf, WolfDire,
 };
 enum featn : unsigned char {
 	Awareness, Backstab,
@@ -91,6 +95,7 @@ extern creature* party[4];
 
 abilityn get_primary(classn v);
 portraitn random_portrait(classn type, gendern gender);
+classn get_race(classn type);
 
 const char* what_to_do();
 

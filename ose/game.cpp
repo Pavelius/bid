@@ -330,7 +330,7 @@ static void paint_main_menu() {
 }
 
 static void test_game() {
-	create_area(Wastes);
+	create_area(Forest);
 	create_creature(Fighter, Male);
 	join_party();
 	player->set(Enemy);

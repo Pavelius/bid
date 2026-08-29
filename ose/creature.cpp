@@ -25,10 +25,75 @@ collectiona creatures;
 static bool critical_hit, critical_miss;
 static int attack_roll;
 
-static char save_basic[][5] = {
+static char saving_thrown_monsters[][5] = {
+	{14, 15, 16, 17, 18},// 0
+	{12, 13, 14, 15, 16},// 1
 	{12, 13, 14, 15, 16},
-	{10, 13, 12, 15, 16},
-	{11, 12, 14, 16, 15}, // 2 - Cleric
+	{12, 13, 14, 15, 16},
+	{10, 11, 12, 13, 14},
+	{10, 11, 12, 13, 14},// 5
+	{10, 11, 12, 13, 14},
+	{8, 9, 10, 10, 12},
+	{8, 9, 10, 10, 12},
+	{8, 9, 10, 10, 12},
+	{6, 7, 8, 8, 10},// 10
+	{6, 7, 8, 8, 10},
+	{6, 7, 8, 8, 10},
+	{4, 5, 6, 5, 8},
+	{4, 5, 6, 5, 8},
+	{4, 5, 6, 5, 8},// 15
+	{2, 3, 4, 3, 6},
+	{2, 3, 4, 3, 6},
+	{2, 3, 4, 3, 6},
+	{2, 2, 2, 2, 4},
+	{2, 2, 2, 2, 4},// 20
+	{2, 2, 2, 2, 4},
+	{2, 2, 2, 2, 2},// 22
+};
+static char saving_thrown_fighter[][5] = {
+	{12, 13, 14, 15, 16},
+	{12, 13, 14, 15, 16}, // 1
+	{12, 13, 14, 15, 16},
+	{12, 13, 14, 15, 16},
+	{10, 11, 12, 13, 14},
+	{10, 11, 12, 13, 14}, // 5
+	{10, 11, 12, 13, 14},
+	{8, 9, 10, 10, 12},
+	{8, 9, 10, 10, 12},
+	{8, 9, 10, 10, 12},
+	{6, 7, 8, 8, 10}, // 10
+	{6, 7, 8, 8, 10},
+	{6, 7, 8, 8, 10},
+	{4, 5, 6, 5, 8},
+	{4, 5, 6, 5, 8}, // 14
+};
+static char saving_thrown_halfling[][5] = {
+	{8, 9, 10, 13, 12},
+	{8, 9, 10, 13, 12}, // 1
+	{8, 9, 10, 13, 12},
+	{8, 9, 10, 13, 12},
+	{6, 7, 8, 10, 10},
+	{6, 7, 8, 10, 10}, // 5
+	{6, 7, 8, 10, 10},
+	{4, 5, 6, 7, 8},
+	{4, 5, 6, 7, 8}, // 8
+};
+static char saving_thrown_theif[][5] = {
+	{13, 14, 13, 16, 15},
+	{13, 14, 13, 16, 15}, // 1
+	{13, 14, 13, 16, 15},
+	{13, 14, 13, 16, 15},
+	{13, 14, 13, 16, 15},
+	{12, 13, 11, 14, 13}, // 5
+	{12, 13, 11, 14, 13},
+	{12, 13, 11, 14, 13},
+	{12, 13, 11, 14, 13},
+	{10, 11, 9, 12, 10},
+	{10, 11, 9, 12, 10}, // 10
+	{10, 11, 9, 12, 10},
+	{10, 11, 9, 12, 10},
+	{8, 9, 7, 10, 8},
+	{8, 9, 7, 10, 8}, // 14
 };
 static char attack_bonuses[][15] = {
 	{0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 5, 5, 5, 5},
@@ -282,6 +347,22 @@ static void update_enchant(variant object) {
 	}
 }
 
+static char* get_saving_throws(classn type, int level) {
+	switch(type) {
+	case Animal: return maptbl(saving_thrown_monsters, level / 2);
+	case Fighter: return maptbl(saving_thrown_fighter, level);
+	case Halfling: return maptbl(saving_thrown_halfling, level);
+	case Theif: return maptbl(saving_thrown_theif, level);
+	default: return maptbl(saving_thrown_monsters, level);
+	}
+}
+
+static void update_saving_throws() {
+	auto pn = get_saving_throws(get_race(player->type), player->abilities[HD]);
+	for(auto i = SaveDeath; i <= SaveSpells; i = (abilityn)(i + 1))
+		player->abilities[i] += pn[i - SaveDeath];
+}
+
 static void copy_abilities(statable& dest, const statable& source) {
 	memcpy(dest.abilities, source.abilities, Lore * sizeof(abilityn));
 }
@@ -291,6 +372,7 @@ static void update_player() {
 	update_enchant(player);
 	// update_enchant(player->getarea());
 	update_abilities();
+	update_saving_throws();
 	update_wear();
 }
 
@@ -333,7 +415,7 @@ static void create_ability(classn type) {
 }
 
 static void create_average_ability() {
-	for(auto i = Strenght; i<=Charisma; i = (abilityn)(i+1))
+	for(auto i = Strenght; i <= Charisma; i = (abilityn)(i + 1))
 		player->basic.abilities[i] = 10;
 }
 
@@ -392,7 +474,7 @@ void create_creature(classn type, gendern gender) {
 	player->type = type;
 	player->gender = gender;
 	player->portrait = random_portrait(type, gender);
-//	player->setname();
+	//	player->setname();
 	create_ability(type);
 	start_equip(type);
 	raise_level(1, true);
@@ -739,7 +821,7 @@ void make_prepare_spells(messagen id) {
 			auto total = player->getspells(i);
 			auto current = player->getspellsprepared(i);
 			if(player->getspells(i)) {
-				if(current<total)
+				if(current < total)
 					an.add(i, getname(ChangeSpellsByLevelAllowed), i, total - current);
 				else
 					an.add(i, getname(ChangeSpellsByLevel), i);
