@@ -349,9 +349,9 @@ static void update_enchant(variant object) {
 
 static char* get_saving_throws(classn type, int level) {
 	switch(type) {
-	case Animal: return maptbl(saving_thrown_monsters, level / 2);
 	case Fighter: return maptbl(saving_thrown_fighter, level);
 	case Halfling: return maptbl(saving_thrown_halfling, level);
+	case Monster: return maptbl(saving_thrown_monsters, level / 2);
 	case Theif: return maptbl(saving_thrown_theif, level);
 	default: return maptbl(saving_thrown_monsters, level);
 	}

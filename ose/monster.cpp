@@ -4,10 +4,13 @@ struct monsteri {
 	classn		race;
 	char		ac, hd[2];
 	alignmentn	alignment;
+	char		saving_throws[2];
+	char		appear[2][2];
+	const char*	treasure;
 };
 
 static monsteri monster_data[] = {
-	{Animal},
+	{Monster},
 	{Human},
 	{Human},
 	{Human},
@@ -16,8 +19,8 @@ static monsteri monster_data[] = {
 	{Halfling},
 	{Dwarf},
 	{Elf},
-	{BearGrizzly, 6, {5}, Neutrality},
-	{Boar, 6, {5}, Neutrality},
+	{BearGrizzly, 6, {5}, Neutrality, {2}, {{1}, {1, 4}}, "U"},
+	{Boar, 7, {3}, Neutrality, {2}, {{1, 6}, {1, 6}}, ""},
 	{CatPanther},
 	{CatTiger},
 	{DogWild},

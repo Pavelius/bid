@@ -25,7 +25,7 @@ enum alignmentn : unsigned char {
 	Lawful, Neutrality, Chaotic
 };
 enum classn : unsigned char {
-	Animal,
+	Monster,
 	Fighter, Cleric, Theif, MagicUser,
 	Human, Halfling, Dwarf, Elf,
 	BearGrizzly, Boar, CatPanther, CatTiger, DogWild, FrogMutant, FrogPoison, Hawk,
@@ -33,7 +33,7 @@ enum classn : unsigned char {
 	Wolf, WolfDire,
 };
 enum featn : unsigned char {
-	Awareness, Backstab,
+	Awareness, Backstab, BearHug,
 	MeleeFight, Charged, Stunned, Flee, Ally, Enemy,
 	Local, Slow,
 };
