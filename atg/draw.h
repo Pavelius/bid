@@ -122,6 +122,7 @@ struct surface {
 		static plugin* first;
 		plugin(const char* name, const char* filter);
 		virtual bool decode(unsigned char* output, int output_bpp, const unsigned char* input, unsigned input_size) = 0;
+		virtual bool getpalette(unsigned char* output, const unsigned char* input) { return false; }
 		virtual bool inspect(int& w, int& h, int& bpp, const unsigned char* input, unsigned size) = 0;
 	};
 	int	width, height, scanline, bpp;

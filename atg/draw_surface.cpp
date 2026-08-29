@@ -1,5 +1,7 @@
 ﻿#include "draw.h"
 #include "io_stream.h"
+#include "math.h"
+#include "slice.h"
 
 #pragma pack(push)
 #pragma pack(1)
@@ -27,6 +29,8 @@ struct info {
 }
 }
 #pragma pack(pop)
+
+color bitmap_pallette[256];
 
 void bitmap_write(const char* url, unsigned char* bits, int width, int height, int bpp, int scanline, color* pallette) {
 	bmp::header bmf = {0};
@@ -67,7 +71,7 @@ void bitmap_write(const char* url, unsigned char* bits, int width, int height, i
 	int pixbytes = bmi.bpp / 8;
 	for(int y = 0; y < height; y++) {
 		int w = pixbytes * width;
-		unsigned char* p0 = (unsigned char*)bits + (height - y - 1)*scanline;
+		unsigned char* p0 = (unsigned char*)bits + (height - y - 1) * scanline;
 		file.write(p0, w);
 		if(w < wscn)
 			file.write(p0, wscn - w);
@@ -122,13 +126,21 @@ static struct bmp_bitmap_plugin : public surface::plugin {
 		unsigned char* pb = (unsigned char*)input + ph->bits;
 		auto input_scanline = color_scanline(width, input_bpp);
 		auto output_scanline = color_scanline(width, output_bpp);
+		if(pi->color_used > 0) {
+			auto color_used = imin(pi->color_used, sizeof(bitmap_pallette) / sizeof(bitmap_pallette[0]));
+			memcpy(bitmap_pallette, ppal, color_used * sizeof(color));
+		}
 		color e;
 		for(int y = 0; y < height; y++) {
 			unsigned char* d = output + y * output_scanline;
-			unsigned char* s = pb + ((pi->height < 0) ? y : (pi->height - y - 1))*input_scanline;
-			for(int x = 0; x < width; x++) {
-				e.read(s, x, input_bpp, ppal);
-				e.write(d, x, output_bpp, 0);
+			unsigned char* s = pb + ((pi->height < 0) ? y : (pi->height - y - 1)) * input_scanline;
+			if(input_bpp == output_bpp && input_bpp == 8)
+				memcpy(d, s, width); // Optimization
+			else {
+				for(int x = 0; x < width; x++) {
+					e.read(s, x, input_bpp, ppal);
+					e.write(d, x, output_bpp, 0);
+				}
 			}
 		}
 		return true;

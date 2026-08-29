@@ -186,11 +186,14 @@ static void consume_food() {
 		return;
 	if(consume(Berry))
 		return;
+	if(consume(Ration))
+		return;
 	player->act(PlayerSufferStarvation);
 	player->starvation += d6();
 }
 
 static void camp_move() {
+	pushvalue push_header(answers::picture, ImageWastelandNight);
 	sb.clear();
 	fixmsg(MakeCampInOpenLand);
 	camp_actions();
