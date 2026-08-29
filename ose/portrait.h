@@ -9,4 +9,5 @@ enum portraitn : unsigned char {
 	MaleElf1,
 	MaleHuman1, MaleHuman2, MaleHuman3, MaleHuman4, MaleHuman5, MaleHuman6, MaleHuman7, MaleHuman8, MaleHuman9, MaleHuman10, MaleHuman11, MaleHuman12,
 	MaleOrk1, MaleOrk2, MaleOrk3,
+	LastPortrait = MaleOrk3,
 };

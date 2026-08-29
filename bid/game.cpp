@@ -12,13 +12,8 @@
 
 static character* player_avatars[3] = {players, players + 1, players + 2};
 
-static const char* get_avatar(charactern type) {
-	return "caf";
-}
-
-static void get_avatar(const void* object, stringbuilder& sb) {
-	auto p = (character*)object;
-	sb.add(get_avatar(p->type));
+static int get_avatar(const void* object) {
+	return 0;
 }
 
 static int get_hits(const void* object) {
@@ -96,7 +91,6 @@ static void test_game() {
 }
 
 void game_run() {
-	answers::resid = "Wasteland";
 	atg_menu = paint_main_menu;
 	srand(13123);
 	test_game();
