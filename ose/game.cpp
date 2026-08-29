@@ -255,7 +255,7 @@ static void paint_value(const item& e) {
 
 static int get_avatar(const void* object) {
 	auto p = (creature*)object;
-	return 0;
+	return p->portrait;
 }
 
 static int get_hits(const void* object) {

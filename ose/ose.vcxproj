@@ -144,10 +144,12 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="locale_ru.cpp" />
     <ClCompile Include="main_util.cpp" />
+    <ClCompile Include="portrait.cpp" />
     <ClCompile Include="spell.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
+    <ClInclude Include="gender.h" />
     <ClInclude Include="portrait.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="game.h" />

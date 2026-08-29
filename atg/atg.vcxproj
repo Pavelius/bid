@@ -58,7 +58,9 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="draw_answers.cpp" />
     <ClCompile Include="draw_atg.cpp" />
-    <ClCompile Include="draw_res.cpp" />
+    <ClCompile Include="draw_res.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="draw_surface.cpp" />
     <ClCompile Include="draw_text.cpp" />
     <ClCompile Include="draw_textf.cpp" />

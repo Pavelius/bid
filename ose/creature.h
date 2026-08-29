@@ -1,5 +1,6 @@
 #pragma once
 
+#include "gender.h"
 #include "item.h"
 #include "spell.h"
 
@@ -7,6 +8,7 @@ typedef flagable<1, unsigned> featf;
 
 typedef void(*fnevent)();
 
+enum portraitn : unsigned char;
 enum messagen : unsigned char;
 enum namen : unsigned char;
 
@@ -32,9 +34,6 @@ enum featn : unsigned char {
 	MeleeFight, Charged, Stunned, Flee, Ally, Enemy,
 	Local, Slow,
 };
-enum gendern : unsigned char {
-	NoGender, Male, Female
-};
 
 struct area;
 
@@ -43,6 +42,7 @@ struct npc {
 	gendern		gender;
 	alignmentn	alignment;
 	namen		customname;
+	portraitn	portrait;
 	bool is(alignmentn v) const { return alignment == v; }
 	bool is(gendern v) const { return gender == v; }
 };
@@ -91,6 +91,7 @@ extern creature* opponent;
 extern creature* party[4];
 
 abilityn get_primary(classn v);
+portraitn random_portrait(classn type, gendern gender);
 
 const char* what_to_do();
 

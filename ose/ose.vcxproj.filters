@@ -9,6 +9,7 @@
     <ClCompile Include="locale_ru.cpp" />
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="main_util.cpp" />
+    <ClCompile Include="portrait.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
@@ -19,5 +20,6 @@
     <ClInclude Include="spell.h" />
     <ClInclude Include="variant.h" />
     <ClInclude Include="portrait.h" />
+    <ClInclude Include="gender.h" />
   </ItemGroup>
 </Project>

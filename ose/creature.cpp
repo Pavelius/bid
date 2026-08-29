@@ -405,7 +405,8 @@ void create_creature(classn type, gendern gender) {
 	player = bsdata<creature>::addz();
 	player->clear();
 	player->type = type;
-//	player->gender = gender;
+	player->gender = gender;
+	player->portrait = random_portrait(type, gender);
 //	player->setname();
 	create_ability(type);
 	create_effect(type);
