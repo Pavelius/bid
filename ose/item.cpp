@@ -48,17 +48,17 @@ int get_base_cost(itemn v) {
 }
 
 static wearn get_wear(itemn v) {
-	if(v <= PinkDiamond)
+	if(v >= Agate)
 		return Backpack;
-	else if(v <= Bolt)
+	else if(v >= Arrow)
 		return Ammunition;
-	else if(v <= Crossbow)
-		return Hands;
-	else if(v <= LeatherArmor)
-		return Body;
-	else if(v <= Shield)
+	else if(v >= Ration)
+		return Edible;
+	else if(v >= Shield)
 		return Offhand;
-	return Backpack;
+	else if(v >= LeatherArmor)
+		return Body;
+	return Hands;
 }
 
 bool have(itemn v, damagen i) {
@@ -66,7 +66,7 @@ bool have(itemn v, damagen i) {
 	case Blunt:
 		switch(v) {
 		case Staff:
-		case WarHammer:
+		case Mace:
 			return true;
 		default:
 			return false;
@@ -74,10 +74,10 @@ bool have(itemn v, damagen i) {
 	case Pierce:
 		switch(v) {
 		case Dagger:
-		case LongBow:
-		case ShortBow:
 		case Spear:
 		case Javelin:
+		case LongBow:
+		case ShortBow:
 			return true;
 		default:
 			return false;

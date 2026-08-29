@@ -9,12 +9,12 @@ enum damagen : unsigned char {
 	Fire, Cold, Acid,
 };
 enum wearn : unsigned char {
-	Backpack, LastWear = Backpack + 16,
+	Backpack, Edible, LastWear = Backpack + 16,
 	Body, Hands, Offhand, Ammunition,
 };
 enum itemn : unsigned char {
 	Fist, Claws,
-	Dagger, HandAxe, Javelin, Spear, Staff, WarHammer,
+	Dagger, HandAxe, Javelin, Spear, Staff, Mace,
 	ShortSword, Sword, TwohandedSword,
 	LongBow, ShortBow, Crossbow,
 	LeatherArmor, ChainArmor, PlateArmor, Shield,
@@ -50,7 +50,7 @@ struct item {
 	item() : type(), count(0) {}
 	item(itemn type) : type(type), count(0) {}
 	item(itemn type, unsigned char count) : type(type), count(count) { }
-	explicit operator bool() const { return count > 0; }
+	explicit operator bool() const { return type > Fist; }
 	const char* name() const;
 	creature* owner() const;
 	int getcount() const { return countable() ? count : 1; }

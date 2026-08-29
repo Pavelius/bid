@@ -27,7 +27,7 @@ enum alignmentn : unsigned char {
 };
 enum classn : unsigned char {
 	Fighter, Cleric, Theif, MagicUser,
-	Human, Dwarf, Elf,
+	Human, Halfling, Dwarf, Elf,
 };
 enum featn : unsigned char {
 	Awareness, Backstab,
@@ -108,5 +108,5 @@ void for_each_party(fnevent proc);
 void join_party();
 bool make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus);
 void make_prepare_spells(messagen id);
-void raise_level(int level);
+void raise_level(int level, bool reroll_lowest = false);
 bool use_skill(abilityn id, bool run);

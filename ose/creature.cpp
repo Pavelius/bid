@@ -28,7 +28,7 @@ static int attack_roll;
 static char save_basic[][5] = {
 	{12, 13, 14, 15, 16},
 	{10, 13, 12, 15, 16},
-	{11, 12, 14, 16, 15},
+	{11, 12, 14, 16, 15}, // 2 - Cleric
 };
 static char attack_bonuses[][15] = {
 	{0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 5, 5, 5, 5},
@@ -82,17 +82,19 @@ static char caster_spells[][15][7] = {
 
 static int get_caster(classn v) {
 	switch(v) {
-	case Cleric: return 1;
-	case MagicUser: return 1;
+	case Cleric: case Elf:
+		return 1;
+	case MagicUser:
+		return 2;
 	default: return 0;
 	}
 }
 
 static int get_attacks(classn v) {
 	switch(v) {
-	case Fighter:
+	case Fighter: case Halfling: case Elf: case Dwarf:
 		return 2;
-	case Theif:
+	case Theif: case Cleric:
 		return 1;
 	default:
 		return 0;
@@ -101,17 +103,13 @@ static int get_attacks(classn v) {
 
 static int get_hit_die(classn v) {
 	switch(v) {
-	case Fighter:
+	case Fighter: case Dwarf:
 		return 8;
-	case Theif:
+	case Theif: case MagicUser:
 		return 4;
 	default:
 		return 6;
 	}
-}
-
-static int get_save_basic(classn v) {
-	return 0;
 }
 
 bool is_enemy(const void* object) {
@@ -359,16 +357,24 @@ static void start_equip(classn type) {
 		player->equip(LeatherArmor);
 		player->equip(ShortSword);
 		break;
+	case Cleric:
+		player->equip(LeatherArmor);
+		player->equip(Mace);
+		break;
+	case Theif:
+		player->equip(LeatherArmor);
+		player->equip(Dagger);
+		break;
 	default:
 		break;
 	}
 }
 
-static void add_hit_points(bool hero_class) {
+static void add_hit_points(bool reroll_low) {
 	auto hd = get_hit_die(player->type);
 	if(!player->mhp) {
 		auto rolled = 0;
-		if(hero_class && hd >= 4) {
+		if(reroll_low && hd >= 4) {
 			while(rolled < 3)
 				rolled = xrand(1, hd);
 		} else
@@ -382,15 +388,12 @@ static bool is_heroic(classn type) {
 	return type >= Fighter && type <= Elf;
 }
 
-void raise_level(int level) {
+void raise_level(int level, bool reroll_lowest) {
 	auto hit_percent = 100;
 	if(player->mhp)
 		hit_percent = player->hp * 100 / player->mhp;
 	while(player->basic.abilities[HD] < level) {
-		if(player->basic.abilities[HD] == 0 && is_heroic(player->type))
-			add_hit_points(true);
-		else
-			add_hit_points(false);
+		add_hit_points(reroll_lowest);
 		player->basic.abilities[HD]++;
 	}
 	update_player();
@@ -411,7 +414,7 @@ void create_creature(classn type, gendern gender) {
 	create_ability(type);
 	create_effect(type);
 	start_equip(type);
-	raise_level(1);
+	raise_level(1, true);
 	create_finish();
 }
 
