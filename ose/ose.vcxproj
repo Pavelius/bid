@@ -148,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
+    <ClInclude Include="portrait.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="item.h" />

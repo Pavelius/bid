@@ -58,7 +58,6 @@ sprite* metrics::h2;
 sprite* metrics::h3;
 sprite* metrics::small;
 sprite* metrics::icons;
-sprite* metrics::images;
 
 static bool	break_modal;
 static long break_result;

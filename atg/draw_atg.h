@@ -2,11 +2,18 @@
 
 #include "stringbuilder.h"
 
+struct sprite;
+
 enum messagen : unsigned char;
 
 typedef bool(*fnvisible)(const void* object);
 typedef void(*fnevent)();
-typedef int(*fnvalue)(const void* object);
+typedef int(*fngetnum)(const void* object);
+
+namespace metrics {
+extern sprite* avatars;
+extern sprite* images;
+}
 
 extern stringbuilder sb;
 extern void* current_avatar;
@@ -21,7 +28,7 @@ void fixmsg(messagen id);
 void game_run(); // Main game entry point
 void main_util(); // External function
 void next_scene(fnevent v);
-void paint_avatars(void** source, int count, fnstatus getname, void* current_player, fnvalue gethits);
+void paint_avatars(void** source, int count, fngetnum getavatar, void* current_player, fngetnum gethits);
 void paint_bar(const char* name, fnevent proc);
 void paint_button(const char* format, long param, bool choose = false, int padding = -1);
 void paint_hilite();

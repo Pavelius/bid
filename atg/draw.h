@@ -111,7 +111,6 @@ extern sprite* h1;
 extern sprite* h2;
 extern sprite* h3;
 extern sprite* icons;
-extern sprite* images;
 extern int border, padding;
 }
 
@@ -239,6 +238,7 @@ void lineup();
 void linet(int x, int y);
 void paint_active_color(fnevent proc);
 void paint_border_color(fnevent proc);
+void paint_picture(int id);
 void pixel(int x, int y);
 void pixel(int x, int y, unsigned char alpha);
 void rectb(); // Draw rectangle border
@@ -264,7 +264,6 @@ void textfs(const char* string);
 
 unsigned char* ptr(int x, int y);
 const char* skiptr(const char* string);
-const sprite* gres(const char* name, const char* folder = 0, point size = {}, int ox = 0, int oy = 0);
 
 inline rect	getrect() { return {caret.x, caret.y, caret.x + width, caret.y + height}; }
 inline bool	ishilite() { return ishilite({caret.x, caret.y, caret.x + width, caret.y + height}); }

@@ -18,5 +18,6 @@
     <ClInclude Include="message.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="variant.h" />
+    <ClInclude Include="portrait.h" />
   </ItemGroup>
 </Project>

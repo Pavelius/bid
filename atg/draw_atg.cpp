@@ -20,6 +20,9 @@ fnevent atg_menu;
 void* current_avatar;
 long current_avatar_post;
 
+sprite* metrics::avatars;
+sprite* metrics::images;
+
 static void atg_hotkey_text(const char* title) {
 	pushfore push;
 	fore = fore.mix(colors::form, 192);
@@ -274,10 +277,10 @@ static void change_avatar() {
 		breakmodal(current_avatar_post);
 }
 
-static void paint_avatar(const sprite* ps, const void* player, unsigned key, bool mark_player, int hit_percent) {
+static void paint_avatar(const sprite* ps, int id, const void* player, unsigned key, bool mark_player, int hit_percent) {
 #ifndef NOART
 	if(ps)
-		image(ps, 0, 0);
+		image(ps, id, 0);
 #endif // NOART
 	if(hit_percent != 100) {
 		pushrect push;
@@ -309,8 +312,18 @@ static void paint_avatar(const sprite* ps, const void* player, unsigned key, boo
 	fire(change_avatar, (long)player, 0, &current_avatar);
 }
 
-void paint_avatars(void** source, int count, fnstatus getavatar, void* current_player, fnvalue gethits) {
-	char temp[260]; stringbuilder sb(temp);
+void paint_picture(int id) {
+	auto ps = metrics::images;
+	if(!ps)
+		return;
+	width = ps->get(id).sx;
+	height = ps->get(id).sy;
+	if(!clipping) // Perfomance optimiation
+		return;
+	image(ps, id, ImageNoOffset);
+}
+
+void paint_avatars(void** source, int count, fngetnum getavatar, void* current_player, fngetnum gethits) {
 	if(!current_avatar || (find_avatars(source, count, current_avatar) == -1))
 		current_avatar = source[0];
 	pushrect push;
@@ -320,10 +333,7 @@ void paint_avatars(void** source, int count, fnstatus getavatar, void* current_p
 		auto p = source[i];
 		if(!p)
 			continue;
-		sb.clear(); getavatar(p, sb);
-		if(temp[0] == 0)
-			continue;
-		paint_avatar(gres(temp, "avatars"), p, F1 + i, p == current_player, gethits(p));
+		paint_avatar(metrics::avatars, getavatar(p), p, F1 + i, p == current_player, gethits(p));
 		caret.x += width + 1;
 	}
 	push.caret.y += height + 1 + metrics::padding;
@@ -420,6 +430,7 @@ static int atg_initialize() {
 	metrics::small = (sprite*)loadb("fonts/small.pma");
 	metrics::icons = (sprite*)loadb("fonts/icons.pma");
 	metrics::images = (sprite*)loadb("fonts/images.pma");
+	metrics::avatars = (sprite*)loadb("fonts/avatars.pma");
 	font = metrics::font;
 	fore = colors::text;
 	fore_stroke = colors::border;

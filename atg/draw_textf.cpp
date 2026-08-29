@@ -86,17 +86,6 @@ static const char* skip_line(const char* p) {
 	return skipcr(p);
 }
 
-static void paint_image(int id) {
-	auto ps = metrics::images;
-	if(!ps)
-		return;
-	width = ps->get(id).sx;
-	height = ps->get(id).sy;
-	if(!clipping) // Perfomance optimiation
-		return;
-	image(ps, id, ImageNoOffset);
-}
-
 static bool match(const char** string, const char* name) {
 	int n = zlen(name);
 	if(memcmp(*string, name, n) != 0)
@@ -390,7 +379,7 @@ static const char* parse_widget_command(const char* p) {
 		} else if(equaln(p, "image")) {
 			sb.clear();
 			auto id = getparam(p);
-			paint_image(id);
+			paint_picture(id);
 		} else if(equaln(p, "text")) {
 			sb.clear();
 			p = read_lf(p, sb);

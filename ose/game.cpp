@@ -253,14 +253,9 @@ static void paint_value(const item& e) {
 	}
 }
 
-static const char* get_avatar(classn type) {
-	return "hg";
-}
-
-static void get_avatar(const void* object, stringbuilder& sb) {
+static int get_avatar(const void* object) {
 	auto p = (creature*)object;
-	sb.add(get_avatar(p->type));
-	sb.add(p->is(Female) ? "f" : "m");
+	return 0;
 }
 
 static int get_hits(const void* object) {
