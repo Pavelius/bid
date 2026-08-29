@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="area.cpp" />
+    <ClCompile Include="creature.cpp" />
+    <ClCompile Include="game.cpp" />
+    <ClCompile Include="information.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="locale_ru.cpp" />
+    <ClCompile Include="refid.cpp" />
+    <ClCompile Include="spell.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="area.h" />
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="message.h" />
+    <ClInclude Include="refid.h" />
+    <ClInclude Include="spell.h" />
+    <ClInclude Include="variant_no_use.h" />
+  </ItemGroup>
+</Project>
