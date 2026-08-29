@@ -45,3 +45,11 @@ void create_area(arean id) {
 	last_area->type = id;
 	last_area->timestamp = game.get(Turns);
 }
+
+int get_movement_modifier(arean type) {
+	switch(type) {
+	case Mountains: case Jungle: case Swamps: return 50;
+	case Sands: case Wastes: case Hills: return 67;
+	default: return 100;
+	}
+}

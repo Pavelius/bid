@@ -8,7 +8,7 @@ enum areafn : unsigned char {
 };
 enum arean : unsigned char {
 	NoArea,
-	Plains, Sands, Wastes, Hills, Mountains, Forest,
+	Plains, Sands, Wastes, Swamps, Hills, Mountains, Jungle, Forest,
 	Cave, Dungeon, Ruins,
 	Garden, Temple, Inn, Tavern, Palace,
 	Hamlet, Village, SmallTown, LargeTown,
@@ -35,5 +35,7 @@ extern area* last_area;
 extern area* next_area;
 
 extern int move_distance;
+
+int get_movement_modifier(arean type);
 
 void create_area(arean id);

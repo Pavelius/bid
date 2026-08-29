@@ -13,6 +13,8 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
+const int yards_in_miles = 1000;
+
 gamei game;
 int last_number;
 
@@ -206,7 +208,9 @@ static void camp_move() {
 }
 
 static void check_movement() {
-	auto value = party_average(Movement) * 10 / 5;
+	auto value = yards_in_miles * (party_average(Movement) * 10 / 5);
+	auto modifier = get_movement_modifier(last_area->type);
+	value = value * modifier / 100;
 	move_distance -= value;
 }
 
@@ -226,7 +230,7 @@ static void adventure_move() {
 		make_party_move();
 		camp_move();
 		for_each_party(consume_food);
-		move_distance -= 30;
+		check_movement();
 		if(move_distance <= 0) {
 			break;
 		} else {
@@ -235,6 +239,11 @@ static void adventure_move() {
 			sb.addn(getname(AdventureNextDay));
 		}
 	}
+}
+
+static void adventure_move(int miles) {
+	move_distance += miles * yards_in_miles;
+	adventure_move();
 }
 
 static void combat_options() {
@@ -334,8 +343,7 @@ static void test_game() {
 	raise_level(3);
 	join_party();
 	select_creatures();
-	move_distance = 100;
-	adventure_move();
+	adventure_move(50);
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);

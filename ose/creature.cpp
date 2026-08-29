@@ -140,17 +140,6 @@ static void add_value(abilityn id, int v) {
 	player->abilities[id] += v;
 }
 
-static void create_effect(classn v) {
-	switch(v) {
-	case Fighter:
-		add_base(TendingWounds, 15);
-		add_base(GearRepairing, 20);
-		break;
-	default:
-		break;
-	}
-}
-
 static void apply_wear(itemn v) {
 	switch(v) {
 	case LeatherArmor: add_value(AC, 2); break;
@@ -405,7 +394,6 @@ void create_creature(classn type, gendern gender) {
 	player->portrait = random_portrait(type, gender);
 //	player->setname();
 	create_ability(type);
-	create_effect(type);
 	start_equip(type);
 	raise_level(1, true);
 	create_finish();
@@ -432,7 +420,6 @@ void create_monster(classn type) {
 	player->type = type;
 	// player->gender = Male;
 	create_average_ability();
-	create_effect(type);
 	start_equip(type);
 	raise_level(get_level(type));
 	player->set(Local);

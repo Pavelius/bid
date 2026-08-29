@@ -18,9 +18,8 @@ enum abilityn : unsigned char {
 	MeleeDamage, MissileDamage, ThrownDamage,
 	AC, Attacks, Initiative, Loyalty, Morale, Movement, Hits,
 	SaveDeath, SaveWand, SaveParalysis, SaveBreath, SaveSpells,
-	Climb, FindTraps, HearNoises, MoveSilently, OpenLocks, Tracking,
-	Pathfinding, GearRepairing, TendingWounds, Hunting, Foraging, TreatIllness, GearCrafting, Lore,
-	DoubleAttackPerDay,
+	Climb, FindTraps, HearNoises, MoveSilently, OpenLocks, Tracking, Lore,
+	LastAbility = Lore,
 };
 enum alignmentn : unsigned char {
 	Lawful, Neutrality, Chaotic
@@ -47,7 +46,7 @@ struct npc {
 	bool is(gendern v) const { return gender == v; }
 };
 struct statable {
-	char		abilities[DoubleAttackPerDay + 1];
+	char		abilities[LastAbility + 1];
 };
 struct creature : npc, statable, wearable, spellable {
 	statable	basic;
