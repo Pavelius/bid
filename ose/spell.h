@@ -1,7 +1,7 @@
 #pragma once
 
 #include "flagable.h"
-#include "refid.h"
+#include "variant.h"
 
 struct collection;
 
@@ -22,7 +22,7 @@ struct spellable {
 typedef flagable<1 + LastSpell / 32, unsigned> spellf;
 
 struct enchanti {
-	refid		object;
+	variant		object;
 	spelln		spell;
 	unsigned	stop;
 	void clear();
@@ -36,8 +36,8 @@ int get_arcane_level(spelln v);
 int get_level(spelln v);
 int get_level(spelln v, domainn type);
 
-void add_enchant(refid object, unsigned stop, spelln spell);
+void add_enchant(variant object, unsigned stop, spelln spell);
 void add_spells(domainn spells, int level);
 void fixlist(const spellable& e);
-void remove_enchant(refid object);
-void remove_enchant(refid object, spelln spell);
+void remove_enchant(variant object);
+void remove_enchant(variant object, spelln spell);

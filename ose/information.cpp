@@ -7,7 +7,6 @@
 #include "math.h"
 #include "stringbuilder.h"
 #include "stringvar.h"
-#include "variant_no_use.h"
 
 static void addv(stringbuilder& sb, const dice& v) {
 	sb.add("%1id%2i", v.c, v.d);
@@ -49,7 +48,7 @@ static void print_last_number(stringbuilder& sb) {
 	sb.add("%1i", last_number);
 }
 
-bool apply_gender(const char* identifier, stringbuilder& sb, gendern gender) {
+static bool apply_gender(const char* identifier, stringbuilder& sb, gendern gender) {
 	struct gender_change_string {
 		const char*	female;
 		const char*	male;

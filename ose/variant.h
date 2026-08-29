@@ -14,6 +14,7 @@ enum spelln : unsigned char;
 enum variantn : unsigned char {
 	Variant,
 	Ability, Action, Alignment, Area, Class, Gender, Item, Material, Spell,
+	CreatureRef, AreaRef,
 };
 union variant {
 	struct {
@@ -31,6 +32,8 @@ union variant {
 	constexpr variant(materialn v) : value(v), type(Material) {}
 	constexpr variant(gendern v) : value(v), type(Gender) {}
 	constexpr variant(spelln v) : value(v), type(Spell) {}
+	constexpr variant(variantn t, unsigned char v) : value(v), type(t) {}
+	template<typename T> variant(const T* v);
 	constexpr bool operator==(const variant& v) { return v.u == u; }
 	constexpr bool operator!=(const variant& v) { return v.u != u; }
 	constexpr void operator++() { value++; }

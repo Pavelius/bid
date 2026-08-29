@@ -37,13 +37,13 @@ bool is_range(itemn v);
 bool is_twohanded(itemn v);
 
 struct item {
-	itemn			type;
+	itemn type;
 	union {
 		unsigned char count;
 		struct {
 			unsigned char power : 3; // 8 separate powers
 			unsigned char identified : 1;
-			unsigned char lost : 1;
+			unsigned char lost : 1; // Thrown in combat. Until end of scene item is unavailable.
 			unsigned char broken : 2; // 1-2 damaged, 3 is nearly to destroy
 		};
 	};
@@ -67,7 +67,6 @@ struct item {
 	bool melee() const { return is_melee(type); }
 	bool missile() const { return is_range(type) && get_ammo(type); }
 	bool throwing() const { return is_range(type) && !get_ammo(type); }
-	bool weapon() const;
 };
 extern item* last_item;
 

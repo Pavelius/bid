@@ -11,7 +11,7 @@
 #include "pushvalue.h"
 #include "rand.h"
 #include "stringbuilder.h"
-#include "variant_no_use.h"
+#include "variant.h"
 
 gamei game;
 int last_number;
@@ -20,6 +20,9 @@ reactionn last_reaction;
 static variant last_result;
 
 extern collectiona creatures;
+
+template<> variant::variant(const area* p) : variant(AreaRef, p - bsdata<area>::elements) {}
+template<> variant::variant(const creature* p) : variant(CreatureRef, p - bsdata<creature>::elements) {}
 
 void pause() {
 	if(!sb)

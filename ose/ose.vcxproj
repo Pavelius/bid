@@ -143,7 +143,6 @@
     <ClCompile Include="information.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="locale_ru.cpp" />
-    <ClCompile Include="refid.cpp" />
     <ClCompile Include="spell.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +151,8 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="message.h" />
-    <ClInclude Include="refid.h" />
     <ClInclude Include="spell.h" />
-    <ClInclude Include="variant_no_use.h" />
+    <ClInclude Include="variant.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

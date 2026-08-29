@@ -46,8 +46,8 @@ void add_spells(domainn spells, int level) {
 	for(auto v : get_spells(spells)) {
 		if(get_level(v) != level)
 			continue;
-		if(get_reverse(v))
-			continue;
+		//if(get_reverse(v))
+		//	continue;
 		records.add(v);
 	}
 }

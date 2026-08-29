@@ -289,7 +289,7 @@ static void update_wear() {
 	}
 }
 
-static void update_enchant(refid object) {
+static void update_enchant(variant object) {
 	if(!object)
 		return;
 	for(auto& e : bsdata<enchanti>()) {
