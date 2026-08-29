@@ -13,8 +13,10 @@ enum wearn : unsigned char {
 	Body, Hands, Offhand, Ammunition,
 };
 enum itemn : unsigned char {
-	Fist, Claws,
-	Dagger, HandAxe, Javelin, Spear, Staff, Mace,
+	Fist,
+	Claws1d4, Claws1d6, Claws1d8,
+	Bite1d6, Bite1d8, Bite1d12, Bite2d6, Bite2d8,
+	Dagger, HandAxe, Javelin, Spear, Staff, BattleAxe, Mace,
 	ShortSword, Sword, TwohandedSword,
 	LongBow, ShortBow, Crossbow,
 	LeatherArmor, ChainArmor, PlateArmor, Shield,
@@ -57,10 +59,10 @@ struct item {
 	int cost() const { return get_cost(type) * getcount(); }
 	int weight() const { return get_weight(type) * getcount(); }
 	void act(messagen id) const;
+	bool broke();
+	bool brokened() const { return broken > 0; }
 	void clear() { type = (itemn)0; count = 0; }
 	bool countable() const { return type >= Ration; }
-	bool damage();
-	bool damaged() const { return broken > 0; }
 	bool deadly() const;
 	bool is(damagen v) const { return have(type, v); }
 	void join(item& it);

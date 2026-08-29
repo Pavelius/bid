@@ -1,15 +1,11 @@
 #include "creature.h"
+#include "dice.h"
 #include "draw_atg.h"
 #include "item.h"
 #include "math.h"
 #include "rand.h"
 #include "slice.h"
 #include "stringbuilder.h"
-
-#pragma section("items$m", read)
-
-_declspec(allocate("items$m")) const char* str_s1 = "Test1";
-_declspec(allocate("items$m")) const char* str_s2 = "Test2";
 
 const int cp = 1;
 const int bp = 5;
@@ -25,6 +21,30 @@ static int get_count(int value) {
 	case 6: return xrand(1, 6);
 	case 18: return xrand(3, 18);
 	default: return 1;
+	}
+}
+
+dice get_damage(itemn v) {
+	switch(v) {
+	case Claws1d4: case Dagger: case Javelin: case Staff:
+		return {1, 4};
+	case Bite1d6: case Claws1d6:
+	case HandAxe: case Mace: case ShortSword: case Spear:
+	case Crossbow: case LongBow: case ShortBow:
+		return {1, 6};
+	case Bite1d8: case Claws1d8:
+	case BattleAxe: case Sword:
+		return {1, 8};
+	case TwohandedSword:
+		return {1, 10};
+	case Bite1d12:
+		return {1, 12};
+	case Bite2d6:
+		return {2, 6};
+	case Bite2d8:
+		return {2, 8};
+	default:
+		return {1, 2};
 	}
 }
 
@@ -148,7 +168,7 @@ bool item::deadly() const {
 	}
 }
 
-bool item::damage() {
+bool item::broke() {
 	if(broken >= 3) {
 		// TODO: break message
 		clear();

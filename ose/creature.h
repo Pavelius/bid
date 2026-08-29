@@ -106,6 +106,7 @@ bool is_wounded(const void* object);
 int party_average(abilityn v);
 int skill_bonus(actionn v, classn type);
 
+void add_monster(classn type);
 void create_creature(classn type, gendern gender);
 void create_monster(classn type);
 void create_monsters(classn type);

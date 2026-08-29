@@ -500,9 +500,9 @@ void create_monster(classn type) {
 	player = bsdata<creature>::addz();
 	player->clear();
 	player->type = type;
-	// player->gender = Male;
+	player->gender = Male;
 	create_average_ability();
-	start_equip(type);
+	add_monster(type);
 	raise_level(get_level(type));
 	player->set(Local);
 	create_finish();
@@ -560,9 +560,11 @@ static int critical_damage(const item& weapon, const dice& damage) {
 	return hits;
 }
 
+dice get_damage(itemn v);
+
 dice get_attack(creature* attacker, abilityn id, const item& weapon, int bonus) {
-	dice result = {1, 2};
-	return result;
+	auto r = get_damage(weapon.type);
+	return r;
 }
 
 static bool check_attack(creature* attacker, creature* enemy, int attack_bonus, int attack_sharpness) {
@@ -588,7 +590,7 @@ static bool check_attack(creature* attacker, creature* enemy, int attack_bonus, 
 static bool weapon_damage(item& weapon) {
 	auto chance_break = 20;
 	if(d100() < chance_break) {
-		if(weapon.damage())
+		if(weapon.broke())
 			weapon.act(WeaponBroken);
 		else
 			weapon.act(WeaponDamage);
