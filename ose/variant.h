@@ -37,7 +37,7 @@ union variant {
 	constexpr bool operator==(const variant& v) { return v.u == u; }
 	constexpr bool operator!=(const variant& v) { return v.u != u; }
 	constexpr void operator++() { value++; }
-	constexpr explicit operator bool() { return u!=0; }
+	constexpr explicit operator bool() { return u != 0; }
 	constexpr operator int() { return u; }
 	void clear() { u = 0; }
 };

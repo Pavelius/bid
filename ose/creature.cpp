@@ -161,12 +161,9 @@ static void apply_wear(itemn v) {
 
 abilityn get_primary(classn v) {
 	switch(v) {
-	case Cleric:
-		return Wisdom;
-	case MagicUser:
-		return Intelligence;
-	default:
-		return Strenght;
+	case Cleric: return Wisdom;
+	case MagicUser: return Intelligence;
+	default: return Strenght;
 	}
 }
 
@@ -384,10 +381,6 @@ static void add_hit_points(bool reroll_low) {
 		player->basic.abilities[Hits] += xrand(1, hd);
 }
 
-static bool is_heroic(classn type) {
-	return type >= Fighter && type <= Elf;
-}
-
 void raise_level(int level, bool reroll_lowest) {
 	auto hit_percent = 100;
 	if(player->mhp)
@@ -584,37 +577,79 @@ static bool have_hunting_weapons() {
 		|| player->is(Javelin);
 }
 
-bool use_skill(abilityn id, bool run) {
-	if(!player->basic.abilities[id])
-		return false;
-	auto bonus = 0;
+int skill_bonus(actionn v, classn type) {
+	auto r = 0;
+	switch(v) {
+	case MakeForaging:
+		switch(type) {
+		case Elf: r += 3; break;
+		case Cleric: r += 2; break;
+		case MagicUser: r += 1; break;
+		default: break;
+		}
+		break;
+	case MakeGearRepairing:
+		switch(type) {
+		case Theif: case Fighter: r += 1; break;
+		case Dwarf: r += 3; break;
+		default: break;
+		}
+		break;
+	case MakeTreatIllness:
+		r -= 3;
+		switch(type) {
+		case Cleric: r += 3; break;
+		case Elf: r += 2; break;
+		default: break;
+		}
+		break;
+	case MakeTendingWounds:
+		switch(type) {
+		case Cleric: r += 3; break;
+		case Fighter: r += 1; break;
+		default: break;
+		}
+		break;
+	case MakeHunting:
+		switch(type) {
+		case Elf: r += 3; break;
+		case Fighter: r += 1; break;
+		default: break;
+		}
+		break;
+	default: break;
+	}
+	return r;
+}
+
+bool use_skill(actionn id, int bonus, bool run) {
 	auto target_count = 1;
 	switch(id) {
-	case TendingWounds:
+	case MakeTendingWounds:
 		targets = creatures;
 		targets.match(is_enemy, false);
 		targets.match(is_wounded, true);
 		if(!targets)
 			return false;
 		break;
-	case GearRepairing:
+	case MakeGearRepairing:
 		select_party_items();
 		targets.match(is_damaged, true);
 		if(!targets)
 			return false;
 		break;
-	case TreatIllness:
+	case MakeTreatIllness:
 		targets = creatures;
 		targets.match(is_enemy, false);
 		targets.match(is_diseased, true);
 		if(!targets)
 			return false;
 		break;
-	case Foraging:
+	case MakeForaging:
 		if(!last_area->outdoor())
 			return false;
 		break;
-	case Hunting:
+	case MakeHunting:
 		if(player->isbadlyhurt())
 			return false; // RULE: You can't hunting when you are badly hurt
 		if(!have_hunting_weapons())
@@ -628,32 +663,32 @@ bool use_skill(abilityn id, bool run) {
 		targets.top(target_count);
 	}
 	if(run) {
-		if(!player->roll(id, bonus))
+		if(!player->roll(Wisdom, bonus))
 			return false;
 		switch(id) {
-		case TreatIllness:
+		case MakeTreatIllness:
 			for(auto p : targets.records<creature>()) {
 				p->disease--;
 				p->act(PlayerTreatedIllness);
 			}
 			break;
-		case TendingWounds:
+		case MakeTendingWounds:
 			for(auto p : targets.records<creature>()) {
 				p->hp++;
 				p->act(PlayerTreatedIllness);
 			}
 			break;
-		case GearRepairing:
+		case MakeGearRepairing:
 			for(auto p : targets.records<item>()) {
 				p->broken--;
 				p->act(PlayerRepairGear);
 			}
 			break;
-		case Foraging:
+		case MakeForaging:
 			player->add(maprnd(forage_result));
 			player->act(PlayerForageItem);
 			break;
-		case Hunting:
+		case MakeHunting:
 			player->add(some(RawMeat));
 			player->act(PlayerHuntingGame);
 			break;

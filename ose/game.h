@@ -9,6 +9,7 @@ enum commandn : unsigned char {
 enum actionn : unsigned char {
 	NoAction,
 	MakeCharge, MakeMeleeAttack, MakeMissileAttack, MakeThrownAttack, MakeRunAway,
+	MakeHunting, MakeTreatIllness, MakeTendingWounds, MakeGearRepairing, MakeForaging,
 	RestParty, MemorizeSpells, ChangeSpellsByLevel, ChangeSpellsByLevelAllowed,
 	MakeCamp,
 };

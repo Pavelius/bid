@@ -66,7 +66,7 @@ void make_player_move(fnevent options_proc) {
 		an.clear();
 		options_proc();
 		last_result.u = (short unsigned)make_player_move();
-		if(last_result.u==ChangePlayer) {
+		if(last_result.u == ChangePlayer) {
 			player = (creature*)current_avatar;
 			continue;
 		} else
@@ -95,39 +95,60 @@ static void addan(actionn v) {
 	an.add(variant(v), getname(v));
 }
 
-static void apply_effect(actionn v) {
+static bool apply_effect(actionn v, bool run) {
 	switch(v) {
 	case MakeCharge:
-		player->act(PlayerCharged);
-		player->set(Charged);
-		player->set(MeleeFight);
-		opponent->set(MeleeFight);
-		make_attack(player, opponent, MeleeAttack, player->wears[Hands], 2);
+		if(player->is(MeleeFight))
+			return false;
+		if(run) {
+			player->act(PlayerCharged);
+			player->set(Charged);
+			player->set(MeleeFight);
+			opponent->set(MeleeFight);
+			make_attack(player, opponent, MeleeAttack, player->wears[Hands], 2);
+		}
 		break;
 	case MakeMeleeAttack:
-		make_attack(player, opponent, MeleeAttack, player->wears[Hands], 0);
+		if(run)
+			make_attack(player, opponent, MeleeAttack, player->wears[Hands], 0);
 		break;
 	case MakeMissileAttack:
-		make_attack(player, opponent, MissileAttack, player->wears[Hands], 0);
-		player->useammo();
+		if(!player->wears[Hands].missile())
+			return false;
+		if(run) {
+			make_attack(player, opponent, MissileAttack, player->wears[Hands], 0);
+			player->useammo();
+		}
 		break;
 	case MakeThrownAttack:
-		make_attack(player, opponent, ThrownAttack, player->wears[Hands], 0);
-		player->useammo();
+		if(!player->wears[Hands].throwing())
+			return false;
+		if(run) {
+			make_attack(player, opponent, ThrownAttack, player->wears[Hands], 0);
+			player->useammo();
+		}
 		break;
 	case MemorizeSpells:
-		make_prepare_spells(PlayerMemorizeSpells);
+		if(run) {
+			make_prepare_spells(PlayerMemorizeSpells);
+		}
 		break;
 	default:
-		break;
+		return false;
 	}
+	return true;
 }
 
 static void apply_result() {
 	switch(last_result.type) {
-	case Action: apply_effect((actionn)last_result.value); break;
+	case Action: apply_effect((actionn)last_result.value, true); break;
 	default: break;
 	}
+}
+
+static void use_skill(actionn id) {
+	auto bonus = skill_bonus(id, player->type) - 2;
+	use_skill(id, bonus, true);
 }
 
 static void camp_actions() {
@@ -136,11 +157,11 @@ static void camp_actions() {
 		if(!p)
 			continue;
 		player = p;
-		use_skill(GearRepairing, true);
-		use_skill(TendingWounds, true);
-		use_skill(TreatIllness, true);
-		use_skill(Hunting, true);
-		use_skill(Foraging, true);
+		use_skill(MakeGearRepairing);
+		use_skill(MakeTendingWounds);
+		use_skill(MakeTreatIllness);
+		use_skill(MakeHunting);
+		use_skill(MakeForaging);
 	}
 }
 
@@ -175,7 +196,7 @@ static void camp_move() {
 	camp_actions();
 	while(true) {
 		make_player_move(camp_options);
-		if(!last_result.u || last_result==variant(RestParty))
+		if(!last_result || last_result == variant(RestParty))
 			return;
 		apply_result();
 	}

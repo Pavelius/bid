@@ -100,6 +100,7 @@ bool is_enemy(const void* object);
 bool is_wounded(const void* object);
 
 int party_average(abilityn v);
+int skill_bonus(actionn v, classn type);
 
 void create_creature(classn type, gendern gender);
 void create_monster(classn type);
@@ -109,4 +110,4 @@ void join_party();
 bool make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus);
 void make_prepare_spells(messagen id);
 void raise_level(int level, bool reroll_lowest = false);
-bool use_skill(abilityn id, bool run);
+bool use_skill(actionn id, int bonus, bool run);
