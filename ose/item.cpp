@@ -1,3 +1,4 @@
+#include "bsdata.h"
 #include "creature.h"
 #include "dice.h"
 #include "draw_atg.h"
@@ -12,6 +13,8 @@ const int bp = 5;
 const int sp = 10;
 const int gp = 100;
 
+BSDATAC(itemground, 4096)
+
 item* last_item;
 
 static int get_count(int value) {
@@ -22,6 +25,16 @@ static int get_count(int value) {
 	case 18: return xrand(3, 18);
 	default: return 1;
 	}
+}
+
+static itemground* find_item(groundn ground, short unsigned index) {
+	for(auto& e : bsdata<itemground>()) {
+		if(!e)
+			continue;
+		if(e.ground == ground && e.index == index)
+			return &e;
+	}
+	return 0;
 }
 
 dice get_damage(itemn v) {
@@ -215,6 +228,23 @@ void item::act(messagen id) const {
 	sb.addsep(' ');
 	sb.addv(getname(id), 0);
 	last_item = push;
+}
+
+void item::drop(groundn ground, short unsigned index) {
+	for(auto& e : bsdata<itemground>()) {
+		if(e.ground != ground || e.index != index)
+			continue;
+		e.join(*this);
+		if(!(*this))
+			return;
+	}
+	auto p = bsdata<itemground>::add();
+	p->type = type;
+	p->count = count;
+	p->ground = ground;
+	p->index = index;
+	clear();
+	last_item = p;
 }
 
 bool wearable::isusable(const item& it) const {

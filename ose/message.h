@@ -13,6 +13,7 @@ enum messagen : unsigned char {
 	PartyMakeCamp,
 	MakeCampInSafeCave, MakeCampInOpenLand,
 	AdventureNextDay, PlayerHearNoiseOnWatch,
+	SearchBodies, NothingValuableHere,
 	StateWounded,
 	PlayerThink, PlayerSay, PlayerCry,
 	SayWhoIsHere,

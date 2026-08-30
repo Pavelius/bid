@@ -9,8 +9,11 @@ enum damagen : unsigned char {
 	Fire, Cold, Acid,
 };
 enum wearn : unsigned char {
-	Backpack, Edible, LastWear = Backpack + 16,
-	Body, Hands, Offhand, Ammunition,
+	Backpack, Edible, LastWear = Backpack + 24,
+	Body, Hands, Offhand, LeftFinger, RightFinger, Head, Ammunition,
+};
+enum groundn : unsigned char {
+	CharacterOwner, AreaOwner,
 };
 enum itemn : unsigned char {
 	Fist,
@@ -26,6 +29,9 @@ enum itemn : unsigned char {
 	Garnet, Peridot, Aquamarine, Tourmaline, Topaz,
 	Opal, Tanzanite, Spinel, Alexandrite, ParaibaTourmaline,
 	Sapphire, Emerald, Ruby, Diamond, PinkDiamond,
+	CP, SP, EP, GP, PP,
+	LastNative = Bite2d8, LastItem = PP,
+	RandomMagicItem, RandomWeapon, RandomPotion,
 };
 
 int get_cost(itemn v);
@@ -64,6 +70,7 @@ struct item {
 	void clear() { type = (itemn)0; count = 0; }
 	bool countable() const { return type >= Ration; }
 	bool deadly() const;
+	void drop(groundn ground, short unsigned index);
 	bool is(damagen v) const { return have(type, v); }
 	void join(item& it);
 	bool melee() const { return is_melee(type); }
@@ -71,6 +78,11 @@ struct item {
 	bool throwing() const { return is_range(type) && !get_ammo(type); }
 };
 extern item* last_item;
+
+struct itemground : item {
+	groundn			ground;
+	short unsigned	index;
+};
 
 struct wearable {
 	item wears[Ammunition + 1];

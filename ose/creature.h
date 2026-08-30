@@ -76,19 +76,19 @@ struct creature : npc, statable, wearable, spellable {
 	bool is(gendern v) const { return npc::is(v); }
 	bool is(itemn v) const { return wearable::is(v); }
 	bool is(spelln v) const { return active.is(v); }
+	bool isbadlyhurt() const { return hp < mhp / 2; }
 	bool iscaster() const;
+	bool isdead() const { return hp <= 0; }
 	bool isenemy(const creature* p) const;
 	bool isknown(spelln v) const { return known.is(v); }
 	bool isminion() const;
 	bool isparty() const;
 	bool isready() const { return hp > 0; }
-	bool isbadlyhurt() const { return hp < mhp / 2; }
 	void kill();
 	void leave();
 	bool roll(abilityn v, int bonus = 0) const;
 	void set(featn v) { feats.set(v); }
 	void update();
-	bool wounded() const { return hp < mhp; }
 };
 extern creature* player;
 extern creature* opponent;

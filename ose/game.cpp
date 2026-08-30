@@ -11,6 +11,7 @@
 #include "pushvalue.h"
 #include "rand.h"
 #include "stringbuilder.h"
+#include "treasure.h"
 #include "variant.h"
 
 const int yards_in_miles = 1000;
@@ -26,14 +27,18 @@ extern collectiona creatures;
 template<> variant::variant(const area* p) : variant(AreaRef, p - bsdata<area>::elements) {}
 template<> variant::variant(const creature* p) : variant(CreatureRef, p - bsdata<creature>::elements) {}
 
-void pause() {
+void pause(const char* format) {
 	if(!sb)
 		return;
 	an.clear();
-	an.add(1, getname(Continue));
+	an.add(1, format);
 	an.choose(0, 0);
 	sb.clear();
 	an.clear();
+}
+
+void pause() {
+	pause(getname(Continue));
 }
 
 void make_reaction_roll(int bonus) {
@@ -93,8 +98,10 @@ static creature* find_creature(fnvisible proc, bool keep) {
 	return 0;
 }
 
-static creature* find_creature(featn v, bool keep) {
+static creature* find_creature(featn v, bool keep, bool alive) {
 	for(auto p : creatures.records<creature>()) {
+		if(alive && !p->isready())
+			continue;
 		if(p->is(v) == keep)
 			return p;
 	}
@@ -102,11 +109,15 @@ static creature* find_creature(featn v, bool keep) {
 }
 
 static creature* get_enemy() {
-	return find_creature(Enemy, !player->is(Enemy));
+	return find_creature(Enemy, !player->is(Enemy), true);
 }
 
 static bool enemy_present() {
-	return find_creature(Enemy, true) && find_creature(Enemy, false);
+	return find_creature(Enemy, true, true);
+}
+
+static bool party_present() {
+	return find_creature(Enemy, false, true);
 }
 
 static bool apply_effect(actionn v, bool run) {
@@ -123,6 +134,8 @@ static bool apply_effect(actionn v, bool run) {
 		}
 		break;
 	case MakeMeleeAttack:
+		if(!player->is(MeleeFight))
+			return false;
 		if(run)
 			make_attack(player, opponent, MeleeAttack, player->wears[Hands], 0);
 		break;
@@ -232,6 +245,15 @@ static void check_movement() {
 	move_distance -= value;
 }
 
+static void loot_enemies() {
+	pause(getname(SearchBodies));
+	fixmsg(NothingValuableHere);
+	pause();
+}
+
+static void combat_experience() {
+}
+
 static void combat_encounter() {
 	pushvalue push_player(player);
 	select_creatures();
@@ -257,7 +279,12 @@ static void combat_encounter() {
 				last_result.u = (unsigned short)an.random();
 			apply_result();
 		}
-		pause();
+		if(enemy_present())
+			pause();
+	}
+	if(party_present()) {
+		loot_enemies();
+		combat_experience();
 	}
 }
 
@@ -326,9 +353,13 @@ static void paint_value(const item& e) {
 
 static void paint_value(const creature* p) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.add(p->name());
-	if(p->wounded())
-		sb.adds("[~%1]", getname(StateWounded));
+	if(p->isdead())
+		sb.add("[~%1]", p->name());
+	else {
+		sb.add(p->name());
+		if(p->isbadlyhurt())
+			sb.adds("[~%1]", getname(StateWounded));
+	}
 	paint_button(temp, 0, false);
 	if(button_hilited && tips_text[0] == 0) {
 	}
@@ -381,7 +412,7 @@ static void page_combatants() {
 static void paint_main_menu() {
 	paint_bar(getname(PageCharacter), page_characters);
 	paint_bar(getname(PageItems), page_items);
-	if(creatures)
+	if(creatures && enemy_present())
 		paint_bar(getname(PageCombatants), page_combatants);
 }
 
@@ -389,8 +420,6 @@ static void test_game() {
 	create_area(Forest);
 	create_creature(Fighter, Male);
 	join_party();
-	player->set(Enemy);
-	opponent = player;
 	create_creature(Elf, Female);
 	join_party();
 	create_creature(Theif, Male);
@@ -399,6 +428,7 @@ static void test_game() {
 	raise_level(3);
 	join_party();
 	select_creatures();
+	treasure_generate("A");
 	adventure_move(50);
 }
 

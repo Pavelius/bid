@@ -4,7 +4,7 @@
 #include "slice.h"
 #include "stringbuilder.h"
 
-BSDATAC(area, 1024)
+BSDATAC(area, 256)
 
 area* last_area;
 area* next_area;
