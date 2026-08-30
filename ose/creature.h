@@ -80,7 +80,7 @@ struct creature : npc, statable, wearable, spellable {
 	bool isenemy(const creature* p) const;
 	bool isknown(spelln v) const { return known.is(v); }
 	bool isminion() const;
-	bool isparty() const { return feats.is(Ally); }
+	bool isparty() const;
 	bool isready() const { return hp > 0; }
 	bool isbadlyhurt() const { return hp < mhp / 2; }
 	void kill();

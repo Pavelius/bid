@@ -495,7 +495,7 @@ void stringbuilder::addsep(char separator) {
 			return;
 		break;
 	}
-	*p++ = separator;
+	add(separator);
 }
 
 void stringbuilder::addx(char separator, const char* format, const char* format_param) {

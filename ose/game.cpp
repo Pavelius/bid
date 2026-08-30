@@ -93,8 +93,20 @@ static creature* find_creature(fnvisible proc, bool keep) {
 	return 0;
 }
 
-static void addan(actionn v) {
-	an.add(variant(v), getname(v));
+static creature* find_creature(featn v, bool keep) {
+	for(auto p : creatures.records<creature>()) {
+		if(p->is(v) == keep)
+			return p;
+	}
+	return 0;
+}
+
+static creature* get_enemy() {
+	return find_creature(Enemy, !player->is(Enemy));
+}
+
+static bool enemy_present() {
+	return find_creature(Enemy, true) && find_creature(Enemy, false);
 }
 
 static bool apply_effect(actionn v, bool run) {
@@ -115,9 +127,7 @@ static bool apply_effect(actionn v, bool run) {
 			make_attack(player, opponent, MeleeAttack, player->wears[Hands], 0);
 		break;
 	case MakeMissileAttack:
-		if(player->is(MeleeFight))
-			return false;
-		if(!player->wears[Hands].missile())
+		if(player->is(MeleeFight) || !player->wears[Hands].missile() || !player->wears[Ammunition])
 			return false;
 		if(run) {
 			make_attack(player, opponent, MissileAttack, player->wears[Hands], 0);
@@ -125,9 +135,7 @@ static bool apply_effect(actionn v, bool run) {
 		}
 		break;
 	case MakeThrownAttack:
-		if(player->is(MeleeFight))
-			return false;
-		if(!player->wears[Hands].throwing() || player->wears[Hands].lost)
+		if(player->is(MeleeFight) || !player->wears[Hands].throwing() || player->wears[Hands].lost)
 			return false;
 		if(run) {
 			make_attack(player, opponent, ThrownAttack, player->wears[Hands], 0);
@@ -135,9 +143,10 @@ static bool apply_effect(actionn v, bool run) {
 		}
 		break;
 	case MemorizeSpells:
-		if(run) {
+		if(run)
 			make_prepare_spells(PlayerMemorizeSpells);
-		}
+		break;
+	case RestParty:
 		break;
 	default:
 		return false;
@@ -145,29 +154,16 @@ static bool apply_effect(actionn v, bool run) {
 	return true;
 }
 
+static void addan(actionn n) {
+	if(apply_effect(n, false))
+		an.add(variant(n), getname(n));
+}
+
 static void apply_result() {
 	switch(last_result.type) {
 	case Action: apply_effect((actionn)last_result.value, true); break;
 	default: break;
 	}
-}
-
-static void combat_options() {
-	opponent = find_creature(is_enemy, true);
-	if(opponent) {
-		if(player->is(MeleeFight))
-			addan(MakeMeleeAttack);
-		else {
-			addan(MakeCharge);
-			if(player->wears[Hands].throwing() && !player->wears[Hands].lost)
-				addan(MakeThrownAttack);
-			addan(MakeMissileAttack);
-		}
-		addan(MakeRunAway);
-		make_player_move();
-		apply_result();
-	} else
-		pause();
 }
 
 static void use_skill(actionn id) {
@@ -236,15 +232,32 @@ static void check_movement() {
 	move_distance -= value;
 }
 
-static bool is_enemy_present() {
-	return find_creature(is_enemy, true) != 0;
-}
-
 static void combat_encounter() {
+	pushvalue push_player(player);
 	select_creatures();
 	initiative_roll();
-	while(is_enemy_present()) {
-		combat_options();
+	while(enemy_present()) {
+		for(auto p : creatures.records<creature>()) {
+			if(!p->isready())
+				continue;
+			player = p;
+			opponent = get_enemy();
+			if(!opponent)
+				continue;
+			sb.addsep('\n');
+			an.clear();
+			addan(MakeCharge);
+			addan(MakeMeleeAttack);
+			addan(MakeThrownAttack);
+			addan(MakeMissileAttack);
+			addan(MakeRunAway);
+			if(player->isparty())
+				last_result.u = (unsigned short)make_player_move();
+			else
+				last_result.u = (unsigned short)an.random();
+			apply_result();
+		}
+		pause();
 	}
 }
 

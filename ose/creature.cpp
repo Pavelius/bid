@@ -145,6 +145,14 @@ static char caster_spells[][15][7] = {
 	{0, 4, 4, 4, 4, 3, 3}}, // 14
 };
 
+bool creature::isparty() const {
+	for(auto p : party) {
+		if(p == this)
+			return true;
+	}
+	return false;
+}
+
 static int get_caster(classn v) {
 	switch(v) {
 	case Cleric: case Elf:
@@ -474,6 +482,7 @@ void create_creature(classn type, gendern gender) {
 	player->type = type;
 	player->gender = gender;
 	player->portrait = random_portrait(type, gender);
+	player->customname = (namen)((1 + rand() % 50) * 2 + ((gender == Female) ? 1 : 0));
 	//	player->setname();
 	create_ability(type);
 	start_equip(type);
