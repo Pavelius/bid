@@ -29,8 +29,11 @@ enum itemn : unsigned char {
 	Garnet, Peridot, Aquamarine, Tourmaline, Topaz,
 	Opal, Tanzanite, Spinel, Alexandrite, ParaibaTourmaline,
 	Sapphire, Emerald, Ruby, Diamond, PinkDiamond,
+	RingSignet, SilverBrooch, StrangeIdol,
 	CP, SP, EP, GP, PP,
 	LastNative = Bite2d8, LastItem = PP,
+	RandomGem, RandomOrnamentalGem, RandomSemiPreciousGem, RandomPreciousGem, RandomGoodGem, RandomExpensiveGem,
+	RandomJewelry,
 	RandomMagicItem, RandomWeapon, RandomPotion,
 };
 
@@ -58,7 +61,7 @@ struct item {
 	item() : type(), count(0) {}
 	item(itemn type) : type(type), count(0) {}
 	item(itemn type, unsigned char count) : type(type), count(count) { }
-	explicit operator bool() const { return type > Fist; }
+	explicit operator bool() const { return type != (itemn)0; }
 	const char* name() const;
 	creature* owner() const;
 	int getcount() const { return countable() ? count : 1; }
@@ -96,6 +99,8 @@ struct wearable {
 	bool iswear(const void* object) const { return object >= wears && object < wears + sizeof(wears) / sizeof(wears[0]); }
 	void useammo();
 };
+
+itemn random(itemn v);
 
 bool is_cursed(const void* object);
 bool is_damaged(const void* object);

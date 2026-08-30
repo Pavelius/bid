@@ -17,6 +17,20 @@ BSDATAC(itemground, 4096)
 
 item* last_item;
 
+static itemn random_gems[20] = {
+	RandomOrnamentalGem, RandomOrnamentalGem, RandomOrnamentalGem, RandomOrnamentalGem,
+	RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem,
+	RandomPreciousGem, RandomPreciousGem, RandomPreciousGem, RandomPreciousGem, RandomPreciousGem, RandomPreciousGem,
+	RandomGoodGem, RandomGoodGem, RandomGoodGem, RandomGoodGem,
+	RandomExpensiveGem
+};
+static itemn random_ornamental_gems[] = {Agate, Malachite, LapisLazuli, Amethyst, Citrine};
+static itemn random_semi_precious_gems[] = {Garnet, Peridot, Aquamarine, Tourmaline, Topaz};
+static itemn random_precious_gems[] = {Opal, Tanzanite, Spinel, Alexandrite};
+static itemn random_good_gems[] = {ParaibaTourmaline, Sapphire, Emerald};
+static itemn random_expensive_gems[] = {Ruby, Diamond, PinkDiamond};
+static itemn random_jewelry[] = {RingSignet, RingSignet, RingSignet, SilverBrooch, SilverBrooch, StrangeIdol};
+
 static int get_count(int value) {
 	switch(value) {
 	case 0: return 0;
@@ -27,14 +41,17 @@ static int get_count(int value) {
 	}
 }
 
-static itemground* find_item(groundn ground, short unsigned index) {
-	for(auto& e : bsdata<itemground>()) {
-		if(!e)
-			continue;
-		if(e.ground == ground && e.index == index)
-			return &e;
+itemn random(itemn v) {
+	switch(v) {
+	case RandomGem: return random(maprnd(random_gems));
+	case RandomOrnamentalGem: return random(maprnd(random_ornamental_gems));
+	case RandomSemiPreciousGem: return random(maprnd(random_semi_precious_gems));
+	case RandomPreciousGem: return random(maprnd(random_precious_gems));
+	case RandomGoodGem: return random(maprnd(random_good_gems));
+	case RandomExpensiveGem: return random(maprnd(random_expensive_gems));
+	case RandomJewelry: return random(maprnd(random_jewelry));
+	default: return v;
 	}
-	return 0;
 }
 
 dice get_damage(itemn v) {
@@ -209,7 +226,7 @@ void item::join(item& v) {
 			count = 255;
 		} else {
 			count = (unsigned char)new_count;
-			v.count = 0;
+			v.clear();
 		}
 	}
 	last_item = this;

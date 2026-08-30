@@ -1,3 +1,4 @@
+#include "itema.h"
 #include "dice.h"
 #include "rand.h"
 #include "slice.h"
@@ -23,6 +24,13 @@ static treasurei data[] = {
 
 int treasure_coins[PP - CP + 1];
 
+static void add_item(itemn v) {
+	item it(v);
+	if(it.countable())
+		it.count = 1;
+	items.add(it);
+}
+
 static void add_coins(itemn coin, const treasurei::record& e) {
 	if(e.chance) {
 		if(d100() >= e.chance)
@@ -34,16 +42,36 @@ static void add_coins(itemn coin, const treasurei::record& e) {
 	treasure_coins[coin - CP] += count;
 }
 
+static void add_items(itemn type, const treasurei::record& e) {
+	if(!type)
+		return;
+	if(e.chance) {
+		if(d100() >= e.chance)
+			return;
+	}
+	auto count = e.range.roll();
+	for(auto i = 0; i < count; i++)
+		add_item(random(type));
+}
+
 static void treasure_clear() {
+	items.clear();
 	memset(treasure_coins, 0, sizeof(treasure_coins));
 }
 
 static void treasure_generate(const treasurei& e) {
+	add_item(Opal);
+	add_item(Opal);
 	add_coins(CP, e.cp);
 	add_coins(SP, e.sp);
 	add_coins(EP, e.ep);
 	add_coins(GP, e.gp);
 	add_coins(PP, e.pp);
+	add_items(RandomGem, e.gems);
+	add_items(RandomJewelry, e.jewelry);
+	add_items((itemn)e.magic.multiplier, e.magic);
+	if(e.additional)
+		add_item(random(e.additional));
 }
 
 void treasure_generate(const char* type) {
