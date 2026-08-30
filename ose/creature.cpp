@@ -492,10 +492,6 @@ static int get_dungeon_count(classn type) {
 	}
 }
 
-static int get_wilderness_count(classn type) {
-	return 1;
-}
-
 void create_monster(classn type) {
 	player = bsdata<creature>::addz();
 	player->clear();
@@ -508,10 +504,14 @@ void create_monster(classn type) {
 	create_finish();
 }
 
-void create_monsters(classn type) {
-	auto count = get_wilderness_count(type);
-	for(auto n = 0; n < count; n++)
+void create_monsters(classn type, bool hostile) {
+	auto count = appear_count(type, 1);
+	for(auto n = 0; n < count; n++) {
 		create_monster(type);
+		if(hostile)
+			player->set(Enemy);
+		creatures.add(player);
+	}
 }
 
 static void update_party() {

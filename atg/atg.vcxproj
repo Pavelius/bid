@@ -67,6 +67,7 @@
     <ClCompile Include="draw_theme.cpp" />
     <ClCompile Include="io_stream.cpp" />
     <ClCompile Include="math.cpp" />
+    <ClCompile Include="pack_util.cpp" />
     <ClCompile Include="png.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="print.cpp" />

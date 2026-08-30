@@ -188,6 +188,9 @@
     <ClCompile Include="sprite_util.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="pack_util.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\LICENSE.txt">

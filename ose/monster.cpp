@@ -1,4 +1,6 @@
 #include "creature.h"
+#include "dice.h"
+#include "rand.h"
 
 struct monsterkpi : statable, spellable {
 	itemn items[4];
@@ -21,7 +23,7 @@ struct monsteri {
 	char		ac, hd[2];
 	alignmentn	alignment;
 	char		saving_throws[2];
-	char		appear[2][2];
+	dice		appear[2];
 	const char*	treasure;
 	monsterkpi	stats;
 };
@@ -47,6 +49,8 @@ static monsteri monster_data[] = {
 };
 static_assert((sizeof(monster_data) / sizeof(monster_data[0])) == Hawk + 1);
 
+static classn forest_animals[] = {BearGrizzly, Boar, CatPanther, CatTiger}; // , DogWild, FrogMutant, FrogPoison, Hawk};
+
 classn get_race(classn type) {
 	return monster_data[type].race;
 }
@@ -69,4 +73,12 @@ static void add_monster_stats(classn type) {
 void add_monster(classn type) {
 	add_monster_stats(type);
 	add_monster_items(type);
+}
+
+int appear_count(classn type, int index) {
+	return monster_data[type].appear[index].roll();
+}
+
+classn random_animal(arean area) {
+	return maprnd(forest_animals);
 }

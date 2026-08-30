@@ -115,6 +115,8 @@ static bool apply_effect(actionn v, bool run) {
 			make_attack(player, opponent, MeleeAttack, player->wears[Hands], 0);
 		break;
 	case MakeMissileAttack:
+		if(player->is(MeleeFight))
+			return false;
 		if(!player->wears[Hands].missile())
 			return false;
 		if(run) {
@@ -123,7 +125,9 @@ static bool apply_effect(actionn v, bool run) {
 		}
 		break;
 	case MakeThrownAttack:
-		if(!player->wears[Hands].throwing())
+		if(player->is(MeleeFight))
+			return false;
+		if(!player->wears[Hands].throwing() || player->wears[Hands].lost)
 			return false;
 		if(run) {
 			make_attack(player, opponent, ThrownAttack, player->wears[Hands], 0);
@@ -146,6 +150,24 @@ static void apply_result() {
 	case Action: apply_effect((actionn)last_result.value, true); break;
 	default: break;
 	}
+}
+
+static void combat_options() {
+	opponent = find_creature(is_enemy, true);
+	if(opponent) {
+		if(player->is(MeleeFight))
+			addan(MakeMeleeAttack);
+		else {
+			addan(MakeCharge);
+			if(player->wears[Hands].throwing() && !player->wears[Hands].lost)
+				addan(MakeThrownAttack);
+			addan(MakeMissileAttack);
+		}
+		addan(MakeRunAway);
+		make_player_move();
+		apply_result();
+	} else
+		pause();
 }
 
 static void use_skill(actionn id) {
@@ -214,11 +236,32 @@ static void check_movement() {
 	move_distance -= value;
 }
 
+static bool is_enemy_present() {
+	return find_creature(is_enemy, true) != 0;
+}
+
+static void combat_encounter() {
+	select_creatures();
+	initiative_roll();
+	while(is_enemy_present()) {
+		combat_options();
+	}
+}
+
+static void animal_encounter() {
+	pushvalue push_player(player);
+	auto type = random_animal(last_area->type);
+	create_monsters(type, true);
+	player->act(PlayerJumpFromBrush);
+	combat_encounter();
+}
+
 static void night_encounter() {
 	pushvalue push_header(answers::picture, ImageWastelandNight);
 	sb.clear();
-	sb.add(getname(PlayerHearNoiseOnWatch));
+	player->act(PlayerHearNoiseOnWatch);
 	pause();
+	animal_encounter();
 }
 
 static void adventure_move() {
@@ -246,24 +289,6 @@ static void adventure_move(int miles) {
 	adventure_move();
 }
 
-static void combat_options() {
-	opponent = find_creature(is_enemy, true);
-	if(opponent) {
-		if(player->is(MeleeFight))
-			addan(MakeMeleeAttack);
-		else {
-			addan(MakeCharge);
-			if(player->wears[Hands].throwing() && !player->wears[Hands].lost)
-				addan(MakeThrownAttack);
-			addan(MakeMissileAttack);
-		}
-		addan(MakeRunAway);
-		make_player_move();
-		apply_result();
-	} else
-		pause();
-}
-
 static void paint_value(abilityn id) {
 	char temp[260]; stringbuilder sb(temp);
 	sb.add("/x 120 text %2i\n%1", getname(id), player->abilities[id]);
@@ -281,6 +306,16 @@ static void paint_value(const item& e) {
 	sb.add(e.name());
 	if(e.count > 1)
 		sb.adds("x%1i", e.count);
+	paint_button(temp, 0, false);
+	if(button_hilited && tips_text[0] == 0) {
+	}
+}
+
+static void paint_value(const creature* p) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(p->name());
+	if(p->wounded())
+		sb.adds("[~%1]", getname(StateWounded));
 	paint_button(temp, 0, false);
 	if(button_hilited && tips_text[0] == 0) {
 	}
@@ -324,9 +359,17 @@ static void page_items() {
 		paint_value(e);
 }
 
+static void page_combatants() {
+	paint_avatars();
+	for(auto p : creatures.records<creature>())
+		paint_value(p);
+}
+
 static void paint_main_menu() {
 	paint_bar(getname(PageCharacter), page_characters);
 	paint_bar(getname(PageItems), page_items);
+	if(creatures)
+		paint_bar(getname(PageCombatants), page_combatants);
 }
 
 static void test_game() {

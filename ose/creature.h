@@ -8,6 +8,7 @@ typedef flagable<1, unsigned> featf;
 
 typedef void(*fnevent)();
 
+enum arean : unsigned char;
 enum portraitn : unsigned char;
 enum messagen : unsigned char;
 enum namen : unsigned char;
@@ -97,21 +98,25 @@ abilityn get_primary(classn v);
 portraitn random_portrait(classn type, gendern gender);
 classn get_race(classn type);
 
+classn random_animal(arean area);
+
 const char* what_to_do();
 
 bool is_diseased(const void* object);
 bool is_enemy(const void* object);
 bool is_wounded(const void* object);
 
+int appear_count(classn type, int index = 0);
 int party_average(abilityn v);
 int skill_bonus(actionn v, classn type);
 
 void add_monster(classn type);
 void create_creature(classn type, gendern gender);
 void create_monster(classn type);
-void create_monsters(classn type);
+void create_monsters(classn type, bool hostile);
 void for_each_party(fnevent proc);
 void join_party();
+void initiative_roll();
 bool make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus);
 void make_prepare_spells(messagen id);
 void raise_level(int level, bool reroll_lowest = false);
