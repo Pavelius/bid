@@ -11,7 +11,6 @@
 #include "pushvalue.h"
 #include "rand.h"
 #include "stringbuilder.h"
-#include "treasure.h"
 #include "variant.h"
 
 const int yards_in_miles = 1000;
@@ -428,7 +427,7 @@ static void test_game() {
 	raise_level(3);
 	join_party();
 	select_creatures();
-	treasure_generate("A");
+	treasure_generate("A", true, false, false);
 	adventure_move(50);
 }
 

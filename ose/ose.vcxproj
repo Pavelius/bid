@@ -148,7 +148,7 @@
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="portrait.cpp" />
     <ClCompile Include="spell.cpp" />
-    <ClCompile Include="treasure.cpp" />
+    <ClCompile Include="item_treasure.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
@@ -160,7 +160,6 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="spell.h" />
-    <ClInclude Include="treasure.h" />
     <ClInclude Include="variant.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

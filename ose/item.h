@@ -34,7 +34,7 @@ enum itemn : unsigned char {
 	LastNative = Bite2d8, LastItem = PP,
 	RandomGem, RandomOrnamentalGem, RandomSemiPreciousGem, RandomPreciousGem, RandomGoodGem, RandomExpensiveGem,
 	RandomJewelry,
-	RandomMagicItem, RandomWeapon, RandomPotion,
+	RandomMagicItem, RandomMagicItemNoWeapon, RandomWeapon, RandomPotion, RandomScroll,
 };
 
 int get_cost(itemn v);
@@ -100,6 +100,8 @@ struct wearable {
 	void useammo();
 };
 
+extern int treasure_coins[PP - CP + 1];
+
 itemn random(itemn v);
 
 bool is_cursed(const void* object);
@@ -107,3 +109,5 @@ bool is_damaged(const void* object);
 bool is_identified(const void* object);
 
 item some(itemn type, int count = 8);
+
+void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual);
