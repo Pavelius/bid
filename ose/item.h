@@ -31,10 +31,21 @@ enum itemn : unsigned char {
 	Sapphire, Emerald, Ruby, Diamond, PinkDiamond,
 	RingSignet, SilverBrooch, StrangeIdol,
 	CP, SP, EP, GP, PP,
-	LastNative = Bite2d8, LastItem = PP,
+	FirstCountable = Ration, LastNative = Bite2d8, LastItem = PP,
 	RandomGem, RandomOrnamentalGem, RandomSemiPreciousGem, RandomPreciousGem, RandomGoodGem, RandomExpensiveGem,
 	RandomJewelry,
-	RandomMagicItem, RandomMagicItemNoWeapon, RandomWeapon, RandomPotion, RandomScroll,
+	RandomMagicItem, RandomMagicItemNoWeapon,
+	RandomArmorOrShield, RandomArmor, RandomMisc, RandomRing, RandomRodStaffWand, RandomScroll, RandomSword, RandomWeapon, RandomPotion,
+};
+enum powern : unsigned char {
+	NoPower, Magic1, Magic2, Magic3,
+	Cursed, Delusion, Weakness,
+	ControlAnimals, ControlHumans, ControlPlants,
+	DjinniSummoning, FireResistance, Invisibility,
+	Telekinesis, WaterWalking,
+	Regeneration, SpellStoring, SpellTurning,
+	Wishes, WishesII, WishesIII,
+	Cancelation, Commanding, Healing, MagePower, Snakes, Striking,
 };
 
 int get_cost(itemn v);
@@ -47,12 +58,16 @@ bool is_melee(itemn v);
 bool is_range(itemn v);
 bool is_twohanded(itemn v);
 
+struct itempower {
+	int bonus; // 0 - is not magical item
+};
+
 struct item {
 	itemn type;
 	union {
 		unsigned char count;
 		struct {
-			unsigned char power : 3; // 8 separate powers
+			unsigned char modification : 4; // 16 separate powers
 			unsigned char identified : 1;
 			unsigned char lost : 1; // Thrown in combat. Until end of scene item is unavailable.
 			unsigned char broken : 2; // 1-2 damaged, 3 is nearly to destroy
@@ -60,10 +75,11 @@ struct item {
 	};
 	item() : type(), count(0) {}
 	item(itemn type) : type(type), count(0) {}
-	item(itemn type, unsigned char count) : type(type), count(count) { }
+	item(itemn type, unsigned char count) : type(type), count(count) {}
 	explicit operator bool() const { return type != (itemn)0; }
 	const char* name() const;
 	creature* owner() const;
+	powern power() const;
 	int getcount() const { return countable() ? count : 1; }
 	int cost() const { return get_cost(type) * getcount(); }
 	int weight() const { return get_weight(type) * getcount(); }
@@ -71,13 +87,14 @@ struct item {
 	bool broke();
 	bool brokened() const { return broken > 0; }
 	void clear() { type = (itemn)0; count = 0; }
-	bool countable() const { return type >= Ration; }
+	bool countable() const { return type >= FirstCountable; }
 	bool deadly() const;
 	void drop(groundn ground, short unsigned index);
 	bool is(damagen v) const { return have(type, v); }
 	void join(item& it);
 	bool melee() const { return is_melee(type); }
 	bool missile() const { return is_range(type) && get_ammo(type); }
+	bool native() const { return type <= LastNative; }
 	bool throwing() const { return is_range(type) && !get_ammo(type); }
 };
 extern item* last_item;

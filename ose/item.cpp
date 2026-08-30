@@ -13,10 +13,20 @@ const int bp = 5;
 const int sp = 10;
 const int gp = 100;
 
+const int max_power = 16;
+
 BSDATAC(itemground, 4096)
 
 item* last_item;
 
+static itemn random_magic_basic[20] = {
+	RandomArmorOrShield, RandomArmorOrShield, RandomMisc,
+	RandomPotion, RandomPotion, RandomPotion, RandomPotion, RandomPotion,
+	RandomRing, RandomRodStaffWand,
+	RandomScroll, RandomScroll, RandomScroll, RandomScroll,
+	RandomSword, RandomSword, RandomSword, RandomSword,
+	RandomWeapon, RandomWeapon,
+};
 static itemn random_gems[20] = {
 	RandomOrnamentalGem, RandomOrnamentalGem, RandomOrnamentalGem, RandomOrnamentalGem,
 	RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem,
@@ -30,6 +40,9 @@ static itemn random_precious_gems[] = {Opal, Tanzanite, Spinel, Alexandrite};
 static itemn random_good_gems[] = {ParaibaTourmaline, Sapphire, Emerald};
 static itemn random_expensive_gems[] = {Ruby, Diamond, PinkDiamond};
 static itemn random_jewelry[] = {RingSignet, RingSignet, RingSignet, SilverBrooch, SilverBrooch, StrangeIdol};
+static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmor, ChainArmor, ChainArmor, PlateArmor, PlateArmor};
+
+static powern power_armor[max_power] = {NoPower, Magic1, Magic2, Magic3, Cursed, Delusion};
 
 static int get_count(int value) {
 	switch(value) {
@@ -50,6 +63,8 @@ itemn random(itemn v) {
 	case RandomGoodGem: return random(maprnd(random_good_gems));
 	case RandomExpensiveGem: return random(maprnd(random_expensive_gems));
 	case RandomJewelry: return random(maprnd(random_jewelry));
+	case RandomMagicItem: return random(maprnd(random_magic_basic));
+	case RandomArmor: return random(maprnd(random_armor));
 	default: return v;
 	}
 }
@@ -86,6 +101,13 @@ itemn get_ammo(itemn v) {
 		return Bolt;
 	default:
 		return (itemn)0;
+	}
+}
+
+static powern* get_power(itemn type) {
+	switch(type) {
+	case LeatherArmor: case ChainArmor: case PlateArmor: return power_armor;
+	default: return 0;
 	}
 }
 
@@ -199,6 +221,8 @@ bool item::deadly() const {
 }
 
 bool item::broke() {
+	if(native())
+		return false;
 	if(broken >= 3) {
 		// TODO: break message
 		clear();
@@ -262,6 +286,13 @@ void item::drop(groundn ground, short unsigned index) {
 	p->index = index;
 	clear();
 	last_item = p;
+}
+
+powern item::power() const {
+	auto pi = get_power(type);
+	if(pi)
+		return pi[modification];
+	return NoPower;
 }
 
 bool wearable::isusable(const item& it) const {
