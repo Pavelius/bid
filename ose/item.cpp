@@ -9,9 +9,10 @@
 #include "stringbuilder.h"
 
 const int cp = 1;
-const int bp = 5;
 const int sp = 10;
+const int ep = 50;
 const int gp = 100;
+const int pp = 500;
 
 const int mp = 16;
 
@@ -54,6 +55,7 @@ itemi item_data[LastItem+1] = {
 	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{1, 12}}},
 	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{2, 6}}},
 	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{2, 8}}},
+	// Melee weapons
 	{Dagger, Hands, 0, 0, FG(Pierce)|FG(Slashing)|FG(Melee), {{1, 4}}},
 	{HandAxe, Hands, 0, 0, FG(Melee), {{1, 6}}},
 	{Javelin, Hands, 0, 0, FG(Pierce)|FG(Thrown), {{1, 4}}},
@@ -63,14 +65,17 @@ itemi item_data[LastItem+1] = {
 	{Mace, Hands, 5*gp, 0, FG(Blunt)|FG(Melee), {{1, 6}}},
 	{ShortSword, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
 	{Sword, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
-	{TwohandedSword, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
-	{LongBow, Hands, 0, 0, FG(Slashing)|FG(Range), {{1, 6}}},
-	{ShortBow, Hands, 0, 0, FG(Slashing)|FG(Range), {{1, 6}}},
-	{Crossbow, Hands, 0, 0, FG(Slashing)|FG(Range), {{1, 6}}},
+	{TwohandedSword, Hands, 0, 0, FG(Slashing)|FG(Melee)|FG(Massive), {{1, 6}}},
+	// Range weapons
+	{LongBow, Hands, 0, 0, FG(Slashing)|FG(Range)|FG(Massive), {{1, 6}}},
+	{ShortBow, Hands, 0, 0, FG(Slashing)|FG(Range)|FG(Massive), {{1, 6}}},
+	{Crossbow, Hands, 0, 0, FG(Slashing)|FG(Range)|FG(Massive), {{1, 6}}},
+	// Armor
 	{LeatherArmor, Body, 20*gp, 200, 0, {{}, 2}},
 	{ChainArmor, Body, 40*gp, 400, 0, {{}, 4}},
 	{PlateArmor, Body, 60*gp, 500, 0, {{}, 6}},
 	{Shield, Offhand, 10*gp, 0, 0, {{}, 1}},
+	// Miscelaneous items
 	{Apparatus, Backpack, 1000*gp, 0, 0, {}},
 	{Amulet, Neck, 20*gp, 0, 0, {}},
 	{Bag, Backpack, 20*gp, 0, 0, {}},
@@ -81,6 +86,76 @@ itemi item_data[LastItem+1] = {
 	{Broom, Backpack, 2*gp, 0, 0, {}},
 	{Candle, Backpack, 2*gp, 0, 0, {}},
 	{Chime, Backpack, 2*gp, 0, 0, {}},
+	{Cloack, Backpack, 0, 0, 0, {}},
+	{CrystalBall, Backpack, 0, 0, 0, {}},
+	{Cube, Backpack, 0, 0, 0, {}},
+	{Decanter, Backpack, 0, 0, 0, {}},
+	{Drums, Backpack, 0, 0, 0, {}},
+	{Dust, Backpack, 0, 0, 0, {}},
+	{Eyes, Backpack, 0, 0, 0, {}},
+	{Feather, Backpack, 0, 0, 0, {}},
+	{Figurine, Backpack, 0, 0, 0, {}},
+	{Carpet, Backpack, 0, 0, 0, {}},
+	{Boat, Backpack, 0, 0, 0, {}},
+	{Gauntlets, Backpack, 0, 0, 0, {}},
+	{Gem, Backpack, 0, 0, 0, {}},
+	{Gridle, Backpack, 0, 0, 0, {}},
+	{Helm, Head, 0, 0, 0, {}},
+	{Horn, Backpack, 0, 0, 0, {}},
+	{Horseshoes, Backpack, 0, 0, 0, {}},
+	{Incense, Backpack, 0, 0, 0, {}},
+	{Fortress, Backpack, 0, 0, 0, {}},
+	{Flask, Backpack, 0, 0, 0, {}},
+	{Jug, Backpack, 0, 0, 0, {}},
+	{Mirror, Backpack, 0, 0, 0, {}},
+	{Net, Backpack, 0, 0, 0, {}},
+	{Oil, Backpack, 0, 0, 0, {}},
+	{Pearl, Backpack, 0, 0, 0, {}},
+	{Pipe, Backpack, 0, 0, 0, {}},
+	{Robe, Body, 0, 0, 0, {}},
+	{Rope, Backpack, 0, 0, 0, {}},
+	{Saw, Backpack, 0, 0, 0, {}},
+	{Scarab, Backpack, 0, 0, 0, {}},
+	{Spade, Backpack, 0, 0, 0, {}},
+	// Edible (Countable start here)
+	{Ration, Edible, 0, 0, 0, {}},
+	{RawMeat, Edible, 0, 0, 0, {}},
+	{Mushrooms, Edible, 0, 0, 0, {}},
+	{Herbs, Edible, 0, 0, 0, {}},
+	{Berry, Edible, 0, 0, 0, {}},
+	// Ammunitions
+	{Arrow, Ammunition, 0, 0, 0, {}},
+	{Bolt, Ammunition, 0, 0, 0, {}},
+	// Gems and precious
+	{Agate, Backpack, 0, 0, 0, {}},
+	{Malachite, Backpack, 0, 0, 0, {}},
+	{LapisLazuli, Backpack, 0, 0, 0, {}},
+	{Amethyst, Backpack, 0, 0, 0, {}},
+	{Citrine, Backpack, 0, 0, 0, {}},
+	{Garnet, Backpack, 0, 0, 0, {}},
+	{Peridot, Backpack, 0, 0, 0, {}},
+	{Aquamarine, Backpack, 0, 0, 0, {}},
+	{Tourmaline, Backpack, 0, 0, 0, {}},
+	{Topaz, Backpack, 0, 0, 0, {}},
+	{Opal, Backpack, 0, 0, 0, {}},
+	{Tanzanite, Backpack, 0, 0, 0, {}},
+	{Spinel, Backpack, 0, 0, 0, {}},
+	{Alexandrite, Backpack, 0, 0, 0, {}},
+	{ParaibaTourmaline, Backpack, 0, 0, 0, {}},
+	{Sapphire, Backpack, 0, 0, 0, {}},
+	{Emerald, Backpack, 0, 0, 0, {}},
+	{Ruby, Backpack, 0, 0, 0, {}},
+	{Diamond, Backpack, 0, 0, 0, {}},
+	{PinkDiamond, Backpack, 0, 0, 0, {}},
+	{RingSignet, Backpack, 0, 0, 0, {}},
+	{SilverBrooch, Backpack, 0, 0, 0, {}},
+	{StrangeIdol, Backpack, 0, 0, 0, {}},
+	// Coins
+	{CP, Backpack, cp, 0, 0, {}},
+	{SP, Backpack, sp, 0, 0, {}},
+	{EP, Backpack, ep, 0, 0, {}},
+	{GP, Backpack, gp, 0, 0, {}},
+	{PP, Backpack, pp, 0, 0, {}},
 };
 
 static int get_magic(powern v) {
@@ -146,29 +221,10 @@ bool is_melee(itemn v) {
 	return v >= Dagger && v <= TwohandedSword;
 }
 
-bool is_range(itemn v) {
-	switch(v) {
-	case ShortBow: case LongBow: case Javelin:
-		return true;
-	default:
-		return false;
-	}
-}
-
-bool is_twohanded(itemn v) {
-	switch(v) {
-	case TwohandedSword:
-	case ShortBow:
-	case LongBow:
-	case Staff:
-		return true;
-	default:
-		return false;
-	}
-}
-
 bool is_cursed(const void* object) {
-	return false;
+	auto p = (item*)object;
+	auto n = p->power();
+	return (n==Cursed || n==Weakness || n==Delusion);
 }
 
 bool is_damaged(const void* object) {
@@ -180,7 +236,13 @@ bool is_identified(const void* object) {
 }
 
 item some(itemn type, int count) {
-	item v(type, xrand(imax(1, count / 2), count));
+	item v(type);
+	if(v.countable()) {
+		if(count>1)
+			v.count = xrand(imax(1, count / 2), count);
+		else
+			v.count = 1;
+	}
 	return v;
 }
 
@@ -271,7 +333,7 @@ void item::set(powern v) {
 bool wearable::isusable(const item& it) const {
 	auto slot = getwear(&it);
 	switch(slot) {
-	case Offhand: return !is_twohanded(wears[Hands].type);
+	case Offhand: return !it.is(Massive);
 	default: return true;
 	}
 }

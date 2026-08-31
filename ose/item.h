@@ -56,10 +56,6 @@ enum powern : unsigned char {
 
 itemn get_ammo(itemn v);
 
-bool is_melee(itemn v);
-bool is_range(itemn v);
-bool is_twohanded(itemn v);
-
 struct magici {
 	char		chance;
 	itemn		type;
@@ -75,8 +71,8 @@ struct itemi {
 	wearn		wear;
 	int			cost, weight;
 	unsigned	flags; // damagen
-	combati		combat; // Only weapon fill this
-	magici*		powers;
+	combati		combat; // Only weapon or armor fill this
+	powern*		powers;
 	bool is(damagen v) const { return (flags & (1<<v))!=0; }
 };
 extern itemi item_data[LastItem+1];
@@ -97,6 +93,7 @@ struct item {
 	item(itemn type, unsigned char count) : type(type), count(count) {}
 	explicit operator bool() const { return type != (itemn)0; }
 	const char* name() const;
+	itemn parent() const { return item_data[type].parent; }
 	creature* owner() const;
 	powern power() const;
 	int getcount() const { return countable() ? count : 1; }
