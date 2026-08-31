@@ -23,6 +23,8 @@ enum itemn : unsigned char {
 	ShortSword, Sword, TwohandedSword,
 	LongBow, ShortBow, Crossbow,
 	LeatherArmor, ChainArmor, PlateArmor, Shield,
+	Apparatus, Amulet, Bag, Book, Boots, Bracers, Brooch, Broom, Candle, Chime,
+	Cloack,	CrystalBall, Cube, Decanter, Drums, Dust, Eyes,
 	Ration, RawMeat, Mushrooms, Herbs, Berry,
 	Arrow, Bolt,
 	Agate, Malachite, LapisLazuli, Amethyst, Citrine,
@@ -124,4 +126,5 @@ bool is_identified(const void* object);
 
 item some(itemn type, int count = 8);
 
+void add_treasure(itemn type);
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual);

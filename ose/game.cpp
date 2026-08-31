@@ -428,6 +428,7 @@ static void test_game() {
 	join_party();
 	select_creatures();
 	treasure_generate("A", true, false, false);
+	add_treasure(RandomArmorOrShield);
 	adventure_move(50);
 }
 

@@ -85,36 +85,34 @@ static const itemmagic* find_magic(const itemmagic* p, int index) {
 	return p;
 }
 
-static const itemmagic* find_table(itemn type) {
-	switch(type) {
-	case RandomArmorOrShield: return magic_armor;
-	default: return 0;
-	}
+static int rd100() {
+	return 1 + rand() % 100;
 }
 
-static item generate(const itemmagic* p) {
-	if(!p || !p->type)
-		return {};
-	auto type = random(p->type);
-	item it(type);
-	it.set(p->power);
-	return it;
-}
-
-static void add_generate(itemn type) {
-	auto p = find_table(type);
-	if(!p)
-		return;
-	auto result = 1 + rand() % 100;
+static void add_treasure(const itemmagic* p, int result) {
 	p = find_magic(p, result);
-	item it = generate(p);
+	if(!p || !p->type)
+		return;
+	item it(random(p->type));
+	it.set(p->power);
 	if(it)
 		items.add(it);
-	if(type == RandomArmorOrShield) {
-		p = find_magic(magic_shield, result);
-		item it = generate(p);
-		if(it)
-			items.add(it);
+}
+
+static void add_treasure(const itemmagic* p) {
+	add_treasure(p, rd100());
+}
+
+void add_treasure(itemn type) {
+	int result;
+	switch(type) {
+	case RandomArmorOrShield:
+		result = rd100();
+		add_treasure(magic_armor, result);
+		add_treasure(magic_shield, result);
+		break;
+	default:
+		break;
 	}
 }
 
