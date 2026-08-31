@@ -40,7 +40,7 @@ static itemn random_semi_precious_gems[] = {Garnet, Peridot, Aquamarine, Tourmal
 static itemn random_precious_gems[] = {Opal, Tanzanite, Spinel, Alexandrite};
 static itemn random_good_gems[] = {ParaibaTourmaline, Sapphire, Emerald};
 static itemn random_expensive_gems[] = {Ruby, Diamond, PinkDiamond};
-static itemn random_jewelry[] = {RingSignet, RingSignet, RingSignet, SilverBrooch, SilverBrooch, StrangeIdol};
+static itemn random_jewelry[] = {SignetRing, SignetRing, SignetRing, SilverBrooch, SilverBrooch, StrangeIdol};
 static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmor, ChainArmor, ChainArmor, PlateArmor, PlateArmor};
 
 static powern power_armor[mp] = {NoPower, Magic1, Magic2, Magic3, Cursed, Delusion};
@@ -121,6 +121,10 @@ itemi item_data[LastItem+1] = {
 	{GreenPotion, Backpack, 0, 0, 0, {}},
 	{RedPotion, Backpack, 0, 0, 0, {}},
 	{Bottle, Backpack, 0, 0, 0, {}},
+	// Ring
+	{SilverRing, LeftFinger, 0, 0, 0, {}},
+	{GoldRing, LeftFinger, 0, 0, 0, {}},
+	{JeweledRing, LeftFinger, 0, 0, 0, {}},
 	// Edible (Countable start here)
 	{Ration, Edible, 0, 0, 0, {}},
 	{RawMeat, Edible, 0, 0, 0, {}},
@@ -151,7 +155,7 @@ itemi item_data[LastItem+1] = {
 	{Ruby, Backpack, 0, 0, 0, {}},
 	{Diamond, Backpack, 0, 0, 0, {}},
 	{PinkDiamond, Backpack, 0, 0, 0, {}},
-	{RingSignet, Backpack, 0, 0, 0, {}},
+	{SignetRing, Backpack, 0, 0, 0, {}},
 	{SilverBrooch, Backpack, 0, 0, 0, {}},
 	{StrangeIdol, Backpack, 0, 0, 0, {}},
 	// Coins

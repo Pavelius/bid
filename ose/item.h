@@ -31,13 +31,14 @@ enum itemn : unsigned char {
 	Gauntlets, Gem, Gridle, Helm, Horn, Horseshoes, Incense, Fortress, Flask,
 	Jug, Mirror, Net, Oil, Pearl, Pipe, Robe, Rope, Saw, Scarab, Spade,
 	BluePotion, GreenPotion, RedPotion, Bottle,
+	SilverRing, GoldRing, JeweledRing,
 	Ration, RawMeat, Mushrooms, Herbs, Berry,
 	Arrow, Bolt,
 	Agate, Malachite, LapisLazuli, Amethyst, Citrine,
 	Garnet, Peridot, Aquamarine, Tourmaline, Topaz,
 	Opal, Tanzanite, Spinel, Alexandrite, ParaibaTourmaline,
 	Sapphire, Emerald, Ruby, Diamond, PinkDiamond,
-	RingSignet, SilverBrooch, StrangeIdol,
+	SignetRing, SilverBrooch, StrangeIdol,
 	CP, SP, EP, GP, PP,
 	FirstCountable = Ration, LastNative = Bite2d8, LastItem = PP,
 	RandomGem, RandomOrnamentalGem, RandomSemiPreciousGem, RandomPreciousGem, RandomGoodGem, RandomExpensiveGem,
@@ -59,8 +60,8 @@ enum powern : unsigned char {
 	FoulCorruption, InfiniteSpells, SublimeHoliness,
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring,
-	Healing, Snakes,
-	Wishes, WishesII, WishesIII, Wizardy,
+	Healing, Snakes, Sharpness,
+	Wishes, WishesII, WishesIII, Wizardy, XRays,
 };
 
 itemn get_ammo(itemn v);

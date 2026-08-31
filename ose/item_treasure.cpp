@@ -146,6 +146,27 @@ static magici magic_potions[] = {
 	{25, BluePotion, ControlUndead},
 	{32, BluePotion, Delusion},
 };
+static magici magic_rings[] = {
+	{5, SilverRing, ControlAnimals},
+	{10, SilverRing, ControlHumans},
+	{16, SilverRing, ControlPlants},
+	{26, SilverRing, Delusion},
+	{29, GoldRing, Summoning},
+	{39, SilverRing, Flaming},
+	{50, GoldRing, Invisibility},
+	{55, SilverRing, Magic1},
+	{70, SilverRing, Magic2},
+	{72, JeweledRing, Regeneration},
+	{74, GoldRing, SpellStoring},
+	{80, GoldRing, ControlSpells},
+	{82, GoldRing, Telekinesis},
+	{88, GoldRing, WaterWalking},
+	{94, GoldRing, Weakness},
+	{96, JeweledRing, Wishes},
+	{97, JeweledRing, WishesII},
+	{98, JeweledRing, WishesIII},
+	{100, GoldRing, XRays}
+};
 static magici* table_magic_misc[] = {magic_misc1, magic_misc2};
 
 int treasure_coins[PP - CP + 1];
@@ -175,6 +196,9 @@ void add_magic_item(itemn type) {
 		break;
 	case RandomMisc:
 		add_magic_item(maprnd(table_magic_misc), result);
+		break;
+	case RandomRing:
+		add_magic_item(magic_rings, result);
 		break;
 	default:
 		// Nothing to do
