@@ -46,11 +46,12 @@ enum powern : unsigned char {
 	NoPower,
 	Magic1, Magic2, Magic3, Cursed, Delusion, Weakness,
 	ControlAnimals, ControlHumans, ControlPlants,
+	BaneLycanthrope, BaneMages, BaneDragons, BaneEnchanted, BaneRegenerated, BaneUndead,
+	EnergyDrain, Flaming, Charming,
 	DjinniSummoning, FireResistance, Invisibility,
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring, SpellTurning,
-	Cancelation, Commanding, Healing, Power, Snakes, Striking,
-	Thunderbolt, Lighting,
+	Cancelation, Commanding, Healing, Power, Snakes, Striking, Thunderbolt, Lighting,
 	Wishes, WishesII, WishesIII,
 };
 
