@@ -11,9 +11,3 @@ int dice::roll() const {
 		r *= m;
 	return r;
 }
-
-int dice::maximum() const {
-	if(!d)
-		return c;
-	return c * d + b;
-}

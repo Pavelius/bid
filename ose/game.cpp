@@ -122,7 +122,7 @@ static bool party_present() {
 static bool apply_effect(actionn v, bool run) {
 	switch(v) {
 	case MakeCharge:
-		if(player->is(MeleeFight))
+		if(player->is(MeleeFight) || !player->wears[Hands].is(Melee))
 			return false;
 		if(run) {
 			player->act(PlayerCharged);
@@ -133,13 +133,13 @@ static bool apply_effect(actionn v, bool run) {
 		}
 		break;
 	case MakeMeleeAttack:
-		if(!player->is(MeleeFight))
+		if(!player->is(MeleeFight) || !player->wears[Hands].is(Melee))
 			return false;
 		if(run)
 			make_attack(player, opponent, MeleeAttack, player->wears[Hands], 0);
 		break;
 	case MakeMissileAttack:
-		if(player->is(MeleeFight) || !player->wears[Hands].missile() || !player->wears[Ammunition])
+		if(player->is(MeleeFight) || !player->wears[Hands].is(Range) || !player->wears[Ammunition])
 			return false;
 		if(run) {
 			make_attack(player, opponent, MissileAttack, player->wears[Hands], 0);
@@ -147,7 +147,7 @@ static bool apply_effect(actionn v, bool run) {
 		}
 		break;
 	case MakeThrownAttack:
-		if(player->is(MeleeFight) || !player->wears[Hands].throwing() || player->wears[Hands].lost)
+		if(player->is(MeleeFight) || !player->wears[Hands].is(Thrown) || player->wears[Hands].lost)
 			return false;
 		if(run) {
 			make_attack(player, opponent, ThrownAttack, player->wears[Hands], 0);

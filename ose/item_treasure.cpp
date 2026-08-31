@@ -3,12 +3,6 @@
 #include "rand.h"
 #include "slice.h"
 
-struct itemmagic {
-	char	chance;
-	itemn	type;
-	powern	power;
-};
-
 struct treasurei {
 	struct record {
 		char	chance;
@@ -45,7 +39,7 @@ static treasurei treasure_data[] = {
 	{'V', {}, {10, {1, 100}}, {5, {1, 100}}, {10, {1, 100}}, {5, {1, 100}}, {10, {1, 4}}, {10, {1, 4}}, {5, {1}, RandomMagicItem}},
 };
 
-static itemmagic magic_armor[] = {
+static magici magic_armor[] = {
 	{28, RandomArmor, Magic1},
 	{42, RandomArmor, Magic2},
 	{48, RandomArmor, Magic3},
@@ -54,7 +48,7 @@ static itemmagic magic_armor[] = {
 	{56, RandomArmor, Cursed},
 	{100},
 };
-static itemmagic magic_shield[] = {
+static magici magic_shield[] = {
 	{16},
 	{25, Shield, Magic1},
 	{27, Shield, Magic2},
@@ -79,7 +73,7 @@ static itemmagic magic_shield[] = {
 
 int treasure_coins[PP - CP + 1];
 
-static const itemmagic* find_magic(const itemmagic* p, int index) {
+static const magici* find_magic(const magici* p, int index) {
 	while(p->chance < index)
 		p++;
 	return p;
@@ -89,7 +83,7 @@ static int rd100() {
 	return 1 + rand() % 100;
 }
 
-static void add_magic_item(const itemmagic* p, int result) {
+static void add_magic_item(const magici* p, int result) {
 	p = find_magic(p, result);
 	if(!p || !p->type)
 		return;
@@ -99,7 +93,7 @@ static void add_magic_item(const itemmagic* p, int result) {
 		items.add(it);
 }
 
-static void add_magic_item(const itemmagic* p) {
+static void add_magic_item(const magici* p) {
 	add_magic_item(p, rd100());
 }
 

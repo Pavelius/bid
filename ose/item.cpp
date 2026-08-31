@@ -44,15 +44,44 @@ static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmo
 
 static powern power_armor[mp] = {NoPower, Magic1, Magic2, Magic3, Cursed, Delusion};
 
-static int get_count(int value) {
-	switch(value) {
-	case 0: return 0;
-	case 3: return xrand(1, 3);
-	case 6: return xrand(1, 6);
-	case 18: return xrand(3, 18);
-	default: return 1;
-	}
-}
+itemi item_data[LastItem+1] = {
+	{Fist, Hands, 0, 0, FG(Melee), {{1, 2}}},
+	{Claws1d4, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 4}}},
+	{Claws1d4, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
+	{Claws1d4, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 8}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{1, 6}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{1, 8}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{1, 12}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{2, 6}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{2, 8}}},
+	{Dagger, Hands, 0, 0, FG(Pierce)|FG(Slashing)|FG(Melee), {{1, 4}}},
+	{HandAxe, Hands, 0, 0, FG(Melee), {{1, 6}}},
+	{Javelin, Hands, 0, 0, FG(Pierce)|FG(Thrown), {{1, 4}}},
+	{Spear, Hands, 0, 0, FG(Pierce)|FG(Thrown)|FG(Melee), {{1, 6}}},
+	{Staff, Hands, 0, 0, FG(Blunt)|FG(Slowest)|FG(Massive)|FG(Melee), {{1, 4}}},
+	{BattleAxe, Hands, 7*gp, 0, FG(Slashing)|FG(Slowest)|FG(Massive)|FG(Melee), {{1, 8}}},
+	{Mace, Hands, 5*gp, 0, FG(Blunt)|FG(Melee), {{1, 6}}},
+	{ShortSword, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
+	{Sword, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
+	{TwohandedSword, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
+	{LongBow, Hands, 0, 0, FG(Slashing)|FG(Range), {{1, 6}}},
+	{ShortBow, Hands, 0, 0, FG(Slashing)|FG(Range), {{1, 6}}},
+	{Crossbow, Hands, 0, 0, FG(Slashing)|FG(Range), {{1, 6}}},
+	{LeatherArmor, Body, 20*gp, 200, 0, {{}, 2}},
+	{ChainArmor, Body, 40*gp, 400, 0, {{}, 4}},
+	{PlateArmor, Body, 60*gp, 500, 0, {{}, 6}},
+	{Shield, Offhand, 10*gp, 0, 0, {{}, 1}},
+	{Apparatus, Backpack, 1000*gp, 0, 0, {}},
+	{Amulet, Neck, 20*gp, 0, 0, {}},
+	{Bag, Backpack, 20*gp, 0, 0, {}},
+	{Book, Backpack, 50*gp, 0, 0, {}},
+	{Boots, Legs, 3*gp, 0, 0, {}},
+	{Bracers, Elbow, 5*gp, 0, 0, {}},
+	{Brooch, Head, 2*gp, 0, 0, {}},
+	{Broom, Backpack, 2*gp, 0, 0, {}},
+	{Candle, Backpack, 2*gp, 0, 0, {}},
+	{Chime, Backpack, 2*gp, 0, 0, {}},
+};
 
 static int get_magic(powern v) {
 	switch(v) {
@@ -80,30 +109,6 @@ itemn random(itemn v) {
 	}
 }
 
-dice get_damage(itemn v) {
-	switch(v) {
-	case Claws1d4: case Dagger: case Javelin: case Staff:
-		return {1, 4};
-	case Bite1d6: case Claws1d6:
-	case HandAxe: case Mace: case ShortSword: case Spear:
-	case Crossbow: case LongBow: case ShortBow:
-		return {1, 6};
-	case Bite1d8: case Claws1d8:
-	case BattleAxe: case Sword:
-		return {1, 8};
-	case TwohandedSword:
-		return {1, 10};
-	case Bite1d12:
-		return {1, 12};
-	case Bite2d6:
-		return {2, 6};
-	case Bite2d8:
-		return {2, 8};
-	default:
-		return {1, 2};
-	}
-}
-
 itemn get_ammo(itemn v) {
 	switch(v) {
 	case ShortBow: case LongBow:
@@ -123,14 +128,6 @@ static powern* get_power(itemn type) {
 	}
 }
 
-int get_base_cost(itemn v) {
-	switch(v) {
-	case LeatherArmor: return 25;
-	case Shield: return 20;
-	default: return 0;
-	}
-}
-
 static wearn get_wear(itemn v) {
 	if(v >= Agate)
 		return Backpack;
@@ -143,42 +140,6 @@ static wearn get_wear(itemn v) {
 	else if(v >= LeatherArmor)
 		return Body;
 	return Hands;
-}
-
-bool have(itemn v, damagen i) {
-	switch(i) {
-	case Blunt:
-		switch(v) {
-		case Staff:
-		case Mace:
-			return true;
-		default:
-			return false;
-		}
-	case Pierce:
-		switch(v) {
-		case Dagger:
-		case Spear:
-		case Javelin:
-		case LongBow:
-		case ShortBow:
-			return true;
-		default:
-			return false;
-		}
-	case Slashing:
-		switch(v) {
-		case Dagger:
-		case ShortSword:
-		case Sword:
-		case TwohandedSword:
-			return true;
-		default:
-			return false;
-		}
-	default:
-		return false;
-	}
 }
 
 bool is_melee(itemn v) {
@@ -223,28 +184,21 @@ item some(itemn type, int count) {
 	return v;
 }
 
-bool item::deadly() const {
-	switch(type) {
-	case HandAxe:
-		return true;
-	default:
-		return false;
-	}
-}
-
-bool item::broke() {
+void item::consume(messagen msg_broke, messagen msg_damage) {
 	if(native())
-		return false;
+		return;
 	if(broken >= 3) {
-		// TODO: break message
+		if(msg_broke)
+			act(msg_broke);
 		clear();
 		auto p = owner();
 		if(p)
 			p->update();
-		return true;
-	} else
+	} else {
+		if(msg_damage)
+			act(msg_damage);
 		broken++;
-	return false;
+	}
 }
 
 void item::join(item& v) {

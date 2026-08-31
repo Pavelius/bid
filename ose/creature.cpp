@@ -562,18 +562,21 @@ static int critical_damage(const item& weapon, const dice& damage) {
 	auto hits = damage.roll(); // Apply damage
 	if(weapon.is(Pierce))
 		hits += damage.roll(); // Apply another damage (can be third)
-	if(weapon.deadly())
+	if(weapon.is(Deadly))
 		hits += damage.maximum(); // Deadly apply maximum damage
 	else
 		hits += damage.roll(); // Apply damage
 	return hits;
 }
 
-dice get_damage(itemn v);
-
 dice get_attack(creature* attacker, abilityn id, const item& weapon, int bonus) {
-	auto r = get_damage(weapon.type);
-	return r;
+	auto& ei = item_data[weapon.type];
+	dice damage;
+	damage.c = ei.combat.damage[0];
+	damage.d = ei.combat.damage[1];
+	damage.b = ei.combat.damage[2];
+	damage.m = 0;
+	return damage;
 }
 
 static bool check_attack(creature* attacker, creature* enemy, int attack_bonus, int attack_sharpness) {
@@ -599,10 +602,7 @@ static bool check_attack(creature* attacker, creature* enemy, int attack_bonus, 
 static bool weapon_damage(item& weapon) {
 	auto chance_break = 20;
 	if(d100() < chance_break) {
-		if(weapon.broke())
-			weapon.act(WeaponBroken);
-		else
-			weapon.act(WeaponDamage);
+		weapon.consume(WeaponBroken, WeaponDamage);
 		return true;
 	}
 	return false;

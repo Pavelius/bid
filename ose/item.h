@@ -7,10 +7,11 @@ enum messagen : unsigned char;
 enum damagen : unsigned char {
 	Blunt, Slashing, Pierce,
 	Fire, Cold, Acid,
+	Melee, Range, Thrown, Deadly, Massive, Slowest,
 };
 enum wearn : unsigned char {
 	Backpack, Edible, LastWear = Backpack + 24,
-	Body, Hands, Offhand, LeftFinger, RightFinger, Head, Ammunition,
+	Body, Head, Neck, Legs, Elbow, Hands, Offhand, LeftFinger, RightFinger, Ammunition,
 };
 enum groundn : unsigned char {
 	CharacterOwner, AreaOwner,
@@ -49,18 +50,36 @@ enum powern : unsigned char {
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring, SpellTurning,
 	Cancelation, Commanding, Healing, Power, Snakes, Striking,
+	Thunderbolt, Lighting,
 	Wishes, WishesII, WishesIII,
 };
 
-int get_cost(itemn v);
-int get_weight(itemn v);
-
 itemn get_ammo(itemn v);
 
-bool have(itemn type, damagen v);
 bool is_melee(itemn v);
 bool is_range(itemn v);
 bool is_twohanded(itemn v);
+
+struct magici {
+	char		chance;
+	itemn		type;
+	powern		power;
+};
+
+struct itemi {
+	struct combati {
+		char	damage[3];
+		char	ac;
+	};
+	itemn		parent;
+	wearn		wear;
+	int			cost, weight;
+	unsigned	flags; // damagen
+	combati		combat; // Only weapon fill this
+	magici*		powers;
+	bool is(damagen v) const { return (flags & (1<<v))!=0; }
+};
+extern itemi item_data[LastItem+1];
 
 struct item {
 	itemn type;
@@ -81,22 +100,18 @@ struct item {
 	creature* owner() const;
 	powern power() const;
 	int getcount() const { return countable() ? count : 1; }
-	int cost() const { return get_cost(type) * getcount(); }
-	int weight() const { return get_weight(type) * getcount(); }
+	int cost() const { return item_data[type].cost * getcount(); }
+	int weight() const { return item_data[type].weight * getcount(); }
 	void act(messagen id) const;
-	bool broke();
-	bool brokened() const { return broken > 0; }
 	void clear() { type = (itemn)0; count = 0; }
+	void consume(messagen crush = (messagen)0, messagen damaged = (messagen)0);
 	bool countable() const { return type >= FirstCountable; }
-	bool deadly() const;
+	bool damaged() const { return broken > 0; }
 	void drop(groundn ground, short unsigned index);
-	bool is(damagen v) const { return have(type, v); }
+	bool is(damagen v) const { return item_data[type].is(v); }
 	void join(item& it);
-	bool melee() const { return is_melee(type); }
-	bool missile() const { return is_range(type) && get_ammo(type); }
 	bool native() const { return type <= LastNative; }
 	void set(powern v);
-	bool throwing() const { return is_range(type) && !get_ammo(type); }
 };
 extern item* last_item;
 
