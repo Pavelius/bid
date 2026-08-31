@@ -13,7 +13,7 @@ const int bp = 5;
 const int sp = 10;
 const int gp = 100;
 
-const int max_power = 16;
+const int mp = 16;
 
 BSDATAC(itemground, 4096)
 
@@ -42,7 +42,7 @@ static itemn random_expensive_gems[] = {Ruby, Diamond, PinkDiamond};
 static itemn random_jewelry[] = {RingSignet, RingSignet, RingSignet, SilverBrooch, SilverBrooch, StrangeIdol};
 static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmor, ChainArmor, ChainArmor, PlateArmor, PlateArmor};
 
-static powern power_armor[max_power] = {NoPower, Magic1, Magic2, Magic3, Cursed, Delusion};
+static powern power_armor[mp] = {NoPower, Magic1, Magic2, Magic3, Cursed, Delusion};
 
 static int get_count(int value) {
 	switch(value) {
@@ -51,6 +51,17 @@ static int get_count(int value) {
 	case 6: return xrand(1, 6);
 	case 18: return xrand(3, 18);
 	default: return 1;
+	}
+}
+
+static int get_magic(powern v) {
+	switch(v) {
+	case Magic1: return 1;
+	case Magic2: return 2;
+	case Magic3: return 3;
+	case Cursed: return -1;
+	case Delusion: return -2;
+	default: return 0;
 	}
 }
 
@@ -107,6 +118,7 @@ itemn get_ammo(itemn v) {
 static powern* get_power(itemn type) {
 	switch(type) {
 	case LeatherArmor: case ChainArmor: case PlateArmor: return power_armor;
+	case Shield: return power_armor;
 	default: return 0;
 	}
 }

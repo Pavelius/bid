@@ -24,7 +24,9 @@ enum itemn : unsigned char {
 	LongBow, ShortBow, Crossbow,
 	LeatherArmor, ChainArmor, PlateArmor, Shield,
 	Apparatus, Amulet, Bag, Book, Boots, Bracers, Brooch, Broom, Candle, Chime,
-	Cloack,	CrystalBall, Cube, Decanter, Drums, Dust, Eyes,
+	Cloack,	CrystalBall, Cube, Decanter, Drums, Dust, Eyes, Feather, Figurine, Carpet,
+	Boat, Gauntlets, Gem, Gridle, Helm, Horn, Horseshoes, Incense, Fortress, Flask,
+	Jug, Mirror, Net, Oil, Pearl, Pipe, Robe, Rope, Saw, Scarab, Spade,
 	Ration, RawMeat, Mushrooms, Herbs, Berry,
 	Arrow, Bolt,
 	Agate, Malachite, LapisLazuli, Amethyst, Citrine,
@@ -126,5 +128,5 @@ bool is_identified(const void* object);
 
 item some(itemn type, int count = 8);
 
-void add_treasure(itemn type);
+void add_magic_item(itemn type);
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual);

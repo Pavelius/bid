@@ -89,7 +89,7 @@ static int rd100() {
 	return 1 + rand() % 100;
 }
 
-static void add_treasure(const itemmagic* p, int result) {
+static void add_magic_item(const itemmagic* p, int result) {
 	p = find_magic(p, result);
 	if(!p || !p->type)
 		return;
@@ -99,17 +99,17 @@ static void add_treasure(const itemmagic* p, int result) {
 		items.add(it);
 }
 
-static void add_treasure(const itemmagic* p) {
-	add_treasure(p, rd100());
+static void add_magic_item(const itemmagic* p) {
+	add_magic_item(p, rd100());
 }
 
-void add_treasure(itemn type) {
+void add_magic_item(itemn type) {
 	int result;
 	switch(type) {
 	case RandomArmorOrShield:
 		result = rd100();
-		add_treasure(magic_armor, result);
-		add_treasure(magic_shield, result);
+		add_magic_item(magic_armor, result);
+		add_magic_item(magic_shield, result);
 		break;
 	default:
 		break;
