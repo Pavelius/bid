@@ -38,14 +38,14 @@ enum itemn : unsigned char {
 	RandomArmorOrShield, RandomArmor, RandomMisc, RandomRing, RandomRodStaffWand, RandomScroll, RandomSword, RandomWeapon, RandomPotion,
 };
 enum powern : unsigned char {
-	NoPower, Magic1, Magic2, Magic3,
-	Cursed, Delusion, Weakness,
+	NoPower,
+	Magic1, Magic2, Magic3, Cursed, Delusion, Weakness,
 	ControlAnimals, ControlHumans, ControlPlants,
 	DjinniSummoning, FireResistance, Invisibility,
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring, SpellTurning,
+	Cancelation, Commanding, Healing, Power, Snakes, Striking,
 	Wishes, WishesII, WishesIII,
-	Cancelation, Commanding, Healing, MagePower, Snakes, Striking,
 };
 
 int get_cost(itemn v);
@@ -57,10 +57,6 @@ bool have(itemn type, damagen v);
 bool is_melee(itemn v);
 bool is_range(itemn v);
 bool is_twohanded(itemn v);
-
-struct itempower {
-	int bonus; // 0 - is not magical item
-};
 
 struct item {
 	itemn type;
@@ -95,6 +91,7 @@ struct item {
 	bool melee() const { return is_melee(type); }
 	bool missile() const { return is_range(type) && get_ammo(type); }
 	bool native() const { return type <= LastNative; }
+	void set(powern v);
 	bool throwing() const { return is_range(type) && !get_ammo(type); }
 };
 extern item* last_item;

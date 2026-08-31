@@ -295,6 +295,13 @@ powern item::power() const {
 	return NoPower;
 }
 
+void item::set(powern v) {
+	auto p = get_power(type);
+	if(!p)
+		return;
+	modification = 0;
+}
+
 bool wearable::isusable(const item& it) const {
 	auto slot = getwear(&it);
 	switch(slot) {

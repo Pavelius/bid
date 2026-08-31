@@ -3,6 +3,12 @@
 #include "rand.h"
 #include "slice.h"
 
+struct itemmagic {
+	char	chance;
+	itemn	type;
+	powern	power;
+};
+
 struct treasurei {
 	struct record {
 		char	chance;
@@ -39,7 +45,78 @@ static treasurei treasure_data[] = {
 	{'V', {}, {10, {1, 100}}, {5, {1, 100}}, {10, {1, 100}}, {5, {1, 100}}, {10, {1, 4}}, {10, {1, 4}}, {5, {1}, RandomMagicItem}},
 };
 
+static itemmagic magic_armor[] = {
+	{28, RandomArmor, Magic1},
+	{42, RandomArmor, Magic2},
+	{48, RandomArmor, Magic3},
+	{51, RandomArmor, Cursed},
+	{54, RandomArmor, Delusion},
+	{56, RandomArmor, Cursed},
+	{100},
+};
+static itemmagic magic_shield[] = {
+	{16},
+	{25, Shield, Magic1},
+	{27, Shield, Magic2},
+	{28, Shield, Magic3},
+	{33},
+	{36, Shield, Magic1},
+	{41, Shield, Magic2},
+	{42, Shield, Magic3},
+	{45},
+	{46, Shield, Magic1},
+	{47, Shield, Magic2},
+	{48, Shield, Magic3},
+	{53},
+	{54, Shield, Magic1},
+	{56},
+	{62, Shield, Delusion},
+	{65, Shield, Weakness},
+	{85, Shield, Magic1},
+	{95, Shield, Magic2},
+	{100, Shield, Magic3},
+};
+
 int treasure_coins[PP - CP + 1];
+
+static const itemmagic* find_magic(const itemmagic* p, int index) {
+	while(p->chance < index)
+		p++;
+	return p;
+}
+
+static const itemmagic* find_table(itemn type) {
+	switch(type) {
+	case RandomArmorOrShield: return magic_armor;
+	default: return 0;
+	}
+}
+
+static item generate(const itemmagic* p) {
+	if(!p || !p->type)
+		return {};
+	auto type = random(p->type);
+	item it(type);
+	it.set(p->power);
+	return it;
+}
+
+static void add_generate(itemn type) {
+	auto p = find_table(type);
+	if(!p)
+		return;
+	auto result = 1 + rand() % 100;
+	p = find_magic(p, result);
+	item it = generate(p);
+	if(it)
+		items.add(it);
+	if(type == RandomArmorOrShield) {
+		p = find_magic(magic_shield, result);
+		item it = generate(p);
+		if(it)
+			items.add(it);
+	}
+}
 
 static void add_item(itemn v) {
 	item it(v);
