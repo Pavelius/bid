@@ -70,6 +70,12 @@ static magici magic_shield[] = {
 	{95, Shield, Magic2},
 	{100, Shield, Magic3},
 };
+static magici magic_misc1[] = {
+	{3, Amulet, AbjurePossession},
+	{6, Amulet, AbjureScrying},
+	{8, Apparatus, AbjureScrying},
+	{12, Bag, Devouring},
+};
 
 int treasure_coins[PP - CP + 1];
 
