@@ -96,7 +96,6 @@ itemi item_data[LastItem+1] = {
 	{Feather, Backpack, 0, 0, 0, {}},
 	{Figurine, Backpack, 0, 0, 0, {}},
 	{Carpet, Backpack, 0, 0, 0, {}},
-	{Boat, Backpack, 0, 0, 0, {}},
 	{Gauntlets, Backpack, 0, 0, 0, {}},
 	{Gem, Backpack, 0, 0, 0, {}},
 	{Gridle, Backpack, 0, 0, 0, {}},
@@ -117,6 +116,11 @@ itemi item_data[LastItem+1] = {
 	{Saw, Backpack, 0, 0, 0, {}},
 	{Scarab, Backpack, 0, 0, 0, {}},
 	{Spade, Backpack, 0, 0, 0, {}},
+	// Drinkable
+	{BluePotion, Backpack, 0, 0, 0, {}},
+	{GreenPotion, Backpack, 0, 0, 0, {}},
+	{RedPotion, Backpack, 0, 0, 0, {}},
+	{Bottle, Backpack, 0, 0, 0, {}},
 	// Edible (Countable start here)
 	{Ration, Edible, 0, 0, 0, {}},
 	{RawMeat, Edible, 0, 0, 0, {}},

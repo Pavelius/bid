@@ -17,6 +17,6 @@ unsigned long getcputime() {
 
 extern "C" int time(void* p);
 
-unsigned int randomseed() {
+unsigned randomseed() {
 	return time(0);
 }

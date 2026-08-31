@@ -427,8 +427,9 @@ static void test_game() {
 	raise_level(3);
 	join_party();
 	select_creatures();
-	treasure_generate("A", true, false, false);
+	// treasure_generate("A", true, false, false);
 	add_magic_item(RandomArmorOrShield);
+	add_magic_item(RandomMisc);
 	adventure_move(50);
 }
 
@@ -437,7 +438,7 @@ void stringbuilder_custom(stringbuilder& sb, const char* id);
 void main_util();
 
 void game_run() {
-	srand(11299);
+	srand(randomseed());
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
 #ifdef _DEBUG

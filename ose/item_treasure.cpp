@@ -3,6 +3,11 @@
 #include "rand.h"
 #include "slice.h"
 
+struct magici {
+	char		chance;
+	itemn		type;
+	powern		power;
+};
 struct treasurei {
 	struct record {
 		char	chance;
@@ -71,11 +76,77 @@ static magici magic_shield[] = {
 	{100, Shield, Magic3},
 };
 static magici magic_misc1[] = {
-	{3, Amulet, AbjurePossession},
-	{6, Amulet, AbjureScrying},
-	{8, Apparatus, AbjureScrying},
+	{3, Amulet, ControlPosession},
+	{6, Amulet, ControlCharmed},
+	{8, Apparatus, Magic1},
 	{12, Bag, Devouring},
+	{17, Bag, Holding},
+	{18, Bag, Transformation},
+	{19, Book, FoulCorruption},
+	{20, Book, InfiniteSpells},
+	{21, Book, SublimeHoliness},
+	{22, Boots, Dancing},
+	{27, Boots, Flying},
+	{31, Boots, Speed},
+	{35, Boots, Leaping},
+	{43, Bracers, Magic1},
+	{48, Bracers, Magic2},
+	{50, Bracers, Magic3},
+	{52, Bracers, Cursed},
+	{59, Brooch, ControlSpells},
+	{64, Broom, Flying},
+	{70, Candle, Invocating},
+	{72, Chime, Opening},
+	{73, Chime, Ravening},
+	{85, Cloack, Magic1},
+	{91, Cloack, Magic2},
+	{94, Cloack, Magic3},
+	{95, Cloack, Flying},
+	{97, Cloack, Poisoning},
+	{100, Cloack, Transformation},
 };
+static magici magic_misc2[] = {
+	{5, CrystalBall, Magic1},
+	{7, CrystalBall, Magic2},
+	{8, CrystalBall, Magic3},
+	{9, CrystalBall, Delusion},
+	{11, Cube, Striking},
+	{13, Cube, Frozing},
+	{16, Decanter, Magic1},
+	{20, Deck, Transformation},
+	{24, Cloack, Displacing},
+	{26, Drums, Scarying},
+	{27, Drums, Thundering},
+	{33, Dust, Appearance},
+	{39, Dust, Invisibility},
+	{40, Dust, Choking},
+	{41, Bottle, Summoning},
+	{43, Apparatus, Summoning},
+	{45, Apparatus, Summoning},
+	{47, Apparatus, Summoning},
+	{49, Apparatus, Summoning},
+	{59, Cloack, Invisibility},
+	{60, Eyes, Charming},
+	{62, Eyes, Microscoping},
+	{63, Eyes, Petrification},
+	{65, Eyes, Zooming},
+	{80, Feather, Zooming},
+	{95, Figurine, FormTiger},
+	{98, Figurine, FormBoat},
+	{100, Gauntlets, Mighty},
+};
+static magici magic_potions[] = {
+	{3, BluePotion, Clairaudience},
+	{4, BluePotion, Clairvoyance},
+	{10, BluePotion, ControlAnimals},
+	{13, BluePotion, ControlDragons},
+	{16, BluePotion, ControlGiants},
+	{19, BluePotion, ControlHumans},
+	{22, BluePotion, ControlPlants},
+	{25, BluePotion, ControlUndead},
+	{32, BluePotion, Delusion},
+};
+static magici* table_magic_misc[] = {magic_misc1, magic_misc2};
 
 int treasure_coins[PP - CP + 1];
 
@@ -83,10 +154,6 @@ static const magici* find_magic(const magici* p, int index) {
 	while(p->chance < index)
 		p++;
 	return p;
-}
-
-static int rd100() {
-	return 1 + rand() % 100;
 }
 
 static void add_magic_item(const magici* p, int result) {
@@ -99,19 +166,18 @@ static void add_magic_item(const magici* p, int result) {
 		items.add(it);
 }
 
-static void add_magic_item(const magici* p) {
-	add_magic_item(p, rd100());
-}
-
 void add_magic_item(itemn type) {
-	int result;
+	auto result = 1 + rand() % 100;
 	switch(type) {
 	case RandomArmorOrShield:
-		result = rd100();
 		add_magic_item(magic_armor, result);
 		add_magic_item(magic_shield, result);
 		break;
+	case RandomMisc:
+		add_magic_item(maprnd(table_magic_misc), result);
+		break;
 	default:
+		// Nothing to do
 		break;
 	}
 }

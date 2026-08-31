@@ -570,12 +570,7 @@ static int critical_damage(const item& weapon, const dice& damage) {
 }
 
 dice get_attack(creature* attacker, abilityn id, const item& weapon, int bonus) {
-	auto& ei = item_data[weapon.type];
-	dice damage;
-	damage.c = ei.combat.damage[0];
-	damage.d = ei.combat.damage[1];
-	damage.b = ei.combat.damage[2];
-	damage.m = 0;
+	auto damage = item_data[weapon.type].combat.damage;
 	return damage;
 }
 

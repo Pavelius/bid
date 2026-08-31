@@ -1,5 +1,7 @@
 #pragma once
 
+#include "dice.h"
+
 struct creature;
 
 enum messagen : unsigned char;
@@ -25,9 +27,10 @@ enum itemn : unsigned char {
 	LongBow, ShortBow, Crossbow,
 	LeatherArmor, ChainArmor, PlateArmor, Shield,
 	Apparatus, Amulet, Bag, Book, Boots, Bracers, Brooch, Broom, Candle, Chime,
-	Cloack,	CrystalBall, Cube, Decanter, Drums, Dust, Eyes, Feather, Figurine, Carpet,
-	Boat, Gauntlets, Gem, Gridle, Helm, Horn, Horseshoes, Incense, Fortress, Flask,
+	Cloack,	CrystalBall, Cube, Decanter, Deck, Drums, Dust, Eyes, Feather, Figurine, Carpet,
+	Gauntlets, Gem, Gridle, Helm, Horn, Horseshoes, Incense, Fortress, Flask,
 	Jug, Mirror, Net, Oil, Pearl, Pipe, Robe, Rope, Saw, Scarab, Spade,
+	BluePotion, GreenPotion, RedPotion, Bottle,
 	Ration, RawMeat, Mushrooms, Herbs, Berry,
 	Arrow, Bolt,
 	Agate, Malachite, LapisLazuli, Amethyst, Citrine,
@@ -45,28 +48,26 @@ enum itemn : unsigned char {
 enum powern : unsigned char {
 	NoPower,
 	Magic1, Magic2, Magic3, Cursed, Delusion, Weakness,
-	ControlAnimals, ControlHumans, ControlPlants,
-	BaneLycanthrope, BaneMages, BaneDragons, BaneEnchanted, BaneRegenerated, BaneUndead,
-	AbjurePossession, AbjureScrying,
-	EnergyDrain, Flaming, Charming, Devouring,
-	DjinniSummoning, FireResistance, Invisibility,
+	Clairaudience, Clairvoyance,
+	ControlAnimals, ControlCharmed, ControlDragons, ControlGiants, ControlHumans,
+	ControlPlants, ControlPosession, ControlSpells, ControlUndead,
+	Appearance, Cancelation, Charming, Choking, Dancing, Devouring, Displacing, Draining,
+	Flaming, Flying, Frozing, Holding, Invisibility, Invocating, Leaping, Lighting, Microscoping, Mighty,
+	Opening, Poisoning, Petrification, Ravening, Scarying, Summoning, Speed, Striking, Thundering, Transformation,
+	Zooming,
+	FormBoat, FormTiger,
+	FoulCorruption, InfiniteSpells, SublimeHoliness,
 	Telekinesis, WaterWalking,
-	Regeneration, SpellStoring, SpellTurning,
-	Cancelation, Commanding, Healing, Power, Snakes, Striking, Thunderbolt, Lighting,
-	Wishes, WishesII, WishesIII,
+	Regeneration, SpellStoring,
+	Healing, Snakes,
+	Wishes, WishesII, WishesIII, Wizardy,
 };
 
 itemn get_ammo(itemn v);
 
-struct magici {
-	char		chance;
-	itemn		type;
-	powern		power;
-};
-
 struct itemi {
 	struct combati {
-		char	damage[3];
+		dice	damage;
 		char	ac;
 	};
 	itemn		parent;
