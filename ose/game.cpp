@@ -447,11 +447,14 @@ static void test_game() {
 void stringbuilder_custom(stringbuilder& sb, const char* id);
 
 void main_util();
+bool pass_test();
 
 void game_run() {
 	srand(rseed());
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
+	if(!pass_test())
+		return;
 #ifdef _DEBUG
 	main_util();
 #endif

@@ -57,7 +57,7 @@
 
 1788157251 /home/user-331/projects/bid/ose/gender.h
 
-1788261599 /home/user-331/projects/bid/ose/item.h
+1788264397 /home/user-331/projects/bid/ose/item.h
 	"dice.h"
 
 1788157251 /home/user-331/projects/bid/ose/spell.h
@@ -86,7 +86,7 @@
 
 1788244468 /home/user-331/projects/bid/atg//rand.h
 
-1788262159 source:/home/user-331/projects/bid/ose/game.cpp
+1788265405 source:/home/user-331/projects/bid/ose/game.cpp
 	"area.h"
 	"answers.h"
 	"bsdata.h"
@@ -129,7 +129,7 @@
 1788157250 /home/user-331/projects/bid/atg//stringvar.h
 	"stringbuilder.h"
 
-1788262059 source:/home/user-331/projects/bid/ose/item.cpp
+1788265907 source:/home/user-331/projects/bid/ose/item.cpp
 	"bsdata.h"
 	"creature.h"
 	"collectiona.h"
@@ -141,7 +141,7 @@
 	"slice.h"
 	"stringbuilder.h"
 
-1788245968 source:/home/user-331/projects/bid/ose/item_treasure.cpp
+1788265999 source:/home/user-331/projects/bid/ose/item_treasure.cpp
 	"area.h"
 	"item.h"
 	"rand.h"
@@ -154,7 +154,7 @@
 1788245232 source:/home/user-331/projects/bid/ose/itema.cpp
 	"itema.h"
 
-1788261276 source:/home/user-331/projects/bid/ose/locale_ru.cpp
+1788264955 source:/home/user-331/projects/bid/ose/locale_ru.cpp
 	"bsdata.h"
 	"area.h"
 	"creature.h"
@@ -588,4 +588,7 @@
 	"choose.h"
 
 1788157250 /home/user-331/projects/bid/atg/choose.h
+
+1788265538 source:/home/user-331/projects/bid/ose/testing.cpp
+	"item.h"
 

@@ -60,8 +60,10 @@ itemi item_data[LastItem + 1] = {
 	{HandAxe, Hands, 0, 0, FG(Melee), {{1, 6}}},
 	{Javelin, Hands, 0, 0, FG(Pierce) | FG(Thrown), {{1, 4}}},
 	{Spear, Hands, 0, 0, FG(Pierce) | FG(Thrown) | FG(Melee), {{1, 6}}},
+	{Trident, Hands, 0, 0, FG(Pierce) | FG(Slashing) | FG(Melee), {{1, 6}}},
 	{Staff, Hands, 0, 0, FG(Blunt) | FG(Slowest) | FG(Massive) | FG(Melee), {{1, 4}}},
 	{BattleAxe, Hands, 7 * gp, 0, FG(Slashing) | FG(Slowest) | FG(Massive) | FG(Melee), {{1, 8}}},
+	{WarHammer, Hands, 5 * gp, 0, FG(Blunt) | FG(Melee) | FG(Massive), {{1, 8}}},
 	{Mace, Hands, 5 * gp, 0, FG(Blunt) | FG(Melee), {{1, 6}}},
 	{ShortSword, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
 	{Sword, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
@@ -69,6 +71,7 @@ itemi item_data[LastItem + 1] = {
 	// Range weapons
 	{LongBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Arrow}},
 	{ShortBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Arrow}},
+	{Sling, Hands, 0, 0, FG(Range) | FG(Massive), {{1, 3}, 0, Bolt}},
 	{Crossbow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Bolt}},
 	// Armor
 	{LeatherArmor, Body, 20 * gp, 200, 0, {{}, 2}},
@@ -90,6 +93,7 @@ itemi item_data[LastItem + 1] = {
 	{CrystalBall, Backpack, 0, 0, 0, {}},
 	{Cube, Backpack, 0, 0, 0, {}},
 	{Decanter, Backpack, 0, 0, 0, {}},
+	{Deck, Backpack, 0, 0, 0, {}},
 	{Drums, Backpack, 0, 0, 0, {}},
 	{Dust, Backpack, 0, 0, 0, {}},
 	{Eyes, Backpack, 0, 0, 0, {}},
@@ -363,4 +367,18 @@ bool wearable::consume(itemn v) {
 		}
 	}
 	return false;
+}
+
+const char* test_item() {
+	if(item_data[WarHammer].parent!=WarHammer)
+		return "Not valid item for warhammer";
+	if(item_data[Cloack].parent!=Cloack)
+		return "Not valid item for Cloack";
+	if(item_data[Gauntlets].parent!=Gauntlets)
+		return "Not valid item for Gauntlets";
+	if(item_data[RawMeat].parent!=RawMeat)
+		return "Not valid item for RawMeat";
+	if(item_data[SignetRing].parent!=SignetRing)
+		return "Not valid item for SignetRing";
+	return 0;
 }
