@@ -66,19 +66,17 @@ enum powern : unsigned char {
 	Wishes, WishesII, WishesIII, XRays,
 };
 
-itemn get_ammo(itemn v);
-
 struct itemi {
 	struct combati {
 		dice	damage;
 		char	ac;
+		itemn	ammo;
 	};
 	itemn		parent;
 	wearn		wear;
 	int			cost, weight;
 	unsigned	flags; // damagen
 	combati		combat; // Only weapon or armor fill this
-	powern*		powers;
 	bool is(damagen v) const { return (flags & (1<<v))!=0; }
 };
 extern itemi item_data[LastItem+1];
@@ -86,9 +84,9 @@ extern itemi item_data[LastItem+1];
 struct item {
 	itemn type;
 	union {
-		unsigned char count;
+		unsigned short count;
 		struct {
-			unsigned char modification : 4; // 16 separate powers
+			unsigned char modification; // Powers. 0 - is no power.
 			unsigned char identified : 1;
 			unsigned char lost : 1; // Thrown in combat. Until end of scene item is unavailable.
 			unsigned char broken : 2; // 1-2 damaged, 3 is nearly to destroy
@@ -99,9 +97,10 @@ struct item {
 	item(itemn type, unsigned char count) : type(type), count(count) {}
 	explicit operator bool() const { return type != (itemn)0; }
 	const char* name() const;
-	itemn parent() const { return item_data[type].parent; }
 	creature* owner() const;
-	powern power() const;
+	itemn ammo() const { return item_data[type].combat.ammo; }
+	itemn parent() const { return item_data[type].parent; }
+	powern power() const { return countable() ? NoPower : (powern)modification; }
 	int getcount() const { return countable() ? count : 1; }
 	int cost() const { return item_data[type].cost * getcount(); }
 	int weight() const { return item_data[type].weight * getcount(); }
@@ -114,7 +113,7 @@ struct item {
 	bool is(damagen v) const { return item_data[type].is(v); }
 	void join(item& it);
 	bool native() const { return type <= LastNative; }
-	void set(powern v);
+	void set(powern v) { if(!countable()) modification = v; }
 };
 extern item* last_item;
 

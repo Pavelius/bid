@@ -14,8 +14,6 @@ const int ep = 50;
 const int gp = 100;
 const int pp = 500;
 
-const int mp = 16;
-
 BSDATAC(itemground, 4096)
 
 item* last_item;
@@ -44,8 +42,6 @@ static itemn random_jewelry[] = {SignetRing, SignetRing, SignetRing, SilverBrooc
 static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmor, ChainArmor, ChainArmor, PlateArmor, PlateArmor};
 static itemn random_swords[] = {ShortSword, ShortSword, Sword, Sword, Sword, TwohandedSword};
 
-static powern power_armor[mp] = {NoPower, Magic1, Magic2, Magic3, Cursed, Delusion};
-
 itemi item_data[LastItem + 1] = {
 	{Fist, Hands, 0, 0, FG(Melee), {{1, 2}}},
 	{Claws1d4, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 4}}},
@@ -68,9 +64,9 @@ itemi item_data[LastItem + 1] = {
 	{Sword, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
 	{TwohandedSword, Hands, 0, 0, FG(Slashing) | FG(Melee) | FG(Massive), {{1, 6}}},
 	// Range weapons
-	{LongBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}}},
-	{ShortBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}}},
-	{Crossbow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}}},
+	{LongBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Arrow}},
+	{ShortBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Arrow}},
+	{Crossbow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Bolt}},
 	// Armor
 	{LeatherArmor, Body, 20 * gp, 200, 0, {{}, 2}},
 	{ChainArmor, Body, 40 * gp, 400, 0, {{}, 4}},
@@ -173,12 +169,16 @@ itemi item_data[LastItem + 1] = {
 
 static int get_magic(powern v) {
 	switch(v) {
-	case Magic1: return 1;
-	case Magic2: return 2;
-	case Magic3: return 3;
-	case Cursed: return -1;
-	case Delusion: return -2;
-	default: return 0;
+	case Magic2:
+		return 2;
+	case Magic3:
+	case Defender: case Holiness: case Corruption:
+		return 3;
+	case Cursed:
+		return -1;
+	case Delusion:
+		return -2;
+	default: return 1;
 	}
 }
 
@@ -206,14 +206,6 @@ itemn get_ammo(itemn v) {
 		return Bolt;
 	default:
 		return (itemn)0;
-	}
-}
-
-static powern* get_power(itemn type) {
-	switch(type) {
-	case LeatherArmor: case ChainArmor: case PlateArmor: return power_armor;
-	case Shield: return power_armor;
-	default: return 0;
 	}
 }
 
@@ -278,18 +270,19 @@ void item::consume(messagen msg_broke, messagen msg_damage) {
 }
 
 void item::join(item& v) {
+	const unsigned max_count = 0xFFFF;
 	if(!operator bool()) {
 		*this = v;
 		v.clear();
 	} else {
 		if(type != v.type || !countable())
 			return;
-		if(count >= 255)
+		if(count >= max_count)
 			return;
 		int new_count = count + v.count;
-		if(new_count > 255) {
-			v.count = new_count - 255;
-			count = 255;
+		if(new_count > max_count) {
+			v.count = new_count - max_count;
+			count = max_count;
 		} else {
 			count = (unsigned char)new_count;
 			v.clear();
@@ -328,20 +321,6 @@ void item::drop(groundn ground, short unsigned index) {
 	p->index = index;
 	clear();
 	last_item = p;
-}
-
-powern item::power() const {
-	auto pi = get_power(type);
-	if(pi)
-		return pi[modification];
-	return NoPower;
-}
-
-void item::set(powern v) {
-	auto p = get_power(type);
-	if(!p)
-		return;
-	modification = 0;
 }
 
 bool wearable::isusable(const item& it) const {
