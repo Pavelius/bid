@@ -5,7 +5,7 @@
 extern "C" int rand(void);
 extern "C" void srand(unsigned seed); // Set random seed
 
-unsigned randomseed();
+unsigned rseed();
 
 inline int d20() { return 1 + rand() % 20; }
 inline int d4() { return 1 + rand() % 4; }

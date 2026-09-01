@@ -1,12 +1,16 @@
 #include "area.h"
 #include "bsdata.h"
+#include "collectiona.h"
 #include "creature.h"
 #include "dice.h"
 #include "draw_atg.h"
 #include "game.h"
 #include "math.h"
+#include "message.h"
 #include "stringbuilder.h"
 #include "stringvar.h"
+
+extern collectiona items;
 
 static void addv(stringbuilder& sb, const dice& v) {
 	sb.add("%1id%2i", v.c, v.d);
@@ -20,6 +24,44 @@ static void player_name(stringbuilder& sb) {
 
 static void item_name(stringbuilder& sb) {
 	sb.add(last_item->name());
+}
+
+static void item_collection(stringbuilder& sb) {
+	auto ps = sb.get();
+	auto index = 0;
+	auto last_index = items.getcount() - 1;
+	for(auto p : items.records<item>()) {
+		if(ps[0]) {
+			if(index==last_index)
+				sb.add(" %1 ", getname(MsgAnd));
+			else
+				sb.add(", ");
+		}
+		sb.add("%-1", p->namefull());
+		index++;
+	}
+}
+
+static void treasure_coins_name(stringbuilder& sb) {
+	auto coins_count = 0;
+	for(auto v : treasure_coins) {
+		if(v)
+			coins_count++;
+	}
+	auto ps = sb.get();
+	auto index = 0;
+	for(auto v : treasure_coins) {
+		if(!v)
+			continue;
+		if(ps[0]) {
+			if(index==coins_count-1)
+				sb.add(" %1 ", getname(MsgAnd));
+			else
+				sb.add(", ");
+		}
+		sb.add("%1i %-2", v, getname(messagen(CoinsCP+index)));
+		index++;
+	}
 }
 
 static void player_class(stringbuilder& sb) {
@@ -101,8 +143,10 @@ BSDATA(stringvari) = {
 	{"AreaSecond", area_second},
 	{"Class", player_class},
 	{"Item", item_name},
+	{"Items", item_collection},
 	{"Number", print_last_number},
 	{"Player", player_name},
+	{"TreasureCoins", treasure_coins_name},
 	{"Weapon", player_weapon},
 };
 BSDATAF(stringvari)

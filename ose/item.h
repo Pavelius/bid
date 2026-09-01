@@ -16,7 +16,7 @@ enum wearn : unsigned char {
 	Body, Head, Neck, Legs, Elbow, Hands, Offhand, LeftFinger, RightFinger, Ammunition,
 };
 enum groundn : unsigned char {
-	CharacterOwner, AreaOwner,
+	CharacterIndex, AreaIndex,
 };
 enum itemn : unsigned char {
 	Fist,
@@ -66,6 +66,8 @@ enum powern : unsigned char {
 	Wishes, WishesII, WishesIII, XRays,
 };
 
+extern bool need_update_items;
+
 struct itemi {
 	struct combati {
 		dice	damage;
@@ -97,15 +99,17 @@ struct item {
 	item(itemn type, unsigned char count) : type(type), count(count) {}
 	explicit operator bool() const { return type != (itemn)0; }
 	const char* name() const;
+	const char* namefull() const;
 	creature* owner() const;
 	itemn ammo() const { return item_data[type].combat.ammo; }
 	itemn parent() const { return item_data[type].parent; }
 	powern power() const { return countable() ? NoPower : (powern)modification; }
+	wearn wear() const { return item_data[type].wear; }
 	int getcount() const { return countable() ? count : 1; }
 	int cost() const { return item_data[type].cost * getcount(); }
 	int weight() const { return item_data[type].weight * getcount(); }
 	void act(messagen id) const;
-	void clear() { type = (itemn)0; count = 0; }
+	void clear() { type = (itemn)0; count = 0; need_update_items = true; }
 	void consume(messagen crush = (messagen)0, messagen damaged = (messagen)0);
 	bool countable() const { return type >= FirstCountable; }
 	bool damaged() const { return broken > 0; }
@@ -146,4 +150,6 @@ bool is_identified(const void* object);
 item some(itemn type, int count = 8);
 
 void add_magic_item(itemn type);
+void add_items(groundn ground, short unsigned index);
+void clear_items();
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual);

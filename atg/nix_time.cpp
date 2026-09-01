@@ -13,6 +13,6 @@ unsigned long getcputime() {
 	return clock()*10000/CLOCKS_PER_SEC;
 }
 
-unsigned randomseed() {
+unsigned rseed() {
     return time(0);
 }

@@ -1,6 +1,7 @@
 #include "area.h"
 #include "bsdata.h"
 #include "game.h"
+#include "item.h"
 #include "slice.h"
 #include "stringbuilder.h"
 
@@ -33,6 +34,10 @@ const char* area::name() const {
 	return getname(type);
 }
 
+short unsigned area::index() const {
+	return this - bsdata<area>::elements;
+}
+
 area* area::parent() const {
 	if(parent_id == 0xFFFF)
 		return 0;
@@ -52,4 +57,12 @@ int get_movement_modifier(arean type) {
 	case Sands: case Wastes: case Hills: return 67;
 	default: return 100;
 	}
+}
+
+void update_area_items() {
+	if(!need_update_items)
+		return;
+	clear_items();
+	add_items(AreaIndex, last_area->index());
+	need_update_items = false;
 }

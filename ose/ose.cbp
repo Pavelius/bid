@@ -98,8 +98,6 @@
 		<Unit filename="item.cpp" />
 		<Unit filename="item.h" />
 		<Unit filename="item_treasure.cpp" />
-		<Unit filename="itema.cpp" />
-		<Unit filename="itema.h" />
 		<Unit filename="locale_ru.cpp" />
 		<Unit filename="message.h" />
 		<Unit filename="monster.cpp" />

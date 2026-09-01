@@ -1,5 +1,5 @@
-#include "itema.h"
-#include "dice.h"
+#include "area.h"
+#include "item.h"
 #include "rand.h"
 #include "slice.h"
 
@@ -229,6 +229,12 @@ static const magici* find_magic(const magici* p, int index) {
 	return p;
 }
 
+static void add_item(item& it) {
+	if(!it)
+		return;
+	it.drop(AreaIndex, last_area->index());
+}
+
 static void add_magic_item(const magici* p, int result) {
 	p = find_magic(p, result);
 	if(!p || !p->type)
@@ -238,8 +244,7 @@ static void add_magic_item(const magici* p, int result) {
 		it.count = xrand(2, 12);
 	else
 		it.set(p->power);
-	if(it)
-		items.add(it);
+	add_item(it);
 }
 
 void add_magic_item(itemn type) {
@@ -271,7 +276,7 @@ static void add_item(itemn v) {
 	item it(v);
 	if(it.countable())
 		it.count = 1;
-	items.add(it);
+	add_item(it);
 }
 
 static void add_coins(itemn coin, const treasurei::record& e) {
@@ -302,7 +307,6 @@ static void add_items(itemn type, const treasurei::record& e) {
 }
 
 static void treasure_clear() {
-	items.clear();
 	memset(treasure_coins, 0, sizeof(treasure_coins));
 }
 

@@ -20,7 +20,6 @@ extern void* current_avatar;
 extern long current_avatar_post;
 extern fnevent atg_menu;
 
-void* make_player_move(const char* id, int count_left, int cancel_mode);
 void* choose_record(const char* id, const char* source_id, fnvisible allow = 0);
 
 bool allow_paint();

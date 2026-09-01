@@ -25,6 +25,7 @@ struct area {
 	flag32			flags;
 	constexpr explicit operator bool() const { return type!=NoArea; }
 	const char* name() const;
+	short unsigned index() const;
 	area* parent() const;
 	void clear();
 	bool is(areafn v) const { return flags.is(v); }
@@ -39,3 +40,4 @@ extern int move_distance;
 int get_movement_modifier(arean type);
 
 void create_area(arean id);
+void update_area_items();

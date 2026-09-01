@@ -1,5 +1,6 @@
 #include "bsdata.h"
 #include "creature.h"
+#include "collectiona.h"
 #include "dice.h"
 #include "draw_atg.h"
 #include "item.h"
@@ -15,8 +16,10 @@ const int gp = 100;
 const int pp = 500;
 
 BSDATAC(itemground, 4096)
+collectiona items;
 
 item* last_item;
+bool need_update_items;
 
 static itemn random_magic_basic[20] = {
 	RandomArmorOrShield, RandomArmorOrShield, RandomMisc,
@@ -198,35 +201,6 @@ itemn random(itemn v) {
 	}
 }
 
-itemn get_ammo(itemn v) {
-	switch(v) {
-	case ShortBow: case LongBow:
-		return Arrow;
-	case Crossbow:
-		return Bolt;
-	default:
-		return (itemn)0;
-	}
-}
-
-static wearn get_wear(itemn v) {
-	if(v >= Agate)
-		return Backpack;
-	else if(v >= Arrow)
-		return Ammunition;
-	else if(v >= Ration)
-		return Edible;
-	else if(v >= Shield)
-		return Offhand;
-	else if(v >= LeatherArmor)
-		return Body;
-	return Hands;
-}
-
-bool is_melee(itemn v) {
-	return v >= Dagger && v <= TwohandedSword;
-}
-
 bool is_cursed(const void* object) {
 	auto p = (item*)object;
 	auto n = p->power();
@@ -250,6 +224,18 @@ item some(itemn type, int count) {
 			v.count = 1;
 	}
 	return v;
+}
+
+void clear_items() {
+	items.clear();
+}
+
+void add_items(groundn ground, short unsigned index) {
+	for(auto& e : bsdata<itemground>()) {
+		if(!e || e.ground!=ground || e.index!=index)
+			continue;
+		items.add(&e);
+	}
 }
 
 void item::consume(messagen msg_broke, messagen msg_damage) {
@@ -299,6 +285,14 @@ const char* item::name() const {
 	return getname(type);
 }
 
+const char* item::namefull() const {
+	static char temp[256]; stringbuilder sb(temp); sb.clear();
+	sb.add(getname(type));
+	if(countable() && count > 1)
+		sb.adds("x%2i", name(), count);
+	return temp;
+}
+
 void item::act(messagen id) const {
 	auto push = last_item; last_item = const_cast<item*>(this);
 	sb.addsep(' ');
@@ -340,7 +334,7 @@ void wearable::add(item& it) {
 }
 
 bool wearable::equip(const item& it) {
-	auto slot = get_wear(it.type);
+	auto slot = it.wear();
 	if(slot > Ammunition)
 		return false;
 	if(wears[slot])
@@ -352,10 +346,10 @@ bool wearable::equip(const item& it) {
 
 void wearable::useammo() {
 	auto& weapon = wears[Hands];
-	auto pi = get_ammo(weapon.type);
+	auto pi = weapon.ammo();
 	if(!pi)
 		return;
-	if(wears[Ammunition].type != pi)
+	if(wears[Ammunition].parent() != pi)
 		return;
 	if(wears[Ammunition].count > 0)
 		wears[Ammunition].count--;

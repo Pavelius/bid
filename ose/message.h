@@ -2,6 +2,8 @@
 
 enum messagen : unsigned char {
 	GameTitle,
+	MsgAnd,
+	CoinsPl, CoinsCP, CoinsSP, CoinsEP, CoinsGP, CoinsPP,
 	PlayerCharged,
 	PlayerCriticalMiss, PlayerMiss, PlayerHit, PlayerCriticalHit, MsgDamage, MsgDamageAndDead,
 	PlayerStunned, PlayerSufferStarvation,

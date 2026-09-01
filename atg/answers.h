@@ -9,42 +9,39 @@ enum picturen : unsigned char;
 
 struct answers {
 	struct element {
-		long 		value;
+		long value, param;
 		const char* text;
-		int			weight;
 	};
 	char buffer[2048];
 	stringbuilder sc;
 	adat<element, 32> elements;
 	static const answers* last;
-	static bool			interactive;
-	static int			column_count;
-	static const char*	header;
-	static const char*	string;
-	static picturen		picture;
-	static bool			show_tips;
+	static bool	interactive;
+	static int column_count;
+	static const char* header;
+	static const char* string;
+	static picturen picture;
+	static bool show_tips;
 	answers() : sc(buffer) {}
 	constexpr operator bool() const { return elements.count != 0; }
-	void				add(long value, const char* name, ...);
-	void				addv(long value, const char* name, const char* format);
-	const element*		begin() const { return elements.data; }
-	element*			begin() { return elements.data; }
-	long				choose(const char* title = 0, const char* cancel_text = 0) const;
-	void				clear();
-	static int			compare(const void* v1, const void* v2);
-	const element*		end() const { return elements.end(); }
-	const element*		find(long value) const;
-	int					getcount() const { return elements.getcount(); }
-	const char*			getname(long v);
-	int					indexof(const void* v) const { return elements.indexof(v); }
-	bool				makeweight();
-	bool				modal(const char* title, const char* cancel) const;
-	void				paintanswers(fnabutton proc, int columns, const char* cancel_text) const;
-	long				random() const;
-	long				randomweight() const;
-	void				remove(int index) { elements.remove(index, 1); }
-	void				sort();
-	int					totalweight() const;
+	const element* begin() const { return elements.data; }
+	const element* end() const { return elements.end(); }
+	const element* find(long value) const;
+	element* begin() { return elements.data; }
+	static int compare(const void* v1, const void* v2);
+	const char* getname(long v);
+	int	getcount() const { return elements.getcount(); }
+	int	indexof(const void* v) const { return elements.indexof(v); }
+	void add(long value, const char* name, ...);
+	void addv(long value, const char* name, const char* format);
+	void addp(long value, long param, const char* text, ...);
+	void addpv(long value, long param, const char* text, const char* format);
+	long choose(const char* title = 0, const char* cancel_text = 0) const;
+	void clear();
+	void paintanswers(fnabutton proc, int columns, const char* cancel_text) const;
+	long random() const;
+	void remove(int index) { elements.remove(index, 1); }
+	void sort();
 };
 extern answers an;
 

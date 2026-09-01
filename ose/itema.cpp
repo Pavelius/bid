@@ -1,6 +1,6 @@
 #include "itema.h"
 
-itema items;
+// itema items;
 
 void itema::add(item& v) {
 	if(v.countable()) {

@@ -22,6 +22,7 @@ reactionn last_reaction;
 static variant last_result;
 
 extern collectiona creatures;
+extern collectiona items;
 
 template<> variant::variant(const area* p) : variant(AreaRef, p - bsdata<area>::elements) {}
 template<> variant::variant(const creature* p) : variant(CreatureRef, p - bsdata<creature>::elements) {}
@@ -66,9 +67,11 @@ long make_player_move(const char* cancel_text) {
 }
 
 void make_player_move(fnevent options_proc) {
+	auto p_console = sb.get();
 	pushvalue push(current_avatar_post, (long)ChangePlayer);
 	current_avatar = (void*)player;
 	while(true) {
+		sb.set(p_console);
 		an.clear();
 		options_proc();
 		last_result.u = (short unsigned)make_player_move();
@@ -242,6 +245,12 @@ static void check_movement() {
 	auto modifier = get_movement_modifier(last_area->type);
 	value = value * modifier / 100;
 	move_distance -= value;
+}
+
+static void take_items_options() {
+	update_area_items();
+	sb.add("Среди сундуков были горы разнообразных монет. В общей сложности вы насчитали %TreasureCoins монет. В куче монет вы заметили %Items.");
+	an.add(0, "Забрать все");
 }
 
 static void loot_enemies() {
@@ -427,9 +436,11 @@ static void test_game() {
 	raise_level(3);
 	join_party();
 	select_creatures();
-	// treasure_generate("A", true, false, false);
+	treasure_generate("A", true, false, false);
 	add_magic_item(RandomArmorOrShield);
 	add_magic_item(RandomMisc);
+	add_magic_item(RandomSword);
+	make_player_move(take_items_options);
 	adventure_move(50);
 }
 
@@ -438,7 +449,7 @@ void stringbuilder_custom(stringbuilder& sb, const char* id);
 void main_util();
 
 void game_run() {
-	srand(randomseed());
+	srand(rseed());
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
 #ifdef _DEBUG

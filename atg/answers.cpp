@@ -55,28 +55,33 @@ void answers::addv(long value, const char* text, const char* format) {
 	sc.addsz();
 }
 
+void answers::addpv(long value, long param, const char* text, const char* format) {
+	auto p = elements.add();
+	p->value = value;
+	p->text = sc.get();
+	sc.addv(text, format);
+	sc.addsz();
+}
+
 void answers::add(long value, const char* name, ...) {
 	XVA_FORMAT(name);
 	addv(value, name, format_param);
 }
 
-int	answers::totalweight() const {
+void answers::addp(long value, long param, const char* name, ...) {
+	XVA_FORMAT(name);
+	addpv(value, param, name, format_param);
+}
+
+/*int answers::totalweight() const {
 	auto n = 0;
 	for(auto& e : elements)
 		n += e.weight;
 	return n;
-}
+}*/
 
 void answers::sort() {
 	qsort(elements.data, elements.count, sizeof(elements.data[0]), compare);
-}
-
-bool answers::modal(const char* title, const char* cancel) const {
-	auto proc = (fnevent)choose(title, cancel);
-	if(!proc)
-		return false;
-	proc();
-	return true;
 }
 
 long answers::random() const {
@@ -85,7 +90,7 @@ long answers::random() const {
 	return elements.data[rand() % elements.count].value;
 }
 
-long answers::randomweight() const {
+/*long answers::randomweight() const {
 	if(!elements.count)
 		return 0;
 	auto n = totalweight();
@@ -98,7 +103,7 @@ long answers::randomweight() const {
 			return e.value;
 	}
 	return 0;
-}
+}*/
 
 const char* answers::getname(long v) {
 	for(auto& e : elements) {
@@ -127,7 +132,7 @@ long answers::choose(const char* title, const char* cancel_text) const {
 	return choose_answers(title, cancel_text, columns);
 }
 
-bool answers::makeweight() {
+/*bool answers::makeweight() {
 	auto ps = elements.begin();
 	for(auto& e : *this) {
 		if(!e.weight)
@@ -138,7 +143,7 @@ bool answers::makeweight() {
 		return false;
 	elements.count = ps - elements.data;
 	return true;
-}
+}*/
 
 const answers::element* answers::find(long value) const {
 	for(auto& e : elements) {
