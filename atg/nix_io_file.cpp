@@ -8,6 +8,10 @@ void printcnv(const char* text) {
    fwrite(text, 1, zlen(text), stdout);
 }
 
+void printdbg(const char* text) {
+   fwrite(text, 1, zlen(text), stderr);
+}
+
 io::file::file() : handle(0) {
 }
 

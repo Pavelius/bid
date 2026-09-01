@@ -32,6 +32,7 @@ enum itemn : unsigned char {
 	Jug, Mirror, Net, Oil, Pearl, Pipe, Robe, Rope, Saw, Scarab, Spade,
 	BluePotion, GreenPotion, RedPotion, Bottle,
 	SilverRing, GoldRing, JeweledRing,
+	ArcaneScroll, DivineScroll,
 	Ration, RawMeat, Mushrooms, Herbs, Berry,
 	Arrow, ArrowM1, ArrowM2, Bolt, BoltM1, BoltM2,
 	Agate, Malachite, LapisLazuli, Amethyst, Citrine,

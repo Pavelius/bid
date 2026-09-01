@@ -44,6 +44,8 @@ static itemn random_expensive_gems[] = {Ruby, Diamond, PinkDiamond};
 static itemn random_jewelry[] = {SignetRing, SignetRing, SignetRing, SilverBrooch, SilverBrooch, StrangeIdol};
 static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmor, ChainArmor, ChainArmor, PlateArmor, PlateArmor};
 static itemn random_swords[] = {ShortSword, ShortSword, Sword, Sword, Sword, TwohandedSword};
+static itemn random_rings[] = {SilverRing, SilverRing, SilverRing, GoldRing, GoldRing, JeweledRing};
+static itemn random_scrolls[] = {ArcaneScroll, ArcaneScroll, ArcaneScroll, DivineScroll};
 
 itemi item_data[LastItem + 1] = {
 	{Fist, Hands, 0, 0, FG(Melee), {{1, 2}}},
@@ -129,6 +131,9 @@ itemi item_data[LastItem + 1] = {
 	{SilverRing, LeftFinger, 0, 0, 0, {}},
 	{GoldRing, LeftFinger, 0, 0, 0, {}},
 	{JeweledRing, LeftFinger, 0, 0, 0, {}},
+	// Scrolls
+	{ArcaneScroll, Backpack},
+	{DivineScroll, Backpack},
 	// Edible (Countable start here)
 	{Ration, Edible, 0, 0, 0, {}},
 	{RawMeat, Edible, 0, 0, 0, {}},
@@ -201,6 +206,8 @@ itemn random(itemn v) {
 	case RandomPreciousGem: return random(maprnd(random_precious_gems));
 	case RandomSemiPreciousGem: return random(maprnd(random_semi_precious_gems));
 	case RandomSword: return random(maprnd(random_swords));
+	case RandomRing: return random(maprnd(random_rings));
+	case RandomScroll: return random(maprnd(random_scrolls));
 	default: return v;
 	}
 }

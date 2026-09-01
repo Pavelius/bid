@@ -8,6 +8,7 @@
 #include "draw_atg.h"
 #include "game.h"
 #include "message.h"
+#include "print.h"
 #include "pushvalue.h"
 #include "rand.h"
 #include "stringbuilder.h"
@@ -437,9 +438,7 @@ static void test_game() {
 	join_party();
 	select_creatures();
 	treasure_generate("A", true, false, false);
-	add_magic_item(RandomArmorOrShield);
-	add_magic_item(RandomMisc);
-	add_magic_item(RandomSword);
+	// add_magic_item(RandomMagicItem);
 	make_player_move(take_items_options);
 	adventure_move(50);
 }
@@ -451,6 +450,7 @@ bool pass_test();
 
 void game_run() {
 	srand(rseed());
+	// srand(12381);
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
 	if(!pass_test())

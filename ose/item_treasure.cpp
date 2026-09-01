@@ -238,6 +238,7 @@ static magici magic_weapons[] = {
 	{99, WarHammer, Flying},
 	{100, WarHammer, Thundering},
 };
+
 static magici* table_magic_misc[] = {magic_misc1, magic_misc2};
 
 int treasure_coins[PP - CP + 1];
@@ -285,6 +286,12 @@ void add_magic_item(itemn type) {
 	case RandomWeapon:
 		add_magic_item(magic_weapons, result);
 		break;
+	case RandomMagicItemNoWeapon:
+		add_magic_item(magic_weapons, result);
+		break;
+/*	case RandomMagicItem:
+		add_magic_item(maprnd(random_magic_basic));
+		break;*/
 	default:
 		// Nothing to do
 		break;
