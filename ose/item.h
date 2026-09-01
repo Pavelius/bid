@@ -142,6 +142,7 @@ struct wearable {
 extern int treasure_coins[PP - CP + 1];
 
 itemn random(itemn v);
+itemn random_basic(itemn v);
 
 bool is_cursed(const void* object);
 bool is_damaged(const void* object);

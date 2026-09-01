@@ -289,11 +289,7 @@ void add_magic_item(itemn type) {
 	case RandomMagicItemNoWeapon:
 		add_magic_item(magic_weapons, result);
 		break;
-/*	case RandomMagicItem:
-		add_magic_item(maprnd(random_magic_basic));
-		break;*/
 	default:
-		// Nothing to do
 		break;
 	}
 }
@@ -332,6 +328,20 @@ static void add_items(itemn type, const treasurei::record& e) {
 		add_item(random(type));
 }
 
+static void add_magic_items(itemn type, const treasurei::record& e) {
+	if(!type)
+		return;
+	if(!e.chance)
+		return;
+	if(e.chance < 100) {
+		if(d100() >= e.chance)
+			return;
+	}
+	auto count = e.range.roll();
+	for(auto i = 0; i < count; i++)
+		add_magic_item(random_basic(type));
+}
+
 static void treasure_clear() {
 	memset(treasure_coins, 0, sizeof(treasure_coins));
 }
@@ -346,11 +356,11 @@ static void treasure_generate(const treasurei& e) {
 	add_coins(PP, e.pp);
 	add_items(RandomGem, e.gems);
 	add_items(RandomJewelry, e.jewelry);
-	add_items((itemn)e.magic.multiplier, e.magic);
+	add_magic_items((itemn)e.magic.multiplier, e.magic);
 	if(e.additional)
-		add_item(random(e.additional));
+		add_magic_item(random_basic(e.additional));
 	if(e.additional2)
-		add_item(random(e.additional2));
+		add_magic_item(random_basic(e.additional2));
 }
 
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual) {

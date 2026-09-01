@@ -227,6 +227,14 @@ itemn random(itemn v) {
 	}
 }
 
+itemn random_basic(itemn v) {
+	switch(v) {
+	case RandomMagicItem: return random_basic(maprnd(random_magic_basic));
+	case RandomMagicItemNoWeapon: return random_basic(maprnd(random_magic_item_no_weapon));
+	default: return v;
+	}
+}
+
 bool is_cursed(const void* object) {
 	auto p = (item*)object;
 	auto n = p->power();

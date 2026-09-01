@@ -26,9 +26,7 @@ enum alignmentn : unsigned char {
 	Lawful, Neutrality, Chaotic
 };
 enum classn : unsigned char {
-	Monster,
-	Fighter, Cleric, Theif, MagicUser,
-	Human, Halfling, Dwarf, Elf,
+	Monster, Fighter, Cleric, Theif, MagicUser, Halfling, Dwarf, Elf, Human,
 	BearGrizzly, Boar, CatPanther, CatTiger, DogWild, FrogMutant, FrogPoison, Hawk,
 	LizardGecko, LizardTuatara, SnakePitViper, SpiderCrab, SpiderPhase, ToadPoisonous, Unicorn,
 	Wolf, WolfDire,
