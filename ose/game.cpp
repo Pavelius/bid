@@ -450,7 +450,7 @@ bool pass_test();
 
 void game_run() {
 	srand(rseed());
-	// srand(12381);
+	// srand(1281);
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
 	if(!pass_test())

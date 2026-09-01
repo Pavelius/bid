@@ -29,6 +29,12 @@ static itemn random_magic_basic[20] = {
 	RandomSword, RandomSword, RandomSword, RandomSword,
 	RandomWeapon, RandomWeapon,
 };
+static itemn random_magic_item_no_weapon[20] = {
+	RandomMisc,
+	RandomPotion, RandomPotion, RandomPotion, RandomPotion, RandomPotion,
+	RandomRing, RandomRodStaffWand,
+	RandomScroll, RandomScroll, RandomScroll, RandomScroll
+};
 static itemn random_gems[20] = {
 	RandomOrnamentalGem, RandomOrnamentalGem, RandomOrnamentalGem, RandomOrnamentalGem,
 	RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem, RandomSemiPreciousGem,
@@ -42,10 +48,16 @@ static itemn random_precious_gems[] = {Opal, Tanzanite, Spinel, Alexandrite};
 static itemn random_good_gems[] = {ParaibaTourmaline, Sapphire, Emerald};
 static itemn random_expensive_gems[] = {Ruby, Diamond, PinkDiamond};
 static itemn random_jewelry[] = {SignetRing, SignetRing, SignetRing, SilverBrooch, SilverBrooch, StrangeIdol};
+static itemn random_misc[] = {Amulet, Bag, Book, Rope, Robe, Carpet, Mirror, Net, Horseshoes};
 static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmor, ChainArmor, ChainArmor, PlateArmor, PlateArmor};
+static itemn random_armor_or_shield[] = {RandomArmor, RandomArmor, RandomArmor, Shield};
 static itemn random_swords[] = {ShortSword, ShortSword, Sword, Sword, Sword, TwohandedSword};
-static itemn random_rings[] = {SilverRing, SilverRing, SilverRing, GoldRing, GoldRing, JeweledRing};
+static itemn random_potions[] = {Potion};
+static itemn random_rings[] = {Ring};
 static itemn random_scrolls[] = {ArcaneScroll, ArcaneScroll, ArcaneScroll, DivineScroll};
+static itemn random_range_weapons[] = {ShortBow, ShortBow, ShortBow, LongBow, LongBow, Crossbow, Sling};
+static itemn random_weapons[] = {Dagger, Dagger, HandAxe, HandAxe, Javelin, Spear, Spear, Spear, Trident, Staff, BattleAxe, WarHammer, Mace, RandomRangeWeapon, RandomRangeWeapon};
+static itemn random_rod_staff_wand[] = {Rod, Staff, Staff, Staff, Wand, Wand};
 
 itemi item_data[LastItem + 1] = {
 	{Fist, Hands, 0, 0, FG(Melee), {{1, 2}}},
@@ -122,16 +134,12 @@ itemi item_data[LastItem + 1] = {
 	{Saw, Backpack, 0, 0, 0, {}},
 	{Scarab, Backpack, 0, 0, 0, {}},
 	{Spade, Backpack, 0, 0, 0, {}},
-	// Drinkable
-	{BluePotion, Backpack, 0, 0, 0, {}},
-	{GreenPotion, Backpack, 0, 0, 0, {}},
-	{RedPotion, Backpack, 0, 0, 0, {}},
+	// Other items
+	{Potion, Backpack, 0, 0, 0, {}},
 	{Bottle, Backpack, 0, 0, 0, {}},
-	// Ring
-	{SilverRing, LeftFinger, 0, 0, 0, {}},
-	{GoldRing, LeftFinger, 0, 0, 0, {}},
-	{JeweledRing, LeftFinger, 0, 0, 0, {}},
-	// Scrolls
+	{Ring, LeftFinger, 0, 0, 0, {}},
+	{Rod, Hands, 0, 0, 0, {}},
+	{Wand, Hands, 0, 0, 0, {}},
 	{ArcaneScroll, Backpack},
 	{DivineScroll, Backpack},
 	// Edible (Countable start here)
@@ -196,18 +204,25 @@ static int get_magic(powern v) {
 
 itemn random(itemn v) {
 	switch(v) {
-	case RandomArmor: return random(maprnd(random_armor));
-	case RandomExpensiveGem: return random(maprnd(random_expensive_gems));
-	case RandomGem: return random(maprnd(random_gems));
+	case RandomGem: return random(maprnd(random_gems)); // Gems and jewelry
+	case RandomOrnamentalGem: return random(maprnd(random_ornamental_gems));
+	case RandomSemiPreciousGem: return random(maprnd(random_semi_precious_gems));
+	case RandomPreciousGem: return random(maprnd(random_precious_gems));
 	case RandomGoodGem: return random(maprnd(random_good_gems));
+	case RandomExpensiveGem: return random(maprnd(random_expensive_gems));
 	case RandomJewelry: return random(maprnd(random_jewelry));
 	case RandomMagicItem: return random(maprnd(random_magic_basic));
-	case RandomOrnamentalGem: return random(maprnd(random_ornamental_gems));
-	case RandomPreciousGem: return random(maprnd(random_precious_gems));
-	case RandomSemiPreciousGem: return random(maprnd(random_semi_precious_gems));
-	case RandomSword: return random(maprnd(random_swords));
+	case RandomMagicItemNoWeapon: return random(maprnd(random_magic_item_no_weapon));
+	case RandomArmorOrShield: return random(maprnd(random_armor_or_shield));
+	case RandomArmor: return random(maprnd(random_armor));
+	case RandomMisc: return random(maprnd(random_misc));
 	case RandomRing: return random(maprnd(random_rings));
+	case RandomRodStaffWand: return random(maprnd(random_rod_staff_wand));
 	case RandomScroll: return random(maprnd(random_scrolls));
+	case RandomSword: return random(maprnd(random_swords));
+	case RandomWeapon: return random(maprnd(random_weapons));
+	case RandomPotion: return random(maprnd(random_potions));
+	case RandomRangeWeapon: return random(maprnd(random_range_weapons));
 	default: return v;
 	}
 }
@@ -387,5 +402,7 @@ const char* test_item() {
 		return "Not valid item for RawMeat";
 	if(item_data[SignetRing].parent!=SignetRing)
 		return "Not valid item for SignetRing";
+	if(item_data[PP].parent != PP)
+		return "Not valid item for PP";
 	return 0;
 }
