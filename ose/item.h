@@ -33,7 +33,7 @@ enum itemn : unsigned char {
 	BluePotion, GreenPotion, RedPotion, Bottle,
 	SilverRing, GoldRing, JeweledRing,
 	Ration, RawMeat, Mushrooms, Herbs, Berry,
-	Arrow, Bolt,
+	Arrow, ArrowM1, ArrowM2, Bolt, BoltM1, BoltM2,
 	Agate, Malachite, LapisLazuli, Amethyst, Citrine,
 	Garnet, Peridot, Aquamarine, Tourmaline, Topaz,
 	Opal, Tanzanite, Spinel, Alexandrite, ParaibaTourmaline,
@@ -62,7 +62,7 @@ enum powern : unsigned char {
 	Corruption, Wizardy, Holiness,
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring,
-	Healing, Snakes, Wounding, Venger, Vorpal, Defender,
+	Accuracy, Distance, Healing, Snakes, Wounding, Venger, Vorpal, Defender,
 	Wishes, WishesII, WishesIII, XRays,
 };
 

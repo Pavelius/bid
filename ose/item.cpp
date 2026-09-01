@@ -46,47 +46,47 @@ static itemn random_swords[] = {ShortSword, ShortSword, Sword, Sword, Sword, Two
 
 static powern power_armor[mp] = {NoPower, Magic1, Magic2, Magic3, Cursed, Delusion};
 
-itemi item_data[LastItem+1] = {
+itemi item_data[LastItem + 1] = {
 	{Fist, Hands, 0, 0, FG(Melee), {{1, 2}}},
-	{Claws1d4, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 4}}},
-	{Claws1d4, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
-	{Claws1d4, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 8}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{1, 6}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{1, 8}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{1, 12}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{2, 6}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce)|FG(Melee), {{2, 8}}},
+	{Claws1d4, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 4}}},
+	{Claws1d4, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
+	{Claws1d4, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 8}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{1, 6}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{1, 8}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{1, 12}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{2, 6}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{2, 8}}},
 	// Melee weapons
-	{Dagger, Hands, 0, 0, FG(Pierce)|FG(Slashing)|FG(Melee), {{1, 4}}},
+	{Dagger, Hands, 0, 0, FG(Pierce) | FG(Slashing) | FG(Melee), {{1, 4}}},
 	{HandAxe, Hands, 0, 0, FG(Melee), {{1, 6}}},
-	{Javelin, Hands, 0, 0, FG(Pierce)|FG(Thrown), {{1, 4}}},
-	{Spear, Hands, 0, 0, FG(Pierce)|FG(Thrown)|FG(Melee), {{1, 6}}},
-	{Staff, Hands, 0, 0, FG(Blunt)|FG(Slowest)|FG(Massive)|FG(Melee), {{1, 4}}},
-	{BattleAxe, Hands, 7*gp, 0, FG(Slashing)|FG(Slowest)|FG(Massive)|FG(Melee), {{1, 8}}},
-	{Mace, Hands, 5*gp, 0, FG(Blunt)|FG(Melee), {{1, 6}}},
-	{ShortSword, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
-	{Sword, Hands, 0, 0, FG(Slashing)|FG(Melee), {{1, 6}}},
-	{TwohandedSword, Hands, 0, 0, FG(Slashing)|FG(Melee)|FG(Massive), {{1, 6}}},
+	{Javelin, Hands, 0, 0, FG(Pierce) | FG(Thrown), {{1, 4}}},
+	{Spear, Hands, 0, 0, FG(Pierce) | FG(Thrown) | FG(Melee), {{1, 6}}},
+	{Staff, Hands, 0, 0, FG(Blunt) | FG(Slowest) | FG(Massive) | FG(Melee), {{1, 4}}},
+	{BattleAxe, Hands, 7 * gp, 0, FG(Slashing) | FG(Slowest) | FG(Massive) | FG(Melee), {{1, 8}}},
+	{Mace, Hands, 5 * gp, 0, FG(Blunt) | FG(Melee), {{1, 6}}},
+	{ShortSword, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
+	{Sword, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
+	{TwohandedSword, Hands, 0, 0, FG(Slashing) | FG(Melee) | FG(Massive), {{1, 6}}},
 	// Range weapons
-	{LongBow, Hands, 0, 0, FG(Slashing)|FG(Range)|FG(Massive), {{1, 6}}},
-	{ShortBow, Hands, 0, 0, FG(Slashing)|FG(Range)|FG(Massive), {{1, 6}}},
-	{Crossbow, Hands, 0, 0, FG(Slashing)|FG(Range)|FG(Massive), {{1, 6}}},
+	{LongBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}}},
+	{ShortBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}}},
+	{Crossbow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}}},
 	// Armor
-	{LeatherArmor, Body, 20*gp, 200, 0, {{}, 2}},
-	{ChainArmor, Body, 40*gp, 400, 0, {{}, 4}},
-	{PlateArmor, Body, 60*gp, 500, 0, {{}, 6}},
-	{Shield, Offhand, 10*gp, 0, 0, {{}, 1}},
+	{LeatherArmor, Body, 20 * gp, 200, 0, {{}, 2}},
+	{ChainArmor, Body, 40 * gp, 400, 0, {{}, 4}},
+	{PlateArmor, Body, 60 * gp, 500, 0, {{}, 6}},
+	{Shield, Offhand, 10 * gp, 0, 0, {{}, 1}},
 	// Miscelaneous items
-	{Apparatus, Backpack, 1000*gp, 0, 0, {}},
-	{Amulet, Neck, 20*gp, 0, 0, {}},
-	{Bag, Backpack, 20*gp, 0, 0, {}},
-	{Book, Backpack, 50*gp, 0, 0, {}},
-	{Boots, Legs, 3*gp, 0, 0, {}},
-	{Bracers, Elbow, 5*gp, 0, 0, {}},
-	{Brooch, Head, 2*gp, 0, 0, {}},
-	{Broom, Backpack, 2*gp, 0, 0, {}},
-	{Candle, Backpack, 2*gp, 0, 0, {}},
-	{Chime, Backpack, 2*gp, 0, 0, {}},
+	{Apparatus, Backpack, 1000 * gp, 0, 0, {}},
+	{Amulet, Neck, 20 * gp, 0, 0, {}},
+	{Bag, Backpack, 20 * gp, 0, 0, {}},
+	{Book, Backpack, 50 * gp, 0, 0, {}},
+	{Boots, Legs, 3 * gp, 0, 0, {}},
+	{Bracers, Elbow, 5 * gp, 0, 0, {}},
+	{Brooch, Head, 2 * gp, 0, 0, {}},
+	{Broom, Backpack, 2 * gp, 0, 0, {}},
+	{Candle, Backpack, 2 * gp, 0, 0, {}},
+	{Chime, Backpack, 2 * gp, 0, 0, {}},
 	{Cloack, Backpack, 0, 0, 0, {}},
 	{CrystalBall, Backpack, 0, 0, 0, {}},
 	{Cube, Backpack, 0, 0, 0, {}},
@@ -134,7 +134,11 @@ itemi item_data[LastItem+1] = {
 	{Berry, Edible, 0, 0, 0, {}},
 	// Ammunitions
 	{Arrow, Ammunition, 0, 0, 0, {}},
+	{Arrow, Ammunition, 0, 0, 0, {0, 0, 1, 1}},
+	{Arrow, Ammunition, 0, 0, 0, {0, 0, 2, 2}},
 	{Bolt, Ammunition, 0, 0, 0, {}},
+	{Bolt, Ammunition, 0, 0, 0, {0, 0, 1, 1}},
+	{Bolt, Ammunition, 0, 0, 0, {0, 0, 2, 2}},
 	// Gems and precious
 	{Agate, Backpack, 0, 0, 0, {}},
 	{Malachite, Backpack, 0, 0, 0, {}},
@@ -234,7 +238,7 @@ bool is_melee(itemn v) {
 bool is_cursed(const void* object) {
 	auto p = (item*)object;
 	auto n = p->power();
-	return (n==Cursed || n==Weakness || n==Delusion);
+	return (n == Cursed || n == Weakness || n == Delusion);
 }
 
 bool is_damaged(const void* object) {
@@ -248,7 +252,7 @@ bool is_identified(const void* object) {
 item some(itemn type, int count) {
 	item v(type);
 	if(v.countable()) {
-		if(count>1)
+		if(count > 1)
 			v.count = xrand(imax(1, count / 2), count);
 		else
 			v.count = 1;

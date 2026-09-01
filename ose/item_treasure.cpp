@@ -200,6 +200,25 @@ static magici magic_swords[] = {
 	{99, RandomSword, Defender},
 	{100, RandomSword, Holiness},
 };
+static magici magic_weapons[] = {
+	{12, ArrowM1},
+	{15, ArrowM2},
+	{19, HandAxe, Magic1},
+	{21, HandAxe, Magic2},
+	{24, LongBow, Magic1},
+	{25, Crossbow, Distance},
+	{26, Crossbow, Speed},
+	{27, Crossbow, Accuracy},
+	{31, BoltM1},
+	{36, BoltM2},
+	{39, Dagger, Magic1},
+	{40, Dagger, Transformation},
+	{41, Dagger, Flying},
+	{42, Dagger, Poisoning},
+	{45, Dagger, ControlGoblinoid},
+	{46, Dagger, Mighty},
+	{50, Javelin, Lighting},
+};
 static magici* table_magic_misc[] = {magic_misc1, magic_misc2};
 
 int treasure_coins[PP - CP + 1];
@@ -215,7 +234,10 @@ static void add_magic_item(const magici* p, int result) {
 	if(!p || !p->type)
 		return;
 	item it(random(p->type));
-	it.set(p->power);
+	if(it.countable())
+		it.count = xrand(2, 12);
+	else
+		it.set(p->power);
 	if(it)
 		items.add(it);
 }
@@ -235,6 +257,9 @@ void add_magic_item(itemn type) {
 		break;
 	case RandomSword:
 		add_magic_item(magic_swords, result);
+		break;
+	case RandomWeapon:
+		add_magic_item(magic_weapons, result);
 		break;
 	default:
 		// Nothing to do
