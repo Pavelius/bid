@@ -42,6 +42,7 @@ static itemn random_good_gems[] = {ParaibaTourmaline, Sapphire, Emerald};
 static itemn random_expensive_gems[] = {Ruby, Diamond, PinkDiamond};
 static itemn random_jewelry[] = {SignetRing, SignetRing, SignetRing, SilverBrooch, SilverBrooch, StrangeIdol};
 static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmor, ChainArmor, ChainArmor, PlateArmor, PlateArmor};
+static itemn random_swords[] = {ShortSword, ShortSword, Sword, Sword, Sword, TwohandedSword};
 
 static powern power_armor[mp] = {NoPower, Magic1, Magic2, Magic3, Cursed, Delusion};
 
@@ -179,15 +180,16 @@ static int get_magic(powern v) {
 
 itemn random(itemn v) {
 	switch(v) {
-	case RandomGem: return random(maprnd(random_gems));
-	case RandomOrnamentalGem: return random(maprnd(random_ornamental_gems));
-	case RandomSemiPreciousGem: return random(maprnd(random_semi_precious_gems));
-	case RandomPreciousGem: return random(maprnd(random_precious_gems));
-	case RandomGoodGem: return random(maprnd(random_good_gems));
+	case RandomArmor: return random(maprnd(random_armor));
 	case RandomExpensiveGem: return random(maprnd(random_expensive_gems));
+	case RandomGem: return random(maprnd(random_gems));
+	case RandomGoodGem: return random(maprnd(random_good_gems));
 	case RandomJewelry: return random(maprnd(random_jewelry));
 	case RandomMagicItem: return random(maprnd(random_magic_basic));
-	case RandomArmor: return random(maprnd(random_armor));
+	case RandomOrnamentalGem: return random(maprnd(random_ornamental_gems));
+	case RandomPreciousGem: return random(maprnd(random_precious_gems));
+	case RandomSemiPreciousGem: return random(maprnd(random_semi_precious_gems));
+	case RandomSword: return random(maprnd(random_swords));
 	default: return v;
 	}
 }

@@ -82,9 +82,9 @@ static magici magic_misc1[] = {
 	{12, Bag, Devouring},
 	{17, Bag, Holding},
 	{18, Bag, Transformation},
-	{19, Book, FoulCorruption},
-	{20, Book, InfiniteSpells},
-	{21, Book, SublimeHoliness},
+	{19, Book, Corruption},
+	{20, Book, Wizardy},
+	{21, Book, Holiness},
 	{22, Boots, Dancing},
 	{27, Boots, Flying},
 	{31, Boots, Speed},
@@ -153,7 +153,7 @@ static magici magic_rings[] = {
 	{26, SilverRing, Delusion},
 	{29, GoldRing, Summoning},
 	{39, SilverRing, Flaming},
-	{50, GoldRing, Invisibility},
+	{50, JeweledRing, Invisibility},
 	{55, SilverRing, Magic1},
 	{70, SilverRing, Magic2},
 	{72, JeweledRing, Regeneration},
@@ -166,6 +166,39 @@ static magici magic_rings[] = {
 	{97, JeweledRing, WishesII},
 	{98, JeweledRing, WishesIII},
 	{100, GoldRing, XRays}
+};
+static magici magic_swords[] = {
+	{3, ShortSword, Quickness},
+	{9, RandomSword, Cursed},
+	{12, RandomSword, Delusion},
+	{28, RandomSword, Magic1},
+	{31, RandomSword, ControlPosession},
+	{34, RandomSword, ControlSpells},
+	{37, RandomSword, ControlDragons},
+	{40, RandomSword, ControlCharmed},
+	{46, RandomSword, ControlGoblinoid},
+	{52, RandomSword, ControlUndead},
+	{55, RandomSword, ControlDragons},
+	{56, RandomSword, Draining},
+	{59, RandomSword, Flaming},
+	{61, RandomSword, Frozing},
+	{64, RandomSword, ControlGiants},
+	{69, RandomSword, Lighting},
+	{71, RandomSword, Locating},
+	{72, RandomSword, Luck},
+	{73, RandomSword, Sharpness},
+	{78, RandomSword, Sun},
+	{79, RandomSword, Wishes},
+	{80, RandomSword, Wounding},
+	{85, RandomSword, Magic2},
+	{87, RandomSword, Charming},
+	{88, RandomSword, Dancing},
+	{89, RandomSword, Devouring},
+	{94, RandomSword, Venger},
+	{95, RandomSword, Vorpal},
+	{98, RandomSword, Magic3},
+	{99, RandomSword, Defender},
+	{100, RandomSword, Holiness},
 };
 static magici* table_magic_misc[] = {magic_misc1, magic_misc2};
 
@@ -199,6 +232,9 @@ void add_magic_item(itemn type) {
 		break;
 	case RandomRing:
 		add_magic_item(magic_rings, result);
+		break;
+	case RandomSword:
+		add_magic_item(magic_swords, result);
 		break;
 	default:
 		// Nothing to do
