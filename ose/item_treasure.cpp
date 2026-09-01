@@ -145,6 +145,23 @@ static magici magic_potions[] = {
 	{22, Potion, ControlPlants},
 	{25, Potion, ControlUndead},
 	{32, Potion, Delusion},
+	{35, Potion, Diminution},
+	{39, Potion, ESP},
+	{43, Potion, Flaming},
+	{47, Potion, Flying},
+	{51, Potion, GaseousForm},
+	{55, Potion, Mighty},
+	{59, Potion, Growth},
+	{63, Potion, Healing},
+	{68, Potion, Heroism},
+	{72, Potion, Invisibility},
+	{76, Potion, Invulnerability},
+	{80, Potion, Levitation},
+	{84, Potion, Longevity},
+	{86, Potion, Poisoning},
+	{89, Potion, Transformation},
+	{97, Potion, Speed},
+	{00, Potion, TreasureFinding},
 };
 static magici magic_rings[] = {
 	{5, Ring, ControlAnimals},
@@ -238,6 +255,10 @@ static magici magic_weapons[] = {
 	{99, WarHammer, Flying},
 	{100, WarHammer, Thundering},
 };
+static magici magic_rod_staff_wands[] = {
+	{5, Rod, ControlSpells},
+	{11, Rod, Cancelation},
+};
 
 static magici* table_magic_misc[] = {magic_misc1, magic_misc2};
 
@@ -285,6 +306,9 @@ void add_magic_item(itemn type) {
 		break;
 	case RandomWeapon:
 		add_magic_item(magic_weapons, result);
+		break;
+	case RandomPotion:
+		add_magic_item(magic_potions, result);
 		break;
 	case RandomMagicItemNoWeapon:
 		add_magic_item(magic_weapons, result);
