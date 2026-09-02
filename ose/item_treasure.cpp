@@ -261,7 +261,7 @@ static magici magic_rod_staff_wands[] = {
 	{15, Rod, Parrying},
 	{16, Rod, Ressurection},
 	{17, Rod, Striking},
-	{18, Staff, Commanding},
+	{18, Staff, ControlAnimals},
 	{20, Staff, Dispelling},
 	{26, Staff, Healing},
 	{27, Staff, Power},

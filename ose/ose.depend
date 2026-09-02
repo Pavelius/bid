@@ -58,7 +58,7 @@
 
 1788157251 /home/user-331/projects/bid/ose/gender.h
 
-1788354359 /home/user-331/projects/bid/ose/item.h
+1788359863 /home/user-331/projects/bid/ose/item.h
 	"dice.h"
 
 1788157251 /home/user-331/projects/bid/ose/spell.h
@@ -87,7 +87,7 @@
 
 1788244468 /home/user-331/projects/bid/atg//rand.h
 
-1788346031 source:/home/user-331/projects/bid/ose/game.cpp
+1788360023 source:/home/user-331/projects/bid/ose/game.cpp
 	"area.h"
 	"answers.h"
 	"bsdata.h"
@@ -143,7 +143,7 @@
 	"slice.h"
 	"stringbuilder.h"
 
-1788354424 source:/home/user-331/projects/bid/ose/item_treasure.cpp
+1788359852 source:/home/user-331/projects/bid/ose/item_treasure.cpp
 	"area.h"
 	"item.h"
 	"rand.h"

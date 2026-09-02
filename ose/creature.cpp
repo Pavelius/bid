@@ -176,12 +176,9 @@ static int get_attacks(classn v) {
 
 static int get_hit_die(classn v) {
 	switch(v) {
-	case Fighter: case Dwarf:
-		return 8;
-	case Theif: case MagicUser:
-		return 4;
-	default:
-		return 6;
+	case Theif: case MagicUser: return 4;
+	case Cleric: return 6;
+	default: return 8;
 	}
 }
 
@@ -517,7 +514,7 @@ static void start_equip(classn type) {
 
 static void add_hit_points(bool reroll_low) {
 	auto hd = get_hit_die(player->type);
-	if(!player->mhp) {
+	if(!player->basic.abilities[Hits]) {
 		auto rolled = 0;
 		if(reroll_low && hd >= 4) {
 			while(rolled < 3)
@@ -577,7 +574,9 @@ void create_monster(classn type) {
 	player->gender = Male;
 	create_average_ability();
 	add_monster(type);
-	raise_level(get_level(type));
+	auto level = player->abilities[HD];
+	player->abilities[HD] = 0;
+	raise_level(level);
 	player->set(Local);
 	create_finish();
 }

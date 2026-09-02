@@ -56,7 +56,7 @@ enum powern : unsigned char {
 	Charming, Choking, Clairaudience, Clairvoyance,	Dancing, Devouring, Displacing, Draining, Radiance,
 	Flaming, Flying, Frozing, Holding, Invisibility, Invocating, Leaping, Lighting, Luck, Microscoping,
 	Diminution, ESP, GaseousForm, Growth, Heroism, Invulnerability, Levitation, Longevity,
-	Opening, Poisoning, Petrification, Ravening, Scarying, Speed, Striking, Sun, Thundering, Transformation, Commanding,
+	Opening, Poisoning, Petrification, Ravening, Scarying, Speed, Striking, Sun, Thundering, Transformation,
 	Dispelling,	Zooming, SwarmingInsects,
 	Mighty, Sharpness, Parrying, Ressurection, Withering,
 	Telekinesis, WaterWalking,

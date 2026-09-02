@@ -462,9 +462,7 @@ static void test_game() {
 	// treasure_generate("A", true, false, false);
 	// add_magic_item(RandomMagicItem);
 	// make_player_move(take_items_options);
-	// adventure_move(50);
-	encounter_monsters = CatPanther;
-	loot_enemies();
+	adventure_move(50);
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);
@@ -473,8 +471,8 @@ void main_util();
 bool pass_test();
 
 void game_run() {
-	srand(rseed());
-	// srand(1281);
+	// srand(rseed());
+	srand(1281);
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
 	if(!pass_test())
