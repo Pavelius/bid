@@ -161,7 +161,7 @@ static magici magic_potions[] = {
 	{86, Potion, Poisoning},
 	{89, Potion, Transformation},
 	{97, Potion, Speed},
-	{00, Potion, TreasureFinding},
+	{00, Potion, TreasureDetection},
 };
 static magici magic_rings[] = {
 	{5, Ring, ControlAnimals},
@@ -258,6 +258,38 @@ static magici magic_weapons[] = {
 static magici magic_rod_staff_wands[] = {
 	{5, Rod, ControlSpells},
 	{11, Rod, Cancelation},
+	{12, Rod, Charming},
+	{14, Rod, Mighty},
+	{15, Rod, Parrying},
+	{16, Rod, Ressurection},
+	{17, Rod, Striking},
+	{18, Staff, Commanding},
+	{20, Staff, Dispelling},
+	{26, Staff, Healing},
+	{27, Staff, Power},
+	{30, Staff, Snakes},
+	{33, Staff, Striking},
+	{36, Staff, SwarmingInsects},
+	{38, Staff, Healing},
+	{40, Staff, Withering},
+	{41, Staff, Wizardy},
+	{44, Staff, Woodlands},
+	{47, Wand, Frozing},
+	{51, Wand, EnemyDetection},
+	{54, Wand, Scarying},
+	{57, Wand, Flaming},
+	{61, Wand, Illusion},
+	{64, Wand, Lighting},
+	{69, Wand, MagicDetection},
+	{74, Wand, MagicMissiles},
+	{79, Wand, TreasureDetection},
+	{84, Wand, Cancelation},
+	{87, Wand, Paralysation},
+	{90, Wand, Transformation},
+	{94, Wand, Radiance},
+	{97, Wand, SecretDoorDetection},
+	{98, Wand, Summoning},
+	{100, Wand, TrapDetection},
 };
 
 static magici* table_magic_misc[] = {magic_misc1, magic_misc2};
@@ -298,19 +330,19 @@ void add_magic_item(itemn type) {
 	case RandomMisc:
 		add_magic_item(maprnd(table_magic_misc), result);
 		break;
+	case RandomPotion:
+		add_magic_item(magic_potions, result);
+		break;
 	case RandomRing:
 		add_magic_item(magic_rings, result);
+		break;
+	case RandomRodStaffWand:
+		add_magic_item(magic_rod_staff_wands, result);
 		break;
 	case RandomSword:
 		add_magic_item(magic_swords, result);
 		break;
 	case RandomWeapon:
-		add_magic_item(magic_weapons, result);
-		break;
-	case RandomPotion:
-		add_magic_item(magic_potions, result);
-		break;
-	case RandomMagicItemNoWeapon:
 		add_magic_item(magic_weapons, result);
 		break;
 	default:
