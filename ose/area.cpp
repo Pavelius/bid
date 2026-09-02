@@ -4,6 +4,7 @@
 #include "item.h"
 #include "slice.h"
 #include "stringbuilder.h"
+#include "variant.h"
 
 BSDATAC(area, 256)
 
@@ -63,6 +64,6 @@ void update_area_items() {
 	if(!need_update_items)
 		return;
 	clear_items();
-	add_items(AreaIndex, last_area->index());
+	add_items(variant(last_area));
 	need_update_items = false;
 }

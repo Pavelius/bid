@@ -10,13 +10,11 @@ enum damagen : unsigned char {
 	Blunt, Slashing, Pierce,
 	Fire, Cold, Acid,
 	Thrown, Deadly, Massive, Slowest,
+	UseArcane, UseDivine, UseLeather, UseMetal,
 };
 enum wearn : unsigned char {
 	Backpack, Edible, LastBackpack = Backpack + 24,
 	Body, Head, Neck, Back, Legs, Elbow, MeleeWeapon, MeleeOffhand, RangeWeapon, LeftFinger, RightFinger, Ammunition,
-};
-enum groundn : unsigned char {
-	CharacterIndex, AreaIndex,
 };
 enum itemn : unsigned char {
 	Fist,
@@ -52,37 +50,36 @@ enum powern : unsigned char {
 	Summoning, SummonAir, SummonEarth, SummonFire, SummonWater,
 	ControlAnimals, ControlCharmed, ControlDragons, ControlFish, ControlGiants, ControlHumans,
 	ControlPlants, ControlLycanthropes, ControlSpells, ControlGoblinoid, ControlUndead,
+	EnemyDetection, InvisibilityDetection, MagicDetection, TrapDetection, TreasureDetection, SecretDoorDetection,
+	FormBoat, FormTiger, FormBird,
 	Corruption, Power, Wizardy, Holiness, Woodlands, Illusion, MagicMissiles, Paralysation,
-	EnemyDetection, MagicDetection, TrapDetection, TreasureDetection, SecretDoorDetection,
-	Clairaudience, Clairvoyance,
-	Appearance, Charming, Choking, Dancing, Devouring, Displacing, Draining, Radiance,
-	Flaming, Flying, Frozing, Holding, Invisibility, Invocating, Leaping, Lighting, Locating, Luck, Microscoping,
+	Charming, Choking, Clairaudience, Clairvoyance,	Dancing, Devouring, Displacing, Draining, Radiance,
+	Flaming, Flying, Frozing, Holding, Invisibility, Invocating, Leaping, Lighting, Luck, Microscoping,
 	Diminution, ESP, GaseousForm, Growth, Heroism, Invulnerability, Levitation, Longevity,
 	Opening, Poisoning, Petrification, Ravening, Scarying, Speed, Striking, Sun, Thundering, Transformation, Commanding,
 	Dispelling,	Zooming, SwarmingInsects,
 	Mighty, Sharpness, Parrying, Ressurection, Withering,
-	FormBoat, FormTiger, FormBird,
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring,
-	Accuracy, Distance, Healing, Snakes, Wounding, Venger, Vorpal, Defender, DwarvenThrower,
+	Distance, Healing, Snakes, Wounding, Venger, Vorpal, Defender, DwarvenThrower,
 	Wishes, XRays,
 };
 
 extern bool need_update_items;
 
 struct attacki {
-	dice		damage;
-	char		ac;
-	char		number;
-	itemn		ammo;
+	dice damage;
+	char ac;
+	char number;
+	itemn ammo;
 };
 
 struct itemi {
-	itemn		parent;
-	wearn		wear;
-	int			cost, weight;
-	unsigned	flags; // damagen
-	attacki		combat; // Only weapon or armor fill this
+	itemn parent;
+	wearn wear;
+	int cost, weight;
+	unsigned flags; // damagen
+	attacki	combat;
 	bool is(damagen v) const { return (flags & (1<<v))!=0; }
 };
 extern itemi item_data[LastItem+1];
@@ -117,7 +114,7 @@ struct item {
 	void consume(messagen crush = (messagen)0, messagen damaged = (messagen)0);
 	bool countable() const { return type >= FirstCountable; }
 	bool damaged() const { return broken > 0; }
-	void drop(groundn ground, short unsigned index);
+	void drop(short unsigned index);
 	bool is(damagen v) const { return item_data[type].is(v); }
 	void join(item& it);
 	bool native() const { return type <= LastNative; }
@@ -126,8 +123,7 @@ struct item {
 extern item* last_item;
 
 struct itemground : item {
-	groundn			ground;
-	short unsigned	index;
+	short unsigned index;
 };
 
 struct wearable {
@@ -155,6 +151,6 @@ bool is_identified(const void* object);
 item some(itemn type, int count = 8);
 
 void add_magic_item(itemn type);
-void add_items(groundn ground, short unsigned index);
+void add_items(short unsigned index);
 void clear_items();
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual);

@@ -2,6 +2,7 @@
 #include "item.h"
 #include "rand.h"
 #include "slice.h"
+#include "variant.h"
 
 struct magici {
 	char		chance;
@@ -117,7 +118,7 @@ static magici magic_misc2[] = {
 	{24, Cloack, Displacing},
 	{26, Drums, Scarying},
 	{27, Drums, Thundering},
-	{33, Dust, Appearance},
+	{33, Dust, InvisibilityDetection},
 	{39, Dust, Invisibility},
 	{40, Dust, Choking},
 	{41, Bottle, Summoning},
@@ -199,7 +200,7 @@ static magici magic_swords[] = {
 	{61, RandomSword, Frozing},
 	{64, RandomSword, ControlGiants},
 	{69, RandomSword, Lighting},
-	{71, RandomSword, Locating},
+	{71, RandomSword, TreasureDetection},
 	{72, RandomSword, Luck},
 	{73, RandomSword, Sharpness},
 	{78, RandomSword, Sun},
@@ -221,9 +222,8 @@ static magici magic_weapons[] = {
 	{19, HandAxe, Magic1},
 	{21, HandAxe, Magic2},
 	{24, LongBow, Magic1},
-	{25, Crossbow, Distance},
-	{26, Crossbow, Speed},
-	{27, Crossbow, Accuracy},
+	{26, Crossbow, Distance},
+	{27, Crossbow, Speed},
 	{31, BoltM1},
 	{36, BoltM2},
 	{39, Dagger, Magic1},
@@ -233,7 +233,7 @@ static magici magic_weapons[] = {
 	{45, Dagger, ControlGoblinoid},
 	{46, Dagger, Mighty},
 	{50, Javelin, Lighting},
-	{55, Javelin, Locating},
+	{55, Javelin, EnemyDetection},
 	{58, Mace, Magic1},
 	{59, Mace, ControlUndead},
 	{62, Mace, Magic2},
@@ -247,7 +247,7 @@ static magici magic_weapons[] = {
 	{82, RandomWeapon, Delusion},
 	{87, Trident, ControlFish},
 	{89, Trident, Scarying},
-	{93, Trident, Locating},
+	{93, Trident, EnemyDetection},
 	{96, WarHammer, Magic1},
 	{98, WarHammer, Magic2},
 	{99, WarHammer, DwarvenThrower},
@@ -303,7 +303,7 @@ static const magici* find_magic(const magici* p, int index) {
 static void add_item(item& it) {
 	if(!it)
 		return;
-	it.drop(AreaIndex, last_area->index());
+	it.drop(variant(last_area));
 }
 
 static void add_magic_item(const magici* p, int result) {

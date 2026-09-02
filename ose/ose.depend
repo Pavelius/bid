@@ -1,11 +1,12 @@
 # depslib dependency file v1.0
-1788246418 source:/home/user-331/projects/bid/ose/area.cpp
+1788354395 source:/home/user-331/projects/bid/ose/area.cpp
 	"area.h"
 	"bsdata.h"
 	"game.h"
 	"item.h"
 	"slice.h"
 	"stringbuilder.h"
+	"variant.h"
 
 1788246327 /home/user-331/projects/bid/ose/area.h
 	"flagable.h"
@@ -57,7 +58,7 @@
 
 1788157251 /home/user-331/projects/bid/ose/gender.h
 
-1788335643 /home/user-331/projects/bid/ose/item.h
+1788354359 /home/user-331/projects/bid/ose/item.h
 	"dice.h"
 
 1788157251 /home/user-331/projects/bid/ose/spell.h
@@ -142,11 +143,12 @@
 	"slice.h"
 	"stringbuilder.h"
 
-1788335525 source:/home/user-331/projects/bid/ose/item_treasure.cpp
+1788354424 source:/home/user-331/projects/bid/ose/item_treasure.cpp
 	"area.h"
 	"item.h"
 	"rand.h"
 	"slice.h"
+	"variant.h"
 
 1788157251 /home/user-331/projects/bid/ose/itema.h
 	"adat.h"

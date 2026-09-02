@@ -250,9 +250,9 @@ void clear_items() {
 	items.clear();
 }
 
-void add_items(groundn ground, short unsigned index) {
+void add_items(short unsigned index) {
 	for(auto& e : bsdata<itemground>()) {
-		if(!e || e.ground!=ground || e.index!=index)
+		if(!e || e.index!=index)
 			continue;
 		items.add(&e);
 	}
@@ -320,9 +320,16 @@ void item::act(messagen id) const {
 	last_item = push;
 }
 
-void item::drop(groundn ground, short unsigned index) {
+void item::drop(short unsigned index) {
 	for(auto& e : bsdata<itemground>()) {
-		if(e.ground != ground || e.index != index)
+		if(!e) {
+			e.type = type;
+			e.count = count;
+			e.index = index;
+			clear();
+			last_item = &e;
+			return;
+		} else if(e.index!=index)
 			continue;
 		e.join(*this);
 		if(!(*this))
@@ -331,7 +338,6 @@ void item::drop(groundn ground, short unsigned index) {
 	auto p = bsdata<itemground>::add();
 	p->type = type;
 	p->count = count;
-	p->ground = ground;
 	p->index = index;
 	clear();
 	last_item = p;
