@@ -69,7 +69,7 @@ static void player_class(stringbuilder& sb) {
 }
 
 static void player_weapon(stringbuilder& sb) {
-	sb.add(player->wears[Hands].name());
+	sb.add(player->wears[MeleeWeapon].name());
 }
 
 static void area_first(stringbuilder& sb) {

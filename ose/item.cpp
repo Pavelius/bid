@@ -60,38 +60,38 @@ static itemn random_weapons[] = {Dagger, Dagger, HandAxe, HandAxe, Javelin, Spea
 static itemn random_rod_staff_wand[] = {Rod, Staff, Staff, Staff, Wand, Wand};
 
 itemi item_data[LastItem + 1] = {
-	{Fist, Hands, 0, 0, FG(Melee), {{1, 2}}},
-	{Claws1d4, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 4}}},
-	{Claws1d4, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
-	{Claws1d4, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 8}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{1, 6}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{1, 8}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{1, 12}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{2, 6}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce) | FG(Melee), {{2, 8}}},
+	{Fist, MeleeWeapon, 0, 0, 0, {{1, 2}}},
+	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 4}}},
+	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 6}}},
+	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 8}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 6}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 8}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 12}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce), {{2, 6}}},
+	{Bite1d6, Head, 0, 0, FG(Pierce), {{2, 8}}},
 	// Melee weapons
-	{Dagger, Hands, 0, 0, FG(Pierce) | FG(Slashing) | FG(Melee), {{1, 4}}},
-	{HandAxe, Hands, 0, 0, FG(Melee), {{1, 6}}},
-	{Javelin, Hands, 0, 0, FG(Pierce) | FG(Thrown), {{1, 4}}},
-	{Spear, Hands, 0, 0, FG(Pierce) | FG(Thrown) | FG(Melee), {{1, 6}}},
-	{Trident, Hands, 0, 0, FG(Pierce) | FG(Slashing) | FG(Melee), {{1, 6}}},
-	{Staff, Hands, 0, 0, FG(Blunt) | FG(Slowest) | FG(Massive) | FG(Melee), {{1, 4}}},
-	{BattleAxe, Hands, 7 * gp, 0, FG(Slashing) | FG(Slowest) | FG(Massive) | FG(Melee), {{1, 8}}},
-	{WarHammer, Hands, 5 * gp, 0, FG(Blunt) | FG(Melee) | FG(Massive), {{1, 8}}},
-	{Mace, Hands, 5 * gp, 0, FG(Blunt) | FG(Melee), {{1, 6}}},
-	{ShortSword, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
-	{Sword, Hands, 0, 0, FG(Slashing) | FG(Melee), {{1, 6}}},
-	{TwohandedSword, Hands, 0, 0, FG(Slashing) | FG(Melee) | FG(Massive), {{1, 6}}},
+	{Dagger, MeleeWeapon, 0, 0, FG(Pierce) | FG(Slashing), {{1, 4}}},
+	{HandAxe, MeleeWeapon, 0, 0, 0, {{1, 6}}},
+	{Javelin, MeleeWeapon, 0, 0, FG(Pierce) | FG(Thrown), {{1, 4}}},
+	{Spear, MeleeWeapon, 0, 0, FG(Pierce) | FG(Thrown), {{1, 6}}},
+	{Trident, MeleeWeapon, 0, 0, FG(Pierce) | FG(Slashing), {{1, 6}}},
+	{Staff, MeleeWeapon, 0, 0, FG(Blunt) | FG(Slowest) | FG(Massive), {{1, 4}}},
+	{BattleAxe, MeleeWeapon, 7 * gp, 0, FG(Slashing) | FG(Slowest) | FG(Massive), {{1, 8}}},
+	{WarHammer, MeleeWeapon, 5 * gp, 0, FG(Blunt) | FG(Massive), {{1, 6, 1}}},
+	{Mace, MeleeWeapon, 5 * gp, 0, FG(Blunt), {{1, 6}}},
+	{ShortSword, MeleeWeapon, 0, 0, 0, {{1, 6}}},
+	{Sword, MeleeWeapon, 0, 0, 0, {{1, 8}}},
+	{TwohandedSword, MeleeWeapon, 0, 0, FG(Massive), {{1, 10}}},
 	// Range weapons
-	{LongBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Arrow}},
-	{ShortBow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Arrow}},
-	{Sling, Hands, 0, 0, FG(Range) | FG(Massive), {{1, 3}, 0, Bolt}},
-	{Crossbow, Hands, 0, 0, FG(Slashing) | FG(Range) | FG(Massive), {{1, 6}, 0, Bolt}},
+	{LongBow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, Arrow}},
+	{ShortBow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, Arrow}},
+	{Sling, RangeWeapon, 0, 0, FG(Massive), {{1, 3}, 0, Bolt}},
+	{Crossbow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, Bolt}},
 	// Armor
 	{LeatherArmor, Body, 20 * gp, 200, 0, {{}, 2}},
 	{ChainArmor, Body, 40 * gp, 400, 0, {{}, 4}},
 	{PlateArmor, Body, 60 * gp, 500, 0, {{}, 6}},
-	{Shield, Offhand, 10 * gp, 0, 0, {{}, 1}},
+	{Shield, MeleeOffhand, 10 * gp, 0, 0, {{}, 1}},
 	// Miscelaneous items
 	{Apparatus, Backpack, 1000 * gp, 0, 0, {}},
 	{Amulet, Neck, 20 * gp, 0, 0, {}},
@@ -138,8 +138,8 @@ itemi item_data[LastItem + 1] = {
 	{Potion, Backpack, 0, 0, 0, {}},
 	{Bottle, Backpack, 0, 0, 0, {}},
 	{Ring, LeftFinger, 0, 0, 0, {}},
-	{Rod, Hands, 0, 0, 0, {}},
-	{Wand, Hands, 0, 0, 0, {}},
+	{Rod, MeleeWeapon, 0, 0, 0, {1, 4}},
+	{Wand, MeleeOffhand, 0, 0, 0, {}},
 	{ArcaneScroll, Backpack},
 	{DivineScroll, Backpack},
 	// Edible (Countable start here)
@@ -190,15 +190,18 @@ itemi item_data[LastItem + 1] = {
 static int get_magic(powern v) {
 	switch(v) {
 	case Magic2:
+	case Charming: case Dancing: case Devouring: case Venger: case Vorpal:
 		return 2;
 	case Magic3:
 	case Defender: case Holiness: case Corruption:
+	case Thundering: case DwarvenThrower:
 		return 3;
 	case Cursed:
 		return -1;
 	case Delusion:
 		return -2;
-	default: return 1;
+	default:
+		return 1;
 	}
 }
 
@@ -354,7 +357,7 @@ void item::drop(groundn ground, short unsigned index) {
 bool wearable::isusable(const item& it) const {
 	auto slot = getwear(&it);
 	switch(slot) {
-	case Offhand: return !it.is(Massive);
+	case MeleeOffhand: return !it.is(Massive);
 	default: return true;
 	}
 }
@@ -379,7 +382,7 @@ bool wearable::equip(const item& it) {
 }
 
 void wearable::useammo() {
-	auto& weapon = wears[Hands];
+	auto& weapon = wears[RangeWeapon];
 	auto pi = weapon.ammo();
 	if(!pi)
 		return;

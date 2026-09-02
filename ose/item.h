@@ -9,11 +9,11 @@ enum messagen : unsigned char;
 enum damagen : unsigned char {
 	Blunt, Slashing, Pierce,
 	Fire, Cold, Acid,
-	Melee, Range, Thrown, Deadly, Massive, Slowest,
+	Thrown, Deadly, Massive, Slowest,
 };
 enum wearn : unsigned char {
 	Backpack, Edible, LastWear = Backpack + 24,
-	Body, Head, Neck, Legs, Elbow, Hands, Offhand, LeftFinger, RightFinger, Ammunition,
+	Body, Head, Neck, Legs, Elbow, MeleeWeapon, MeleeOffhand, RangeWeapon, LeftFinger, RightFinger, Ammunition,
 };
 enum groundn : unsigned char {
 	CharacterIndex, AreaIndex,
@@ -51,7 +51,7 @@ enum powern : unsigned char {
 	Magic1, Magic2, Magic3, Cursed, Delusion, Weakness,
 	Summoning, SummonAir, SummonEarth, SummonFire, SummonWater,
 	ControlAnimals, ControlCharmed, ControlDragons, ControlFish, ControlGiants, ControlHumans,
-	ControlPlants, ControlPosession, ControlSpells, ControlGoblinoid, ControlUndead,
+	ControlPlants, ControlLycanthropes, ControlSpells, ControlGoblinoid, ControlUndead,
 	Corruption, Power, Wizardy, Holiness, Woodlands, Illusion, MagicMissiles, Paralysation,
 	EnemyDetection, MagicDetection, TrapDetection, TreasureDetection, SecretDoorDetection,
 	Clairaudience, Clairvoyance,
@@ -61,11 +61,11 @@ enum powern : unsigned char {
 	Opening, Poisoning, Petrification, Ravening, Scarying, Speed, Striking, Sun, Thundering, Transformation, Commanding,
 	Dispelling,	Zooming, SwarmingInsects,
 	Mighty, Quickness, Sharpness, Parrying, Ressurection, Withering,
-	FormBoat, FormTiger,
+	FormBoat, FormTiger, FormBird,
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring,
-	Accuracy, Distance, Healing, Snakes, Wounding, Venger, Vorpal, Defender,
-	Wishes, WishesII, WishesIII, XRays,
+	Accuracy, Distance, Healing, Snakes, Wounding, Venger, Vorpal, Defender, DwarvenThrower,
+	Wishes, XRays,
 };
 
 extern bool need_update_items;

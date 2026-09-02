@@ -76,7 +76,7 @@ static magici magic_shield[] = {
 	{100, Shield, Magic3},
 };
 static magici magic_misc1[] = {
-	{3, Amulet, ControlPosession},
+	{3, Amulet, ControlLycanthropes},
 	{6, Amulet, ControlCharmed},
 	{8, Apparatus, Magic1},
 	{12, Bag, Devouring},
@@ -121,10 +121,10 @@ static magici magic_misc2[] = {
 	{39, Dust, Invisibility},
 	{40, Dust, Choking},
 	{41, Bottle, Summoning},
-	{43, Apparatus, Summoning},
-	{45, Apparatus, Summoning},
-	{47, Apparatus, Summoning},
-	{49, Apparatus, Summoning},
+	{43, Apparatus, SummonAir},
+	{45, Apparatus, SummonFire},
+	{47, Apparatus, SummonEarth},
+	{49, Apparatus, SummonWater},
 	{59, Cloack, Invisibility},
 	{60, Eyes, Charming},
 	{62, Eyes, Microscoping},
@@ -161,7 +161,7 @@ static magici magic_potions[] = {
 	{86, Potion, Poisoning},
 	{89, Potion, Transformation},
 	{97, Potion, Speed},
-	{00, Potion, TreasureDetection},
+	{100, Potion, TreasureDetection},
 };
 static magici magic_rings[] = {
 	{5, Ring, ControlAnimals},
@@ -179,9 +179,7 @@ static magici magic_rings[] = {
 	{82, Ring, Telekinesis},
 	{88, Ring, WaterWalking},
 	{94, Ring, Weakness},
-	{96, Ring, Wishes},
-	{97, Ring, WishesII},
-	{98, Ring, WishesIII},
+	{98, Ring, Wishes},
 	{100, Ring, XRays}
 };
 static magici magic_swords[] = {
@@ -189,7 +187,7 @@ static magici magic_swords[] = {
 	{9, RandomSword, Cursed},
 	{12, RandomSword, Delusion},
 	{28, RandomSword, Magic1},
-	{31, RandomSword, ControlPosession},
+	{31, RandomSword, ControlLycanthropes},
 	{34, RandomSword, ControlSpells},
 	{37, RandomSword, ControlDragons},
 	{40, RandomSword, ControlCharmed},
@@ -252,7 +250,7 @@ static magici magic_weapons[] = {
 	{93, Trident, Locating},
 	{96, WarHammer, Magic1},
 	{98, WarHammer, Magic2},
-	{99, WarHammer, Flying},
+	{99, WarHammer, DwarvenThrower},
 	{100, WarHammer, Thundering},
 };
 static magici magic_rod_staff_wands[] = {
