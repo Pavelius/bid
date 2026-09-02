@@ -98,6 +98,7 @@ classn get_race(classn type);
 
 classn random_animal(arean area);
 
+const char* get_treasure(classn type);
 const char* what_to_do();
 
 bool is_diseased(const void* object);

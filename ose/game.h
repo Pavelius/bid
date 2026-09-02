@@ -2,6 +2,8 @@
 
 typedef void(*fnevent)();
 
+enum classn : unsigned char;
+
 enum commandn : unsigned char {
 	Cancel, Continue, ChangePlayer, ClearAllList, Confirm,
 	PageCharacter, PageItems, PageCombatants,
@@ -31,6 +33,7 @@ struct gamei {
 
 extern gamei game;
 extern reactionn last_reaction;
+extern classn encounter_monsters;
 extern int last_number;
 
 void make_reaction_roll(int bonus);

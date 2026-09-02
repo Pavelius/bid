@@ -183,7 +183,7 @@ static magici magic_rings[] = {
 	{100, Ring, XRays}
 };
 static magici magic_swords[] = {
-	{3, ShortSword, Quickness},
+	{3, ShortSword, Speed},
 	{9, RandomSword, Cursed},
 	{12, RandomSword, Delusion},
 	{28, RandomSword, Magic1},

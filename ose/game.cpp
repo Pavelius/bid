@@ -19,6 +19,7 @@ const int yards_in_miles = 1000;
 gamei game;
 int last_number;
 
+classn encounter_monsters;
 reactionn last_reaction;
 static variant last_result;
 
@@ -254,7 +255,28 @@ static void take_items_options() {
 	an.add(0, "Забрать все");
 }
 
+static void generate_loot(classn type, int count) {
+	treasure_generate(get_treasure(encounter_monsters), false, true, false);
+	for(auto i = 0; i < count; i++)
+		treasure_generate(get_treasure(encounter_monsters), false, false, true);
+}
+
+static int body_count(bool is_party) {
+	auto result = 0;
+	for(auto p : creatures.records<creature>()) {
+		if(p->isparty() != is_party)
+			continue;
+		if(!p->isdead())
+			continue;
+		result++;
+	}
+	return result;
+}
+
 static void loot_enemies() {
+	if(!encounter_monsters)
+		return;
+	generate_loot(encounter_monsters, /*чbody_count(false)*/7);
 	pause(getname(SearchBodies));
 	fixmsg(NothingValuableHere);
 	pause();
@@ -281,10 +303,10 @@ static void combat_encounter() {
 			addan(MakeMeleeAttack);
 			addan(MakeThrownAttack);
 			addan(MakeMissileAttack);
-			addan(MakeRunAway);
-			if(player->isparty())
+			if(player->isparty()) {
+				addan(MakeRunAway);
 				last_result.u = (unsigned short)make_player_move();
-			else
+			} else
 				last_result.u = (unsigned short)an.random();
 			apply_result();
 		}
@@ -299,8 +321,8 @@ static void combat_encounter() {
 
 static void animal_encounter() {
 	pushvalue push_player(player);
-	auto type = random_animal(last_area->type);
-	create_monsters(type, true);
+	encounter_monsters = random_animal(last_area->type);
+	create_monsters(encounter_monsters, true);
 	player->act(PlayerJumpFromBrush);
 	combat_encounter();
 }
@@ -437,10 +459,12 @@ static void test_game() {
 	raise_level(3);
 	join_party();
 	select_creatures();
-	treasure_generate("A", true, false, false);
+	// treasure_generate("A", true, false, false);
 	// add_magic_item(RandomMagicItem);
-	make_player_move(take_items_options);
-	adventure_move(50);
+	// make_player_move(take_items_options);
+	// adventure_move(50);
+	encounter_monsters = CatPanther;
+	loot_enemies();
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);

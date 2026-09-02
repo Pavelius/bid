@@ -18,6 +18,7 @@ struct monsterkpi : statable, spellable {
 		}
 	}
 };
+
 struct monsteri {
 	classn		race;
 	char		ac, hd[2];
@@ -39,7 +40,7 @@ static monsteri monster_data[] = {
 	{Elf},
 	{Human},
 	{BearGrizzly, 6, {5}, Neutrality, {2}, {{1}, {1, 4}}, "U", {BearHug}},
-	{Boar, 7, {3}, Neutrality, {2}, {{1, 6}, {1, 6}}, ""},
+	{Boar, 7, {3}, Neutrality, {2}, {{1, 6}, {1, 6}}},
 	{CatPanther, 4, {4}, Neutrality, {2}, {{1, 2}, {1, 6}}, "U", {Claws1d4, Bite1d8}},
 	{CatTiger, 6, {6}, Neutrality, {3}, {{1}, {1, 3}}, "U", {Claws1d6, Bite2d6}},
 	{DogWild},
@@ -77,6 +78,10 @@ void add_monster(classn type) {
 
 int appear_count(classn type, int index) {
 	return monster_data[type].appear[index].roll();
+}
+
+const char* get_treasure(classn type) {
+	return monster_data[type].treasure;
 }
 
 classn random_animal(arean area) {

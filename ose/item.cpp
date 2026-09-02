@@ -188,24 +188,6 @@ itemi item_data[LastItem + 1] = {
 	{PP, Backpack, pp, 0, 0, {}},
 };
 
-static int get_magic(powern v) {
-	switch(v) {
-	case Magic2:
-	case Charming: case Dancing: case Devouring: case Venger: case Vorpal:
-		return 2;
-	case Magic3:
-	case Defender: case Holiness: case Corruption:
-	case Thundering: case DwarvenThrower:
-		return 3;
-	case Cursed:
-		return -1;
-	case Delusion:
-		return -2;
-	default:
-		return 1;
-	}
-}
-
 itemn random(itemn v) {
 	switch(v) {
 	case RandomGem: return random(maprnd(random_gems)); // Gems and jewelry

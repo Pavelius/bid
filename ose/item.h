@@ -13,7 +13,7 @@ enum damagen : unsigned char {
 };
 enum wearn : unsigned char {
 	Backpack, Edible, LastBackpack = Backpack + 24,
-	Body, Head, Neck, Legs, Elbow, MeleeWeapon, MeleeOffhand, RangeWeapon, LeftFinger, RightFinger, Ammunition,
+	Body, Head, Neck, Back, Legs, Elbow, MeleeWeapon, MeleeOffhand, RangeWeapon, LeftFinger, RightFinger, Ammunition,
 };
 enum groundn : unsigned char {
 	CharacterIndex, AreaIndex,
@@ -60,7 +60,7 @@ enum powern : unsigned char {
 	Diminution, ESP, GaseousForm, Growth, Heroism, Invulnerability, Levitation, Longevity,
 	Opening, Poisoning, Petrification, Ravening, Scarying, Speed, Striking, Sun, Thundering, Transformation, Commanding,
 	Dispelling,	Zooming, SwarmingInsects,
-	Mighty, Quickness, Sharpness, Parrying, Ressurection, Withering,
+	Mighty, Sharpness, Parrying, Ressurection, Withering,
 	FormBoat, FormTiger, FormBird,
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring,

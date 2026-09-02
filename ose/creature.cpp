@@ -336,6 +336,74 @@ static void update_abilities() {
 	player->mhp = imax((int)player->abilities[HD], player->abilities[Hits] + player->abilities[HD] * bonus);
 }
 
+static int get_magic(powern v) {
+	switch(v) {
+	case NoPower:
+		return 0;
+	case Magic2:
+	case Charming: case Dancing: case Devouring: case Venger: case Vorpal:
+		return 2;
+	case Magic3:
+	case Defender: case Holiness: case Corruption:
+	case Thundering: case DwarvenThrower:
+		return 3;
+	case Cursed:
+		return -1;
+	case Delusion:
+		return -2;
+	default:
+		return 1;
+	}
+}
+
+static void apply_wear_magic(powern power) {
+	switch(power) {
+	case Magic1: player->abilities[AC] += 1; break;
+	case Magic2: player->abilities[AC] += 2; break;
+	case Magic3: player->abilities[AC] += 3; break;
+	case Cursed: player->abilities[AC] -= 1; break;
+	case Delusion: player->abilities[AC] -= 2; break;
+	default: break;
+	}
+}
+
+static void apply_weapon_magic(powern power) {
+	switch(power) {
+	case Defender: player->abilities[AC] += 3; break;
+	default: break;
+	}
+}
+
+static void apply_wear_magic(itemn type, powern power) {
+	if(!power)
+		return;
+	switch(item_data[type].wear) {
+	case Body:
+		player->abilities[AC] += get_magic(power);
+		break;
+	case LeftFinger:
+		apply_wear_magic(power);
+		break;
+	case Head:
+		apply_wear_magic(power);
+		break;
+	case Back:
+		apply_wear_magic(power);
+		break;
+	case Elbow:
+		apply_wear_magic(power);
+		break;
+	case MeleeWeapon:
+		apply_weapon_magic(power);
+		break;
+	case RangeWeapon:
+		apply_weapon_magic(power);
+		break;
+	default:
+		break;
+	}
+}
+
 static void update_wear() {
 	for(auto& e : player->wears) {
 		if(!e)
@@ -343,6 +411,7 @@ static void update_wear() {
 		if(!player->isusable(e))
 			continue;
 		apply_wear(e.type);
+		apply_wear_magic(e.type, (powern)e.modification);
 	}
 }
 
@@ -574,6 +643,9 @@ static void get_attack(attacki& result, creature* attacker, abilityn id, const i
 	result.damage.m += attacker->abilities[id];
 	if(id==MeleeAttack)
 		result.damage.b += attacker->abilities[MeleeDamage];
+	auto magic_bonus = get_magic(weapon.power());
+	result.damage.m += magic_bonus;
+	result.damage.b += magic_bonus;
 }
 
 static bool check_attack(creature* attacker, creature* enemy, int attack_bonus, int attack_sharpness) {
