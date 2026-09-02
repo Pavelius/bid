@@ -27,6 +27,9 @@
     <ClInclude Include="contract.h">
       <Filter>Logic</Filter>
     </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logic">

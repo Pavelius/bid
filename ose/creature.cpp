@@ -506,6 +506,8 @@ static void start_equip(classn type) {
 	case Theif:
 		player->equip(LeatherArmor);
 		player->equip(Dagger);
+		player->equip(ShortBow);
+		player->equip(item(Arrow, xrand(2, 12)));
 		break;
 	default:
 		break;
@@ -640,7 +642,7 @@ static int critical_damage(const item& weapon, const attacki& attack) {
 static void get_attack(attacki& result, creature* attacker, abilityn id, const item& weapon, int bonus) {
 	result = item_data[weapon.type].combat;
 	result.damage.m += attacker->abilities[id];
-	if(id==MeleeAttack)
+	if(id == MeleeAttack)
 		result.damage.b += attacker->abilities[MeleeDamage];
 	auto magic_bonus = get_magic(weapon.power());
 	result.damage.m += magic_bonus;

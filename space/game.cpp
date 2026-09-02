@@ -13,7 +13,7 @@ static void stringbuilder_custom(stringbuilder& sb, const char* id) {
 }
 
 void game_run() {
-	answers::resid = "Wasteland";
+	answers::picture = ImageWasteland;
 	stringbuilder::custom = stringbuilder_custom;
 	srand(2311);
 }

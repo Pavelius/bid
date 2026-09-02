@@ -64,7 +64,7 @@ int party_average(abilityn v);
 void create_creature(classn type, gendern gender);
 void for_each_party(fnevent proc);
 void join_party();
-void make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus);
+bool make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus);
 void make_prepare_spells(messagen id);
 void raise_level(int level);
 bool use_skill(abilityn id, bool run);

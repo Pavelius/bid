@@ -1,12 +1,10 @@
 #pragma once
 
+#include "item.h"
+
 enum locationn : unsigned char {
 	Galactic, System,
 	Sun, Earth, Mars, Venera, Hupiter,
-};
-enum itemn : unsigned char {
-	Minerals, Food, Medicals, Techincs, Luxury, Alcohole, Weapons, Drugs, Fuel,
-	ShardCannon, IndustrialLaser, RocketSystem,
 };
 enum govermentn : unsigned char {
 	Anarchy, Monarchy, Republic, Democraty,
@@ -18,22 +16,8 @@ enum enviromentn : unsigned char {
 enum contractn : unsigned char {
 	DeliverCargo, SellTradeGoods, KillRefuges,
 };
-struct item {
-	itemn type;
-	union {
-		unsigned char count;
-		struct {
-			unsigned char damage : 3; // 0 - no damage, 7 - unfunctional.
-			unsigned char identified : 1; // Show all statistic
-			unsigned char modification : 4; // Modification variations
-		};
-	};
-	constexpr item() : type((itemn)0), count(0) {}
-	constexpr item(itemn type) : type(type), count((type < ShardCannon) ? 1 : 0) {}
-	constexpr item(itemn type, int count) : type(type), count(count) {}
-	constexpr explicit operator bool() const { return type || count; }
-	constexpr bool countable() const { return type < ShardCannon; }
-	void clear() { type = (itemn)0; count = 0; }
+enum picturen : unsigned char {
+	ImageWasteland, ImageWastelandNight,
 };
 struct locationi {
 	locationn	parent;
@@ -45,10 +29,6 @@ struct contracti {
 	contractn	type;
 	locationn	location;
 	itemn		item;
-};
-struct cargoi {
-	short unsigned cargo[Fuel + 1];
-	void		add(item& v);
 };
 struct shipi : cargoi {
 	locationn	location;

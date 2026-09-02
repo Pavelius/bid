@@ -156,7 +156,7 @@ static bool apply_effect(actionn v, bool run) {
 			return false;
 		if(run) {
 			make_attack(player, opponent, ThrownAttack, player->wears[MeleeWeapon], 0);
-			player->useammo();
+			player->wears[MeleeWeapon].lost = 1;
 		}
 		break;
 	case MemorizeSpells:
