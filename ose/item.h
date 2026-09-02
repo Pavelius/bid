@@ -12,7 +12,7 @@ enum damagen : unsigned char {
 	Thrown, Deadly, Massive, Slowest,
 };
 enum wearn : unsigned char {
-	Backpack, Edible, LastWear = Backpack + 24,
+	Backpack, Edible, LastBackpack = Backpack + 24,
 	Body, Head, Neck, Legs, Elbow, MeleeWeapon, MeleeOffhand, RangeWeapon, LeftFinger, RightFinger, Ammunition,
 };
 enum groundn : unsigned char {
@@ -29,7 +29,7 @@ enum itemn : unsigned char {
 	Apparatus, Amulet, Bag, Book, Boots, Bracers, Brooch, Broom, Candle, Chime,
 	Cloack,	CrystalBall, Cube, Decanter, Deck, Drums, Dust, Eyes, Feather, Figurine, Carpet,
 	Gauntlets, Gem, Gridle, Helm, Horn, Horseshoes, Incense, Fortress, Flask,
-	Jug, Mirror, Net, Oil, Pearl, Pipe, Robe, Rope, Saw, Scarab, Spade,
+	Jug, Mirror, Net, Oil, Pearl, Pipe, Robe, Rope, Saw, Scarab, Spade, Stone,
 	Potion, Bottle, Ring, Rod, Wand, ArcaneScroll, DivineScroll,
 	Ration, RawMeat, Mushrooms, Herbs, Berry,
 	Arrow, ArrowM1, ArrowM2, Bolt, BoltM1, BoltM2,
@@ -55,7 +55,7 @@ enum powern : unsigned char {
 	Corruption, Power, Wizardy, Holiness, Woodlands, Illusion, MagicMissiles, Paralysation,
 	EnemyDetection, MagicDetection, TrapDetection, TreasureDetection, SecretDoorDetection,
 	Clairaudience, Clairvoyance,
-	Appearance, Cancelation, Charming, Choking, Dancing, Devouring, Displacing, Draining, Radiance,
+	Appearance, Charming, Choking, Dancing, Devouring, Displacing, Draining, Radiance,
 	Flaming, Flying, Frozing, Holding, Invisibility, Invocating, Leaping, Lighting, Locating, Luck, Microscoping,
 	Diminution, ESP, GaseousForm, Growth, Heroism, Invulnerability, Levitation, Longevity,
 	Opening, Poisoning, Petrification, Ravening, Scarying, Speed, Striking, Sun, Thundering, Transformation, Commanding,
@@ -70,17 +70,19 @@ enum powern : unsigned char {
 
 extern bool need_update_items;
 
+struct attacki {
+	dice		damage;
+	char		ac;
+	char		number;
+	itemn		ammo;
+};
+
 struct itemi {
-	struct combati {
-		dice	damage;
-		char	ac;
-		itemn	ammo;
-	};
 	itemn		parent;
 	wearn		wear;
 	int			cost, weight;
 	unsigned	flags; // damagen
-	combati		combat; // Only weapon or armor fill this
+	attacki		combat; // Only weapon or armor fill this
 	bool is(damagen v) const { return (flags & (1<<v))!=0; }
 };
 extern itemi item_data[LastItem+1];

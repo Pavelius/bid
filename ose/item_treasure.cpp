@@ -255,7 +255,7 @@ static magici magic_weapons[] = {
 };
 static magici magic_rod_staff_wands[] = {
 	{5, Rod, ControlSpells},
-	{11, Rod, Cancelation},
+	{11, Rod, Dispelling},
 	{12, Rod, Charming},
 	{14, Rod, Mighty},
 	{15, Rod, Parrying},
@@ -281,7 +281,7 @@ static magici magic_rod_staff_wands[] = {
 	{69, Wand, MagicDetection},
 	{74, Wand, MagicMissiles},
 	{79, Wand, TreasureDetection},
-	{84, Wand, Cancelation},
+	{84, Wand, Dispelling},
 	{87, Wand, Paralysation},
 	{90, Wand, Transformation},
 	{94, Wand, Radiance},

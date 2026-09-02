@@ -83,10 +83,10 @@ itemi item_data[LastItem + 1] = {
 	{Sword, MeleeWeapon, 0, 0, 0, {{1, 8}}},
 	{TwohandedSword, MeleeWeapon, 0, 0, FG(Massive), {{1, 10}}},
 	// Range weapons
-	{LongBow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, Arrow}},
-	{ShortBow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, Arrow}},
-	{Sling, RangeWeapon, 0, 0, FG(Massive), {{1, 3}, 0, Bolt}},
-	{Crossbow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, Bolt}},
+	{LongBow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, 0, Arrow}},
+	{ShortBow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, 0, Arrow}},
+	{Sling, RangeWeapon, 0, 0, FG(Massive), {{1, 3}, 0, 0, Bolt}},
+	{Crossbow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, 0, Bolt}},
 	// Armor
 	{LeatherArmor, Body, 20 * gp, 200, 0, {{}, 2}},
 	{ChainArmor, Body, 40 * gp, 400, 0, {{}, 4}},
@@ -134,6 +134,7 @@ itemi item_data[LastItem + 1] = {
 	{Saw, Backpack, 0, 0, 0, {}},
 	{Scarab, Backpack, 0, 0, 0, {}},
 	{Spade, Backpack, 0, 0, 0, {}},
+	{Stone, Backpack, 0, 0, 0, {}},
 	// Other items
 	{Potion, Backpack, 0, 0, 0, {}},
 	{Bottle, Backpack, 0, 0, 0, {}},
@@ -363,7 +364,7 @@ bool wearable::isusable(const item& it) const {
 }
 
 void wearable::add(item& it) {
-	for(auto& v : slice<item>(wears + Backpack, wears + LastWear + 1)) {
+	for(auto& v : slice<item>(wears + Backpack, wears + LastBackpack + 1)) {
 		if(!it)
 			break;
 		v.join(it);

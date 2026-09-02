@@ -558,20 +558,22 @@ void initiative_roll() {
 	qsort(creatures.data, creatures.count, sizeof(creatures.data[0]), compare_initiative);
 }
 
-static int critical_damage(const item& weapon, const dice& damage) {
-	auto hits = damage.roll(); // Apply damage
+static int critical_damage(const item& weapon, const attacki& attack) {
+	auto hits = attack.damage.roll(); // Apply damage
 	if(weapon.is(Pierce))
-		hits += damage.roll(); // Apply another damage (can be third)
+		hits += attack.damage.roll(); // Apply another damage (can be third)
 	if(weapon.is(Deadly))
-		hits += damage.maximum(); // Deadly apply maximum damage
+		hits += attack.damage.maximum(); // Deadly apply maximum damage
 	else
-		hits += damage.roll(); // Apply damage
+		hits += attack.damage.roll(); // Apply damage
 	return hits;
 }
 
-dice get_attack(creature* attacker, abilityn id, const item& weapon, int bonus) {
-	auto damage = item_data[weapon.type].combat.damage;
-	return damage;
+static void get_attack(attacki& result, creature* attacker, abilityn id, const item& weapon, int bonus) {
+	result = item_data[weapon.type].combat;
+	result.damage.m += attacker->abilities[id];
+	if(id==MeleeAttack)
+		result.damage.b += attacker->abilities[MeleeDamage];
 }
 
 static bool check_attack(creature* attacker, creature* enemy, int attack_bonus, int attack_sharpness) {
@@ -604,10 +606,12 @@ static bool weapon_damage(item& weapon) {
 }
 
 bool make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus) {
-	if(check_attack(attacker, enemy, attack_bonus + attacker->get(ability), weapon.is(Slashing))) {
-		auto damage = get_attack(attacker, ability, weapon, attack_bonus);
+	attacki attack;
+	get_attack(attack, attacker, ability, weapon, attack_bonus);
+	attack.damage.m = attack_bonus;
+	if(check_attack(attacker, enemy, attack.damage.m, weapon.is(Slashing))) {
 		if(critical_hit) {
-			enemy->damage(critical_damage(weapon, damage));
+			enemy->damage(critical_damage(weapon, attack));
 			if(weapon.is(Blunt) && enemy->isready()) {
 				if(!enemy->roll(SaveParalysis)) {
 					enemy->set(Stunned);
@@ -615,7 +619,7 @@ bool make_attack(creature* attacker, creature* enemy, abilityn ability, item& we
 				}
 			}
 		} else
-			enemy->damage(damage.roll());
+			enemy->damage(attack.damage.roll());
 		return true;
 	} else if(critical_miss)
 		weapon_damage(weapon);
