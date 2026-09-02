@@ -645,6 +645,8 @@ static void get_attack(attacki& result, creature* attacker, abilityn id, const i
 	auto magic_bonus = get_magic(weapon.power());
 	result.damage.m += magic_bonus;
 	result.damage.b += magic_bonus;
+	if(!result.number)
+		result.number = 1;
 }
 
 static bool check_attack(creature* attacker, creature* enemy, int attack_bonus, int attack_sharpness) {
@@ -676,25 +678,27 @@ static bool weapon_damage(item& weapon) {
 	return false;
 }
 
-bool make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus) {
+void make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus) {
 	attacki attack;
 	get_attack(attack, attacker, ability, weapon, attack_bonus);
-	attack.damage.m = attack_bonus;
-	if(check_attack(attacker, enemy, attack.damage.m, weapon.is(Slashing))) {
-		if(critical_hit) {
-			enemy->damage(critical_damage(weapon, attack));
-			if(weapon.is(Blunt) && enemy->isready()) {
-				if(!enemy->roll(SaveParalysis)) {
-					enemy->set(Stunned);
-					enemy->act(PlayerStunned);
+	for(auto i = 0; i < attack.number; i++) {
+		attack.damage.m = attack_bonus;
+		if(!(*enemy))
+			continue;
+		if(check_attack(attacker, enemy, attack.damage.m, weapon.is(Slashing))) {
+			if(critical_hit) {
+				enemy->damage(critical_damage(weapon, attack));
+				if(weapon.is(Blunt) && enemy->isready()) {
+					if(!enemy->roll(SaveParalysis)) {
+						enemy->set(Stunned);
+						enemy->act(PlayerStunned);
+					}
 				}
-			}
-		} else
-			enemy->damage(attack.damage.roll());
-		return true;
-	} else if(critical_miss)
-		weapon_damage(weapon);
-	return false;
+			} else
+				enemy->damage(attack.damage.roll());
+		} else if(critical_miss)
+			weapon_damage(weapon);
+	}
 }
 
 static void select_items(creature* player) {

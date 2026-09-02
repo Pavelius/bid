@@ -116,7 +116,7 @@ void create_monsters(classn type, bool hostile);
 void for_each_party(fnevent proc);
 void join_party();
 void initiative_roll();
-bool make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus);
+void make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus);
 void make_prepare_spells(messagen id);
 void raise_level(int level, bool reroll_lowest = false);
 bool use_skill(actionn id, int bonus, bool run);

@@ -61,9 +61,9 @@ static itemn random_rod_staff_wand[] = {Rod, Staff, Staff, Staff, Wand, Wand};
 
 itemi item_data[LastItem + 1] = {
 	{Fist, MeleeWeapon, 0, 0, 0, {{1, 2}}},
-	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 4}}},
-	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 6}}},
-	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 8}}},
+	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 4}, 0, 2}},
+	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 6}, 0, 2}},
+	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 8}, 0, 2}},
 	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 6}}},
 	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 8}}},
 	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 12}}},
