@@ -39,6 +39,7 @@ enum globalvarn : unsigned char {
 };
 enum picturen : unsigned char {
 	ImageWasteland, ImageWastelandNight,
+	ImagePlainVillage,
 };
 
 struct gamei {

@@ -493,7 +493,7 @@ static void paint_main_menu() {
 // START GAME
 
 static void test_game() {
-	create_area(Forest);
+	create_area(Wastes);
 	create_creature(Fighter, Male);
 	join_party();
 	create_creature(Elf, Female);
