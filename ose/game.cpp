@@ -263,12 +263,12 @@ static void generate_loot(classn type, int count) {
 		treasure_generate(get_treasure(encounter_monsters), false, false, true);
 }
 
-static int body_count(bool is_party) {
+static int creature_count(bool is_dead, bool is_party) {
 	auto result = 0;
 	for(auto p : creatures.records<creature>()) {
 		if(p->isparty() != is_party)
 			continue;
-		if(!p->isdead())
+		if(p->isdead() != is_dead)
 			continue;
 		result++;
 	}
@@ -278,13 +278,28 @@ static int body_count(bool is_party) {
 static void loot_enemies() {
 	if(!encounter_monsters)
 		return;
-	generate_loot(encounter_monsters, body_count(false));
+	generate_loot(encounter_monsters, creature_count(true, false));
 	pause(getname(SearchBodies));
 	fixmsg(NothingValuableHere);
 	pause();
 }
 
 static void combat_experience() {
+	auto player_count = creature_count(false, true);
+	if(!player_count)
+		return;
+	auto total = 0;
+	for(auto p : creatures.records<creature>()) {
+		if(p->isparty() || p->isdead())
+			continue;
+		total += p->award();
+	}
+	auto per_player = total / player_count;
+	for(auto p : creatures.records<creature>()) {
+		if(!p->isparty() || p->isdead())
+			continue;
+		p->addexp(per_player);
+	}
 }
 
 static void combat_encounter() {

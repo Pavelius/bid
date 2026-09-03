@@ -62,6 +62,7 @@ struct creature : npc, statable, wearable, spellable {
 	short		hp, mhp;
 	spellf		known, active;
 	spellable	prepare;
+	int			experience;
 	constexpr explicit operator bool() const { return hp > 0; }
 	const char* name() const;
 	int award() const;
@@ -72,6 +73,7 @@ struct creature : npc, statable, wearable, spellable {
 	int getspellsprepared(int level) const;
 	void act(messagen id) const;
 	void actv(char separator, const char* format, const char* format_param) const;
+	void addexp(int value) { experience += value; }
 	void clear();
 	void damage(int value);
 	bool is(alignmentn v) const { return npc::is(v); }

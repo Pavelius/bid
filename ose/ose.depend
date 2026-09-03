@@ -51,7 +51,7 @@
 	"adat.h"
 	"stringbuilder.h"
 
-1788419817 /home/user-331/projects/bid/ose/creature.h
+1788441610 /home/user-331/projects/bid/ose/creature.h
 	"gender.h"
 	"item.h"
 	"spell.h"
@@ -87,7 +87,7 @@
 
 1788244468 /home/user-331/projects/bid/atg//rand.h
 
-1788432955 source:/home/user-331/projects/bid/ose/game.cpp
+1788441504 source:/home/user-331/projects/bid/ose/game.cpp
 	"area.h"
 	"answers.h"
 	"bsdata.h"
