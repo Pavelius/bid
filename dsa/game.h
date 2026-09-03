@@ -7,6 +7,11 @@ enum commandn : unsigned char {
 	Cancel, Continue, ChangePlayer, ClearAllList, Confirm,
 	PageCharacter, PageItems, PageCombatants,
 };
+enum picturen : unsigned char {
+	ImageWasteland, ImageWastelandNight,
+	ImagePlainVillage,
+};
+
 struct gamei {
 	unsigned variables[Blessing+1];
 	void add(globalvarn v, int i) { variables[v] += i; }

@@ -189,7 +189,7 @@ static void check_movement() {
 }
 
 static void night_encounter() {
-	pushvalue push_header(answers::resid, "WastelandNight");
+	pushvalue push_header(answers::picture, ImageWastelandNight);
 	sb.clear();
 	sb.add(getname(PlayerHearNoiseOnWatch));
 	pause();
@@ -197,7 +197,7 @@ static void night_encounter() {
 
 static void adventure_move() {
 	pushvalue push_header(answers::header, "%AreaName");
-	answers::resid = "Wasteland";
+	answers::picture = ImageWasteland;
 	while(true) {
 		sb.adds(getinfo(last_area->type));
 		addan(MakeCamp);
@@ -255,18 +255,8 @@ static void paint_value(const item& e) {
 	}
 }
 
-static const char* get_avatar(classn type) {
-	switch(type) {
-	case ClericAir: return "ca";
-	case Ranger: return "rn";
-	default: return "hg";
-	}
-}
-
-static void get_avatar(const void* object, stringbuilder& sb) {
-	auto p = (creature*)object;
-	sb.add(get_avatar(p->type));
-	sb.add(p->isfemale() ? "f" : "m");
+static int get_avatar(const void* object) {
+	return ((creature*)object)->portrait;
 }
 
 static int get_hits(const void* object) {
@@ -327,9 +317,19 @@ static void test_game() {
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);
 
+extern unsigned char bin_avatars[];
+extern unsigned char bin_images[];
+
+void main_util();
+
 void game_run() {
 	srand(11299);
 	stringbuilder::custom = stringbuilder_custom;
+#ifdef _DEBUG
+	main_util();
+#endif
+	metrics::avatars = (sprite*)bin_avatars;
+	metrics::images = (sprite*)bin_images;
 	atg_menu = paint_main_menu;
 	test_game();
 }

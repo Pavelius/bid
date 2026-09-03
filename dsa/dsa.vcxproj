@@ -158,13 +158,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="area.cpp" />
+    <ClCompile Include="bin_avatars.cpp" />
+    <ClCompile Include="bin_images.cpp" />
     <ClCompile Include="calendar.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="locale_ru.cpp" />
+    <ClCompile Include="main_util.cpp" />
     <ClCompile Include="npc.cpp" />
+    <ClCompile Include="portrait.cpp" />
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="stringact.cpp" />
     <ClCompile Include="variant.cpp" />

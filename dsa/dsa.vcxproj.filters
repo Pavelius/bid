@@ -32,5 +32,9 @@
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="stringact.cpp" />
     <ClCompile Include="variant.cpp" />
+    <ClCompile Include="bin_images.cpp" />
+    <ClCompile Include="main_util.cpp" />
+    <ClCompile Include="portrait.cpp" />
+    <ClCompile Include="bin_avatars.cpp" />
   </ItemGroup>
 </Project>

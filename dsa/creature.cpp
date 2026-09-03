@@ -254,6 +254,20 @@ static abilityn get_secondary(classn v) {
 	}
 }
 
+portraitn random_portrait(classn type, gendern gender, fncfilter filter);
+
+static bool is_no_party(unsigned char index) {
+	for(auto p : party) {
+		if(p && p->portrait == index)
+			return false;
+	}
+	return true;
+}
+
+void npci::setportrait() {
+	portrait = random_portrait(type, gender, is_no_party);
+}
+
 void creature::clear() {
 	memset((void*)this, 0, sizeof(*this));
 }
@@ -496,6 +510,7 @@ void create_creature(classn type, gendern gender) {
 	player->type = type;
 	player->gender = gender;
 	player->setname();
+	player->setportrait();
 	create_ability(type);
 	create_effect(type);
 	start_equip(type);
