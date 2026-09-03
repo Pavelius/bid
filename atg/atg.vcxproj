@@ -49,6 +49,10 @@
   <ItemGroup>
     <ClCompile Include="answers.cpp" />
     <ClCompile Include="array.cpp" />
+    <ClCompile Include="bin_font.cpp" />
+    <ClCompile Include="bin_h1.cpp" />
+    <ClCompile Include="bin_h2.cpp" />
+    <ClCompile Include="bin_h3.cpp" />
     <ClCompile Include="bstream.cpp" />
     <ClCompile Include="choose.cpp" />
     <ClCompile Include="collection.cpp" />
@@ -65,6 +69,7 @@
     <ClCompile Include="draw_text.cpp" />
     <ClCompile Include="draw_textf.cpp" />
     <ClCompile Include="draw_theme.cpp" />
+    <ClCompile Include="font_util.cpp" />
     <ClCompile Include="io_stream.cpp" />
     <ClCompile Include="math.cpp" />
     <ClCompile Include="pack_util.cpp" />

@@ -19,6 +19,9 @@
     <Filter Include="Util">
       <UniqueIdentifier>{3b5c5223-22fa-4263-bd27-3c9bc2899686}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Binary">
+      <UniqueIdentifier>{03e2f8b9-9bfb-4855-b80d-3383bc64f9a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="adat.h">
@@ -190,6 +193,21 @@
     </ClCompile>
     <ClCompile Include="pack_util.cpp">
       <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="font_util.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="bin_font.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="bin_h1.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="bin_h2.cpp">
+      <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="bin_h3.cpp">
+      <Filter>Binary</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
