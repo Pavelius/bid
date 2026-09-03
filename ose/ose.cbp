@@ -107,7 +107,6 @@
 		<Unit filename="message.h" />
 		<Unit filename="monster.cpp" />
 		<Unit filename="portrait.cpp" />
-		<Unit filename="portrait.h" />
 		<Unit filename="spell.cpp" />
 		<Unit filename="spell.h" />
 		<Unit filename="testing.cpp" />
