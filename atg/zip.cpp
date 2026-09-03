@@ -1,4 +1,4 @@
-﻿#include "bstream.h"
+#include "bstream.h"
 #include "slice.h"
 
 #define assert(V)
