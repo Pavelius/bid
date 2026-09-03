@@ -9,6 +9,7 @@ struct collectiona : adat<void*, 256> {
 	void match(fnvfilter proc, bool keep);
 	void shuffle();
 	void top(int number);
+	int total(fnvfilter proc, bool keep) const;
 	template<typename T> slice<T*> records() const { return slice<T*>((T**)data, (T**)data + count); }
 	void* random() const;
 };

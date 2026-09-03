@@ -21,7 +21,8 @@ enum abilityn : unsigned char {
 	AC, Attacks, Initiative, Loyalty, Morale, Movement, Hits,
 	SaveDeath, SaveWand, SaveParalysis, SaveBreath, SaveSpells,
 	Climb, FindTraps, HearNoises, MoveSilently, OpenLocks, Tracking, Lore,
-	LastAbility = Lore,
+	HorribleWail,
+	LastAbility = HorribleWail,
 };
 enum alignmentn : unsigned char {
 	Lawful, Neutrality, Chaotic
@@ -33,9 +34,11 @@ enum classn : unsigned char {
 	Wolf, WolfDire,
 };
 enum featn : unsigned char {
-	Awareness, Backstab, BearHug,
+	Awareness, Backstab,
 	MeleeFight, Charged, Stunned, Flee, Ally, Enemy,
-	Local, Slow,
+	Local, Slow, Undead, StealthySurprise, SwallowWhole,
+	BlinkAttack, HugAttack, PetrifyingTouch, PetrifyingGaze,
+	ImmuneBlind, ImmuneCold, ImmuneDamage, ImmuneFire, ImmuneLighting, ImmuneSurprise,
 };
 
 struct area;
@@ -61,6 +64,7 @@ struct creature : npc, statable, wearable, spellable {
 	spellable	prepare;
 	constexpr explicit operator bool() const { return hp > 0; }
 	const char* name() const;
+	int award() const;
 	int get(abilityn v) const { return abilities[v]; }
 	int getbonus(abilityn v) const;
 	int getskill(abilityn v) const;

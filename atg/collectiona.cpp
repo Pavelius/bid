@@ -53,3 +53,13 @@ void collectiona::top(int number) {
 	if(count > (unsigned)number)
 		count = number;
 }
+
+int collectiona::total(fnvfilter proc, bool keep) const {
+	auto r = 0;
+	for(auto v : *this) {
+		if(proc(v) != keep)
+			continue;
+		r++;
+	}
+	return r;
+}

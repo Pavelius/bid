@@ -6,11 +6,6 @@
 #include "slice.h"
 #include "stringbuilder.h"
 
-#pragma section("items$m", read)
-
-_declspec(allocate("items$m")) const char* str_s1 = "Test1";
-_declspec(allocate("items$m")) const char* str_s2 = "Test2";
-
 const int cp = 1;
 const int bp = 5;
 const int sp = 10;

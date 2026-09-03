@@ -40,6 +40,10 @@
 		<Unit filename="../atg/answers.h" />
 		<Unit filename="../atg/array.cpp" />
 		<Unit filename="../atg/array.h" />
+		<Unit filename="../atg/bin_font.cpp" />
+		<Unit filename="../atg/bin_h1.cpp" />
+		<Unit filename="../atg/bin_h2.cpp" />
+		<Unit filename="../atg/bin_h3.cpp" />
 		<Unit filename="../atg/bsdata.h" />
 		<Unit filename="../atg/bstream.cpp" />
 		<Unit filename="../atg/bstream.h" />
@@ -58,7 +62,6 @@
 		<Unit filename="../atg/draw_answers.cpp" />
 		<Unit filename="../atg/draw_atg.cpp" />
 		<Unit filename="../atg/draw_atg.h" />
-		<Unit filename="../atg/draw_res.cpp" />
 		<Unit filename="../atg/draw_surface.cpp" />
 		<Unit filename="../atg/draw_text.cpp" />
 		<Unit filename="../atg/draw_textf.cpp" />
@@ -89,6 +92,8 @@
 		<Unit filename="../atg/zip.cpp" />
 		<Unit filename="area.cpp" />
 		<Unit filename="area.h" />
+		<Unit filename="bin_avatars.cpp" />
+		<Unit filename="bin_images.cpp" />
 		<Unit filename="creature.cpp" />
 		<Unit filename="creature.h" />
 		<Unit filename="game.cpp" />

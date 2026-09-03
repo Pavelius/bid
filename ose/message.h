@@ -14,7 +14,7 @@ enum messagen : unsigned char {
 	PlayerJumpFromBrush, PlayerJumpFromTree,
 	PartyMakeCamp,
 	MakeCampInSafeCave, MakeCampInOpenLand,
-	AdventureNextDay, PlayerHearNoiseOnWatch,
+	CampNightEnd, AdventureNextDay, PlayerHearNoiseOnWatch,
 	SearchBodies, NothingValuableHere,
 	StateWounded,
 	PlayerThink, PlayerSay, PlayerCry,

@@ -109,6 +109,20 @@ static char reaction_bonus[19] = {
 	-3, -3, -3, -2, -1, -1, -1, -1, -1, 0,
 	0, 0, 0, 1, 1, 1, 1, 1, 2
 };
+static int base_experience[21*2] = {
+	5, 10, 15, 20, 25, 35, 50, 75, 125, 175,
+	225, 275, 350, 450, 450, 650, 650, 900, 900, 900, // 10
+	900, 1100, 1100, 1100, 1100, 1350, 1350, 1350, 1350, 1350, // 20
+	1350, 1350, 1350, 2000, 2000, 2000, 2000, 2000, 2000, // 30
+	2000, 2000, 2500
+};
+static int additional_experience[21*2] = {
+	1, 3, 4, 5, 10, 15, 25, 50, 75, 125,
+	175, 225, 300, 400, 400, 550, 550, 700, 700, 700, // 10
+	700, 800, 800, 800, 800, 950, 950, 950, 950, 950, // 20
+	950, 950, 950, 1150, 1150, 1150, 1150, 1150, 1150, // 30
+	1150, 1150, 2000
+};
 static char caster_spells[][15][7] = {
 	{},
 	// 1 - Priest, Druid
@@ -230,8 +244,19 @@ static abilityn get_secondary(classn v) {
 	return Constitution;
 }
 
+static int get_experience_award(int hd, int bonus_hd, int additional_powers) {
+	auto table_index = (hd + 1) * 2;
+	if(bonus_hd > 0)
+		table_index++;
+	return base_experience[table_index] + additional_powers * additional_experience[table_index];
+}
+
 void creature::clear() {
 	memset((void*)this, 0, sizeof(*this));
+}
+
+int creature::award() const {
+	return get_experience_award(abilities[HD], getbonus(Constitution), 0);
 }
 
 void creature::act(messagen id) const {

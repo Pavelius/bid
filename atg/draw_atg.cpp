@@ -432,8 +432,6 @@ static int atg_initialize() {
 	metrics::h1 = (sprite*)bin_h1;
 	metrics::h2 = (sprite*)bin_h2;
 	metrics::h3 = (sprite*)bin_h3;
-	// metrics::small = (sprite*)loadb("fonts/small.pma");
-	// metrics::icons = (sprite*)loadb("fonts/icons.pma");
 	font = metrics::font;
 	fore = colors::text;
 	fore_stroke = colors::border;

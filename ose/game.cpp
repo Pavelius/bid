@@ -165,6 +165,8 @@ static bool apply_effect(actionn v, bool run) {
 		break;
 	case RestParty:
 		break;
+	case MakeCamp:
+		break;
 	default:
 		return false;
 	}
@@ -230,7 +232,7 @@ static void consume_food() {
 }
 
 static void camp_move() {
-	pushvalue push_header(answers::picture, ImageWastelandNight);
+	answers::picture = ImageWastelandNight;
 	sb.clear();
 	fixmsg(MakeCampInOpenLand);
 	camp_actions();
@@ -276,7 +278,7 @@ static int body_count(bool is_party) {
 static void loot_enemies() {
 	if(!encounter_monsters)
 		return;
-	generate_loot(encounter_monsters, /*÷body_count(false)*/7);
+	generate_loot(encounter_monsters, body_count(false));
 	pause(getname(SearchBodies));
 	fixmsg(NothingValuableHere);
 	pause();
@@ -327,19 +329,26 @@ static void animal_encounter() {
 	combat_encounter();
 }
 
+static bool check_encounter(int chance = 1) {
+	auto result = 1 + rand() % 6;
+	return result <= chance;
+}
+
 static void night_encounter() {
-	pushvalue push_header(answers::picture, ImageWastelandNight);
 	sb.clear();
-	player->act(PlayerHearNoiseOnWatch);
-	pause();
-	animal_encounter();
+	if(check_encounter()) {
+		player->act(PlayerHearNoiseOnWatch);
+		pause();
+		animal_encounter();
+	} else
+		player->act(CampNightEnd);
 }
 
 static void adventure_move() {
 	pushvalue push_header(answers::header, "%AreaName");
-	answers::picture = ImageWasteland;
 	while(true) {
-		sb.adds(getinfo(last_area->type));
+		answers::picture = ImageWasteland;
+		sb.addn(getinfo(last_area->type));
 		addan(MakeCamp);
 		make_party_move();
 		camp_move();
@@ -349,8 +358,7 @@ static void adventure_move() {
 			break;
 		} else {
 			night_encounter();
-			pause();
-			sb.addn(getname(AdventureNextDay));
+			sb.adds(getname(AdventureNextDay));
 		}
 	}
 }
@@ -359,6 +367,9 @@ static void adventure_move(int miles) {
 	move_distance += miles * yards_in_miles;
 	adventure_move();
 }
+
+//////////////////////////////////////////////////////
+// INTERFACE WINDOW
 
 static void paint_value(abilityn id) {
 	char temp[260]; stringbuilder sb(temp);
@@ -447,6 +458,9 @@ static void paint_main_menu() {
 		paint_bar(getname(PageCombatants), page_combatants);
 }
 
+//////////////////////////////////////////////////////
+// START GAME
+
 static void test_game() {
 	create_area(Forest);
 	create_creature(Fighter, Male);
@@ -473,13 +487,17 @@ bool pass_test();
 extern unsigned char bin_avatars[];
 extern unsigned char bin_images[];
 
-void game_run() {
-	srand(rseed());
+static void initialize_resources() {
 	metrics::avatars = (sprite*)bin_avatars;
 	metrics::images = (sprite*)bin_images;
-	// srand(1281);
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
+}
+
+void game_run() {
+	srand(rseed());
+	// srand(1281);
+	initialize_resources();
 	if(!pass_test())
 		return;
 #ifdef _DEBUG

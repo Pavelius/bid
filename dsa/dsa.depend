@@ -533,3 +533,301 @@
 	"slice.h"
 	"stringbuilder.h"
 
+1788258496 source:/home/user-331/projects/bid/atg/answers.cpp
+	"answers.h"
+	"pushvalue.h"
+	"rand.h"
+
+1788416680 /home/user-331/projects/bid/atg/answers.h
+	"adat.h"
+	"stringbuilder.h"
+
+1788157250 /home/user-331/projects/bid/atg/adat.h
+	"slice.h"
+
+1788157250 /home/user-331/projects/bid/atg/slice.h
+
+1788157250 /home/user-331/projects/bid/atg/stringbuilder.h
+	"slice.h"
+	<stdarg.h>
+
+1788157250 /home/user-331/projects/bid/atg/pushvalue.h
+
+1788244468 /home/user-331/projects/bid/atg/rand.h
+
+1788157250 source:/home/user-331/projects/bid/atg/array.cpp
+	"array.h"
+	"math.h"
+	"stringbuilder.h"
+
+1788157250 /home/user-331/projects/bid/atg/array.h
+	"slice.h"
+
+1788157250 /home/user-331/projects/bid/atg/math.h
+
+1788157250 source:/home/user-331/projects/bid/atg/bstream.cpp
+	"bstream.h"
+
+1788157250 /home/user-331/projects/bid/atg/bstream.h
+
+1788157250 source:/home/user-331/projects/bid/atg/collection.cpp
+	"collection.h"
+	"math.h"
+	"rand.h"
+	"stringbuilder.h"
+
+1788157250 /home/user-331/projects/bid/atg/collection.h
+	"adat.h"
+	"slice.h"
+
+1788416483 source:/home/user-331/projects/bid/atg/collectiona.cpp
+	"collectiona.h"
+	"math.h"
+	"rand.h"
+	"stringbuilder.h"
+
+1788416430 /home/user-331/projects/bid/atg/collectiona.h
+	"adat.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/color.cpp
+	"color.h"
+	"math.h"
+	"slice.h"
+
+1788157250 /home/user-331/projects/bid/atg/color.h
+
+1788174021 source:/home/user-331/projects/bid/atg/dice.cpp
+	"dice.h"
+	"rand.h"
+
+1788174015 /home/user-331/projects/bid/atg/dice.h
+
+1788157250 source:/home/user-331/projects/bid/atg/draw.cpp
+	"draw.h"
+	"math.h"
+
+1788157250 /home/user-331/projects/bid/atg/draw.h
+	"color.h"
+	"point.h"
+
+1788157250 /home/user-331/projects/bid/atg/point.h
+	"rect.h"
+
+1788157250 /home/user-331/projects/bid/atg/rect.h
+
+1788157250 source:/home/user-331/projects/bid/atg/draw_answers.cpp
+	"answers.h"
+	"draw.h"
+
+1788415830 source:/home/user-331/projects/bid/atg/draw_atg.cpp
+	"answers.h"
+	"draw.h"
+	"draw_atg.h"
+	"io_stream.h"
+	"print.h"
+	"pushvalue.h"
+	"stringbuilder.h"
+
+1788257843 /home/user-331/projects/bid/atg/draw_atg.h
+	"stringbuilder.h"
+
+1788271229 /home/user-331/projects/bid/atg/io_stream.h
+
+1788271507 /home/user-331/projects/bid/atg/print.h
+
+1788157250 source:/home/user-331/projects/bid/atg/draw_res.cpp
+	"draw.h"
+	"io_stream.h"
+	"math.h"
+	"stringbuilder.h"
+	"adat.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/draw_surface.cpp
+	"io_stream.h"
+	"math.h"
+	"slice.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/draw_text.cpp
+	"draw.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/draw_textf.cpp
+	"draw.h"
+	"slice.h"
+	"stringbuilder.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/draw_theme.cpp
+	"draw.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/io_stream.cpp
+	"io_stream.h"
+	"stringbuilder.h"
+	"slice.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/math.cpp
+	"math.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/nix_draw3x.cpp
+	<X11/keysym.h>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/XKBlib.h>
+	<cstdlib>
+	"draw.h"
+	"stringbuilder.h"
+
+1788271491 source:/home/user-331/projects/bid/atg/nix_io_file.cpp
+	<cstdio>
+	<unistd.h>
+	<dirent.h>
+	"io_stream.h"
+	"stringbuilder.h"
+
+1788244476 source:/home/user-331/projects/bid/atg/nix_time.cpp
+	<time.h>
+
+1788157250 source:/home/user-331/projects/bid/atg/png.cpp
+	"math.h"
+	"slice.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/point.cpp
+	"math.h"
+	"point.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/print.cpp
+	"print.h"
+	"stringbuilder.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/stringbuilder.cpp
+	"stringbuilder.h"
+	"slice.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/stringvar.cpp
+	"bsdata.h"
+	"stringvar.h"
+
+1788157250 /home/user-331/projects/bid/atg/bsdata.h
+	"array.h"
+
+1788157250 /home/user-331/projects/bid/atg/stringvar.h
+	"stringbuilder.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/szdup.cpp
+	"stringbuilder.h"
+
+1788157250 source:/home/user-331/projects/bid/atg/zip.cpp
+	"slice.h"
+
+1788157250 source:/home/user-331/projects/bid/dsa/area.cpp
+	"area.h"
+	"bsdata.h"
+	"game.h"
+	"slice.h"
+	"stringbuilder.h"
+
+1788157250 /home/user-331/projects/bid/dsa/area.h
+	"flagable.h"
+	"variant.h"
+
+1788157250 /home/user-331/projects/bid/atg/flagable.h
+
+1788157250 /home/user-331/projects/bid/dsa/variant.h
+
+1788157250 /home/user-331/projects/bid/dsa/game.h
+
+1788157250 source:/home/user-331/projects/bid/dsa/calendar.cpp
+	"calendar.h"
+
+1788157250 /home/user-331/projects/bid/dsa/calendar.h
+
+1788157250 source:/home/user-331/projects/bid/dsa/creature.cpp
+	"action.h"
+	"adat.h"
+	"answers.h"
+	"area.h"
+	"bsdata.h"
+	"creature.h"
+	"collection.h"
+	"collectiona.h"
+	"class.h"
+	"draw_atg.h"
+	"game.h"
+	"math.h"
+	"message.h"
+	"pushvalue.h"
+	"rand.h"
+	"stringbuilder.h"
+
+1788157250 /home/user-331/projects/bid/dsa/action.h
+
+1788157250 /home/user-331/projects/bid/dsa/creature.h
+	"ability.h"
+	"feat.h"
+	"item.h"
+	"npc.h"
+	"spell.h"
+
+1788157250 /home/user-331/projects/bid/dsa/ability.h
+
+1788157250 /home/user-331/projects/bid/dsa/feat.h
+	"flagable.h"
+
+1788157250 /home/user-331/projects/bid/dsa/item.h
+	"damage.h"
+	"dice.h"
+
+1788157250 /home/user-331/projects/bid/dsa/damage.h
+
+1788157250 /home/user-331/projects/bid/dsa/npc.h
+	"gender.h"
+
+1788157250 /home/user-331/projects/bid/dsa/gender.h
+
+1788157250 /home/user-331/projects/bid/dsa/spell.h
+	"flagable.h"
+	"variant.h"
+
+1788157250 /home/user-331/projects/bid/dsa/class.h
+
+1788157250 /home/user-331/projects/bid/dsa/message.h
+
+1788157250 source:/home/user-331/projects/bid/dsa/information.cpp
+	"ability.h"
+	"area.h"
+	"bsdata.h"
+	"class.h"
+	"creature.h"
+	"draw_atg.h"
+	"game.h"
+	"gender.h"
+	"math.h"
+	"stringbuilder.h"
+	"stringvar.h"
+	"variant.h"
+
+1788157250 source:/home/user-331/projects/bid/dsa/locale_ru.cpp
+	"bsdata.h"
+	"ability.h"
+	"action.h"
+	"area.h"
+	"class.h"
+	"game.h"
+	"item.h"
+	"npc.h"
+	"message.h"
+	"spell.h"
+	"stringbuilder.h"
+	"stringlocale.h"
+
+1788157250 /home/user-331/projects/bid/dsa/stringlocale.h
+
+1788157250 source:/home/user-331/projects/bid/dsa/npc.cpp
+	"npc.h"
+	"rand.h"
+	"stringbuilder.h"
+
+1788157250 source:/home/user-331/projects/bid/dsa/spell.cpp
+	"bsdata.h"
+	"collection.h"
+	"spell.h"
+	"stringbuilder.h"
+

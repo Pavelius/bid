@@ -39,7 +39,7 @@ static monsteri monster_data[] = {
 	{Dwarf},
 	{Elf},
 	{Human},
-	{BearGrizzly, 6, {5}, Neutrality, {2}, {{1}, {1, 4}}, "U", {BearHug}},
+	{BearGrizzly, 6, {5}, Neutrality, {2}, {{1}, {1, 4}}, "U", {HugAttack}},
 	{Boar, 7, {3}, Neutrality, {2}, {{1, 6}, {1, 6}}},
 	{CatPanther, 4, {4}, Neutrality, {2}, {{1, 2}, {1, 6}}, "U", {Claws1d4, Bite1d8}},
 	{CatTiger, 6, {6}, Neutrality, {3}, {{1}, {1, 3}}, "U", {Claws1d6, Bite2d6}},
