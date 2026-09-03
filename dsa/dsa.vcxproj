@@ -137,12 +137,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ability.h" />
     <ClInclude Include="action.h" />
-    <ClInclude Include="alignment.h" />
     <ClInclude Include="area.h" />
     <ClInclude Include="calendar.h" />
-    <ClInclude Include="class.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="damage.h" />
     <ClInclude Include="feat.h" />

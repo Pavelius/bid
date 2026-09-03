@@ -1,7 +1,5 @@
-#include "ability.h"
 #include "area.h"
 #include "bsdata.h"
-#include "class.h"
 #include "creature.h"
 #include "draw_atg.h"
 #include "game.h"

@@ -19,16 +19,17 @@ enum wearn : unsigned char {
 };
 enum itemn : unsigned char {
 	Fist, Claws,
-	Agate, Malachite, LapisLazuli, Amethyst, Citrine,
-	Garnet, Peridot, Aquamarine, Tourmaline, Topaz,
-	Opal, Tanzanite, Spinel, Alexandrite, ParaibaTourmaline,
-	Sapphire, Emerald, Ruby, Diamond, PinkDiamond,
-	Arrow, Bolt,
 	Dagger, HandAxe, Javelin, Spear, Staff, Crusher,
 	ShortSword, Sword, TwohandedSword,
 	LongBow, ShortBow, Crossbow,
 	LeatherArmor, Shield,
 	RawMeat, Mushrooms, Herbs, Berry,
+	Arrow, Bolt,
+	Agate, Malachite, LapisLazuli, Amethyst, Citrine,
+	Garnet, Peridot, Aquamarine, Tourmaline, Topaz,
+	Opal, Tanzanite, Spinel, Alexandrite, ParaibaTourmaline,
+	Sapphire, Emerald, Ruby, Diamond, PinkDiamond,
+	LastItem = PinkDiamond
 };
 
 int get_base_cost(itemn v);

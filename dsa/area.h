@@ -27,6 +27,7 @@ enum arean : unsigned char {
 struct arealink {
 	short unsigned	from, to;
 };
+
 struct area {
 	unsigned short	parent; // Parent area id
 	arean			type; // Area main type

@@ -6,7 +6,6 @@
 #include "creature.h"
 #include "collection.h"
 #include "collectiona.h"
-#include "class.h"
 #include "draw_atg.h"
 #include "game.h"
 #include "math.h"

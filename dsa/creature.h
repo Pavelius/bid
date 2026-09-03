@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ability.h"
 #include "feat.h"
 #include "item.h"
 #include "npc.h"
@@ -8,19 +7,37 @@
 
 enum messagen : unsigned char;
 
+enum abilityn : unsigned char {
+	HD, Strenght, Dexterity, Constitution, Intelligence, Wisdom, Charisma,
+	MeleeAttack, MissileAttack, ThrownAttack,
+	MeleeDamage, MissileDamage, ThrownDamage,
+	AC, Attacks, Initiative, Loyalty, Morale, Movement, Hits,
+	SaveDeath, SaveWand, SaveParalysis, SaveBreath, SaveSpells,
+	Climb, FindTraps, HearNoises, MoveSilently, OpenLocks, Tracking,
+	Pathfinding, GearRepairing, TendingWounds, Hunting, Foraging, TreatIllness, GearCrafting, Lore,
+	DoubleAttackPerDay,
+};
+enum alignmentn : unsigned char {
+	NeutralAlignment, Lawful, Chaotic,
+};
+
 typedef void(*fnevent)();
 
 abilityn get_primary(classn v);
 
 struct area;
 
+struct statable {
+	char abilities[DoubleAttackPerDay + 1];
+};
+
 struct creature : npci, statable, spellable, wearable {
-	statable	basic;
-	featf		feats;
-	char		initiative, disease, starvation, paralize;
-	short		hp, mhp;
-	spellf		known, active;
-	spellable	prepare;
+	statable basic;
+	featf feats;
+	char initiative, disease, starvation, paralize;
+	short hp, mhp;
+	spellf known, active;
+	spellable prepare;
 	constexpr explicit operator bool() const { return hp > 0; }
 	const char* name() const;
 	int get(abilityn v) const { return abilities[v]; }

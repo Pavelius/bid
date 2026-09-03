@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="ability.h" />
     <ClInclude Include="action.h" />
-    <ClInclude Include="alignment.h" />
     <ClInclude Include="area.h" />
     <ClInclude Include="calendar.h" />
-    <ClInclude Include="class.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="damage.h" />
     <ClInclude Include="feat.h" />
