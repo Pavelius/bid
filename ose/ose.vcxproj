@@ -139,6 +139,11 @@
   <ItemGroup>
     <ClCompile Include="area.cpp" />
     <ClCompile Include="bin_avatars.cpp" />
+    <ClCompile Include="bin_font.cpp" />
+    <ClCompile Include="bin_h1.cpp" />
+    <ClCompile Include="bin_h2.cpp" />
+    <ClCompile Include="bin_h3.cpp" />
+    <ClCompile Include="bin_images.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="information.cpp" />

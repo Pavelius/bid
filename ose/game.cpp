@@ -471,10 +471,12 @@ void main_util();
 bool pass_test();
 
 extern unsigned char bin_avatars[];
+extern unsigned char bin_images[];
 
 void game_run() {
 	srand(rseed());
 	metrics::avatars = (sprite*)bin_avatars;
+	metrics::images = (sprite*)bin_images;
 	// srand(1281);
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;

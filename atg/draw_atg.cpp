@@ -421,16 +421,19 @@ void set_hilite_state(const char* format) {
 
 void initialize_png();
 
+extern unsigned char bin_font[];
+extern unsigned char bin_h1[];
+extern unsigned char bin_h2[];
+extern unsigned char bin_h3[];
+
 static int atg_initialize() {
 	set_dark_theme();
-	metrics::h1 = (sprite*)loadb("fonts/h1.pma");
-	metrics::h2 = (sprite*)loadb("fonts/h2.pma");
-	metrics::h3 = (sprite*)loadb("fonts/h3.pma");
-	metrics::font = (sprite*)loadb("fonts/font.pma");
-	metrics::small = (sprite*)loadb("fonts/small.pma");
-	metrics::icons = (sprite*)loadb("fonts/icons.pma");
-	metrics::images = (sprite*)loadb("fonts/images.pma");
-	// metrics::avatars = (sprite*)loadb("fonts/avatars.pma");
+	metrics::font = (sprite*)bin_font;
+	metrics::h1 = (sprite*)bin_h1;
+	metrics::h2 = (sprite*)bin_h2;
+	metrics::h3 = (sprite*)bin_h3;
+	// metrics::small = (sprite*)loadb("fonts/small.pma");
+	// metrics::icons = (sprite*)loadb("fonts/icons.pma");
 	font = metrics::font;
 	fore = colors::text;
 	fore_stroke = colors::border;

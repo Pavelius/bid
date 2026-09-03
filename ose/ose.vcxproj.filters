@@ -15,6 +15,11 @@
     <ClCompile Include="itema.cpp" />
     <ClCompile Include="testing.cpp" />
     <ClCompile Include="bin_avatars.cpp" />
+    <ClCompile Include="bin_images.cpp" />
+    <ClCompile Include="bin_font.cpp" />
+    <ClCompile Include="bin_h1.cpp" />
+    <ClCompile Include="bin_h2.cpp" />
+    <ClCompile Include="bin_h3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
