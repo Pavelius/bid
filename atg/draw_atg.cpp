@@ -430,7 +430,7 @@ static int atg_initialize() {
 	metrics::small = (sprite*)loadb("fonts/small.pma");
 	metrics::icons = (sprite*)loadb("fonts/icons.pma");
 	metrics::images = (sprite*)loadb("fonts/images.pma");
-	metrics::avatars = (sprite*)loadb("fonts/avatars.pma");
+	// metrics::avatars = (sprite*)loadb("fonts/avatars.pma");
 	font = metrics::font;
 	fore = colors::text;
 	fore_stroke = colors::border;

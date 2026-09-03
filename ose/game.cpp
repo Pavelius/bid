@@ -470,8 +470,11 @@ void stringbuilder_custom(stringbuilder& sb, const char* id);
 void main_util();
 bool pass_test();
 
+extern unsigned char bin_avatars[];
+
 void game_run() {
 	srand(rseed());
+	metrics::avatars = (sprite*)bin_avatars;
 	// srand(1281);
 	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;

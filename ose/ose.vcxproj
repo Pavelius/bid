@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="area.cpp" />
+    <ClCompile Include="bin_avatars.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="information.cpp" />

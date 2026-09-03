@@ -14,6 +14,7 @@
     <ClCompile Include="item_treasure.cpp" />
     <ClCompile Include="itema.cpp" />
     <ClCompile Include="testing.cpp" />
+    <ClCompile Include="bin_avatars.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
