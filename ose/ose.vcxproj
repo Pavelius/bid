@@ -155,7 +155,7 @@
     <ClInclude Include="area.h" />
     <ClInclude Include="gender.h" />
     <ClInclude Include="itema.h" />
-    <ClInclude Include="portrait.h" />
+    <ClInclude Include="portrait_no_use.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="item.h" />

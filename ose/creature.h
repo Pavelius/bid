@@ -7,6 +7,7 @@
 typedef flagable<1, unsigned> featf;
 
 typedef void(*fnevent)();
+typedef bool (*fncfilter)(unsigned char v);
 
 enum arean : unsigned char;
 enum portraitn : unsigned char;
@@ -93,7 +94,7 @@ extern creature* opponent;
 extern creature* party[4];
 
 abilityn get_primary(classn v);
-portraitn random_portrait(classn type, gendern gender);
+portraitn random_portrait(classn type, gendern gender, fncfilter filter = 0);
 classn get_race(classn type);
 
 classn random_animal(arean area);

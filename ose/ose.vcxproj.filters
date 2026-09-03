@@ -23,7 +23,7 @@
     <ClInclude Include="message.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="variant.h" />
-    <ClInclude Include="portrait.h" />
+    <ClInclude Include="portrait_no_use.h" />
     <ClInclude Include="gender.h" />
     <ClInclude Include="itema.h" />
   </ItemGroup>

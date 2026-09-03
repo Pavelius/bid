@@ -544,12 +544,20 @@ static void create_finish() {
 	player->hp = player->mhp;
 }
 
+static bool no_party_avatar(unsigned char i) {
+	for(auto p : party) {
+		if(p && p->portrait == i)
+			return false;
+	}
+	return true;
+}
+
 void create_creature(classn type, gendern gender) {
 	player = bsdata<creature>::addz();
 	player->clear();
 	player->type = type;
 	player->gender = gender;
-	player->portrait = random_portrait(type, gender);
+	player->portrait = random_portrait(get_race(type), gender, no_party_avatar);
 	player->customname = (namen)((1 + rand() % 50) * 2 + ((gender == Female) ? 1 : 0));
 	//	player->setname();
 	create_ability(type);
