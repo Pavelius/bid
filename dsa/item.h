@@ -84,6 +84,7 @@ struct item {
 	bool weapon() const;
 };
 extern item* last_item;
+
 struct wearable {
 	item wears[Ammunition + 1];
 	wearn getwear(const void* object) const { return iswear(object) ? wearn((item*)object - wears) : Backpack; }

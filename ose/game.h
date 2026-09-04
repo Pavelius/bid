@@ -29,7 +29,7 @@ enum actionn : unsigned char {
 	MakeCharge, MakeMeleeAttack, MakeMissileAttack, MakeThrownAttack, MakeRunAway,
 	MakeHunting, MakeTreatIllness, MakeTendingWounds, MakeGearRepairing, MakeForaging,
 	RestParty, MemorizeSpells, ChangeSpellsByLevel, ChangeSpellsByLevelAllowed,
-	LeaveSettlement, MakeCamp,
+	LeaveSettlement, LeaveOutside, MakeCamp,
 };
 enum reactionn : unsigned char {
 	Hostile, Unfriendly, Neutral, Indifferent, Friendly,

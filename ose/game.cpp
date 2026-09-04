@@ -185,15 +185,34 @@ static bool apply_effect(actionn v, bool run) {
 		break;
 	case RestParty: break;
 	case MakeCamp: break;
-	case LeaveSettlement: break;
+	case LeaveSettlement:
+		if(last_area->parent_id != 0)
+			return false;
+		if(run) {
+			last_area = 0;
+			pass_turn();
+		}
+		break;
+	case LeaveOutside:
+		if(last_area->parent_id == 0)
+			return false;
+		if(run) {
+			last_area = bsdata<area>::elements + last_area->parent_id;
+			pass_turn();
+		}
+		break;
 	default: return false;
 	}
 	return true;
 }
 
+static void addanñ(actionn n) {
+	an.add(variant(n), getname(n));
+}
+
 static void addan(actionn n) {
 	if(apply_effect(n, false))
-		an.add(variant(n), getname(n));
+		addanñ(n);
 }
 
 static void apply_result() {
@@ -415,12 +434,14 @@ static void add_area_visit(short unsigned parent) {
 		an.add(variant(&e), area_visit[e.type]);
 	}
 	addan(LeaveSettlement);
+	addan(LeaveOutside);
 }
 
 static void village_move() {
 	pushvalue push_header(answer_header, "%AreaName");
-	while(true) {
+	while(last_area) {
 		answer_picture = ImagePlainVillage;
+		sb.clear();
 		sb.addn(area_look[last_area->type]);
 		add_area_visit(last_area->index());
 		make_party_move();
