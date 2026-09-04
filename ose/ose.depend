@@ -21,7 +21,7 @@
 
 1788442262 /home/user-331/projects/bid/atg//slice.h
 
-1788532770 /home/user-331/projects/bid/ose/game.h
+1788533581 /home/user-331/projects/bid/ose/game.h
 
 1788531131 /home/user-331/projects/bid/atg//stringbuilder.h
 	"slice.h"
@@ -87,7 +87,7 @@
 
 1788442247 /home/user-331/projects/bid/atg//rand.h
 
-1788532635 source:/home/user-331/projects/bid/ose/game.cpp
+1788533670 source:/home/user-331/projects/bid/ose/game.cpp
 	"area.h"
 	"answers.h"
 	"bsdata.h"

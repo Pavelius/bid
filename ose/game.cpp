@@ -59,6 +59,10 @@ void pause() {
 	pause(getname(Continue));
 }
 
+void pass_turn() {
+	game.add(Turns, 1);
+}
+
 void make_reaction_roll(int bonus) {
 	auto result = d6() + d6() + bonus;
 	if(result <= 2)
@@ -194,8 +198,15 @@ static void addan(actionn n) {
 
 static void apply_result() {
 	switch(last_result.type) {
-	case Action: apply_effect((actionn)last_result.value, true); break;
-	default: break;
+	case Action:
+		apply_effect((actionn)last_result.value, true);
+		break;
+	case AreaRef:
+		last_area = bsdata<area>::elements + last_result.value;
+		pass_turn();
+		break;
+	default:
+		break;
 	}
 }
 

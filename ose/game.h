@@ -57,5 +57,6 @@ void make_reaction_roll(int bonus);
 void make_party_move();
 long make_player_move(const char* cancel_text = 0);
 void make_player_move(fnevent add_answers);
+void pass_turn();
 void pause();
 void pause(const char* format);
