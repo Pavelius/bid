@@ -144,7 +144,5 @@ template<class T> void fistatus(const void* object, stringbuilder& sb);
 template<typename T>
 struct bsenum {
 	static const char* names[];
-	static const char* info[];
 };
 template<typename T> const char* getname(T v) { return bsenum<T>::names[v]; }
-template<typename T> const char* getinfo(T v) { return bsenum<T>::info[v]; }

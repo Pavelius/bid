@@ -179,12 +179,10 @@ static bool apply_effect(actionn v, bool run) {
 		if(run)
 			make_prepare_spells(PlayerMemorizeSpells);
 		break;
-	case RestParty:
-		break;
-	case MakeCamp:
-		break;
-	default:
-		return false;
+	case RestParty: break;
+	case MakeCamp: break;
+	case LeaveSettlement: break;
+	default: return false;
 	}
 	return true;
 }
@@ -248,7 +246,7 @@ static void consume_food() {
 }
 
 static void camp_move() {
-	answers::picture = ImageWastelandNight;
+	answer_picture = ImageWastelandNight;
 	sb.clear();
 	fixmsg(MakeCampInOpenLand);
 	camp_actions();
@@ -376,10 +374,10 @@ static void night_encounter() {
 }
 
 static void adventure_move() {
-	pushvalue push_header(answers::header, "%AreaName");
+	pushvalue push_header(answer_header, "%AreaName");
 	while(true) {
-		answers::picture = ImageWasteland;
-		sb.addn(getinfo(last_area->type));
+		answer_picture = ImageWasteland;
+		sb.addn(area_look[last_area->type]);
 		addan(MakeCamp);
 		make_party_move();
 		camp_move();
@@ -397,6 +395,26 @@ static void adventure_move() {
 static void adventure_move(int miles) {
 	move_distance += miles * yards_in_miles;
 	adventure_move();
+}
+
+static void add_area_visit(short unsigned parent) {
+	for(auto& e : bsdata<area>()) {
+		if(e.parent_id!=parent)
+			continue;
+		an.add(variant(&e), area_visit[e.type]);
+	}
+	addan(LeaveSettlement);
+}
+
+static void village_move() {
+	pushvalue push_header(answer_header, "%AreaName");
+	while(true) {
+		answer_picture = ImagePlainVillage;
+		sb.addn(area_look[last_area->type]);
+		add_area_visit(last_area->index());
+		make_party_move();
+		apply_result();
+	}
 }
 
 //////////////////////////////////////////////////////
@@ -493,7 +511,7 @@ static void paint_main_menu() {
 // START GAME
 
 static void test_game() {
-	create_area(Wastes);
+	create_area(Wastes, 0);
 	create_creature(Fighter, Male);
 	join_party();
 	create_creature(Elf, Female);
@@ -507,7 +525,14 @@ static void test_game() {
 	// treasure_generate("A", true, false, false);
 	// add_magic_item(RandomMagicItem);
 	// make_player_move(take_items_options);
-	adventure_move(50);
+	// adventure_move(50);
+	create_area(Village, 0);
+	auto parent = last_area->index();
+	create_area(Market, parent);
+	create_area(Tavern, parent);
+	create_area(Inn, parent);
+	last_area = bsdata<area>::elements + parent;
+	village_move();
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);

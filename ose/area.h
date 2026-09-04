@@ -25,14 +25,18 @@ enum areafn : unsigned char {
 enum arean : unsigned char {
 	NoArea,
 	Plains, Sands, Wastes, Swamps, Hills, Mountains, Jungle, Forest,
-	Cave, Dungeon, Ruins,
-	Garden, Temple, Inn, Tavern, Palace,
 	Hamlet, Village, SmallTown, LargeTown,
+	Cave, Dungeon, Ruins,
+	Market, Garden, Temple, Inn, Tavern, Palace,
+	LastArea = Palace,
 };
+extern const char* area_look[Palace+1];
+extern const char* area_visit[Palace+1];
 
 struct arealink {
 	short unsigned	from, to;
 };
+
 struct area {
 	arean			type; // Area main type
 	unsigned char	param; // Area subtype
@@ -55,5 +59,5 @@ extern int move_distance;
 
 int get_movement_modifier(arean type);
 
-void create_area(arean id);
+void create_area(arean id, short unsigned parent);
 void update_area_items();

@@ -61,11 +61,12 @@ area* area::parent() const {
 	return bsdata<area>::elements + parent_id;
 }
 
-void create_area(arean id) {
+void create_area(arean id, short unsigned parent_id) {
 	last_area = bsdata<area>::addz();
 	last_area->clear();
 	last_area->type = id;
 	last_area->timestamp = game.get(Turns);
+	last_area->parent_id = parent_id;
 }
 
 int get_movement_modifier(arean type) {

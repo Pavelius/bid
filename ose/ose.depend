@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1788354395 source:/home/user-331/projects/bid/ose/area.cpp
+1788532434 source:/home/user-331/projects/bid/ose/area.cpp
 	"area.h"
 	"bsdata.h"
 	"game.h"
@@ -8,26 +8,26 @@
 	"stringbuilder.h"
 	"variant.h"
 
-1788246327 /home/user-331/projects/bid/ose/area.h
+1788532457 /home/user-331/projects/bid/ose/area.h
 	"flagable.h"
 
-1788157250 /home/user-331/projects/bid/atg//flagable.h
+1788442159 /home/user-331/projects/bid/atg//flagable.h
 
-1788157250 /home/user-331/projects/bid/atg//bsdata.h
+1788441984 /home/user-331/projects/bid/atg//bsdata.h
 	"array.h"
 
-1788157250 /home/user-331/projects/bid/atg//array.h
+1788441977 /home/user-331/projects/bid/atg//array.h
 	"slice.h"
 
-1788157250 /home/user-331/projects/bid/atg//slice.h
+1788442262 /home/user-331/projects/bid/atg//slice.h
 
-1788343748 /home/user-331/projects/bid/ose/game.h
+1788532770 /home/user-331/projects/bid/ose/game.h
 
-1788157250 /home/user-331/projects/bid/atg//stringbuilder.h
+1788531131 /home/user-331/projects/bid/atg//stringbuilder.h
 	"slice.h"
 	<stdarg.h>
 
-1788418106 source:/home/user-331/projects/bid/ose/creature.cpp
+1788442359 source:/home/user-331/projects/bid/ose/creature.cpp
 	"adat.h"
 	"answers.h"
 	"area.h"
@@ -44,50 +44,50 @@
 	"rand.h"
 	"stringbuilder.h"
 
-1788157250 /home/user-331/projects/bid/atg//adat.h
+1788441957 /home/user-331/projects/bid/atg//adat.h
 	"slice.h"
 
-1788416680 /home/user-331/projects/bid/atg//answers.h
+1788529754 /home/user-331/projects/bid/atg//answers.h
 	"adat.h"
 	"stringbuilder.h"
 
-1788441610 /home/user-331/projects/bid/ose/creature.h
+1788442368 /home/user-331/projects/bid/ose/creature.h
 	"gender.h"
 	"item.h"
 	"spell.h"
 
-1788157251 /home/user-331/projects/bid/ose/gender.h
+1788442387 /home/user-331/projects/bid/ose/gender.h
 
-1788359863 /home/user-331/projects/bid/ose/item.h
+1788442405 /home/user-331/projects/bid/ose/item.h
 	"dice.h"
 
-1788157251 /home/user-331/projects/bid/ose/spell.h
+1788442915 /home/user-331/projects/bid/ose/spell.h
 	"flagable.h"
 	"variant.h"
 
-1788157251 /home/user-331/projects/bid/ose/variant.h
+1788442892 /home/user-331/projects/bid/ose/variant.h
 
-1788157250 /home/user-331/projects/bid/atg//collection.h
+1788442023 /home/user-331/projects/bid/atg//collection.h
 	"adat.h"
 	"slice.h"
 
-1788416430 /home/user-331/projects/bid/atg//collectiona.h
+1788442040 /home/user-331/projects/bid/atg//collectiona.h
 	"adat.h"
 
-1788174015 /home/user-331/projects/bid/atg//dice.h
+1788442065 /home/user-331/projects/bid/atg//dice.h
 
-1788257843 /home/user-331/projects/bid/atg//draw_atg.h
+1788442102 /home/user-331/projects/bid/atg//draw_atg.h
 	"stringbuilder.h"
 
-1788157250 /home/user-331/projects/bid/atg//math.h
+1788442184 /home/user-331/projects/bid/atg//math.h
 
-1788433329 /home/user-331/projects/bid/ose/message.h
+1788442846 /home/user-331/projects/bid/ose/message.h
 
-1788157250 /home/user-331/projects/bid/atg//pushvalue.h
+1788442239 /home/user-331/projects/bid/atg//pushvalue.h
 
-1788244468 /home/user-331/projects/bid/atg//rand.h
+1788442247 /home/user-331/projects/bid/atg//rand.h
 
-1788441504 source:/home/user-331/projects/bid/ose/game.cpp
+1788532635 source:/home/user-331/projects/bid/ose/game.cpp
 	"area.h"
 	"answers.h"
 	"bsdata.h"
@@ -104,18 +104,18 @@
 	"stringbuilder.h"
 	"variant.h"
 
-1788157250 /home/user-331/projects/bid/atg//draw.h
+1788442083 /home/user-331/projects/bid/atg//draw.h
 	"color.h"
 	"point.h"
 
-1788157250 /home/user-331/projects/bid/atg//color.h
+1788442050 /home/user-331/projects/bid/atg//color.h
 
-1788157250 /home/user-331/projects/bid/atg//point.h
+1788442221 /home/user-331/projects/bid/atg//point.h
 	"rect.h"
 
-1788157250 /home/user-331/projects/bid/atg//rect.h
+1788442254 /home/user-331/projects/bid/atg//rect.h
 
-1788329591 source:/home/user-331/projects/bid/ose/information.cpp
+1788442392 source:/home/user-331/projects/bid/ose/information.cpp
 	"area.h"
 	"bsdata.h"
 	"collectiona.h"
@@ -128,10 +128,10 @@
 	"stringbuilder.h"
 	"stringvar.h"
 
-1788157250 /home/user-331/projects/bid/atg//stringvar.h
+1788442320 /home/user-331/projects/bid/atg//stringvar.h
 	"stringbuilder.h"
 
-1788415208 source:/home/user-331/projects/bid/ose/item.cpp
+1788442398 source:/home/user-331/projects/bid/ose/item.cpp
 	"bsdata.h"
 	"creature.h"
 	"collectiona.h"
@@ -143,7 +143,7 @@
 	"slice.h"
 	"stringbuilder.h"
 
-1788359852 source:/home/user-331/projects/bid/ose/item_treasure.cpp
+1788442416 source:/home/user-331/projects/bid/ose/item_treasure.cpp
 	"area.h"
 	"item.h"
 	"rand.h"
@@ -157,7 +157,7 @@
 1788245232 source:/home/user-331/projects/bid/ose/itema.cpp
 	"itema.h"
 
-1788433437 source:/home/user-331/projects/bid/ose/locale_ru.cpp
+1788532807 source:/home/user-331/projects/bid/ose/locale_ru.cpp
 	"bsdata.h"
 	"area.h"
 	"creature.h"
@@ -168,14 +168,14 @@
 	"stringbuilder.h"
 	"stringlocale.h"
 
-1788157250 /home/user-331/projects/bid/atg//stringlocale.h
+1788531124 /home/user-331/projects/bid/atg//stringlocale.h
 
-1788419387 source:/home/user-331/projects/bid/ose/monster.cpp
+1788442852 source:/home/user-331/projects/bid/ose/monster.cpp
 	"creature.h"
 	"dice.h"
 	"rand.h"
 
-1788415208 source:/home/user-331/projects/bid/ose/portrait.cpp
+1788442857 source:/home/user-331/projects/bid/ose/portrait.cpp
 	"adat.h"
 	"creature.h"
 	"gender.h"
@@ -184,7 +184,7 @@
 
 1788157251 /home/user-331/projects/bid/ose/portrait.h
 
-1788157251 source:/home/user-331/projects/bid/ose/spell.cpp
+1788442872 source:/home/user-331/projects/bid/ose/spell.cpp
 	"bsdata.h"
 	"collection.h"
 	"slice.h"
@@ -402,93 +402,93 @@
 1757139960 source:/home/user-331/projects/atg/zip.cpp
 	"slice.h"
 
-1788258496 source:/home/user-331/projects/bid/atg/answers.cpp
+1788529780 source:/home/user-331/projects/bid/atg/answers.cpp
 	"answers.h"
 	"pushvalue.h"
 	"rand.h"
 
-1788416680 /home/user-331/projects/bid/atg/answers.h
+1788529754 /home/user-331/projects/bid/atg/answers.h
 	"adat.h"
 	"stringbuilder.h"
 
-1788157250 /home/user-331/projects/bid/atg/adat.h
+1788441957 /home/user-331/projects/bid/atg/adat.h
 	"slice.h"
 
-1788157250 /home/user-331/projects/bid/atg/slice.h
+1788442262 /home/user-331/projects/bid/atg/slice.h
 
-1788157250 /home/user-331/projects/bid/atg/stringbuilder.h
+1788531131 /home/user-331/projects/bid/atg/stringbuilder.h
 	"slice.h"
 	<stdarg.h>
 
-1788157250 /home/user-331/projects/bid/atg/pushvalue.h
+1788442239 /home/user-331/projects/bid/atg/pushvalue.h
 
-1788244468 /home/user-331/projects/bid/atg/rand.h
+1788442247 /home/user-331/projects/bid/atg/rand.h
 
-1788157250 source:/home/user-331/projects/bid/atg/array.cpp
+1788441972 source:/home/user-331/projects/bid/atg/array.cpp
 	"array.h"
 	"math.h"
 	"stringbuilder.h"
 
-1788157250 /home/user-331/projects/bid/atg/array.h
+1788441977 /home/user-331/projects/bid/atg/array.h
 	"slice.h"
 
-1788157250 /home/user-331/projects/bid/atg/math.h
+1788442184 /home/user-331/projects/bid/atg/math.h
 
-1788157250 source:/home/user-331/projects/bid/atg/bstream.cpp
+1788441992 source:/home/user-331/projects/bid/atg/bstream.cpp
 	"bstream.h"
 
-1788157250 /home/user-331/projects/bid/atg/bstream.h
+1788441998 /home/user-331/projects/bid/atg/bstream.h
 
-1788157250 source:/home/user-331/projects/bid/atg/collection.cpp
+1788442018 source:/home/user-331/projects/bid/atg/collection.cpp
 	"collection.h"
 	"math.h"
 	"rand.h"
 	"stringbuilder.h"
 
-1788157250 /home/user-331/projects/bid/atg/collection.h
+1788442023 /home/user-331/projects/bid/atg/collection.h
 	"adat.h"
 	"slice.h"
 
-1788416483 source:/home/user-331/projects/bid/atg/collectiona.cpp
+1788442030 source:/home/user-331/projects/bid/atg/collectiona.cpp
 	"collectiona.h"
 	"math.h"
 	"rand.h"
 	"stringbuilder.h"
 
-1788416430 /home/user-331/projects/bid/atg/collectiona.h
+1788442040 /home/user-331/projects/bid/atg/collectiona.h
 	"adat.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/color.cpp
+1788442045 source:/home/user-331/projects/bid/atg/color.cpp
 	"color.h"
 	"math.h"
 	"slice.h"
 
-1788157250 /home/user-331/projects/bid/atg/color.h
+1788442050 /home/user-331/projects/bid/atg/color.h
 
-1788174021 source:/home/user-331/projects/bid/atg/dice.cpp
+1788442058 source:/home/user-331/projects/bid/atg/dice.cpp
 	"dice.h"
 	"rand.h"
 
-1788174015 /home/user-331/projects/bid/atg/dice.h
+1788442065 /home/user-331/projects/bid/atg/dice.h
 
-1788157250 source:/home/user-331/projects/bid/atg/draw.cpp
+1788442070 source:/home/user-331/projects/bid/atg/draw.cpp
 	"draw.h"
 	"math.h"
 
-1788157250 /home/user-331/projects/bid/atg/draw.h
+1788442083 /home/user-331/projects/bid/atg/draw.h
 	"color.h"
 	"point.h"
 
-1788157250 /home/user-331/projects/bid/atg/point.h
+1788442221 /home/user-331/projects/bid/atg/point.h
 	"rect.h"
 
-1788157250 /home/user-331/projects/bid/atg/rect.h
+1788442254 /home/user-331/projects/bid/atg/rect.h
 
-1788157250 source:/home/user-331/projects/bid/atg/draw_answers.cpp
+1788442089 source:/home/user-331/projects/bid/atg/draw_answers.cpp
 	"answers.h"
 	"draw.h"
 
-1788415830 source:/home/user-331/projects/bid/atg/draw_atg.cpp
+1788529795 source:/home/user-331/projects/bid/atg/draw_atg.cpp
 	"answers.h"
 	"draw.h"
 	"draw_atg.h"
@@ -497,12 +497,12 @@
 	"pushvalue.h"
 	"stringbuilder.h"
 
-1788257843 /home/user-331/projects/bid/atg/draw_atg.h
+1788442102 /home/user-331/projects/bid/atg/draw_atg.h
 	"stringbuilder.h"
 
-1788271229 /home/user-331/projects/bid/atg/io_stream.h
+1788442171 /home/user-331/projects/bid/atg/io_stream.h
 
-1788271507 /home/user-331/projects/bid/atg/print.h
+1788442234 /home/user-331/projects/bid/atg/print.h
 
 1788157250 source:/home/user-331/projects/bid/atg/draw_res.cpp
 	"draw.h"
@@ -511,31 +511,32 @@
 	"stringbuilder.h"
 	"adat.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/draw_surface.cpp
+1788442113 source:/home/user-331/projects/bid/atg/draw_surface.cpp
+	"draw.h"
 	"io_stream.h"
 	"math.h"
 	"slice.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/draw_text.cpp
+1788442120 source:/home/user-331/projects/bid/atg/draw_text.cpp
 	"draw.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/draw_textf.cpp
+1788442126 source:/home/user-331/projects/bid/atg/draw_textf.cpp
 	"draw.h"
 	"slice.h"
 	"stringbuilder.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/draw_theme.cpp
+1788442150 source:/home/user-331/projects/bid/atg/draw_theme.cpp
 	"draw.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/io_stream.cpp
+1788442165 source:/home/user-331/projects/bid/atg/io_stream.cpp
 	"io_stream.h"
 	"stringbuilder.h"
 	"slice.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/math.cpp
+1788442178 source:/home/user-331/projects/bid/atg/math.cpp
 	"math.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/nix_draw3x.cpp
+1788442189 source:/home/user-331/projects/bid/atg/nix_draw3x.cpp
 	<X11/keysym.h>
 	<X11/Xlib.h>
 	<X11/Xutil.h>
@@ -544,58 +545,60 @@
 	"draw.h"
 	"stringbuilder.h"
 
-1788271491 source:/home/user-331/projects/bid/atg/nix_io_file.cpp
+1788442195 source:/home/user-331/projects/bid/atg/nix_io_file.cpp
 	<cstdio>
 	<unistd.h>
 	<dirent.h>
 	"io_stream.h"
 	"stringbuilder.h"
 
-1788244476 source:/home/user-331/projects/bid/atg/nix_time.cpp
+1788442202 source:/home/user-331/projects/bid/atg/nix_time.cpp
 	<time.h>
 
-1788157250 source:/home/user-331/projects/bid/atg/png.cpp
+1788442211 source:/home/user-331/projects/bid/atg/png.cpp
+	"draw.h"
 	"math.h"
 	"slice.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/point.cpp
+1788442216 source:/home/user-331/projects/bid/atg/point.cpp
 	"math.h"
 	"point.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/print.cpp
+1788442227 source:/home/user-331/projects/bid/atg/print.cpp
 	"print.h"
 	"stringbuilder.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/stringbuilder.cpp
+1788442302 source:/home/user-331/projects/bid/atg/stringbuilder.cpp
 	"stringbuilder.h"
 	"slice.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/stringvar.cpp
+1788442316 source:/home/user-331/projects/bid/atg/stringvar.cpp
 	"bsdata.h"
 	"stringvar.h"
 
-1788157250 /home/user-331/projects/bid/atg/bsdata.h
+1788441984 /home/user-331/projects/bid/atg/bsdata.h
 	"array.h"
 
-1788157250 /home/user-331/projects/bid/atg/stringvar.h
+1788442320 /home/user-331/projects/bid/atg/stringvar.h
 	"stringbuilder.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/szdup.cpp
+1788442324 source:/home/user-331/projects/bid/atg/szdup.cpp
 	"stringbuilder.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/zip.cpp
+1788442336 source:/home/user-331/projects/bid/atg/zip.cpp
+	"bstream.h"
 	"slice.h"
 
-1788157250 source:/home/user-331/projects/bid/atg/choose.cpp
+1788442005 source:/home/user-331/projects/bid/atg/choose.cpp
 	"answers.h"
 	"choose.h"
 
-1788157250 /home/user-331/projects/bid/atg/choose.h
+1788442010 /home/user-331/projects/bid/atg/choose.h
 
-1788265538 source:/home/user-331/projects/bid/ose/testing.cpp
+1788442887 source:/home/user-331/projects/bid/ose/testing.cpp
 	"item.h"
 
-1788271507 /home/user-331/projects/bid/atg//print.h
+1788442234 /home/user-331/projects/bid/atg//print.h
 
 1788415208 source:/home/user-331/projects/bid/atg/bin_font.cpp
 
@@ -605,7 +608,7 @@
 
 1788415208 source:/home/user-331/projects/bid/atg/bin_h3.cpp
 
-1788415208 source:/home/user-331/projects/bid/ose/bin_avatars.cpp
+1788501914 source:/home/user-331/projects/bid/ose/bin_avatars.cpp
 
-1788415208 source:/home/user-331/projects/bid/ose/bin_images.cpp
+1788501914 source:/home/user-331/projects/bid/ose/bin_images.cpp
 

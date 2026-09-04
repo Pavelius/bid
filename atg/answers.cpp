@@ -18,9 +18,10 @@
 #include "pushvalue.h"
 #include "rand.h"
 
-const char* answers::header;
+picturen answer_picture;
+const char* answer_header;
+
 const char* answers::string;
-picturen answers::picture;
 bool answers::show_tips = true;
 bool answers::interactive = true;
 int answers::column_count = 1;

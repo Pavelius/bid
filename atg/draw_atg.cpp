@@ -72,12 +72,12 @@ void paint_hilite() {
 }
 
 static void paint_header() {
-	if(!answers::header || !answers::header[0])
+	if(!answer_header || !answer_header[0])
 		return;
 	pushfont push_font(metrics::h1);
 	pushfore push_fore(colors::header);
 	char temp[260]; stringbuilder sb(temp);
-	sb.add(answers::header);
+	sb.add(answer_header);
 	texta(temp, AlignCenter);
 	caret.y += texth() + metrics::padding;
 }
@@ -129,7 +129,7 @@ static void paint_picture() {
 	auto p = metrics::images;
 	if(!p)
 		return;
-	image(caret.x, caret.y, p, answers::picture, 0);
+	image(caret.x, caret.y, p, answer_picture, 0);
 	caret.y += p->get(0).sy + metrics::border + metrics::padding;
 #endif // NOART
 }

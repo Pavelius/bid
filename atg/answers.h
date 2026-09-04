@@ -23,6 +23,9 @@ typedef void(*fnabutton)(int index, long value, const char* text);
 
 enum picturen : unsigned char;
 
+extern picturen answer_picture;
+extern const char* answer_header;
+
 struct answers {
 	struct element {
 		long value, param;
@@ -34,9 +37,7 @@ struct answers {
 	static const answers* last;
 	static bool	interactive;
 	static int column_count;
-	static const char* header;
 	static const char* string;
-	static picturen picture;
 	static bool show_tips;
 	answers() : sc(buffer) {}
 	constexpr operator bool() const { return elements.count != 0; }
