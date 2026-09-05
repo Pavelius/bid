@@ -61,8 +61,8 @@ static itemn random_gems[20] = {
 static itemn random_ornamental_gems[] = {Agate, Malachite, LapisLazuli, Amethyst, Citrine};
 static itemn random_semi_precious_gems[] = {Garnet, Peridot, Aquamarine, Tourmaline, Topaz};
 static itemn random_precious_gems[] = {Opal, Tanzanite, Spinel, Alexandrite};
-static itemn random_good_gems[] = {ParaibaTourmaline, Sapphire, Emerald};
-static itemn random_expensive_gems[] = {Ruby, Diamond, PinkDiamond};
+static itemn random_good_gems[] = {ParaibaTourmaline, PinkDiamond};
+static itemn random_expensive_gems[] = {Sapphire, Emerald, Ruby, Diamond};
 static itemn random_jewelry[] = {SignetRing, SignetRing, SignetRing, SilverBrooch, SilverBrooch, StrangeIdol};
 static itemn random_misc[] = {Amulet, Bag, Book, Rope, Robe, Carpet, Mirror, Net, Horseshoes};
 static itemn random_armor[] = {LeatherArmor, LeatherArmor, ChainArmor, ChainArmor, ChainArmor, ChainArmor, PlateArmor, PlateArmor};
@@ -80,29 +80,29 @@ itemi item_data[LastItem + 1] = {
 	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 4}, 0, 2}},
 	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 6}, 0, 2}},
 	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 8}, 0, 2}},
-	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 6}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 8}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce), {{1, 12}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce), {{2, 6}}},
-	{Bite1d6, Head, 0, 0, FG(Pierce), {{2, 8}}},
+	{Bite1d6, Head, 0, 0, Pierce, {{1, 6}}},
+	{Bite1d6, Head, 0, 0, Pierce, {{1, 8}}},
+	{Bite1d6, Head, 0, 0, Pierce, {{1, 12}}},
+	{Bite1d6, Head, 0, 0, Pierce, {{2, 6}}},
+	{Bite1d6, Head, 0, 0, Pierce, {{2, 8}}},
 	// Melee weapons
-	{Dagger, MeleeWeapon, 0, 0, FG(Pierce) | FG(Slashing), {{1, 4}}},
-	{HandAxe, MeleeWeapon, 0, 0, 0, {{1, 6}}},
-	{Javelin, MeleeWeapon, 0, 0, FG(Pierce) | FG(Thrown), {{1, 4}}},
-	{Spear, MeleeWeapon, 0, 0, FG(Pierce) | FG(Thrown), {{1, 6}}},
-	{Trident, MeleeWeapon, 0, 0, FG(Pierce) | FG(Slashing), {{1, 6}}},
-	{Staff, MeleeWeapon, 0, 0, FG(Blunt) | FG(Slowest) | FG(Massive), {{1, 4}}},
-	{BattleAxe, MeleeWeapon, 7 * gp, 0, FG(Slashing) | FG(Slowest) | FG(Massive), {{1, 8}}},
-	{WarHammer, MeleeWeapon, 5 * gp, 0, FG(Blunt) | FG(Massive), {{1, 6, 1}}},
-	{Mace, MeleeWeapon, 5 * gp, 0, FG(Blunt), {{1, 6}}},
+	{Dagger, MeleeWeapon, 0, 0, {Pierce, Slashing}, {{1, 4}}},
+	{HandAxe, MeleeWeapon, 0, 0, {}, {{1, 6}}},
+	{Javelin, MeleeWeapon, 0, 0, {Pierce, Thrown}, {{1, 4}}},
+	{Spear, MeleeWeapon, 0, 0, {Pierce, Thrown}, {{1, 6}}},
+	{Trident, MeleeWeapon, 0, 0, {Pierce, Slashing}, {{1, 6}}},
+	{Staff, MeleeWeapon, 0, 0, {Blunt, Slowest, Large}, {{1, 4}}},
+	{BattleAxe, MeleeWeapon, 7 * gp, 0, {Slashing, Slowest, Large}, {{1, 8}}},
+	{WarHammer, MeleeWeapon, 5 * gp, 0, {Blunt, Large}, {{1, 6, 1}}},
+	{Mace, MeleeWeapon, 5 * gp, 0, {Blunt}, {{1, 6}}},
 	{ShortSword, MeleeWeapon, 0, 0, 0, {{1, 6}}},
 	{Sword, MeleeWeapon, 0, 0, 0, {{1, 8}}},
-	{TwohandedSword, MeleeWeapon, 0, 0, FG(Massive), {{1, 10}}},
+	{TwohandedSword, MeleeWeapon, 0, 0, {Large}, {{1, 10}}},
 	// Range weapons
-	{LongBow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, 0, Arrow}},
-	{ShortBow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, 0, Arrow}},
-	{Sling, RangeWeapon, 0, 0, FG(Massive), {{1, 3}, 0, 0, Bolt}},
-	{Crossbow, RangeWeapon, 0, 0, FG(Pierce) | FG(Massive), {{1, 6}, 0, 0, Bolt}},
+	{LongBow, RangeWeapon, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Arrow}},
+	{ShortBow, RangeWeapon, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Arrow}},
+	{Sling, RangeWeapon, 0, 0, {Large}, {{1, 3}, 0, 0, Bolt}},
+	{Crossbow, RangeWeapon, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Bolt}},
 	// Armor
 	{LeatherArmor, Body, 20 * gp, 200, 0, {{}, 2}},
 	{ChainArmor, Body, 40 * gp, 400, 0, {{}, 4}},
@@ -151,6 +151,11 @@ itemi item_data[LastItem + 1] = {
 	{Scarab, Backpack, 0, 0, 0, {}},
 	{Spade, Backpack, 0, 0, 0, {}},
 	{Stone, Backpack, 0, 0, 0, {}},
+	// Gemstones
+	{Sapphire, Backpack, 0, 0, 0, {}},
+	{Emerald, Backpack, 0, 0, 0, {}},
+	{Ruby, Backpack, 0, 0, 0, {}},
+	{Diamond, Backpack, 0, 0, 0, {}},
 	// Other items
 	{Potion, Backpack, 0, 0, 0, {}},
 	{Bottle, Backpack, 0, 0, 0, {}},
@@ -161,6 +166,8 @@ itemi item_data[LastItem + 1] = {
 	{DivineScroll, Backpack},
 	// Edible (Countable start here)
 	{Ration, Edible, 0, 0, 0, {}},
+	{Bread, Edible, 0, 0, 0, {}},
+	{Corn, Edible, 0, 0, 0, {}},
 	{RawMeat, Edible, 0, 0, 0, {}},
 	{Mushrooms, Edible, 0, 0, 0, {}},
 	{Herbs, Edible, 0, 0, 0, {}},
@@ -188,10 +195,6 @@ itemi item_data[LastItem + 1] = {
 	{Spinel, Backpack, 0, 0, 0, {}},
 	{Alexandrite, Backpack, 0, 0, 0, {}},
 	{ParaibaTourmaline, Backpack, 0, 0, 0, {}},
-	{Sapphire, Backpack, 0, 0, 0, {}},
-	{Emerald, Backpack, 0, 0, 0, {}},
-	{Ruby, Backpack, 0, 0, 0, {}},
-	{Diamond, Backpack, 0, 0, 0, {}},
 	{PinkDiamond, Backpack, 0, 0, 0, {}},
 	{SignetRing, Backpack, 0, 0, 0, {}},
 	{SilverBrooch, Backpack, 0, 0, 0, {}},
@@ -271,6 +274,13 @@ void add_items(short unsigned index) {
 		if(!e || e.index!=index)
 			continue;
 		items.add(&e);
+	}
+}
+
+void clear_items(short unsigned index) {
+	for(auto& e : bsdata<itemground>()) {
+		if(e && e.index == index)
+			e.clear();
 	}
 }
 
@@ -362,7 +372,7 @@ void item::drop(short unsigned index) {
 bool wearable::isusable(const item& it) const {
 	auto slot = getwear(&it);
 	switch(slot) {
-	case MeleeOffhand: return !it.is(Massive);
+	case MeleeOffhand: return !it.is(Large);
 	default: return true;
 	}
 }

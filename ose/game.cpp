@@ -201,7 +201,10 @@ static bool apply_effect(actionn v, bool run) {
 			pass_turn();
 		}
 		break;
-	default: return false;
+	case BuyMarketGoods:
+		break;
+	default:
+		return false;
 	}
 	return true;
 }
@@ -437,12 +440,23 @@ static void add_area_visit(short unsigned parent) {
 	addan(LeaveOutside);
 }
 
+static void add_actions(arean type) {
+	switch(type) {
+	case Market:
+		addan(BuyMarketGoods);
+		break;
+	default:
+		break;
+	}
+}
+
 static void village_move() {
 	pushvalue push_header(answer_header, "%AreaName");
 	while(last_area) {
 		answer_picture = ImagePlainVillage;
 		sb.clear();
 		sb.addn(area_look[last_area->type]);
+		add_actions(last_area->type);
 		add_area_visit(last_area->index());
 		make_party_move();
 		apply_result();

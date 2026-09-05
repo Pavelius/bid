@@ -17,6 +17,7 @@
 #pragma once
 
 #include "dice.h"
+#include "flagable.h"
 
 struct creature;
 
@@ -25,7 +26,7 @@ enum messagen : unsigned char;
 enum damagen : unsigned char {
 	Blunt, Slashing, Pierce,
 	Fire, Cold, Acid,
-	Thrown, Deadly, Massive, Slowest,
+	Large, Deadly, Thrown, Slowest,
 	UseArcane, UseDivine, UseLeather, UseMetal,
 };
 enum wearn : unsigned char {
@@ -44,13 +45,14 @@ enum itemn : unsigned char {
 	Cloack,	CrystalBall, Cube, Decanter, Deck, Drums, Dust, Eyes, Feather, Figurine, Carpet,
 	Gauntlets, Gem, Gridle, Helm, Horn, Horseshoes, Incense, Fortress, Flask,
 	Jug, Mirror, Net, Oil, Pearl, Pipe, Robe, Rope, Saw, Scarab, Spade, Stone,
+	Sapphire, Emerald, Ruby, Diamond,
 	Potion, Bottle, Ring, Rod, Wand, ArcaneScroll, DivineScroll,
-	Ration, RawMeat, Mushrooms, Herbs, Berry,
+	Ration, Bread, Corn, RawMeat, Mushrooms, Herbs, Berry,
 	Arrow, ArrowM1, ArrowM2, Bolt, BoltM1, BoltM2,
 	Agate, Malachite, LapisLazuli, Amethyst, Citrine,
 	Garnet, Peridot, Aquamarine, Tourmaline, Topaz,
 	Opal, Tanzanite, Spinel, Alexandrite, ParaibaTourmaline,
-	Sapphire, Emerald, Ruby, Diamond, PinkDiamond,
+	PinkDiamond,
 	SignetRing, SilverBrooch, StrangeIdol,
 	CP, SP, EP, GP, PP,
 	FirstCountable = Ration, LastNative = Bite2d8, LastItem = PP,
@@ -66,7 +68,7 @@ enum powern : unsigned char {
 	Summoning, SummonAir, SummonEarth, SummonFire, SummonWater,
 	ControlAnimals, ControlCharmed, ControlDragons, ControlFish, ControlGiants, ControlHumans,
 	ControlPlants, ControlLycanthropes, ControlSpells, ControlGoblinoid, ControlUndead,
-	EnemyDetection, InvisibilityDetection, MagicDetection, TrapDetection, TreasureDetection, SecretDoorDetection,
+	DetectEnemy, DetectInvisibility, DetectSpells, DetectTrap, DetectTreasure, DetectSecretDoors,
 	FormBoat, FormTiger, FormBird,
 	Corruption, Power, Wizardy, Holiness, Woodlands, Illusion, MagicMissiles, Paralysation,
 	Charming, Choking, Clairaudience, Clairvoyance,	Dancing, Devouring, Displacing, Draining, Radiance,
@@ -83,6 +85,8 @@ enum powern : unsigned char {
 
 extern bool need_update_items;
 
+typedef flag32 damagef;
+
 struct attacki {
 	dice damage;
 	char ac;
@@ -94,9 +98,9 @@ struct itemi {
 	itemn parent;
 	wearn wear;
 	int cost, weight;
-	unsigned flags; // damagen
+	damagef flags; // damagen
 	attacki	combat;
-	bool is(damagen v) const { return (flags & (1<<v))!=0; }
+	bool is(damagen v) const { return flags.is(v); }
 };
 extern itemi item_data[LastItem+1];
 
@@ -169,4 +173,5 @@ item some(itemn type, int count = 8);
 void add_magic_item(itemn type);
 void add_items(short unsigned index);
 void clear_items();
+void clear_items(short unsigned index);
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual);
