@@ -43,6 +43,7 @@
     <ClInclude Include="sprite_util.h" />
     <ClInclude Include="stringbuilder.h" />
     <ClInclude Include="stringlocale.h" />
+    <ClInclude Include="stringset.h" />
     <ClInclude Include="stringvar.h" />
     <ClInclude Include="win.h" />
   </ItemGroup>
@@ -96,6 +97,7 @@
     <ClCompile Include="stringbuilder.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="stringset.cpp" />
     <ClCompile Include="stringvar.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>

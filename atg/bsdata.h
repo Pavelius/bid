@@ -18,30 +18,24 @@
 
 #include "array.h"
 
-#ifdef _MSC_VER
-#define	BSDATATMPL
-#else
-#define	BSDATATMPL template<>
-#endif
-
 #define	lenghtof(C) (sizeof(C)/sizeof(C[0]))
 #define	FO(T,R) ((size_t)&((T*)0)->R)
 
-#define BSDATA(e) BSDATATMPL e bsdata<e>::elements[]
-#define BSDATAD(e) BSDATATMPL array bsdata<e>::source(sizeof(e));
-#define BSDATAE(e) BSDATATMPL array bsdata<e>::source(bsdata<e>::elements, sizeof(bsdata<e>::elements[0]), 0, lenghtof(bsdata<e>::elements));
-#define BSDATAF(e) BSDATATMPL array bsdata<e>::source(bsdata<e>::elements, sizeof(bsdata<e>::elements[0]), lenghtof(bsdata<e>::elements), lenghtof(bsdata<e>::elements));
-#define BSDATAC(e, c) BSDATATMPL e bsdata<e>::elements[c] = {}; BSDATAE(e)
+#define BSDATA(e) template<> e bsdata<e>::elements[]
+#define BSDATAD(e) template<> array bsdata<e>::source(sizeof(e));
+#define BSDATAE(e) template<> array bsdata<e>::source(bsdata<e>::elements, sizeof(bsdata<e>::elements[0]), 0, lenghtof(bsdata<e>::elements));
+#define BSDATAF(e) template<> array bsdata<e>::source(bsdata<e>::elements, sizeof(bsdata<e>::elements[0]), lenghtof(bsdata<e>::elements), lenghtof(bsdata<e>::elements));
+#define BSDATAC(e, c) template<> e bsdata<e>::elements[c] = {}; BSDATAE(e)
 #define NOBSDATA(e) template<> struct bsdata<e> : bsdata<int> {};
 
 template<typename T>
 struct bsdata {
-	static T			elements[];
-	static array		source;
+	static T		elements[];
+	static array	source;
 	static constexpr array*	source_ptr = &source;
-	static T*			add() { return (T*)source.add(); }
-	static T*			addz() { for(auto& e : bsdata<T>()) if(!e) return &e; return add(); }
-	static T*			find(const char* id) { return (T*)source.findv(id, 0); }
+	static T* add() { return (T*)source.add(); }
+	static T* addz() { for(auto& e : bsdata<T>()) if(!e) return &e; return add(); }
+	static T* find(const char* id) { return (T*)source.findv(id, 0); }
 	static constexpr bool have(const void* p) { return source.have(p); }
 	static constexpr bool haveb(const void* p) { return source.haveb(p); }
 	static constexpr T&	get(int i) { return begin()[i]; }

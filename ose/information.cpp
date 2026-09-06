@@ -25,6 +25,7 @@
 #include "math.h"
 #include "message.h"
 #include "stringbuilder.h"
+#include "stringset.h"
 #include "stringvar.h"
 
 extern collectiona items;
@@ -89,14 +90,12 @@ static void player_weapon(stringbuilder& sb) {
 	sb.add(player->wears[MeleeWeapon].name());
 }
 
-static void area_first(stringbuilder& sb) {
-}
-
-static void area_second(stringbuilder& sb) {
-}
-
 static void area_name(stringbuilder& sb) {
 	sb.add(last_area->name());
+}
+
+static void area_namefull(stringbuilder& sb) {
+	sb.add(last_area->namefull());
 }
 
 static void area_type(stringbuilder& sb) {
@@ -110,6 +109,8 @@ static void print_last_number(stringbuilder& sb) {
 void stringbuilder_custom(stringbuilder& sb, const char* id) {
 	if(stringvar_identifier(sb, id))
 		return;
+	if(stringset_identifier(id, sb))
+		return;
 	if(apply_gender(id, sb, str_gender))
 		return;
 	default_string(sb, id);
@@ -117,9 +118,8 @@ void stringbuilder_custom(stringbuilder& sb, const char* id) {
 
 BSDATA(stringvari) = {
 	{"AreaName", area_name},
+	{"AreaNameFull", area_namefull},
 	{"AreaType", area_type},
-	{"AreaFirst", area_first},
-	{"AreaSecond", area_second},
 	{"Class", player_class},
 	{"Item", item_name},
 	{"Items", item_collection},

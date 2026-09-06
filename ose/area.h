@@ -22,11 +22,11 @@ enum actionn : unsigned char;
 enum picturen : unsigned char;
 
 enum areafn : unsigned char {
+	Visited, Known,
 	Dusked, Darkened, Fired, Icy,
 	Locked, Looted, Opened, Hidden,
 };
 enum arean : unsigned char {
-	NoArea,
 	Plains, Sands, Wastes, Swamps, Hills, Mountains, Jungle, Forest,
 	Hamlet, Village, SmallTown, LargeTown,
 	Cave, Dungeon, Ruins,
@@ -51,12 +51,13 @@ struct arealink {
 
 struct area {
 	arean			type; // Area main type
-	unsigned char	param; // Area subtype
+	unsigned char	names[2]; // Custom name
 	unsigned short	parent_id; // Parent area id
 	unsigned		timestamp; // Creation time in turns (10 minutes each) from zero year.
 	flag32			flags;
-	constexpr explicit operator bool() const { return type != NoArea; }
+	constexpr explicit operator bool() const { return timestamp != 0; }
 	const char* name() const;
+	const char* namefull() const;
 	short unsigned index() const;
 	area* parent() const;
 	void clear();
@@ -68,6 +69,9 @@ extern area* last_area;
 extern area* next_area;
 
 extern int move_distance;
+
+extern const char* LocationFemaleFirstName[];
+extern const char* LocationMaleFirstName[];
 
 int get_movement_modifier(arean type);
 

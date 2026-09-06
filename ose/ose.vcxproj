@@ -154,7 +154,7 @@
     <ClCompile Include="main_util.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="portrait.cpp" />
-    <ClCompile Include="game_market.cpp" />
+    <ClCompile Include="game_settlement.cpp" />
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="item_treasure.cpp" />
     <ClCompile Include="testing.cpp" />

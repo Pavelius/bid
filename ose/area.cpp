@@ -26,7 +26,6 @@
 BSDATAC(area, 256)
 
 areai area_data[] = {
-	{},
 	{}, // Plains
 	{}, // Sands
 	{}, // Wastes
@@ -76,6 +75,18 @@ bool area::outdoor() const {
 
 const char* area::name() const {
 	return getname(type);
+}
+
+const char* area::namefull() const {
+	static char temp[260]; stringbuilder sb(temp);
+	switch(type) {
+	case Forest:
+		sb.add("%LocationMaleFirstName %1", getname(type));
+		break;
+	default:
+		return getname(type);
+	}
+	return temp;
 }
 
 short unsigned area::index() const {

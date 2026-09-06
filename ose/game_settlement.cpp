@@ -1,8 +1,10 @@
 #include "answers.h"
 #include "area.h"
 #include "adat.h"
+#include "bsdata.h"
 #include "creature.h"
 #include "collectiona.h"
+#include "draw_atg.h"
 #include "game.h"
 #include "itema.h"
 #include "message.h"
@@ -129,10 +131,54 @@ static bool sell_action(bool run) {
 	return true;
 }
 
-bool buy_market_action(bool run) {
-	return buy_action(market_items, run);
+static bool gather_information(bool run) {
+	// 1 - We have some interesting location - lair of some monsters maybe.
+	// 2 - We have some group of creatures occupied it. This is a `classn` creatures. Also can a adjective like `vile`, `evil`, `merciless`, `strange` e.t.c
+	// 3 - Also you can have a broad group of threat like `undead`, `bandits`, `greenskins`, `dwarves` e.t.c.
+	if(run) {
+		pass_turn();
+		sb.addn("%TavernRumorSpeech");
+		sb.addn("\"");
+		if(d100() < 60)
+			sb.add("%TavernRumorGeneral");
+		else {
+			sb.add("%TavernAlreadyKnown");
+			sb.adds("%TavernNothingToSay");
+		}
+		sb.add("\"");
+		pause();
+	}
+	return true;
 }
 
-bool sell_market_action(bool run) {
-	return sell_action(run);
+static bool leave_settlement(bool run) {
+	if(last_area->parent_id != 0)
+		return false;
+	if(run) {
+		last_area = 0;
+		pass_turn();
+	}
+	return true;
+}
+
+static bool leave_outside(bool run) {
+	if(last_area->parent_id == 0)
+		return false;
+	if(run) {
+		last_area = bsdata<area>::elements + last_area->parent_id;
+		pass_turn();
+	}
+	return true;
+}
+
+bool apply_settlement(actionn v, bool run) {
+	switch(v) {
+	case BuyTradeGoods: return buy_action(market_items, run);
+	case SellTradeGoods: return sell_action(run);
+	case GatherInformation: return gather_information(run);
+	case LeaveSettlement: return leave_settlement(run);
+	case LeaveOutside: return leave_outside(run);
+	default: return false;
+	}
+	return true;
 }

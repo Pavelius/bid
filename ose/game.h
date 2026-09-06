@@ -16,6 +16,7 @@
 
 #pragma once
 
+typedef bool(*fnaction)(bool run);
 typedef void(*fnevent)();
 
 enum classn : unsigned char;
@@ -25,7 +26,6 @@ enum commandn : unsigned char {
 	PageCharacter, PageItems, PageCombatants,
 };
 enum actionn : unsigned char {
-	NoAction,
 	MakeCharge, MakeMeleeAttack, MakeMissileAttack, MakeThrownAttack, MakeRunAway,
 	MakeHunting, MakeTreatIllness, MakeTendingWounds, MakeGearRepairing, MakeForaging,
 	RestParty, MemorizeSpells, ChangeSpellsByLevel, ChangeSpellsByLevelAllowed,
@@ -58,8 +58,10 @@ extern int last_number;
 void addopt(actionn n);
 void addoptn(actionn n);
 void apply_result();
+bool apply_camp(actionn v, bool run);
+bool apply_combat(actionn v, bool run);
+bool apply_settlement(actionn v, bool run);
 void area_move();
-bool buy_market_action(bool run);
 long choose_player_option(const char* cancel_text);
 void create_market_items();
 void make_any_player_move(const char* cancel_text = 0);
@@ -69,4 +71,3 @@ void make_player_move(const char* cancel_text = 0);
 void pass_turn();
 void pause();
 void pause(const char* format);
-bool sell_market_action(bool run);

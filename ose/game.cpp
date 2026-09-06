@@ -138,7 +138,7 @@ static bool party_present() {
 	return find_creature(Enemy, false, true);
 }
 
-static bool apply_effect(actionn v, bool run) {
+static bool apply_combat(actionn v, bool run) {
 	switch(v) {
 	case MakeCharge:
 		if(player->is(MeleeFight))
@@ -173,36 +173,36 @@ static bool apply_effect(actionn v, bool run) {
 			player->wears[MeleeWeapon].lost = 1;
 		}
 		break;
+	default:
+		return false;
+	}
+	return true;
+}
+
+static bool apply_camp(actionn v, bool run) {
+	switch(v) {
 	case MemorizeSpells:
 		if(run)
 			make_prepare_spells(PlayerMemorizeSpells);
 		break;
-	case RestParty: break;
-	case MakeCamp: break;
-	case LeaveSettlement:
-		if(last_area->parent_id != 0)
-			return false;
-		if(run) {
-			last_area = 0;
-			pass_turn();
-		}
+	case RestParty:
 		break;
-	case LeaveOutside:
-		if(last_area->parent_id == 0)
-			return false;
-		if(run) {
-			last_area = bsdata<area>::elements + last_area->parent_id;
-			pass_turn();
-		}
-		break;
-	case BuyTradeGoods: return buy_market_action(run);
-	case SellTradeGoods: return sell_market_action(run);
-	case GatherInformation:
+	case MakeCamp:
 		break;
 	default:
 		return false;
 	}
 	return true;
+}
+
+static bool apply_effect(actionn v, bool run) {
+	if(apply_combat(v, run))
+		return true;
+	if(apply_camp(v, run))
+		return true;
+	if(apply_settlement(v, run))
+		return true;
+	return false;
 }
 
 void addopt(actionn n) {
@@ -445,10 +445,12 @@ static void add_area_actions(arean type) {
 }
 
 void area_move() {
+	last_area->set(Known);
+	last_area->set(Visited);
 	while(true) {
 		auto type = last_area->type;
 		answer_picture = area_data[type].picture;
-		answer_header = "%AreaName";
+		answer_header = "%AreaNameFull";
 		sb.clear();
 		sb.addn(area_look[type]);
 		add_area_visit(last_area->index());
@@ -559,6 +561,7 @@ static void paint_main_menu() {
 // START GAME
 
 static void test_game() {
+	game.add(Turns, 1000);
 	create_area(Wastes, 0);
 	create_creature(Fighter, Male);
 	join_party();
