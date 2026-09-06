@@ -16,12 +16,14 @@
 
 #pragma once
 
+#include "variant.h"
+
 typedef void(*fnevent)();
 
 enum classn : unsigned char;
 
 enum commandn : unsigned char {
-	Cancel, Continue, ChangePlayer, ClearAllList, Confirm,
+	Cancel, Continue, ClearAllList, Confirm,
 	PageCharacter, PageItems, PageCombatants,
 };
 enum actionn : unsigned char {
@@ -29,21 +31,25 @@ enum actionn : unsigned char {
 	MakeCharge, MakeMeleeAttack, MakeMissileAttack, MakeThrownAttack, MakeRunAway,
 	MakeHunting, MakeTreatIllness, MakeTendingWounds, MakeGearRepairing, MakeForaging,
 	RestParty, MemorizeSpells, ChangeSpellsByLevel, ChangeSpellsByLevelAllowed,
-	LeaveSettlement, LeaveOutside, BuyTradeGoods, SellTradeGoods, MakeCamp,
+	LeaveSettlement, LeaveOutside, LeaveBack,
+	BuyTradeGoods, SellTradeGoods, MakeCamp,
+	LastAction = MakeCamp
 };
 enum reactionn : unsigned char {
 	Hostile, Unfriendly, Neutral, Indifferent, Friendly,
 };
 enum globalvarn : unsigned char {
-	Turns, Blessing,
+	Turns, Blessing, PartyCoins,
 };
 enum picturen : unsigned char {
 	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage,
+	ImagePlainVillage, ImageVillageMarket,
 };
 
+extern variant last_result;
+
 struct gamei {
-	unsigned variables[Blessing+1];
+	unsigned variables[PartyCoins + 1];
 	void add(globalvarn v, int i) { variables[v] += i; }
 	unsigned get(globalvarn v) const { return variables[v]; }
 };
@@ -53,13 +59,18 @@ extern reactionn last_reaction;
 extern classn encounter_monsters;
 extern int last_number;
 
-void addanñ(actionn n);
+void addopt(actionn n);
+void addoptn(actionn n);
+void apply_result();
+void area_move();
 bool buy_market_action(bool run);
+long choose_player_option(const char* cancel_text);
 void create_market_items();
+void make_any_player_move(const char* cancel_text = 0);
 void make_reaction_roll(int bonus);
 void make_party_move(const char* cancel_text = 0);
-long make_player_move(const char* cancel_text = 0);
-void make_player_move(fnevent add_answers, const char* cancel_text = 0);
+void make_player_move(const char* cancel_text = 0);
 void pass_turn();
 void pause();
 void pause(const char* format);
+bool sell_market_action(bool run);

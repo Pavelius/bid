@@ -35,6 +35,6 @@ enum messagen : unsigned char {
 	StateWounded,
 	PlayerThink, PlayerSay, PlayerCry,
 	SayWhoIsHere,
-	BuyItemForCost,
-	AskLeft, AskMemorizeSpells, AskWhatToDo,
+	BuyItemForCost, AvailableCount,
+	AskLeft, AskMemorizeSpells, AskWhatToDoPlayer, AskWhatToDo,
 };

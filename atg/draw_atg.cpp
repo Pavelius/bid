@@ -289,16 +289,10 @@ static int find_avatars(void** source, int count, void* current) {
 	return -1;
 }
 
-static void post_event(fnevent proc) {
-	if(!proc)
-		return;
-	answer_event = proc;
-	breakmodal(0);
-}
-
 static void change_avatar() {
 	current_avatar = (void*)hparam;
-	post_event(atg_change_avatar);
+	if(atg_change_avatar)
+		atg_change_avatar();
 }
 
 static void paint_avatar(const sprite* ps, int id, const void* player, unsigned key, bool mark_player, int hit_percent) {
@@ -422,12 +416,14 @@ static void choose_answers_scene() {
 }
 
 long choose_answers(const char* title, const char* cancel_text, int columns) {
-	answer_event = 0;
-	if(!answers::interactive)
-		return an.random();
 	if(!an.elements) {
 		if(!cancel_text)
 			return 0;
+	}
+	if(!answers::interactive) {
+		auto r = an.random();
+		an.clear();
+		return r;
 	}
 	if(columns == -1)
 		columns = answer_columns_def();
@@ -435,7 +431,9 @@ long choose_answers(const char* title, const char* cancel_text, int columns) {
 	answer_cancel_text = cancel_text;
 	answer_columns = columns;
 	scene(choose_answers_scene); // Run as scene allow correct dragging api.
-	return getresult();
+	auto r = getresult();
+	an.clear();
+	return r;
 }
 
 long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel) {

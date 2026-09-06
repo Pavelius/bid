@@ -907,7 +907,7 @@ bool use_skill(actionn id, int bonus, bool run) {
 const char* what_to_do() {
 	static char temp[260]; stringbuilder sb(temp);
 	sb.clear();
-	sb.add(getname(AskWhatToDo), player->name());
+	sb.add(getname(AskWhatToDoPlayer), player->name());
 	return temp;
 }
 
@@ -926,7 +926,6 @@ static void modify_spells(messagen id, spellable& e, int level) {
 		sb.clear();
 		fixmsg(id);
 		fixlist(e);
-		an.clear();
 		if(prepare_spells < maximum_spells) {
 			for(auto v : records)
 				an.add(v, getname((spelln)v));
@@ -952,7 +951,6 @@ void make_prepare_spells(messagen id) {
 		sb.clear();
 		fixmsg(id);
 		fixlist(player->prepare);
-		an.clear();
 		for(auto i = 1; i <= 6; i++) {
 			auto total = player->getspells(i);
 			auto current = player->getspellsprepared(i);
@@ -963,14 +961,14 @@ void make_prepare_spells(messagen id) {
 					an.add(i, getname(ChangeSpellsByLevel), i);
 			}
 		}
-		auto level = make_player_move(getname(Confirm));
-		if(!level) {
+		make_player_move(getname(Confirm));
+		if(!last_result) {
 			sb.clear();
 			break;
 		}
 		records.clear();
-		add_spells(get_spells(player->type), level);
-		modify_spells(id, player->prepare, level);
+		add_spells(get_spells(player->type), last_result.u);
+		modify_spells(id, player->prepare, last_result.u);
 	}
 }
 

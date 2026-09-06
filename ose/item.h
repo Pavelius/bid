@@ -158,9 +158,10 @@ struct wearable {
 	bool add(const item& value) { item v = value; add(v); return v.operator bool(); }
 	bool consume(itemn v);
 	bool equip(const item& value);
-	bool is(itemn type) const { for(auto& e : wears) if(e && e.type == type) return true; return false; }
+	bool isbackpack() const { auto pe = wears + LastBackpack; for(auto p = wears; p < pe; p++) if(*p) return true; return false; }
 	bool isusable(const item& it) const;
 	bool iswear(const void* object) const { return object >= wears && object < wears + sizeof(wears) / sizeof(wears[0]); }
+	bool present(itemn type) const { for(auto& e : wears) if(e && e.type == type) return true; return false; }
 	void useammo();
 };
 

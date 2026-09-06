@@ -18,6 +18,9 @@
 
 #include "flagable.h"
 
+enum actionn : unsigned char;
+enum picturen : unsigned char;
+
 enum areafn : unsigned char {
 	Dusked, Darkened, Fired, Icy,
 	Locked, Looted, Opened, Hidden,
@@ -30,8 +33,17 @@ enum arean : unsigned char {
 	Market, Garden, Temple, Inn, Tavern, Palace,
 	LastArea = Palace,
 };
-extern const char* area_look[Palace+1];
-extern const char* area_visit[Palace+1];
+extern const char* area_look[Palace + 1];
+extern const char* area_visit[Palace + 1];
+
+typedef flagable<2, unsigned> actiona;
+
+struct areai {
+	actionn			leave;
+	actiona			actions;
+	picturen		picture;
+};
+extern areai area_data[LastArea + 1];
 
 struct arealink {
 	short unsigned	from, to;
@@ -43,7 +55,7 @@ struct area {
 	unsigned short	parent_id; // Parent area id
 	unsigned		timestamp; // Creation time in turns (10 minutes each) from zero year.
 	flag32			flags;
-	constexpr explicit operator bool() const { return type!=NoArea; }
+	constexpr explicit operator bool() const { return type != NoArea; }
 	const char* name() const;
 	short unsigned index() const;
 	area* parent() const;

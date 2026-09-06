@@ -95,7 +95,7 @@ struct creature : npc, statable, wearable, spellable {
 	bool is(alignmentn v) const { return npc::is(v); }
 	bool is(featn v) const { return feats.is(v); }
 	bool is(gendern v) const { return npc::is(v); }
-	bool is(itemn v) const { return wearable::is(v); }
+	bool is(itemn v) const { return wearable::present(v); }
 	bool is(spelln v) const { return active.is(v); }
 	bool isbadlyhurt() const { return hp < mhp / 2; }
 	bool iscaster() const;

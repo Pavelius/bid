@@ -15,6 +15,7 @@
 */
 
 #include "area.h"
+#include "answers.h"
 #include "bsdata.h"
 #include "game.h"
 #include "item.h"
@@ -23,6 +24,32 @@
 #include "variant.h"
 
 BSDATAC(area, 256)
+
+areai area_data[] = {
+	{},
+	{}, // Plains
+	{}, // Sands
+	{}, // Wastes
+	{}, // Swamps
+	{}, // Hills
+	{}, // Mountains
+	{}, // Jungle
+	{}, // Forest
+	{}, // Hamlet
+	{LeaveSettlement, {}, ImagePlainVillage}, // Village
+	{}, // SmallTown
+	{}, // LargeTown
+	{}, // Cave
+	{}, // Dungeon
+	{}, // Ruins
+	{LeaveBack, {BuyTradeGoods, SellTradeGoods}, ImageVillageMarket}, // Market
+	{}, // Garden
+	{}, // Temple
+	{}, // Inn
+	{}, // Tavern
+	{}, // Palace
+};
+static_assert(sizeof(area_data)/ sizeof(area_data[0]) == LastArea + 1);
 
 area* last_area;
 area* next_area;

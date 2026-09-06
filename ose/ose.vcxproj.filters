@@ -16,7 +16,7 @@
     <ClCompile Include="testing.cpp" />
     <ClCompile Include="bin_avatars.cpp" />
     <ClCompile Include="bin_images.cpp" />
-    <ClCompile Include="settlement.cpp" />
+    <ClCompile Include="game_market.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
@@ -26,7 +26,6 @@
     <ClInclude Include="message.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="variant.h" />
-    <ClInclude Include="gender.h" />
     <ClInclude Include="itema.h" />
   </ItemGroup>
 </Project>
