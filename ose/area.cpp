@@ -37,16 +37,16 @@ areai area_data[] = {
 	{}, // Forest
 	{}, // Hamlet
 	{LeaveSettlement, {}, ImagePlainVillage}, // Village
-	{}, // SmallTown
-	{}, // LargeTown
-	{}, // Cave
-	{}, // Dungeon
-	{}, // Ruins
+	{LeaveSettlement}, // SmallTown
+	{LeaveSettlement}, // LargeTown
+	{LeaveOutside}, // Cave
+	{LeaveOutside}, // Dungeon
+	{LeaveOutside}, // Ruins
 	{LeaveBack, {BuyTradeGoods, SellTradeGoods}, ImageVillageMarket}, // Market
-	{}, // Garden
-	{}, // Temple
-	{}, // Inn
-	{}, // Tavern
+	{LeaveOutside}, // Garden
+	{LeaveOutside}, // Temple
+	{LeaveOutside}, // Inn
+	{LeaveOutside, {GatherInformation}, ImageTavern}, // Tavern
 	{}, // Palace
 };
 static_assert(sizeof(area_data)/ sizeof(area_data[0]) == LastArea + 1);

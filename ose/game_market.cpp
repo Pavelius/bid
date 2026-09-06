@@ -103,6 +103,7 @@ static bool buy_action(itema& source, bool run) {
 				player->add(item(pi->type, 1));
 				pi->consume();
 			}
+			player->update();
 			normalize(source);
 		}
 	}
@@ -114,13 +115,14 @@ static bool sell_action(bool run) {
 		return false;
 	if(run) {
 		while(true) {
-			auto pi = choose_item(*player, BuyItemForCost, get_sell_price);
+			auto pi = choose_item(*player, SellItemForCost, get_sell_price);
 			if(!pi)
 				break;
 			auto cost = get_sell_price(*pi);
 			game.add(PartyCoins, cost);
 			market_items.add(*pi);
 			pi->clear();
+			player->update();
 			normalize(market_items);
 		}
 	}

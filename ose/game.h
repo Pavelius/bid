@@ -16,8 +16,6 @@
 
 #pragma once
 
-#include "variant.h"
-
 typedef void(*fnevent)();
 
 enum classn : unsigned char;
@@ -32,7 +30,7 @@ enum actionn : unsigned char {
 	MakeHunting, MakeTreatIllness, MakeTendingWounds, MakeGearRepairing, MakeForaging,
 	RestParty, MemorizeSpells, ChangeSpellsByLevel, ChangeSpellsByLevelAllowed,
 	LeaveSettlement, LeaveOutside, LeaveBack,
-	BuyTradeGoods, SellTradeGoods, MakeCamp,
+	BuyTradeGoods, SellTradeGoods, GatherInformation, MakeCamp,
 	LastAction = MakeCamp
 };
 enum reactionn : unsigned char {
@@ -43,10 +41,8 @@ enum globalvarn : unsigned char {
 };
 enum picturen : unsigned char {
 	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage, ImageVillageMarket,
+	ImagePlainVillage, ImageVillageMarket, ImageTavern
 };
-
-extern variant last_result;
 
 struct gamei {
 	unsigned variables[PartyCoins + 1];

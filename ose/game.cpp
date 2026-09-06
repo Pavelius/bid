@@ -32,12 +32,13 @@
 
 const int yards_in_miles = 1000;
 
+static variant last_result;
+
 gamei game;
 int last_number;
 
 classn encounter_monsters;
 reactionn last_reaction;
-variant last_result;
 
 extern collectiona creatures;
 extern collectiona items;
@@ -196,6 +197,8 @@ static bool apply_effect(actionn v, bool run) {
 		break;
 	case BuyTradeGoods: return buy_market_action(run);
 	case SellTradeGoods: return sell_market_action(run);
+	case GatherInformation:
+		break;
 	default:
 		return false;
 	}

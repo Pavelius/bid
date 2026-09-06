@@ -961,14 +961,14 @@ void make_prepare_spells(messagen id) {
 					an.add(i, getname(ChangeSpellsByLevel), i);
 			}
 		}
-		make_player_move(getname(Confirm));
-		if(!last_result) {
+		auto level = choose_player_option(getname(Confirm));
+		if(!level) {
 			sb.clear();
 			break;
 		}
 		records.clear();
-		add_spells(get_spells(player->type), last_result.u);
-		modify_spells(id, player->prepare, last_result.u);
+		add_spells(get_spells(player->type), level);
+		modify_spells(id, player->prepare, level);
 	}
 }
 
