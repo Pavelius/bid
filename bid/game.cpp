@@ -52,7 +52,7 @@ static void paint_value(actionn v) {
 	height = texth() - 1;
 	button_check(0);
 	paint_hilite();
-	set_hilite_state(getinfo(v));
+	set_hilite_state(action_info[v]);
 	paint_cicle(6, player->actions[v], 4);
 	caret.x += 64;
 	text(getname(v));

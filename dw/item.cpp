@@ -13,7 +13,6 @@ BSDATA(item) = {
 	{ElvenArrows, {Ammo4, Weight1}, 20},
 	{Club, {Close, Weight2}, 1},
 };
-assert_enum(bsdata<item>::elements, Club)
 
 const char* item::name() const {
 	return getname(type);

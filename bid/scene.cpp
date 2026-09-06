@@ -53,7 +53,7 @@ void action_roll(actionn type) {
 	while(running_scene()) {
 		an.clear();
 		ally_help(type, ActionRollHelp);
-		int result = an.choose(str(getname(ActionRollHeader), player->getname(), getname(type), roll_dices), getname(MakeRoll));
+		int result = choose_answers(str(getname(ActionRollHeader), player->getname(), getname(type), roll_dices), getname(MakeRoll));
 		auto a = (messagen)(result / 4);
 		auto p = get_player(result);
 		if(p->apply(type, a, true))

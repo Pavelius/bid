@@ -16,7 +16,7 @@ BSENUM(messagen) = {
 	"Большинство выстрелов прошли по касательной.",
 	"Вы вышли на открытую позицию, которой враг воспользовался.",
 };
-assert_enum(bsenum<messagen>::names, MsgVolleyEnemyMove)
+assert_enum(messagen, MsgVolleyEnemyMove)
 
 BSENUM(itemn) = {
 	"Пусто",
@@ -25,4 +25,4 @@ BSENUM(itemn) = {
 	"Дубина", "Посох",
 	"Нож", "Метательный кинжал",
 };
-assert_enum(bsenum<itemn>::names, ThrowingDagger)
+assert_enum(itemn, ThrowingDagger)

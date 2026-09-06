@@ -18,36 +18,42 @@ BSENUM(messagen) = {
 	"Откуда вы родом?",
 	"Кем вы были в прошлом?",
 };
-assert_enum(bsenum<messagen>::names, ChooseBackground)
+assert_enum(messagen, ChooseBackground)
+
 BSENUM(charactern) = {
 	"Нет",
 	"Головорез", "Ищейка", "Умелец", "Проныра", "Артист", "Кукловод", "Мистик"
 };
-assert_enum(bsenum<charactern>::names, Whisper)
+assert_enum(charactern, Whisper)
+
 BSENUM(heiretagen) = {
 	"Акорос", "Ирувия", "Кинжальные острова", "Сиверос", "Сковлан", "Тихерос"
 };
-assert_enum(bsenum<heiretagen>::names, Tycheros)
+assert_enum(heiretagen, Tycheros)
+
 BSENUM(vicen) = {
 	"Религия", "Азартные игры", "Роскошь", "Долг", "Удовольствие", "Беспамятство", "Потустороннее",
 };
-assert_enum(bsenum<vicen>::names, Weird)
+assert_enum(vicen, Weird)
+
 BSENUM(backgroundn) = {
 	"Ученный", "Рабочий", "Законник", "Торговец", "Военный", "Аристократ", "Шпана",
 };
-assert_enum(bsenum<backgroundn>::names, Underworld)
+assert_enum(backgroundn, Underworld)
+
 BSENUM(attributen) = {
 	"Чутье", "Удаль", "Воля",
 };
-assert_enum(bsenum<attributen>::names, Resolve)
+assert_enum(attributen, Resolve)
 
 BSENUM(actionn) = {
 	"Резонанс", "Приказ", "Общение", "Сноровка", "Охота",
 	"Проникновение", "Драка", "Изучение", "Разведка", "Манипуляция",
 	"Ремесло", "Разрушение",
 };
-assert_enum(bsenum<actionn>::names, Wreck)
-BSINFO(actionn) = {
+assert_enum(actionn, Wreck)
+
+const char* action_info[Wreck + 1] = {
 	"В резонансе ты открываешь свой разум призрачному полю или направляешь через своё тело электроплазменную энергию.",
 	"Отдавая приказ, ты добиваешься немедленного повиновения.",
 	"В процессе общения ты контактируешь со своими друзьями и знакомыми.",
@@ -61,7 +67,7 @@ BSINFO(actionn) = {
 	"Ремесло помогает тебе работать с устройствами и конструкциями.",
 	"Разрушение - это прямое физическое уничтожение.",
 };
-assert_enum(bsenum<actionn>::info, Wreck)
+
 BSENUM(namen) = {
 	"Адельард", "Агата", "Аймерик", "Агнес", "Алан",
 	"Аделина", "Альбрехт", "Алиса", "Амори", "Амалия",

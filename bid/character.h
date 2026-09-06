@@ -50,6 +50,9 @@ struct character : npci, actiona {
 	int			get(attributen i) const;
 	int			getindex() const;
 };
+
+extern const char* action_info[Wreck + 1];
+
 extern character* roll_help;
 extern character* player;
 extern character players[3];

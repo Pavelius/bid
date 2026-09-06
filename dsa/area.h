@@ -42,8 +42,11 @@ struct area {
 	bool outdoor() const;
 	void set(areafn v) { flags.set(v); }
 };
+
 extern area* last_area;
 extern area* next_area;
 extern int move_distance;
+
+extern const char* area_look[LargeTown + 1];
 
 void create_area(arean id);

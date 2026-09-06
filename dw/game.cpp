@@ -14,7 +14,7 @@ int	bonus_damage, bonus_enemy_damage;
 int player_defend;
 
 static void fixpause() {
-	an.choose(0, getname(Next));
+	choose_answers(0, getname(Next));
 }
 
 void fixclear() {
@@ -33,7 +33,7 @@ item* wearable::chooseitem(const char* title, const char* cancel, fnvisible proc
 		an.add((long)&e, e.name());
 	}
 	an.sort();
-	return (item*)an.choose(title, cancel);
+	return (item*)choose_answers(title, cancel);
 }
 
 static void stringbuilder_custom(stringbuilder& sb, const char* id) {
@@ -50,7 +50,7 @@ static void change_weapon() {
 	}
 	if(!an)
 		return;
-	auto pi = (item*)an.choose();
+	auto pi = (item*)choose_answers();
 	if(!pi)
 		return;
 	iswap(player->wears[Hands], *pi);
@@ -127,7 +127,7 @@ static void choose_options(slice<messagen> source, int count = 1) {
 			sb.add(getname(ChooseOptionLeftCount), count);
 		else
 			sb.add(getname(ChooseOption));
-		auto m = (messagen)an.choose(temp, 0);
+		auto m = (messagen)choose_answers(temp, 0);
 		apply_options(m);
 	}
 }
@@ -218,7 +218,6 @@ static bool move_defend(bool run) {
 }
 
 void game_run() {
-	answers::resid = "Wasteland";
 	stringbuilder::custom = stringbuilder_custom;
 	enemy.create(Skeleton);
 	srand(2311);

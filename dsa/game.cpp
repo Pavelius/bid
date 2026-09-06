@@ -30,7 +30,7 @@ void pause() {
 		return;
 	an.clear();
 	an.add(1, getname(Continue));
-	an.choose(0, 0);
+	choose_answers(0, 0);
 	sb.clear();
 	an.clear();
 }
@@ -50,18 +50,22 @@ void make_reaction_roll(int bonus) {
 }
 
 void make_party_move() {
-	last_result.u = (unsigned short)an.choose(0, 0);
+	last_result.u = (unsigned short)choose_answers(0, 0);
 	an.clear();
 }
 
 long make_player_move(const char* cancel_text) {
-	auto result = an.choose(what_to_do(), cancel_text);
+	auto result = choose_answers(what_to_do(), cancel_text);
 	an.clear();
 	return result;
 }
 
+static void change_player() {
+	player = (creature*)current_avatar;
+}
+
 void make_player_move(fnevent options_proc) {
-	pushvalue push(current_avatar_post, (long)ChangePlayer);
+	pushvalue push(atg_change_avatar, change_player);
 	current_avatar = (void*)player;
 	while(true) {
 		an.clear();
@@ -188,17 +192,17 @@ static void check_movement() {
 }
 
 static void night_encounter() {
-	pushvalue push_header(answers::picture, ImageWastelandNight);
+	pushvalue push_header(answer_picture, ImageWastelandNight);
 	sb.clear();
 	sb.add(getname(PlayerHearNoiseOnWatch));
 	pause();
 }
 
 static void adventure_move() {
-	pushvalue push_header(answers::header, "%AreaName");
-	answers::picture = ImageWasteland;
+	pushvalue push_header(answer_header, "%AreaName");
+	answer_picture = ImageWasteland;
 	while(true) {
-		sb.adds(getinfo(last_area->type));
+		sb.adds(area_look[last_area->type]);
 		addan(MakeCamp);
 		make_party_move();
 		camp_move();

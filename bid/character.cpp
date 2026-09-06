@@ -1,6 +1,5 @@
 #include "answers.h"
 #include "character.h"
-#include "choose.h"
 #include "game.h"
 #include "message.h"
 #include "rand.h"
@@ -34,7 +33,7 @@ static void add_actions(actiona& source, int bonus, int maximum) {
 			an.add(i, getname(i));
 		}
 		an.sort();
-		auto n = (actionn)an.choose(getname(ChooseActionDot));
+		auto n = (actionn)choose_answers(getname(ChooseActionDot));
 		source.actions[n]++;
 		bonus--;
 	}
@@ -78,10 +77,10 @@ void actiona::apply(charactern type) {
 static void add_player() {
 	player->clear();
 	player->setname();
-	player->type = (charactern)choosev(0, Whisper, allow_character, bsenum<charactern>::names, getname(ChoosePlaybook));
+	player->type = (charactern)choose_value(0, Whisper, allow_character, bsenum<charactern>::names, getname(ChoosePlaybook));
 	player->apply(player->type);
-	player->heiretage = (heiretagen)choosev(0, Weird, bsenum<heiretagen>::names, getname(ChooseHeiretage));
-	player->background = (backgroundn)choosev(0, Underworld, bsenum<backgroundn>::names, getname(ChooseBackground));
+	player->heiretage = (heiretagen)choose_value(0, Weird, 0, bsenum<heiretagen>::names, getname(ChooseHeiretage));
+	player->background = (backgroundn)choose_value(0, Underworld, 0, bsenum<backgroundn>::names, getname(ChooseBackground));
 	add_actions(*player, 4, 2);
 }
 
