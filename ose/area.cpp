@@ -55,6 +55,18 @@ area* next_area;
 
 int move_distance;
 
+const char* get_name(arean type, int p1, int p2) {
+	static char temp[260]; stringbuilder sb(temp);
+	switch(type) {
+	case Forest:
+		sb.add("%1 %2", LocationMaleFirstName[p1], getname(type));
+		break;
+	default:
+		return getname(type);
+	}
+	return temp;
+}
+
 void area::clear() {
 	memset((void*)this, 0, sizeof(*this));
 	parent_id = 0xFFFF;
@@ -78,15 +90,7 @@ const char* area::name() const {
 }
 
 const char* area::namefull() const {
-	static char temp[260]; stringbuilder sb(temp);
-	switch(type) {
-	case Forest:
-		sb.add("%LocationMaleFirstName %1", getname(type));
-		break;
-	default:
-		return getname(type);
-	}
-	return temp;
+	return get_name(type, names[0], names[1]);
 }
 
 short unsigned area::index() const {

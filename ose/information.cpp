@@ -24,11 +24,26 @@
 #include "gender.h"
 #include "math.h"
 #include "message.h"
+#include "rand.h"
 #include "stringbuilder.h"
 #include "stringset.h"
 #include "stringvar.h"
 
 extern collectiona items;
+
+static const char* random(const char** names) {
+	auto p = stringset_find(names);
+	if(p)
+		return p->names[rand() % p->count];
+	return "";
+}
+
+static int random_index(const char** names) {
+	auto p = stringset_find(names);
+	if(p)
+		return rand() % p->count;
+	return 0;
+}
 
 static void addv(stringbuilder& sb, const dice& v) {
 	sb.add("%1id%2i", v.c, v.d);
@@ -90,6 +105,10 @@ static void player_weapon(stringbuilder& sb) {
 	sb.add(player->wears[MeleeWeapon].name());
 }
 
+static void location_name(stringbuilder& sb) {
+	sb.addv(get_name(Forest, random_index(LocationMaleFirstName), rand()), 0);
+}
+
 static void area_name(stringbuilder& sb) {
 	sb.add(last_area->name());
 }
@@ -123,6 +142,7 @@ BSDATA(stringvari) = {
 	{"Class", player_class},
 	{"Item", item_name},
 	{"Items", item_collection},
+	{"LocationName", location_name},
 	{"Name", print_name},
 	{"Number", print_last_number},
 	{"Player", player_name},

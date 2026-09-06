@@ -75,5 +75,7 @@ extern const char* LocationMaleFirstName[];
 
 int get_movement_modifier(arean type);
 
+const char* get_name(arean type, int p1, int p2);
+
 void create_area(arean id, short unsigned parent);
 void update_area_items();
