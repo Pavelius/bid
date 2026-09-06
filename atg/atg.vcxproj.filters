@@ -99,6 +99,9 @@
     <ClInclude Include="sprite_util.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="gender.h">
+      <Filter>Strings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="array.cpp">
@@ -199,6 +202,9 @@
     </ClCompile>
     <ClCompile Include="bin_h3.cpp">
       <Filter>Binary</Filter>
+    </ClCompile>
+    <ClCompile Include="gender.cpp">
+      <Filter>Strings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

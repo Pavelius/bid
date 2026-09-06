@@ -280,10 +280,9 @@ void creature::act(messagen id) const {
 }
 
 void creature::actv(char separator, const char* format, const char* format_param) const {
-	auto push_player = player; player = const_cast<creature*>(this);
+	pushvalue push_gender(str_gender, player->gender);
 	sb.addsep(separator);
 	sb.addv(format, format_param);
-	player = push_player;
 }
 
 bool creature::iscaster() const {

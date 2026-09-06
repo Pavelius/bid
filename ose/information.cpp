@@ -21,6 +21,7 @@
 #include "dice.h"
 #include "draw_atg.h"
 #include "game.h"
+#include "gender.h"
 #include "math.h"
 #include "message.h"
 #include "stringbuilder.h"
@@ -106,49 +107,11 @@ static void print_last_number(stringbuilder& sb) {
 	sb.add("%1i", last_number);
 }
 
-static bool apply_gender(const char* identifier, stringbuilder& sb, gendern gender) {
-	struct gender_change_string {
-		const char*	female;
-		const char*	male;
-		const char*	multiply;
-	};
-	static gender_change_string player_gender[] = {
-		{"госпожа", "господин", "господа"},
-		{"женщина", "мужчина", "господа"},
-		{"стерва", "ублюдок", "ублюдки"},
-		{"миледи", "милорд", "милорды"},
-		{"такая", "такой", "такие"},
-		{"леди", "лорд", "лорды"},
-		{"ась", "ся", "ись"},
-		{"нее", "него", "них"},
-		{"она", "он", "они"},
-		{"шла", "шел", "шли"},
-		{"ая", "ый", "ые"},
-		{"ее", "его", "их"},
-		{"ей", "ему", "им"},
-		{"ла", "", "ли"},
-		{"а", "", "и"},
-	};
-	for(auto& e : player_gender) {
-		if(!equal(e.female, identifier))
-			continue;
-		if(gender == NoGender)
-			sb.add(e.multiply);
-		else if(gender == Female)
-			sb.add(e.female);
-		else
-			sb.add(e.male);
-		return true;
-	}
-	return false;
-}
 void stringbuilder_custom(stringbuilder& sb, const char* id) {
 	if(stringvar_identifier(sb, id))
 		return;
-	if(player) {
-		if(apply_gender(id, sb, player->gender))
-			return;
-	}
+	if(apply_gender(id, sb, str_gender))
+		return;
 	default_string(sb, id);
 }
 
@@ -160,6 +123,7 @@ BSDATA(stringvari) = {
 	{"Class", player_class},
 	{"Item", item_name},
 	{"Items", item_collection},
+	{"Name", print_name},
 	{"Number", print_last_number},
 	{"Player", player_name},
 	{"TreasureCoins", treasure_coins_name},

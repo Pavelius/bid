@@ -19,8 +19,10 @@
 #include "collectiona.h"
 #include "dice.h"
 #include "draw_atg.h"
+#include "gender.h"
 #include "item.h"
 #include "math.h"
+#include "pushvalue.h"
 #include "rand.h"
 #include "slice.h"
 #include "stringbuilder.h"
@@ -295,6 +297,13 @@ void clear_items(short unsigned index) {
 	}
 }
 
+static gendern get_gender(itemn type) {
+	switch(type) {
+	case Mace: case LeatherArmor: case ChainArmor: return Female;
+	default: return Male;
+	}
+}
+
 void item::consume(messagen msg_broke, messagen msg_damage) {
 	if(native())
 		return;
@@ -358,10 +367,11 @@ const char* item::namefull() const {
 }
 
 void item::act(messagen id) const {
-	auto push = last_item; last_item = const_cast<item*>(this);
+	pushvalue push(last_item, const_cast<item*>(this));
+	pushvalue push_name(str_name, getname(type));
+	pushvalue push_gender(str_gender, get_gender(type));
 	sb.addsep(' ');
 	sb.addv(getname(id), 0);
-	last_item = push;
 }
 
 void item::drop(short unsigned index) {

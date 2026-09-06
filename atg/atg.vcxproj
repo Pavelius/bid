@@ -31,6 +31,7 @@
     <ClInclude Include="draw.h" />
     <ClInclude Include="draw_atg.h" />
     <ClInclude Include="flagable.h" />
+    <ClInclude Include="gender.h" />
     <ClInclude Include="io_stream.h" />
     <ClInclude Include="math.h" />
     <ClInclude Include="point.h" />
@@ -82,6 +83,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="font_util.cpp" />
+    <ClCompile Include="gender.cpp" />
     <ClCompile Include="io_stream.cpp" />
     <ClCompile Include="math.cpp" />
     <ClCompile Include="pack_util.cpp" />

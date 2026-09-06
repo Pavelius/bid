@@ -16,6 +16,15 @@
 
 #pragma once
 
+class stringbuilder;
+
 enum gendern : unsigned char {
 	NoGender, Male, Female
 };
+
+extern gendern str_gender;
+
+extern const char* str_name;
+
+bool apply_gender(const char* identifier, stringbuilder& sb, gendern gender);
+void print_name(stringbuilder& sb);
