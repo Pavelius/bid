@@ -7,9 +7,9 @@
 struct resei {
 	const char*	name;
 	const char*	folder;
-	unsigned	flags;
-	sprite*		data;
-	bool		notfound;
+	unsigned flags;
+	sprite*	data;
+	bool notfound;
 };
 static adat<resei, 512> source;
 
@@ -82,7 +82,7 @@ const sprite* gres(const char* name, const char* folder, point maxsize, int ox, 
 						rc.y2 = rc.y1 + maxsize.y;
 					}
 					unsigned size = sizeof(sprite) + rc.height() * rc.width() * 3;
-					// Вывод на экран
+					// Sprite header write
 					p->data = (sprite*)new char[size]; memset(p->data, 0, size);
 					p->data->width = rc.width();
 					p->data->height = rc.height();

@@ -37,29 +37,24 @@ static void normalize(itema& source) {
 
 void create_market_items() {
 	market_items.clear();
-	add_market(RandomFood);
-	add_market(RandomWeapon, xrand(1, 6));
-	add_market(RandomArmor, xrand(1, 6));
+	add_market(RandomFood, xrand(2, 4));
+	add_market(RandomMarketGood, xrand(1, 6));
 }
 
-static item* choose_item(collectiona& source, messagen v) {
+static item* choose_item(itema& source, messagen v) {
 	an.clear();
-	for(auto p : source.records<item>())
-		an.add((long)p, getname(v), p->name(), p->price());
-	return (item*)an.choose(what_to_do(), getname(Cancel));
+	for(auto& e : source)
+		an.add((long)&e, getname(v), e.name(), e.price());
+	return (item*)(what_to_do(), getname(Cancel));
 }
 
-bool buy_market_action(fnvfilter proc, bool run) {
-	auto& items = market_items;
-	collectiona source;
-	source.select(items.data, items.count, sizeof(items.data[0]), proc);
+bool buy_market_action(bool run) {
+	auto& source = market_items;
 	if(!source)
 		return false;
 	if(run) {
 		while(true) {
-			source.select(items.data, items.count, sizeof(items.data[0]), proc);
-			if(!source)
-				break;
+			normalize(source);
 			auto pi = choose_item(source, BuyItemForCost);
 			if(!pi)
 				break;
@@ -69,7 +64,6 @@ bool buy_market_action(fnvfilter proc, bool run) {
 				player->add(item(pi->type, 1));
 				pi->consume();
 			}
-			normalize(items);
 		}
 	}
 	return true;

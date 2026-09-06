@@ -131,9 +131,6 @@
     <ClCompile Include="draw.cpp">
       <Filter>Interface</Filter>
     </ClCompile>
-    <ClCompile Include="draw_answers.cpp">
-      <Filter>Interface</Filter>
-    </ClCompile>
     <ClCompile Include="draw_atg.cpp">
       <Filter>Interface</Filter>
     </ClCompile>

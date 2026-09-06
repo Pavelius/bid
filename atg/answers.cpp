@@ -15,9 +15,11 @@
 */
 
 #include "answers.h"
+#include "draw.h"
 #include "pushvalue.h"
 #include "rand.h"
 
+fnevent answer_event;
 picturen answer_picture;
 const char* answer_header;
 
@@ -26,9 +28,9 @@ bool answers::show_tips = true;
 bool answers::interactive = true;
 int answers::column_count = 1;
 
-const answers* answers::last;
-
 answers an;
+
+void buttonparam();
 
 static bool allow(const answers& an, size_t max_width) {
 	for(auto& e : an) {
@@ -38,7 +40,7 @@ static bool allow(const answers& an, size_t max_width) {
 	return true;
 }
 
-static int getcolumns(const answers& an) {
+int answer_columns_def() {
 	auto count = an.getcount();
 	if(!count)
 		return 1;
@@ -60,20 +62,68 @@ unsigned anhotkey(int index) {
 	return hotkeys[index];
 }
 
+const char* find_separator(const char* pb) {
+	auto p = pb;
+	while(*p) {
+		if(*p == '-' && p[1] == '+' && p[2] == '-' && (p[3] == 10 || p[3] == 13) && p > pb && (p[-1] == 10 || p[-1] == 13))
+			return p;
+		p++;
+	}
+	return 0;
+}
+
+void answers_paint(fnabutton paintcell, int columns, const char* cancel_text) {
+	auto column_width = width;
+	if(columns > 1)
+		column_width = (column_width - (metrics::border * 2 + metrics::padding) * (columns - 1)) / columns + 1;
+	auto index = 0;
+	auto y1 = (int)caret.y, x1 = (int)caret.x;
+	auto y2 = (int)caret.y;
+	auto push_width_normal = width;
+	auto push_x2 = caret.x + width;
+	width = column_width;
+	pushfore push;
+	for(auto& e : an.elements) {
+		fore = push.fore;
+		if(e.value < 0)
+			fore = fore.mix(colors::header, 128);
+		paintcell(index, e.value, e.text);
+		caret.y += height + metrics::padding;
+		fire(e.proc, (long)e.value, 0, &e);
+		index++;
+		if(caret.y > y2)
+			y2 = caret.y;
+		if(columns > 1) {
+			auto current_column = index % columns;
+			width = column_width;
+			if(current_column == 0) {
+				y1 = caret.y;
+				caret.x = x1;
+			} else {
+				caret.y = y1;
+				caret.x += width + metrics::border * 2 + metrics::padding;
+				if(current_column == columns - 1)
+					width = push_x2 - caret.x;
+			}
+		}
+	}
+	caret.x = x1; caret.y = y2;
+	width = push_width_normal;
+	if(cancel_text) {
+		fore = fore.mix(colors::header, 128);
+		paintcell(-1, 0, cancel_text);
+		fire(buttonparam, 0);
+		caret.y += height + metrics::padding;
+	}
+}
+
 int answers::compare(const void* v1, const void* v2) {
 	return szcmp(((answers::element*)v1)->text, ((answers::element*)v2)->text);
 }
 
-void answers::addv(long value, const char* text, const char* format) {
+void answers::addv(fnevent proc, long value, const char* text, const char* format) {
 	auto p = elements.add();
-	p->value = value;
-	p->text = sc.get();
-	sc.addv(text, format);
-	sc.addsz();
-}
-
-void answers::addpv(long value, long param, const char* text, const char* format) {
-	auto p = elements.add();
+	p->proc = proc;
 	p->value = value;
 	p->text = sc.get();
 	sc.addv(text, format);
@@ -82,20 +132,8 @@ void answers::addpv(long value, long param, const char* text, const char* format
 
 void answers::add(long value, const char* name, ...) {
 	XVA_FORMAT(name);
-	addv(value, name, format_param);
+	addv(buttonparam, value, name, format_param);
 }
-
-void answers::addp(long value, long param, const char* name, ...) {
-	XVA_FORMAT(name);
-	addpv(value, param, name, format_param);
-}
-
-/*int answers::totalweight() const {
-	auto n = 0;
-	for(auto& e : elements)
-		n += e.weight;
-	return n;
-}*/
 
 void answers::sort() {
 	qsort(elements.data, elements.count, sizeof(elements.data[0]), compare);
@@ -106,21 +144,6 @@ long answers::random() const {
 		return 0;
 	return elements.data[rand() % elements.count].value;
 }
-
-/*long answers::randomweight() const {
-	if(!elements.count)
-		return 0;
-	auto n = totalweight();
-	if(!n)
-		return 0;
-	auto m = rand() % n;
-	for(auto& e : elements) {
-		m -= e.weight;
-		if(m <= 0)
-			return e.value;
-	}
-	return 0;
-}*/
 
 const char* answers::getname(long v) {
 	for(auto& e : elements) {
@@ -136,6 +159,7 @@ void answers::clear() {
 }
 
 long answers::choose(const char* title, const char* cancel_text) const {
+	answer_event = 0;
 	if(!interactive)
 		return random();
 	if(!elements) {
@@ -143,39 +167,13 @@ long answers::choose(const char* title, const char* cancel_text) const {
 			return 0;
 	}
 	auto columns = column_count;
-	if(columns == -1)
-		columns = getcolumns(*this);
-	pushvalue push(last, this);
 	return choose_answers(title, cancel_text, columns);
 }
-
-/*bool answers::makeweight() {
-	auto ps = elements.begin();
-	for(auto& e : *this) {
-		if(!e.weight)
-			continue;
-		*ps++ = e;
-	}
-	if(ps == elements.data)
-		return false;
-	elements.count = ps - elements.data;
-	return true;
-}*/
 
 const answers::element* answers::find(long value) const {
 	for(auto& e : elements) {
 		if(e.value==value)
 			return &e;
-	}
-	return 0;
-}
-
-const char* find_separator(const char* pb) {
-	auto p = pb;
-	while(*p) {
-		if(*p == '-' && p[1] == '+' && p[2] == '-' && (p[3] == 10 || p[3] == 13) && p > pb && (p[-1] == 10 || p[-1] == 13))
-			return p;
-		p++;
 	}
 	return 0;
 }

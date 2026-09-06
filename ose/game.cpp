@@ -78,7 +78,7 @@ void make_reaction_roll(int bonus) {
 }
 
 void make_party_move(const char* cancel_text) {
-	last_result.u = (unsigned short)an.choose(0, 0);
+	last_result.u = (unsigned short)an.choose(0, cancel_text);
 	an.clear();
 }
 
@@ -88,20 +88,26 @@ long make_player_move(const char* cancel_text) {
 	return result;
 }
 
+static void change_player() {
+	player = (creature*)current_avatar;
+}
+
 void make_player_move(fnevent options_proc, const char* cancel_text) {
 	auto p_console = sb.get();
-	pushvalue push(current_avatar_post, (long)ChangePlayer);
+	pushvalue push(atg_change_avatar, change_player);
 	current_avatar = (void*)player;
 	while(true) {
 		sb.set(p_console);
 		an.clear();
 		options_proc();
 		last_result.u = (short unsigned)make_player_move(cancel_text);
-		if(last_result.u == ChangePlayer) {
-			player = (creature*)current_avatar;
+		if(answer_event) {
+			auto proc = answer_event;
+			answer_event = 0;
+			proc();
 			continue;
-		} else
-			break;
+		}
+		break;
 	}
 }
 
@@ -201,9 +207,7 @@ static bool apply_effect(actionn v, bool run) {
 			pass_turn();
 		}
 		break;
-	case BuyArmor: return buy_market_action(is_item_armor, run);
-	case BuyFood: return buy_market_action(is_item_food, run);
-	case BuyWeapons: return buy_market_action(is_item_weapon, run);
+	case BuyTradeGoods: return buy_market_action(run);
 	default:
 		return false;
 	}
@@ -441,18 +445,17 @@ static void add_area_visit(short unsigned parent) {
 	addan(LeaveOutside);
 }
 
-static void village_moves() {
-	sb.addn(area_look[last_area->type]);
-	addan(BuyFood);
-	addan(BuyArmor);
-	addan(BuyWeapons);
+static void location_options() {
+	addan(BuyTradeGoods);
+	addan(SellTradeGoods);
 }
 
 static void location_move(area* p) {
 	while(true) {
 		answer_picture = ImagePlainVillage;
 		sb.clear();
-		make_player_move(village_moves, getname(LeaveOutside));
+		sb.addn(area_look[last_area->type]);
+		make_player_move(location_options, getname(LeaveOutside));
 		if(!last_result)
 			break;
 		apply_result();

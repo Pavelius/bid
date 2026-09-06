@@ -60,6 +60,7 @@ enum itemn : unsigned char {
 	RandomJewelry,
 	RandomMagicItem, RandomMagicItemNoWeapon,
 	RandomArmorOrShield, RandomArmor, RandomMisc, RandomRing, RandomRodStaffWand, RandomScroll, RandomSword, RandomWeapon, RandomPotion,
+	RandomMarketGood,
 	RandomRangeWeapon, RandomFood,
 };
 enum powern : unsigned char {

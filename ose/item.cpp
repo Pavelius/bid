@@ -74,6 +74,8 @@ static itemn random_range_weapons[] = {ShortBow, ShortBow, ShortBow, LongBow, Lo
 static itemn random_weapons[] = {Dagger, Dagger, HandAxe, HandAxe, Javelin, Spear, Spear, Spear, Trident, Staff, BattleAxe, WarHammer, Mace, RandomRangeWeapon, RandomRangeWeapon};
 static itemn random_rod_staff_wand[] = {Rod, Staff, Staff, Staff, Wand, Wand};
 static itemn random_food[] = {Bread, Bread, Corn, RawMeat, RawMeat};
+static itemn random_market_good[] = {LeatherArmor, Shield, Spear, Dagger, Mace, Staff, Boots, Bracers, Candle,
+	Cloack, Carpet, Gauntlets, Gridle, Helm, Horseshoes, Incense, Jug, Mirror, Net, Oil, Robe, Rope, Saw, Scarab, Spade};
 
 itemi item_data[LastItem + 1] = {
 	{MeleeWeapon, Fist, 0, 0, 0, {{1, 2}}},
@@ -228,6 +230,7 @@ itemn random(itemn v) {
 	case RandomPotion: return random(maprnd(random_potions));
 	case RandomRangeWeapon: return random(maprnd(random_range_weapons));
 	case RandomFood: return random(maprnd(random_food));
+	case RandomMarketGood: return random(maprnd(random_market_good));
 	default: return v;
 	}
 }

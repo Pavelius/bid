@@ -24,17 +24,19 @@
 
 // #define NOART
 
+static int answer_columns;
+
 static char sb_console[4096];
+stringbuilder sb(sb_console);
+
 static const char* answer_title;
 static const char* answer_cancel_text;
-static int answer_columns;
 static void* current_tab;
 static point last_separator;
 
-stringbuilder sb(sb_console);
 fnevent atg_menu;
+fnevent atg_change_avatar;
 void* current_avatar;
-long current_avatar_post;
 
 sprite* metrics::avatars;
 sprite* metrics::images;
@@ -104,7 +106,7 @@ static void atg_paintcell(int index, long value, const char* title) {
 		return;
 	auto push = caret;
 	if(index == -1)
-		index = answers::last->getcount();
+		index = an.getcount();
 	unsigned key = anhotkey(index);
 	pushfore push_fore;
 	auto push_width = width;
@@ -287,10 +289,16 @@ static int find_avatars(void** source, int count, void* current) {
 	return -1;
 }
 
+static void post_event(fnevent proc) {
+	if(!proc)
+		return;
+	answer_event = proc;
+	breakmodal(0);
+}
+
 static void change_avatar() {
 	current_avatar = (void*)hparam;
-	if(current_avatar_post)
-		breakmodal(current_avatar_post);
+	post_event(atg_change_avatar);
 }
 
 static void paint_avatar(const sprite* ps, int id, const void* player, unsigned key, bool mark_player, int hit_percent) {
@@ -410,10 +418,12 @@ static void choose_answers_scene() {
 	paint_header();
 	paint_console();
 	paint_ask();
-	answers::last->paintanswers(atg_paintcell, answer_columns, answer_cancel_text);
+	answers_paint(atg_paintcell, answer_columns, answer_cancel_text);
 }
 
 long choose_answers(const char* title, const char* cancel_text, int columns) {
+	if(columns == -1)
+		columns = answer_columns_def();
 	answer_title = title;
 	answer_cancel_text = cancel_text;
 	answer_columns = columns;

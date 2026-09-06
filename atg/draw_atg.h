@@ -33,8 +33,8 @@ extern sprite* images;
 
 extern stringbuilder sb;
 extern void* current_avatar;
-extern long current_avatar_post;
 extern fnevent atg_menu;
+extern fnevent atg_change_avatar;
 
 void* choose_record(const char* id, const char* source_id, fnvisible allow = 0);
 
