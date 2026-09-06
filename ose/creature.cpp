@@ -936,7 +936,7 @@ static void modify_spells(messagen id, spellable& e, int level) {
 		an.add(-1, getname(Confirm));
 		sbn.clear(); sbn.add(getname(AskMemorizeSpells), level);
 		addleft(sbn, prepare_spells, maximum_spells);
-		auto result = an.choose(temp);
+		auto result = choose_answers(temp);
 		if(result == -1)
 			break;
 		else if(result == -2) {

@@ -20,6 +20,7 @@
 #include "stringbuilder.h"
 
 typedef void(*fnevent)();
+typedef bool(*fnuctest)(int v);
 typedef void(*fnabutton)(int index, long value, const char* text);
 
 enum picturen : unsigned char;
@@ -31,14 +32,13 @@ extern fnevent answer_event;
 struct answers {
 	struct element {
 		fnevent		proc;
-		long		value, param;
+		long		value;
 		const char* text;
 	};
 	char buffer[2048];
 	stringbuilder sc;
 	adat<element, 32> elements;
 	static bool	interactive;
-	static int column_count;
 	static const char* string;
 	static bool show_tips;
 	answers() : sc(buffer) {}
@@ -53,7 +53,6 @@ struct answers {
 	int	indexof(const void* v) const { return elements.indexof(v); }
 	void add(long value, const char* name, ...);
 	void addv(fnevent proc, long value, const char* name, const char* format);
-	long choose(const char* title = 0, const char* cancel_text = 0) const;
 	void clear();
 	long random() const;
 	void remove(int index) { elements.remove(index, 1); }
@@ -68,4 +67,5 @@ int answer_columns_def();
 const char* find_separator(const char* p);
 
 void answers_paint(fnabutton paintcell, int columns, const char* cancel_text);
-long choose_answers(const char* title, const char* cancel_text, int columns);
+long choose_answers(const char* title = 0, const char* cancel_text = 0, int columns = 1);
+long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel_text = 0);

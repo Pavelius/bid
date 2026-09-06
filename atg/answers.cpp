@@ -26,7 +26,6 @@ const char* answer_header;
 const char* answers::string;
 bool answers::show_tips = true;
 bool answers::interactive = true;
-int answers::column_count = 1;
 
 answers an;
 
@@ -156,18 +155,6 @@ const char* answers::getname(long v) {
 void answers::clear() {
 	elements.clear();
 	sc.clear();
-}
-
-long answers::choose(const char* title, const char* cancel_text) const {
-	answer_event = 0;
-	if(!interactive)
-		return random();
-	if(!elements) {
-		if(!cancel_text)
-			return 0;
-	}
-	auto columns = column_count;
-	return choose_answers(title, cancel_text, columns);
 }
 
 const answers::element* answers::find(long value) const {

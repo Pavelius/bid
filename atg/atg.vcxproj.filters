@@ -96,9 +96,6 @@
     <ClInclude Include="bstream.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="choose.h">
-      <Filter>Strings</Filter>
-    </ClInclude>
     <ClInclude Include="sprite_util.h">
       <Filter>Util</Filter>
     </ClInclude>
@@ -175,9 +172,6 @@
     </ClCompile>
     <ClCompile Include="bstream.cpp">
       <Filter>Support</Filter>
-    </ClCompile>
-    <ClCompile Include="choose.cpp">
-      <Filter>Strings</Filter>
     </ClCompile>
     <ClCompile Include="zip.cpp">
       <Filter>Support</Filter>

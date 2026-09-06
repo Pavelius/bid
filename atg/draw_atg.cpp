@@ -422,6 +422,13 @@ static void choose_answers_scene() {
 }
 
 long choose_answers(const char* title, const char* cancel_text, int columns) {
+	answer_event = 0;
+	if(!answers::interactive)
+		return an.random();
+	if(!an.elements) {
+		if(!cancel_text)
+			return 0;
+	}
 	if(columns == -1)
 		columns = answer_columns_def();
 	answer_title = title;
@@ -429,6 +436,17 @@ long choose_answers(const char* title, const char* cancel_text, int columns) {
 	answer_columns = columns;
 	scene(choose_answers_scene); // Run as scene allow correct dragging api.
 	return getresult();
+}
+
+long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel) {
+	an.clear();
+	for(auto i = t1; i < t2; i++) {
+		if(condition && !condition((unsigned char)i))
+			continue;
+		an.add(i, names[i]);
+	}
+	an.sort();
+	return choose_answers(title, cancel);
 }
 
 void fixmsg(messagen id) {

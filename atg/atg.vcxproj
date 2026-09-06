@@ -24,7 +24,6 @@
     <ClInclude Include="array.h" />
     <ClInclude Include="bsdata.h" />
     <ClInclude Include="bstream.h" />
-    <ClInclude Include="choose.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="collectiona.h" />
     <ClInclude Include="color.h" />
@@ -56,9 +55,6 @@
     <ClCompile Include="bin_h2.cpp" />
     <ClCompile Include="bin_h3.cpp" />
     <ClCompile Include="bstream.cpp" />
-    <ClCompile Include="choose.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="collectiona.cpp" />
     <ClCompile Include="color.cpp" />

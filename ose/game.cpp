@@ -50,7 +50,7 @@ void pause(const char* format) {
 		return;
 	an.clear();
 	an.add(1, format);
-	an.choose(0, 0);
+	choose_answers();
 	sb.clear();
 	an.clear();
 }
@@ -78,12 +78,12 @@ void make_reaction_roll(int bonus) {
 }
 
 void make_party_move(const char* cancel_text) {
-	last_result.u = (unsigned short)an.choose(0, cancel_text);
+	last_result.u = (unsigned short)choose_answers(0, cancel_text);
 	an.clear();
 }
 
 long make_player_move(const char* cancel_text) {
-	auto result = an.choose(what_to_do(), cancel_text);
+	auto result = choose_answers(what_to_do(), cancel_text);
 	an.clear();
 	return result;
 }
