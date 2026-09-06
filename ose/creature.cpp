@@ -987,3 +987,7 @@ int party_average(abilityn v) {
 		return 0;
 	return total / count;
 }
+
+void sayone(classn type, messagen v1) {
+	sb.addn("- %1 - %2 %-3 - %4", getname(v1), getname(PlayerSay), getname(type));
+}

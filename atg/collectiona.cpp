@@ -39,6 +39,21 @@ void collectiona::distinct() {
 	count = ps - data;
 }
 
+void collectiona::select(void* source, int count, unsigned size, fnvfilter proc) {
+	auto ps = this->data;
+	auto pse = endof();
+	auto pb = (unsigned char*)source;
+	auto pe = (unsigned char*)source + count * size;
+	while(pb < pe) {
+		if(proc(pb)) {
+			if(ps < pse)
+				*ps++ = pb;
+		}
+		pb += size;
+	}
+	this->count = ps - data;
+}
+
 void collectiona::group(fnvgroup proc) {
 	for(auto& e : *this)
 		e = proc(e);

@@ -142,4 +142,5 @@ void initiative_roll();
 void make_attack(creature* attacker, creature* enemy, abilityn ability, item& weapon, int attack_bonus);
 void make_prepare_spells(messagen id);
 void raise_level(int level, bool reroll_lowest = false);
+void sayone(classn type, messagen v1, messagen v2);
 bool use_skill(actionn id, int bonus, bool run);

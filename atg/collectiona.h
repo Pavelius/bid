@@ -28,5 +28,6 @@ struct collectiona : adat<void*, 256> {
 	int total(fnvfilter proc, bool keep) const;
 	template<typename T> slice<T*> records() const { return slice<T*>((T**)data, (T**)data + count); }
 	void* random() const;
+	void select(void* source, int count, unsigned size, fnvfilter proc);
 };
 extern collectiona targets;

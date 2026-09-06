@@ -17,6 +17,7 @@
 #pragma once
 
 typedef void(*fnevent)();
+typedef bool(*fnvfilter)(const void* v);
 
 enum classn : unsigned char;
 
@@ -29,7 +30,7 @@ enum actionn : unsigned char {
 	MakeCharge, MakeMeleeAttack, MakeMissileAttack, MakeThrownAttack, MakeRunAway,
 	MakeHunting, MakeTreatIllness, MakeTendingWounds, MakeGearRepairing, MakeForaging,
 	RestParty, MemorizeSpells, ChangeSpellsByLevel, ChangeSpellsByLevelAllowed,
-	LeaveSettlement, LeaveOutside, BuyMarketGoods, MakeCamp,
+	LeaveSettlement, LeaveOutside, BuyWeapons, BuyArmor, BuyFood, MakeCamp,
 };
 enum reactionn : unsigned char {
 	Hostile, Unfriendly, Neutral, Indifferent, Friendly,
@@ -53,10 +54,13 @@ extern reactionn last_reaction;
 extern classn encounter_monsters;
 extern int last_number;
 
+void addanñ(actionn n);
+bool buy_market_action(fnvfilter proc, bool run);
+void create_market_items();
 void make_reaction_roll(int bonus);
-void make_party_move();
+void make_party_move(const char* cancel_text = 0);
 long make_player_move(const char* cancel_text = 0);
-void make_player_move(fnevent add_answers);
+void make_player_move(fnevent add_answers, const char* cancel_text = 0);
 void pass_turn();
 void pause();
 void pause(const char* format);

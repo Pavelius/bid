@@ -25,7 +25,6 @@
 #include "slice.h"
 #include "stringbuilder.h"
 
-const int cp = 1;
 const int sp = 10;
 const int ep = 50;
 const int gp = 100;
@@ -74,137 +73,137 @@ static itemn random_scrolls[] = {ArcaneScroll, ArcaneScroll, ArcaneScroll, Divin
 static itemn random_range_weapons[] = {ShortBow, ShortBow, ShortBow, LongBow, LongBow, Crossbow, Sling};
 static itemn random_weapons[] = {Dagger, Dagger, HandAxe, HandAxe, Javelin, Spear, Spear, Spear, Trident, Staff, BattleAxe, WarHammer, Mace, RandomRangeWeapon, RandomRangeWeapon};
 static itemn random_rod_staff_wand[] = {Rod, Staff, Staff, Staff, Wand, Wand};
+static itemn random_food[] = {Bread, Bread, Corn, RawMeat, RawMeat};
 
 itemi item_data[LastItem + 1] = {
-	{Fist, MeleeWeapon, 0, 0, 0, {{1, 2}}},
-	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 4}, 0, 2}},
-	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 6}, 0, 2}},
-	{Claws1d4, MeleeWeapon, 0, 0, 0, {{1, 8}, 0, 2}},
-	{Bite1d6, Head, 0, 0, Pierce, {{1, 6}}},
-	{Bite1d6, Head, 0, 0, Pierce, {{1, 8}}},
-	{Bite1d6, Head, 0, 0, Pierce, {{1, 12}}},
-	{Bite1d6, Head, 0, 0, Pierce, {{2, 6}}},
-	{Bite1d6, Head, 0, 0, Pierce, {{2, 8}}},
+	{MeleeWeapon, Fist, 0, 0, 0, {{1, 2}}},
+	{MeleeWeapon, Claws1d4, 0, 0, 0, {{1, 4}, 0, 2}},
+	{MeleeWeapon, Claws1d4, 0, 0, 0, {{1, 6}, 0, 2}},
+	{MeleeWeapon, Claws1d4, 0, 0, 0, {{1, 8}, 0, 2}},
+	{Head, Bite1d6, 0, 0, Pierce, {{1, 6}}},
+	{Head, Bite1d6, 0, 0, Pierce, {{1, 8}}},
+	{Head, Bite1d6, 0, 0, Pierce, {{1, 12}}},
+	{Head, Bite1d6, 0, 0, Pierce, {{2, 6}}},
+	{Head, Bite1d6, 0, 0, Pierce, {{2, 8}}},
 	// Melee weapons
-	{Dagger, MeleeWeapon, 0, 0, {Pierce, Slashing}, {{1, 4}}},
-	{HandAxe, MeleeWeapon, 0, 0, {}, {{1, 6}}},
-	{Javelin, MeleeWeapon, 0, 0, {Pierce, Thrown}, {{1, 4}}},
-	{Spear, MeleeWeapon, 0, 0, {Pierce, Thrown}, {{1, 6}}},
-	{Trident, MeleeWeapon, 0, 0, {Pierce, Slashing}, {{1, 6}}},
-	{Staff, MeleeWeapon, 0, 0, {Blunt, Slowest, Large}, {{1, 4}}},
-	{BattleAxe, MeleeWeapon, 7 * gp, 0, {Slashing, Slowest, Large}, {{1, 8}}},
-	{WarHammer, MeleeWeapon, 5 * gp, 0, {Blunt, Large}, {{1, 6, 1}}},
-	{Mace, MeleeWeapon, 5 * gp, 0, {Blunt}, {{1, 6}}},
-	{ShortSword, MeleeWeapon, 0, 0, 0, {{1, 6}}},
-	{Sword, MeleeWeapon, 0, 0, 0, {{1, 8}}},
-	{TwohandedSword, MeleeWeapon, 0, 0, {Large}, {{1, 10}}},
+	{MeleeWeapon, Dagger, 0, 0, {Pierce, Slashing}, {{1, 4}}},
+	{MeleeWeapon, HandAxe, 0, 0, {}, {{1, 6}}},
+	{MeleeWeapon, Javelin, 0, 0, {Pierce, Thrown}, {{1, 4}}},
+	{MeleeWeapon, Spear, 0, 0, {Pierce, Thrown}, {{1, 6}}},
+	{MeleeWeapon, Trident, 0, 0, {Pierce, Slashing}, {{1, 6}}},
+	{MeleeWeapon, Staff, 0, 0, {Blunt, Slowest, Large}, {{1, 4}}},
+	{MeleeWeapon, BattleAxe, 7 * gp, 0, {Slashing, Slowest, Large}, {{1, 8}}},
+	{MeleeWeapon, WarHammer, 5 * gp, 0, {Blunt, Large}, {{1, 6, 1}}},
+	{MeleeWeapon, Mace, 5 * gp, 0, {Blunt}, {{1, 6}}},
+	{MeleeWeapon, ShortSword, 0, 0, 0, {{1, 6}}},
+	{MeleeWeapon, Sword, 0, 0, 0, {{1, 8}}},
+	{MeleeWeapon, TwohandedSword, 0, 0, {Large}, {{1, 10}}},
 	// Range weapons
-	{LongBow, RangeWeapon, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Arrow}},
-	{ShortBow, RangeWeapon, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Arrow}},
-	{Sling, RangeWeapon, 0, 0, {Large}, {{1, 3}, 0, 0, Bolt}},
-	{Crossbow, RangeWeapon, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Bolt}},
+	{RangeWeapon, LongBow, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Arrow}},
+	{RangeWeapon, ShortBow, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Arrow}},
+	{RangeWeapon, Sling, 0, 0, {Large}, {{1, 3}, 0, 0, Bolt}},
+	{RangeWeapon, Crossbow, 0, 0, {Pierce, Large}, {{1, 6}, 0, 0, Bolt}},
 	// Armor
-	{LeatherArmor, Body, 20 * gp, 200, 0, {{}, 2}},
-	{ChainArmor, Body, 40 * gp, 400, 0, {{}, 4}},
-	{PlateArmor, Body, 60 * gp, 500, 0, {{}, 6}},
-	{Shield, MeleeOffhand, 10 * gp, 0, 0, {{}, 1}},
+	{Body, LeatherArmor, 20 * gp, 200, 0, {{}, 2}},
+	{Body, ChainArmor, 40 * gp, 400, 0, {{}, 4}},
+	{Body, PlateArmor, 60 * gp, 500, 0, {{}, 6}},
+	{MeleeOffhand, Shield, 10 * gp, 0, 0, {{}, 1}},
 	// Miscelaneous items
-	{Apparatus, Backpack, 1000 * gp, 0, 0, {}},
-	{Amulet, Neck, 20 * gp, 0, 0, {}},
-	{Bag, Backpack, 20 * gp, 0, 0, {}},
-	{Book, Backpack, 50 * gp, 0, 0, {}},
-	{Boots, Legs, 3 * gp, 0, 0, {}},
-	{Bracers, Elbow, 5 * gp, 0, 0, {}},
-	{Brooch, Head, 2 * gp, 0, 0, {}},
-	{Broom, Backpack, 2 * gp, 0, 0, {}},
-	{Candle, Backpack, 2 * gp, 0, 0, {}},
-	{Chime, Backpack, 2 * gp, 0, 0, {}},
-	{Cloack, Backpack, 0, 0, 0, {}},
-	{CrystalBall, Backpack, 0, 0, 0, {}},
-	{Cube, Backpack, 0, 0, 0, {}},
-	{Decanter, Backpack, 0, 0, 0, {}},
-	{Deck, Backpack, 0, 0, 0, {}},
-	{Drums, Backpack, 0, 0, 0, {}},
-	{Dust, Backpack, 0, 0, 0, {}},
-	{Eyes, Backpack, 0, 0, 0, {}},
-	{Feather, Backpack, 0, 0, 0, {}},
-	{Figurine, Backpack, 0, 0, 0, {}},
-	{Carpet, Backpack, 0, 0, 0, {}},
-	{Gauntlets, Backpack, 0, 0, 0, {}},
-	{Gem, Backpack, 0, 0, 0, {}},
-	{Gridle, Backpack, 0, 0, 0, {}},
-	{Helm, Head, 0, 0, 0, {}},
-	{Horn, Backpack, 0, 0, 0, {}},
-	{Horseshoes, Backpack, 0, 0, 0, {}},
-	{Incense, Backpack, 0, 0, 0, {}},
-	{Fortress, Backpack, 0, 0, 0, {}},
-	{Flask, Backpack, 0, 0, 0, {}},
-	{Jug, Backpack, 0, 0, 0, {}},
-	{Mirror, Backpack, 0, 0, 0, {}},
-	{Net, Backpack, 0, 0, 0, {}},
-	{Oil, Backpack, 0, 0, 0, {}},
-	{Pearl, Backpack, 0, 0, 0, {}},
-	{Pipe, Backpack, 0, 0, 0, {}},
-	{Robe, Body, 0, 0, 0, {}},
-	{Rope, Backpack, 0, 0, 0, {}},
-	{Saw, Backpack, 0, 0, 0, {}},
-	{Scarab, Backpack, 0, 0, 0, {}},
-	{Spade, Backpack, 0, 0, 0, {}},
-	{Stone, Backpack, 0, 0, 0, {}},
+	{Backpack, Apparatus, 1000 * gp, 0, 0, {}},
+	{Neck, Amulet, 20 * gp, 0, 0, {}},
+	{Backpack, Bag, 20 * gp, 0, 0, {}},
+	{Backpack, Book, 50 * gp, 0, 0, {}},
+	{Legs, Boots, 3 * gp, 0, 0, {}},
+	{Elbow, Bracers, 5 * gp, 0, 0, {}},
+	{Head, Brooch, 2 * gp, 0, 0, {}},
+	{Backpack, Broom, 2 * gp, 0, 0, {}},
+	{Backpack, Candle, 2 * gp, 0, 0, {}},
+	{Backpack, Chime, 2 * gp, 0, 0, {}},
+	{Backpack, Cloack, 0, 0, 0, {}},
+	{Backpack, CrystalBall, 0, 0, 0, {}},
+	{Backpack, Cube, 0, 0, 0, {}},
+	{Backpack, Decanter, 0, 0, 0, {}},
+	{Backpack, Deck, 0, 0, 0, {}},
+	{Backpack, Drums, 0, 0, 0, {}},
+	{Backpack, Dust, 0, 0, 0, {}},
+	{Backpack, Eyes, 0, 0, 0, {}},
+	{Backpack, Feather, 0, 0, 0, {}},
+	{Backpack, Figurine, 0, 0, 0, {}},
+	{Backpack, Carpet, 0, 0, 0, {}},
+	{Backpack, Gauntlets, 0, 0, 0, {}},
+	{Backpack, Gridle, 0, 0, 0, {}},
+	{Head, Helm, 0, 0, 0, {}},
+	{Backpack, Horn, 0, 0, 0, {}},
+	{Backpack, Horseshoes, 0, 0, 0, {}},
+	{Backpack, Incense, 0, 0, 0, {}},
+	{Backpack, Fortress, 0, 0, 0, {}},
+	{Backpack, Flask, 0, 0, 0, {}},
+	{Backpack, Jug, 0, 0, 0, {}},
+	{Backpack, Mirror, 0, 0, 0, {}},
+	{Backpack, Net, 0, 0, 0, {}},
+	{Backpack, Oil, 0, 0, 0, {}},
+	{Backpack, Pearl, 0, 0, 0, {}},
+	{Backpack, Pipe, 0, 0, 0, {}},
+	{Body, Robe, 0, 0, 0, {}},
+	{Backpack, Rope, 0, 0, 0, {}},
+	{Backpack, Saw, 0, 0, 0, {}},
+	{Backpack, Scarab, 0, 0, 0, {}},
+	{Backpack, Spade, 0, 0, 0, {}},
+	{Backpack, Stone, 0, 0, 0, {}},
 	// Gemstones
-	{Sapphire, Backpack, 0, 0, 0, {}},
-	{Emerald, Backpack, 0, 0, 0, {}},
-	{Ruby, Backpack, 0, 0, 0, {}},
-	{Diamond, Backpack, 0, 0, 0, {}},
+	{Backpack, Sapphire, 0, 0, 0, {}},
+	{Backpack, Emerald, 0, 0, 0, {}},
+	{Backpack, Ruby, 0, 0, 0, {}},
+	{Backpack, Diamond, 0, 0, 0, {}},
 	// Other items
-	{Potion, Backpack, 0, 0, 0, {}},
-	{Bottle, Backpack, 0, 0, 0, {}},
-	{Ring, LeftFinger, 0, 0, 0, {}},
-	{Rod, MeleeWeapon, 0, 0, 0, {1, 4}},
-	{Wand, MeleeOffhand, 0, 0, 0, {}},
-	{ArcaneScroll, Backpack},
-	{DivineScroll, Backpack},
+	{Backpack, Potion, 0, 0, 0, {}},
+	{Backpack, Bottle, 0, 0, 0, {}},
+	{LeftFinger, Ring, 0, 0, 0, {}},
+	{MeleeWeapon, Rod, 0, 0, 0, {1, 4}},
+	{MeleeOffhand, Wand, 0, 0, 0, {}},
+	{Backpack, ArcaneScroll},
+	{Backpack, DivineScroll},
 	// Edible (Countable start here)
-	{Ration, Edible, 0, 0, 0, {}},
-	{Bread, Edible, 0, 0, 0, {}},
-	{Corn, Edible, 0, 0, 0, {}},
-	{RawMeat, Edible, 0, 0, 0, {}},
-	{Mushrooms, Edible, 0, 0, 0, {}},
-	{Herbs, Edible, 0, 0, 0, {}},
-	{Berry, Edible, 0, 0, 0, {}},
+	{Edible, Ration, 5 * sp, 0, 0, {}},
+	{Edible, Bread, 3 * sp, 0, 0, {}},
+	{Edible, Corn, 2 * sp, 0, 0, {}},
+	{Edible, RawMeat, 2 * sp, 0, 0, {}},
+	{Edible, Mushrooms, 4 * sp, 0, 0, {}},
+	{Edible, Herbs, 1 * gp, 0, 0, {}},
+	{Edible, Berry, 2 * sp, 0, 0, {}},
 	// Ammunitions
-	{Arrow, Ammunition, 0, 0, 0, {}},
-	{Arrow, Ammunition, 0, 0, 0, {0, 0, 1, 1}},
-	{Arrow, Ammunition, 0, 0, 0, {0, 0, 2, 2}},
-	{Bolt, Ammunition, 0, 0, 0, {}},
-	{Bolt, Ammunition, 0, 0, 0, {0, 0, 1, 1}},
-	{Bolt, Ammunition, 0, 0, 0, {0, 0, 2, 2}},
+	{Ammunition, Arrow, 1 * sp, 2, 0, {}},
+	{Ammunition, Arrow, 1 * gp, 2, 0, {0, 0, 1, 1}},
+	{Ammunition, Arrow, 1 * gp, 2, 0, {0, 0, 2, 2}},
+	{Ammunition, Bolt, 1 * sp, 3, 0, {}},
+	{Ammunition, Bolt, 1 * gp, 3, 0, {0, 0, 1, 1}},
+	{Ammunition, Bolt, 1 * gp, 3, 0, {0, 0, 2, 2}},
 	// Gems and precious
-	{Agate, Backpack, 0, 0, 0, {}},
-	{Malachite, Backpack, 0, 0, 0, {}},
-	{LapisLazuli, Backpack, 0, 0, 0, {}},
-	{Amethyst, Backpack, 0, 0, 0, {}},
-	{Citrine, Backpack, 0, 0, 0, {}},
-	{Garnet, Backpack, 0, 0, 0, {}},
-	{Peridot, Backpack, 0, 0, 0, {}},
-	{Aquamarine, Backpack, 0, 0, 0, {}},
-	{Tourmaline, Backpack, 0, 0, 0, {}},
-	{Topaz, Backpack, 0, 0, 0, {}},
-	{Opal, Backpack, 0, 0, 0, {}},
-	{Tanzanite, Backpack, 0, 0, 0, {}},
-	{Spinel, Backpack, 0, 0, 0, {}},
-	{Alexandrite, Backpack, 0, 0, 0, {}},
-	{ParaibaTourmaline, Backpack, 0, 0, 0, {}},
-	{PinkDiamond, Backpack, 0, 0, 0, {}},
-	{SignetRing, Backpack, 0, 0, 0, {}},
-	{SilverBrooch, Backpack, 0, 0, 0, {}},
-	{StrangeIdol, Backpack, 0, 0, 0, {}},
+	{Backpack, Agate, 0, 0, 0, {}},
+	{Backpack, Malachite, 0, 0, 0, {}},
+	{Backpack, LapisLazuli, 0, 0, 0, {}},
+	{Backpack, Amethyst, 0, 0, 0, {}},
+	{Backpack, Citrine, 0, 0, 0, {}},
+	{Backpack, Garnet, 0, 0, 0, {}},
+	{Backpack, Peridot, 0, 0, 0, {}},
+	{Backpack, Aquamarine, 0, 0, 0, {}},
+	{Backpack, Tourmaline, 0, 0, 0, {}},
+	{Backpack, Topaz, 0, 0, 0, {}},
+	{Backpack, Opal, 0, 0, 0, {}},
+	{Backpack, Tanzanite, 0, 0, 0, {}},
+	{Backpack, Spinel, 0, 0, 0, {}},
+	{Backpack, Alexandrite, 0, 0, 0, {}},
+	{Backpack, ParaibaTourmaline, 0, 0, 0, {}},
+	{Backpack, PinkDiamond, 0, 0, 0, {}},
+	{Backpack, SignetRing, 0, 0, 0, {}},
+	{Backpack, SilverBrooch, 0, 0, 0, {}},
+	{Backpack, StrangeIdol, 0, 0, 0, {}},
 	// Coins
-	{CP, Backpack, cp, 0, 0, {}},
-	{SP, Backpack, sp, 0, 0, {}},
-	{EP, Backpack, ep, 0, 0, {}},
-	{GP, Backpack, gp, 0, 0, {}},
-	{PP, Backpack, pp, 0, 0, {}},
+	{Backpack, CP, 0, 0, 0, {}},
+	{Backpack, SP, sp, 0, 0, {}},
+	{Backpack, EP, ep, 0, 0, {}},
+	{Backpack, GP, gp, 0, 0, {}},
+	{Backpack, PP, pp, 0, 0, {}},
 };
 
 itemn random(itemn v) {
@@ -228,6 +227,7 @@ itemn random(itemn v) {
 	case RandomWeapon: return random(maprnd(random_weapons));
 	case RandomPotion: return random(maprnd(random_potions));
 	case RandomRangeWeapon: return random(maprnd(random_range_weapons));
+	case RandomFood: return random(maprnd(random_food));
 	default: return v;
 	}
 }
@@ -277,6 +277,14 @@ void add_items(short unsigned index) {
 	}
 }
 
+item* find_item(short unsigned index) {
+	for(auto& e : bsdata<itemground>()) {
+		if(e && e.index == index)
+			return &e;
+	}
+	return 0;
+}
+
 void clear_items(short unsigned index) {
 	for(auto& e : bsdata<itemground>()) {
 		if(e && e.index == index)
@@ -287,6 +295,13 @@ void clear_items(short unsigned index) {
 void item::consume(messagen msg_broke, messagen msg_damage) {
 	if(native())
 		return;
+	if(countable()) {
+		if(count)
+			count--;
+		else
+			clear();
+		return;
+	}
 	if(broken >= 3) {
 		if(msg_broke)
 			act(msg_broke);
@@ -415,6 +430,21 @@ bool wearable::consume(itemn v) {
 		}
 	}
 	return false;
+}
+
+bool is_item_weapon(const void* object) {
+	auto p = (item*)object;
+	return p->is(MeleeWeapon) || p->is(MeleeOffhand) || p->is(RangeWeapon);
+}
+
+bool is_item_armor(const void* object) {
+	auto p = (item*)object;
+	return p->is(Body) || p->is(Head);
+}
+
+bool is_item_food(const void* object) {
+	auto p = (item*)object;
+	return p->is(Edible);
 }
 
 const char* test_item() {

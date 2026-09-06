@@ -77,7 +77,7 @@ void make_reaction_roll(int bonus) {
 		last_reaction = Friendly;
 }
 
-void make_party_move() {
+void make_party_move(const char* cancel_text) {
 	last_result.u = (unsigned short)an.choose(0, 0);
 	an.clear();
 }
@@ -88,7 +88,7 @@ long make_player_move(const char* cancel_text) {
 	return result;
 }
 
-void make_player_move(fnevent options_proc) {
+void make_player_move(fnevent options_proc, const char* cancel_text) {
 	auto p_console = sb.get();
 	pushvalue push(current_avatar_post, (long)ChangePlayer);
 	current_avatar = (void*)player;
@@ -96,7 +96,7 @@ void make_player_move(fnevent options_proc) {
 		sb.set(p_console);
 		an.clear();
 		options_proc();
-		last_result.u = (short unsigned)make_player_move();
+		last_result.u = (short unsigned)make_player_move(cancel_text);
 		if(last_result.u == ChangePlayer) {
 			player = (creature*)current_avatar;
 			continue;
@@ -201,15 +201,16 @@ static bool apply_effect(actionn v, bool run) {
 			pass_turn();
 		}
 		break;
-	case BuyMarketGoods:
-		break;
+	case BuyArmor: return buy_market_action(is_item_armor, run);
+	case BuyFood: return buy_market_action(is_item_food, run);
+	case BuyWeapons: return buy_market_action(is_item_weapon, run);
 	default:
 		return false;
 	}
 	return true;
 }
 
-static void addanñ(actionn n) {
+void addanñ(actionn n) {
 	an.add(variant(n), getname(n));
 }
 
@@ -440,26 +441,41 @@ static void add_area_visit(short unsigned parent) {
 	addan(LeaveOutside);
 }
 
-static void add_actions(arean type) {
-	switch(type) {
-	case Market:
-		addan(BuyMarketGoods);
-		break;
-	default:
-		break;
+static void village_moves() {
+	sb.addn(area_look[last_area->type]);
+	addan(BuyFood);
+	addan(BuyArmor);
+	addan(BuyWeapons);
+}
+
+static void location_move(area* p) {
+	while(true) {
+		answer_picture = ImagePlainVillage;
+		sb.clear();
+		make_player_move(village_moves, getname(LeaveOutside));
+		if(!last_result)
+			break;
+		apply_result();
 	}
 }
 
-static void village_move() {
-	pushvalue push_header(answer_header, "%AreaName");
+static void settlement_move() {
 	while(last_area) {
 		answer_picture = ImagePlainVillage;
+		answer_header = "%AreaName";
 		sb.clear();
 		sb.addn(area_look[last_area->type]);
-		add_actions(last_area->type);
 		add_area_visit(last_area->index());
 		make_party_move();
-		apply_result();
+		switch(last_result.type) {
+		case AreaRef:
+			pass_turn();
+			location_move(bsdata<area>::elements + last_result.value);
+			break;
+		default:
+			apply_result();
+			break;
+		}
 	}
 }
 
@@ -578,7 +594,8 @@ static void test_game() {
 	create_area(Tavern, parent);
 	create_area(Inn, parent);
 	last_area = bsdata<area>::elements + parent;
-	village_move();
+	create_market_items();
+	settlement_move();
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);

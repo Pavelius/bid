@@ -43,7 +43,7 @@ enum itemn : unsigned char {
 	LeatherArmor, ChainArmor, PlateArmor, Shield,
 	Apparatus, Amulet, Bag, Book, Boots, Bracers, Brooch, Broom, Candle, Chime,
 	Cloack,	CrystalBall, Cube, Decanter, Deck, Drums, Dust, Eyes, Feather, Figurine, Carpet,
-	Gauntlets, Gem, Gridle, Helm, Horn, Horseshoes, Incense, Fortress, Flask,
+	Gauntlets, Gridle, Helm, Horn, Horseshoes, Incense, Fortress, Flask,
 	Jug, Mirror, Net, Oil, Pearl, Pipe, Robe, Rope, Saw, Scarab, Spade, Stone,
 	Sapphire, Emerald, Ruby, Diamond,
 	Potion, Bottle, Ring, Rod, Wand, ArcaneScroll, DivineScroll,
@@ -60,12 +60,12 @@ enum itemn : unsigned char {
 	RandomJewelry,
 	RandomMagicItem, RandomMagicItemNoWeapon,
 	RandomArmorOrShield, RandomArmor, RandomMisc, RandomRing, RandomRodStaffWand, RandomScroll, RandomSword, RandomWeapon, RandomPotion,
-	RandomRangeWeapon,
+	RandomRangeWeapon, RandomFood,
 };
 enum powern : unsigned char {
 	NoPower,
 	Magic1, Magic2, Magic3, Cursed, Delusion, Weakness,
-	Summoning, SummonAir, SummonEarth, SummonFire, SummonWater,
+	SummonDjin, SummonAir, SummonEarth, SummonFire, SummonWater, SummonInsects,
 	ControlAnimals, ControlCharmed, ControlDragons, ControlFish, ControlGiants, ControlHumans,
 	ControlPlants, ControlLycanthropes, ControlSpells, ControlGoblinoid, ControlUndead,
 	DetectEnemy, DetectInvisibility, DetectSpells, DetectTrap, DetectTreasure, DetectSecretDoors,
@@ -75,7 +75,7 @@ enum powern : unsigned char {
 	Flaming, Flying, Frozing, Holding, Invisibility, Invocating, Leaping, Lighting, Luck, Microscoping,
 	Diminution, ESP, GaseousForm, Growth, Heroism, Invulnerability, Levitation, Longevity,
 	Opening, Poisoning, Petrification, Ravening, Scarying, Speed, Striking, Sun, Thundering, Transformation,
-	Dispelling,	Zooming, SwarmingInsects,
+	Dispelling,	Zooming,
 	Mighty, Sharpness, Parrying, Ressurection, Withering,
 	Telekinesis, WaterWalking,
 	Regeneration, SpellStoring,
@@ -95,8 +95,8 @@ struct attacki {
 };
 
 struct itemi {
-	itemn parent;
 	wearn wear;
+	itemn parent;
 	int cost, weight;
 	damagef flags; // damagen
 	attacki	combat;
@@ -115,29 +115,33 @@ struct item {
 			unsigned char broken : 2; // 1-2 damaged, 3 is nearly to destroy
 		};
 	};
-	item() : type(), count(0) {}
-	item(itemn type) : type(type), count(0) {}
-	item(itemn type, unsigned char count) : type(type), count(count) {}
-	explicit operator bool() const { return type != (itemn)0; }
+	constexpr item() : type(), count(0) {}
+	constexpr item(itemn type) : type(type), count(0) {}
+	constexpr item(itemn type, unsigned char count) : type(type), count(count) {}
+	constexpr explicit operator bool() const { return type != (itemn)0; }
+	constexpr bool countable() const { return type >= FirstCountable; }
+	constexpr bool native() const { return type <= LastNative; }
+	constexpr const itemi& geti() const { return item_data[type]; }
+	constexpr itemn ammo() const { return geti().combat.ammo; }
+	constexpr itemn parent() const { return geti().parent; }
+	constexpr powern power() const { return countable() ? NoPower : (powern)modification; }
+	constexpr wearn wear() const { return geti().wear; }
 	const char* name() const;
 	const char* namefull() const;
 	creature* owner() const;
-	itemn ammo() const { return item_data[type].combat.ammo; }
-	itemn parent() const { return item_data[type].parent; }
-	powern power() const { return countable() ? NoPower : (powern)modification; }
-	wearn wear() const { return item_data[type].wear; }
 	int getcount() const { return countable() ? count : 1; }
-	int cost() const { return item_data[type].cost * getcount(); }
-	int weight() const { return item_data[type].weight * getcount(); }
+	int cost() const { return geti().cost * getcount(); }
+	int price() const { return geti().cost; }
+	int weight() const { return geti().weight * getcount(); }
 	void act(messagen id) const;
 	void clear() { type = (itemn)0; count = 0; need_update_items = true; }
 	void consume(messagen crush = (messagen)0, messagen damaged = (messagen)0);
-	bool countable() const { return type >= FirstCountable; }
 	bool damaged() const { return broken > 0; }
 	void drop(short unsigned index);
-	bool is(damagen v) const { return item_data[type].is(v); }
+	bool is(damagen v) const { return geti().is(v); }
+	bool is(itemn v) const { return type == v; }
+	bool is(wearn v) const { return wear() == v; }
 	void join(item& it);
-	bool native() const { return type <= LastNative; }
 	void set(powern v) { if(!countable()) modification = v; }
 };
 extern item* last_item;
@@ -161,12 +165,17 @@ struct wearable {
 
 extern int treasure_coins[PP - CP + 1];
 
+item* find_item(short unsigned index);
+
 itemn random(itemn v);
 itemn random_basic(itemn v);
 
 bool is_cursed(const void* object);
 bool is_damaged(const void* object);
 bool is_identified(const void* object);
+bool is_item_weapon(const void* object);
+bool is_item_armor(const void* object);
+bool is_item_food(const void* object);
 
 item some(itemn type, int count = 8);
 
