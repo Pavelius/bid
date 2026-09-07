@@ -33,3 +33,5 @@ const stringset* stringset_find(const char* id);
 const stringset* stringset_find(const char** names);
 
 bool stringset_identifier(const char* identifier, stringbuilder& sb);
+
+const char* test_stringset();

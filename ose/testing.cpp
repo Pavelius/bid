@@ -14,7 +14,10 @@
 	limitations under the License.77
 */
 
+#include "draw_atg.h"
 #include "item.h"
+#include "print.h"
+#include "stringset.h"
 
 typedef const char*(fnautotest)();
 
@@ -24,12 +27,15 @@ static int error_count;
 
 static void pass_test(fnautotest proc) {
 	auto error_message = proc();
-	if(error_message)
+	if(error_message) {
+		sb.addn(error_message);
 		error_count++;
+	}
 }
 
 bool pass_test() {
 	error_count = 0;
 	pass_test(test_item);
+	pass_test(test_stringset);
 	return error_count == 0;
 }

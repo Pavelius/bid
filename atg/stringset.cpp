@@ -25,3 +25,13 @@ bool stringset_identifier(const char* identifier, stringbuilder& sb) {
 	sb.addv(p->names[rand() % p->count], 0);
 	return true;
 }
+
+const char* test_stringset() {
+	for(auto p = stringset_data; *p; p++) {
+		if(!p->count)
+			return str("Zero count string set for `%1`", p->id);
+		if(!p->names[p->count-1])
+			return str("Invalid count of string in string set `%1`", p->id);
+	}
+	return 0;
+}
