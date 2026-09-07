@@ -16,27 +16,28 @@
 
 #pragma once
 
-struct character;
-
-enum commandn : unsigned char {
-	Cancel, Continue,
-	PageCharacter, PageItems, PageCombatants,
-	LastCommand = PageCombatants,
+enum itemn : unsigned char {
+	NoItem,
+	Axe, Bow, Halberd, HookAndLine, Knife, Shield, Sling, Spear, Staff, Sword,
+	LightArmor, HeavyArmor,
 };
 
-enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern
+enum wearn : unsigned char {
+	Backpack, LastBackpach = Backpack + 3,
+	Weapon, Armor,
+	LastWear = Armor
 };
 
-extern character* party[4];
+struct item {
+	itemn type;
+	union {
+		unsigned char count;
+		struct {
+			unsigned char lost : 1;
+		};
+	};
+};
 
-extern const char* command_names[LastCommand + 1];
-
-extern int last_number;
-
-extern char roll_difficult, roll_dices[16];
-
-void apply_result();
-void pause();
-void pause(const char* format);
+struct wearable {
+	item wears[LastWear + 1];
+};

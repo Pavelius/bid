@@ -17,14 +17,17 @@
 #pragma once
 
 #include "flagable.h"
+#include "item.h"
 
 enum creaturen : unsigned char {
-	Commoner, Tenderpaws,
+	Commoner,
+	Tenderpaw, Guardmouse, PatrolGuard, PatrolLeader, GuardCaptain,
+	LastCreature = GuardCaptain
 };
 
 enum skilln : unsigned char {
 	Nature, Will, Health, Resources, Circles,
-	Apiarist, Archivist, Armorer, Baker, Boatcrafter,
+	Administrator, Apiarist, Archivist, Armorer, Baker, Boatcrafter,
 	Brewer, Carpenter, Cartographer, Cook, Fighter,
 	Glazier, Haggler, Harvester, Healer, Hunter,
 	Insectrist, Instructor, Laborer, Loremouse, Manipulator,
@@ -50,26 +53,46 @@ enum traitn : unsigned char {
 	LastTrait = Young
 };
 
-typedef flagable<1+LastTrait/32> traitf;
-typedef flagable<1+LastSkill/32> skillf;
-
-extern const char* skill_names[LastSkill+1];
-
-struct skillable {
-	char skills[LastSkill+1];
-	char fail[LastSkill+1];
-	char success[LastSkill+1];
+enum conditionn : unsigned char {
+	HungryAndThirsty, Angry, Tired, Injured, Sick,
 };
 
-struct traitable {
-	traitf traits, traits_upgraded;
+typedef flagable<1 + LastTrait / 32, unsigned> traitf;
+typedef flagable<1 + LastSkill / 32, unsigned> skillf;
+typedef flagable<1 + LastSkill / 32, unsigned> skillf;
+typedef flagable<1, unsigned char> conditionf;
+
+extern const char* creature_names[LastCreature + 1];
+extern const char* skill_names[LastSkill + 1];
+
+struct skillable {
+	char skills[LastSkill + 1];
+	char fail[LastSkill + 1];
+	char success[LastSkill + 1];
+	int get(skilln v) const { return skills[v]; }
 };
 
 struct creature {
 	creaturen type;
 	char nature;
+	short unsigned birth;
+	constexpr explicit operator bool() const { return birth != 0; }
+	void setbirth(creaturen type);
 };
 
-struct character : creature, skillable, traitable {
+struct character : creature, skillable, wearable {
+	skilln speciality;
+	traitf traits, traits_upgraded;
+	conditionf conditions;
+	void add(skilln v, int i) { skills[v] += i; }
+	bool is(skilln v) const { return skills[v] > 0; }
+	bool is(traitn v) const { return traits.is(v); }
+	bool is(conditionn v) const { return conditions.is(v); }
+	void setbirth(creaturen v);
 	void update();
 };
+extern character* player;
+extern character character_data[32];
+extern creature	creature_data[64];
+
+void create_character();

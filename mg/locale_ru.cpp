@@ -15,12 +15,24 @@
 */
 
 #include "bsdata.h"
+#include "creature.h"
 #include "game.h"
 #include "stringbuilder.h"
 #include "stringset.h"
 
+const char* command_names[LastCommand + 1] = {
+	"Отменить", "Продолжить",
+	"Персонаж", "Предметы", "Сражение"
+};
+
+const char* creature_names[LastCreature + 1] = {
+	"Крестьянин",
+	"Новичек", "Страж", "Патрульный", "Лидер", "Капитан"
+};
+
 const char* message_names[] = {
-	"Old School Hack Esscential Engine 0.1",
+	"Mouse guard 0.1",
+	"Какое положение занимает мышь в гвардии?"
 };
 
 stringset stringset_data[] = {

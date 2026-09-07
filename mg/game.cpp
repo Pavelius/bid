@@ -15,9 +15,9 @@
 */
 
 #include "answers.h"
-#include "bsdata.h"
 #include "collection.h"
 #include "collectiona.h"
+#include "creature.h"
 #include "draw.h"
 #include "draw_atg.h"
 #include "game.h"
@@ -26,16 +26,18 @@
 #include "rand.h"
 #include "stringbuilder.h"
 
-gamei game;
-
 static void paint_main_menu() {
 }
 
 //////////////////////////////////////////////////////
 // START GAME
 
+void pause(const char* format) {
+	choose_answers(0, format);
+}
+
 static void test_game() {
-	game.add(Turns, 1000);
+	create_character();
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);

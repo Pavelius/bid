@@ -14,29 +14,7 @@
 	limitations under the License.77
 */
 
-#pragma once
+#include "game.h"
 
-struct character;
 
-enum commandn : unsigned char {
-	Cancel, Continue,
-	PageCharacter, PageItems, PageCombatants,
-	LastCommand = PageCombatants,
-};
 
-enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern
-};
-
-extern character* party[4];
-
-extern const char* command_names[LastCommand + 1];
-
-extern int last_number;
-
-extern char roll_difficult, roll_dices[16];
-
-void apply_result();
-void pause();
-void pause(const char* format);

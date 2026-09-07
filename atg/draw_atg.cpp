@@ -436,14 +436,15 @@ long choose_answers(const char* title, const char* cancel_text, int columns) {
 	return r;
 }
 
-long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel) {
+long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel, bool need_sort) {
 	an.clear();
-	for(auto i = t1; i < t2; i++) {
+	for(auto i = t1; i <= t2; i++) {
 		if(condition && !condition((unsigned char)i))
 			continue;
 		an.add(i, names[i]);
 	}
-	an.sort();
+	if(need_sort)
+		an.sort();
 	return choose_answers(title, cancel);
 }
 
