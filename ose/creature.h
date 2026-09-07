@@ -48,6 +48,7 @@ enum classn : unsigned char {
 	BearGrizzly, Boar, CatPanther, CatTiger, DogWild, FrogMutant, FrogPoison, Hawk,
 	LizardGecko, LizardTuatara, SnakePitViper, SpiderCrab, SpiderPhase, ToadPoisonous, Unicorn,
 	Wolf, WolfDire,
+	LastClass = WolfDire
 };
 enum featn : unsigned char {
 	Awareness, Backstab,
@@ -56,6 +57,10 @@ enum featn : unsigned char {
 	BlinkAttack, HugAttack, PetrifyingTouch, PetrifyingGaze,
 	ImmuneBlind, ImmuneCold, ImmuneDamage, ImmuneFire, ImmuneLighting, ImmuneSurprise,
 };
+
+extern const char* ability_names[LastAbility + 1];
+extern const char* class_names[LastClass + 1];
+extern const char* name_names[];
 
 struct area;
 

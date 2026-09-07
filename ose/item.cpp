@@ -354,13 +354,9 @@ creature* item::owner() const {
 	return 0;
 }
 
-const char* item::name() const {
-	return getname(type);
-}
-
 const char* item::namefull() const {
 	static char temp[256]; stringbuilder sb(temp); sb.clear();
-	sb.add(getname(type));
+	sb.add(name());
 	if(countable() && count > 1)
 		sb.adds("x%2i", name(), count);
 	return temp;
@@ -368,10 +364,10 @@ const char* item::namefull() const {
 
 void item::act(messagen id) const {
 	pushvalue push(last_item, const_cast<item*>(this));
-	pushvalue push_name(str_name, getname(type));
+	pushvalue push_name(str_name, name());
 	pushvalue push_gender(str_gender, get_gender(type));
 	sb.addsep(' ');
-	sb.addv(getname(id), 0);
+	sb.addv(message_names[id], 0);
 }
 
 void item::drop(short unsigned index) {

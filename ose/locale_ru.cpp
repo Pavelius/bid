@@ -22,10 +22,9 @@
 #include "message.h"
 #include "spell.h"
 #include "stringbuilder.h"
-#include "stringlocale.h"
 #include "stringset.h"
 
-BSENUM(namen) = {
+const char* name_names[] = {
 	"Безимянный", "Безимянная", "Менелай", "Тия", "Ахилл", "Хатшепсут",
 	"Одиссей", "Пенелопа", "Нестор", "Кассандра", "Диомед", "Андромаха",
 	"Аякс", "Гекуба", "Приам", "Ифигения", "Гектор", "Электра",
@@ -65,7 +64,7 @@ BSENUM(namen) = {
 	"Сабни", "Рагнхильд", "Нехси", "Ингрид", "Херуэф", "Сигрун"
 };
 
-BSENUM(actionn) = {
+const char* action_names[LastAction + 1] = {
 	"Выставив [%-Weapon] набросится на врага.",
 	"Атаковать ближайшего врага.",
 	"Стрелять по врагу.",
@@ -88,9 +87,8 @@ BSENUM(actionn) = {
 	"Постпрашивать у постояльцев про последние новости и слухи.",
 	"Сделать привал.",
 };
-assert_enum(actionn, MakeCamp)
 
-BSENUM(messagen) = {
+const char* message_names[LastMessage + 1] = {
 	"Old School Hack Esscential Engine 0.1",
 	"и",
 	"монет", "медных", "серебрянных", "электрумых", "золотых", "платиновых",
@@ -133,21 +131,21 @@ BSENUM(messagen) = {
 	"Подготовить какое заклинание %1i уровня?",
 	"Что будет делать %Player?",
 	"Что будете делать?",
-}; assert_enum(messagen, AskWhatToDo)
+};
 
-BSENUM(commandn) = {
+const char* command_names[PageCombatants + 1] = {
 	"Отменить", "Продолжить", "Очистить все", "Подтвердить",
 	"Персонаж", "Предметы", "Бой",
-}; assert_enum(commandn, PageCombatants)
+};
 
-BSENUM(classn) = {
+const char* class_names[LastClass + 1] = {
 	"Животное",
 	"Воин", "Клерик", "Вор", "Маг",
 	"Человек", "Хоббит", "Гном", "Эльф",
 	"Медведь", "Кабан", "Пантера", "Тигр", "Собака", "Лягушка", "Лягушка", "Ястреб",
-}; assert_enum(classn, Hawk)
+};
 
-BSENUM(itemn) = {
+const char* item_names[LastItem + 1] = {
 	"Кулаки",
 	"Когти", "Когти", "Когти",
 	"Пасть", "Пасть", "Пасть", "Пасть", "Пасть",
@@ -169,14 +167,14 @@ BSENUM(itemn) = {
 	"Розовый алмаз",
 	"Фамильное кольцо", "Серебрянная брошь", "Идол",
 	"Медные монеты", "Серебрянные монеты", "Электриумные монеты", "Золотые монеты", "Платиновые монеты",
-}; assert_enum(itemn, LastItem)
+};
 
-BSENUM(arean) = {
+const char* area_names[LastArea + 1] = {
 	"Равнина", "Пески", "Пустошь", "Болото", "Холмы", "Горы", "Джунгли", "Лес",
 	"Поселение", "Деревня", "Город", "Город-Государство",
 	"Пещера", "Подземелье", "Руины",
 	"Рынок", "Сад", "Храм", "Гостиница", "Таверна", "Дворец",
-}; assert_enum(arean, Palace)
+};
 
 const char* area_look[LastArea + 1] = {
 	"Plains",
@@ -207,9 +205,8 @@ const char* area_visit[LastArea + 1] = {
 	"Зайти в пещеру", "Спуститься в подземелье", "Посетить руины",
 	"Посетить местный рынок", "Зайти в прекрасный сад", "Посетить местный храм", "Остановиться в гостинице", "Посетить таверну", "Посетить дворец местного лорда"
 };
-static_assert(lenghtof(area_visit) == LastArea + 1);
 
-BSENUM(abilityn) = {
+const char* ability_names[LastAbility + 1] = {
 	"Уровень",
 	"Сила", "Ловкость", "Телосложение", "Интеллект", "Мудрость", "Харизма",
 	"Ближний бой", "Стрельба", "Метание",
@@ -218,12 +215,12 @@ BSENUM(abilityn) = {
 	"Спасение от смерти", "Спасение от палочки", "Спасение от паралича", "Спасение от дыхания", "Спасение от магии",
 	"Лазанье", "Найти ловушки", "Слышать звуки", "Двигаться тихо", "Вскрывать замки", "Выслеживание", "Знания легенд",
 	"Смертельный вой"
-}; assert_enum(abilityn, LastAbility)
+};
 
-BSENUM(spelln) = {
+const char* spell_names[LastSpell + 1] = {
 	"Исцелить легкую рану", "Нанести легкую рану", "Обнаружить зло", "Обнаружить магию", "Свет", "Тьма",
 	"Защита от зла", "Очистить еду и воду", "Убрать страх", "Вызвать страх", "Сопротивление холоду",
-}; assert_enum(spelln, LastSpell)
+};
 
 static const char* TavernMaleNPC[] = {
 	"Торговец", "Рыбак", "Бродяга", "Калека", "Конюх",
@@ -269,12 +266,15 @@ const char* LocationFemaleFirstName[] = {
 };
 
 stringset stringset_data[] = {
-	{BSDATASET(DayDistance)},
-	{BSDATASET(LocationFemaleFirstName)},
-	{BSDATASET(LocationMaleFirstName)},
-	{BSDATASET(TavernAlreadyKnown)},
-	{BSDATASET(TavernMaleNPC)},
-	{BSDATASET(TavernNothingToSay)},
-	{BSDATASET(TavernRumorGeneral)},
-	{BSDATASET(TavernRumorSpeech)},
+	DSTEXT(DayDistance),
+	DSTEXT(LocationFemaleFirstName),
+	DSTEXT(LocationMaleFirstName),
+	DSTEXT(TavernAlreadyKnown),
+	DSTEXT(TavernMaleNPC),
+	DSTEXT(TavernNothingToSay),
+	DSTEXT(TavernRumorGeneral),
+	DSTEXT(TavernRumorSpeech),
+	DSTEXT(area_names),
+	DSTEXT(item_names),
+	DSTEXT(message_names),
 	{}};

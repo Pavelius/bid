@@ -55,7 +55,7 @@ void pause(const char* format) {
 }
 
 void pause() {
-	pause(getname(Continue));
+	pause(command_names[Continue]);
 }
 
 void pass_turn() {
@@ -77,7 +77,7 @@ void make_reaction_roll(int bonus) {
 }
 
 void make_party_move(const char* cancel_text) {
-	last_result.u = (unsigned short)choose_answers(getname(AskWhatToDo), cancel_text);
+	last_result.u = (unsigned short)choose_answers(message_names[AskWhatToDo], cancel_text);
 }
 
 static void change_player() {
@@ -206,7 +206,7 @@ static bool apply_effect(actionn v, bool run) {
 }
 
 void addopt(actionn n) {
-	an.add(variant(n), getname(n));
+	an.add(variant(n), action_names[n]);
 }
 
 void addoptn(actionn n) {
@@ -326,7 +326,7 @@ static void loot_enemies() {
 	if(!encounter_monsters)
 		return;
 	generate_loot(encounter_monsters, creature_count(true, false));
-	pause(getname(SearchBodies));
+	pause(message_names[SearchBodies]);
 	fixmsg(NothingValuableHere);
 	pause();
 }
@@ -419,7 +419,7 @@ static void adventure_move() {
 			break;
 		} else {
 			night_encounter();
-			sb.adds(getname(AdventureNextDay));
+			sb.adds(message_names[AdventureNextDay]);
 		}
 	}
 }
@@ -457,7 +457,7 @@ void area_move() {
 		add_area_actions(type);
 		const char* cancel_text = 0;
 		if(area_data[type].leave)
-			cancel_text = getname(area_data[type].leave);
+			cancel_text = action_names[area_data[type].leave];
 		make_any_player_move(cancel_text);
 		if(!last_result)
 			break;
@@ -472,7 +472,7 @@ void area_move() {
 
 static void paint_value(abilityn id) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.add("/x 120 text %2i\n%1", getname(id), player->abilities[id]);
+	sb.add("/x 120 text %2i\n%1", ability_names[id], player->abilities[id]);
 	paint_button(temp, 0, false);
 	if(button_hilited && tips_text[0] == 0) {
 		stringbuilder sb(tips_text);
@@ -499,7 +499,7 @@ static void paint_value(const creature* p) {
 	else {
 		sb.add(p->name());
 		if(p->isbadlyhurt())
-			sb.adds("[~%1]", getname(StateWounded));
+			sb.adds("[~%1]", message_names[StateWounded]);
 	}
 	paint_button(temp, 0, false);
 	if(button_hilited && tips_text[0] == 0) {
@@ -551,10 +551,10 @@ static void page_combatants() {
 }
 
 static void paint_main_menu() {
-	paint_bar(getname(PageCharacter), page_characters);
-	paint_bar(getname(PageItems), page_items);
+	paint_bar(command_names[PageCharacter], page_characters);
+	paint_bar(command_names[PageItems], page_items);
 	if(creatures && enemy_present())
-		paint_bar(getname(PageCombatants), page_combatants);
+		paint_bar(command_names[PageCombatants], page_combatants);
 }
 
 //////////////////////////////////////////////////////

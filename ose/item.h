@@ -84,6 +84,8 @@ enum powern : unsigned char {
 	Wishes, XRays,
 };
 
+extern const char* item_names[LastItem + 1];
+
 extern bool need_update_items;
 
 typedef flag32 damagef;
@@ -127,7 +129,7 @@ struct item {
 	constexpr itemn parent() const { return geti().parent; }
 	constexpr powern power() const { return countable() ? NoPower : (powern)modification; }
 	constexpr wearn wear() const { return geti().wear; }
-	const char* name() const;
+	const char* name() const { return item_names[type]; }
 	const char* namefull() const;
 	creature* owner() const;
 	int getcount() const { return countable() ? count : 1; }

@@ -44,6 +44,9 @@ enum picturen : unsigned char {
 	ImagePlainVillage, ImageVillageMarket, ImageTavern
 };
 
+extern const char* action_names[LastAction + 1];
+extern const char* command_names[PageCombatants + 1];
+
 struct gamei {
 	unsigned variables[PartyCoins + 1];
 	void add(globalvarn v, int i) { variables[v] += i; }

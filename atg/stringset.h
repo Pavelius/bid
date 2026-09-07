@@ -16,7 +16,7 @@
 
 #pragma once
 
-#define BSDATASET(N) #N, N, (sizeof(N)/sizeof(N[0]))
+#define DSTEXT(N) {#N, N, (sizeof(N)/sizeof(N[0]))}
 
 class stringbuilder;
 

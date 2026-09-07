@@ -141,8 +141,8 @@ void default_string(stringbuilder& sb, const char* id);
 
 template<class T> void fistatus(const void* object, stringbuilder& sb);
 
-template<typename T>
-struct bsenum {
-	static const char* names[];
-};
-template<typename T> const char* getname(T v) { return bsenum<T>::names[v]; }
+//template<typename T>
+//struct bsenum {
+//	static const char* names[];
+//};
+//template<typename T> const char* getname(T v) { return bsenum<T>::names[v]; }

@@ -449,7 +449,7 @@ long choose_value(long t1, long t2, fnuctest condition, const char** names, cons
 
 void fixmsg(messagen id) {
 	sb.addsep('\n');
-	sb.addv(getname(id), 0);
+	sb.addv(message_names[id], 0);
 }
 
 void set_hilite_state(const char* format) {
@@ -481,7 +481,7 @@ static int atg_initialize() {
 	ptips = paint_status_text;
 	answers::string = sb_console;
 	sys_create_window(-1, -1, 800, 600, 0, 32);
-	sys_caption(getname((messagen)0));
+	sys_caption(message_names[0]);
 	return 0;
 }
 

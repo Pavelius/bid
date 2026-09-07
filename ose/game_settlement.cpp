@@ -57,10 +57,10 @@ static int get_buy_price(const item& v) {
 
 static void addopt(const item& e, messagen v, fnitemget price) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.add(getname(v), e.name(), price(e));
+	sb.add(message_names[v], e.name(), price(e));
 	if(e.countable() && e.count > 1) {
 		sb.adds("[~");
-		sb.add(getname(AvailableCount), e.count);
+		sb.add(message_names[AvailableCount], e.count);
 		sb.adds("]");
 	}
 	an.addv((long)&e, temp, 0);
@@ -70,7 +70,7 @@ static item* choose_item(itema& source, messagen v, fnitemget price) {
 	while(true) {
 		for(auto& e : source)
 			addopt(e, v, price);
-		auto result = (item*)choose_player_option(getname(Cancel));
+		auto result = (item*)choose_player_option(command_names[Cancel]);
 		if(((long)result) == Continue)
 			continue;
 		return result;
@@ -84,7 +84,7 @@ static item* choose_item(wearable& source, messagen v, fnitemget price) {
 			if(*p)
 				addopt(*p, v, price);
 		}
-		auto result = (item*)choose_player_option(getname(Cancel));
+		auto result = (item*)choose_player_option(command_names[Cancel]);
 		if(((long)result) == Continue)
 			continue;
 		return result;

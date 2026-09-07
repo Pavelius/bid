@@ -42,7 +42,6 @@
     <ClInclude Include="slice.h" />
     <ClInclude Include="sprite_util.h" />
     <ClInclude Include="stringbuilder.h" />
-    <ClInclude Include="stringlocale.h" />
     <ClInclude Include="stringset.h" />
     <ClInclude Include="stringvar.h" />
     <ClInclude Include="win.h" />

@@ -31,6 +31,8 @@ extern sprite* avatars;
 extern sprite* images;
 }
 
+extern const char* message_names[];
+
 extern stringbuilder sb;
 extern void* current_avatar;
 extern fnevent atg_menu;

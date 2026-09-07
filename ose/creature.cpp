@@ -276,7 +276,7 @@ int creature::award() const {
 }
 
 void creature::act(messagen id) const {
-	actv(' ', getname(id), 0);
+	actv(' ', message_names[id], 0);
 }
 
 void creature::actv(char separator, const char* format, const char* format_param) const {
@@ -296,8 +296,8 @@ int creature::getbonus(abilityn v) const {
 
 const char* creature::name() const {
 	if(customname)
-		return getname(customname);
-	return getname(type);
+		return name_names[customname];
+	return class_names[type];
 }
 
 int creature::getspells(int level) const {
@@ -906,7 +906,7 @@ bool use_skill(actionn id, int bonus, bool run) {
 const char* what_to_do() {
 	static char temp[260]; stringbuilder sb(temp);
 	sb.clear();
-	sb.add(getname(AskWhatToDoPlayer), player->name());
+	sb.add(message_names[AskWhatToDoPlayer], player->name());
 	return temp;
 }
 
@@ -914,7 +914,7 @@ static void addleft(stringbuilder& sb, int current, int maximum) {
 	auto left = maximum - current;
 	if(left <= 0)
 		return;
-	sb.adds(getname(AskLeft), left, current, maximum);
+	sb.adds(message_names[AskLeft], left, current, maximum);
 }
 
 static void modify_spells(messagen id, spellable& e, int level) {
@@ -927,12 +927,12 @@ static void modify_spells(messagen id, spellable& e, int level) {
 		fixlist(e);
 		if(prepare_spells < maximum_spells) {
 			for(auto v : records)
-				an.add(v, getname((spelln)v));
+				an.add(v, spell_names[v]);
 		}
 		an.sort();
-		an.add(-2, getname(ClearAllList));
-		an.add(-1, getname(Confirm));
-		sbn.clear(); sbn.add(getname(AskMemorizeSpells), level);
+		an.add(-2, command_names[ClearAllList]);
+		an.add(-1, command_names[Confirm]);
+		sbn.clear(); sbn.add(message_names[AskMemorizeSpells], level);
 		addleft(sbn, prepare_spells, maximum_spells);
 		auto result = choose_answers(temp);
 		if(result == -1)
@@ -955,12 +955,12 @@ void make_prepare_spells(messagen id) {
 			auto current = player->getspellsprepared(i);
 			if(player->getspells(i)) {
 				if(current < total)
-					an.add(i, getname(ChangeSpellsByLevelAllowed), i, total - current);
+					an.add(i, action_names[ChangeSpellsByLevelAllowed], i, total - current);
 				else
-					an.add(i, getname(ChangeSpellsByLevel), i);
+					an.add(i, action_names[ChangeSpellsByLevel], i);
 			}
 		}
-		auto level = choose_player_option(getname(Confirm));
+		auto level = choose_player_option(command_names[Confirm]);
 		if(!level) {
 			sb.clear();
 			break;
@@ -986,5 +986,5 @@ int party_average(abilityn v) {
 }
 
 void sayone(classn type, messagen v1) {
-	sb.addn("- %1 - %2 %-3 - %4", getname(v1), getname(PlayerSay), getname(type));
+	sb.addn("- %1 - %2 %-3 - %4", message_names[v1], message_names[PlayerSay], class_names[type]);
 }

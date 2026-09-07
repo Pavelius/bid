@@ -92,8 +92,8 @@ void fixlist(const spellable& e) {
 		if(!n)
 			continue;
 		if(n > 1)
-			sb.addn("[+%1 x%2i]", getname(i), n);
+			sb.addn("[+%1 x%2i]", spell_names[i], n);
 		else
-			sb.addn("[+%1]", getname(i));
+			sb.addn("[+%1]", spell_names[i]);
 	}
 }

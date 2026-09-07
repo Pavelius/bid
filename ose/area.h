@@ -33,8 +33,10 @@ enum arean : unsigned char {
 	Market, Garden, Temple, Inn, Tavern, Palace,
 	LastArea = Palace,
 };
-extern const char* area_look[Palace + 1];
-extern const char* area_visit[Palace + 1];
+
+extern const char* area_look[LastArea + 1];
+extern const char* area_names[LastArea + 1];
+extern const char* area_visit[LastArea + 1];
 
 typedef flagable<2, unsigned> actiona;
 
@@ -56,7 +58,7 @@ struct area {
 	unsigned		timestamp; // Creation time in turns (10 minutes each) from zero year.
 	flag32			flags;
 	constexpr explicit operator bool() const { return timestamp != 0; }
-	const char* name() const;
+	const char* name() const { return area_names[type]; }
 	const char* namefull() const;
 	short unsigned index() const;
 	area* parent() const;

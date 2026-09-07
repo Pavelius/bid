@@ -81,9 +81,6 @@
     <ClInclude Include="stringbuilder.h">
       <Filter>Strings</Filter>
     </ClInclude>
-    <ClInclude Include="stringlocale.h">
-      <Filter>Strings</Filter>
-    </ClInclude>
     <ClInclude Include="stringvar.h">
       <Filter>Strings</Filter>
     </ClInclude>

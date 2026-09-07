@@ -59,10 +59,10 @@ const char* get_name(arean type, int p1, int p2) {
 	static char temp[260]; stringbuilder sb(temp);
 	switch(type) {
 	case Forest:
-		sb.add("%1 %2", LocationMaleFirstName[p1], getname(type));
+		sb.add("%1 %2", LocationMaleFirstName[p1], area_names[type]);
 		break;
 	default:
-		return getname(type);
+		return area_names[type];
 	}
 	return temp;
 }
@@ -83,10 +83,6 @@ bool area::outdoor() const {
 	default:
 		return false;
 	}
-}
-
-const char* area::name() const {
-	return getname(type);
 }
 
 const char* area::namefull() const {

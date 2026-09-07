@@ -37,6 +37,8 @@ struct spellable {
 };
 typedef flagable<1 + LastSpell / 32, unsigned> spellf;
 
+extern const char* spell_names[LastSpell + 1];
+
 struct enchanti {
 	variant object;
 	spelln spell;

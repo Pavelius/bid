@@ -37,4 +37,7 @@ enum messagen : unsigned char {
 	SayWhoIsHere,
 	BuyItemForCost, SellItemForCost, AvailableCount,
 	AskLeft, AskMemorizeSpells, AskWhatToDoPlayer, AskWhatToDo,
+	LastMessage = AskWhatToDo,
 };
+
+extern const char* message_names[LastMessage + 1];

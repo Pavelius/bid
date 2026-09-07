@@ -66,7 +66,7 @@ static void item_collection(stringbuilder& sb) {
 	for(auto p : items.records<item>()) {
 		if(ps[0]) {
 			if(index==last_index)
-				sb.add(" %1 ", getname(MsgAnd));
+				sb.add(" %1 ", message_names[MsgAnd]);
 			else
 				sb.add(", ");
 		}
@@ -88,17 +88,17 @@ static void treasure_coins_name(stringbuilder& sb) {
 			continue;
 		if(ps[0]) {
 			if(index==coins_count-1)
-				sb.add(" %1 ", getname(MsgAnd));
+				sb.add(" %1 ", message_names[MsgAnd]);
 			else
 				sb.add(", ");
 		}
-		sb.add("%1i %-2", v, getname(messagen(CoinsCP+index)));
+		sb.add("%1i %-2", v, message_names[CoinsCP+index]);
 		index++;
 	}
 }
 
 static void player_class(stringbuilder& sb) {
-	sb.add(getname(player->type));
+	sb.add(class_names[player->type]);
 }
 
 static void player_weapon(stringbuilder& sb) {
@@ -118,7 +118,7 @@ static void area_namefull(stringbuilder& sb) {
 }
 
 static void area_type(stringbuilder& sb) {
-	sb.add(getname(last_area->type));
+	sb.add(last_area->name());
 }
 
 static void print_last_number(stringbuilder& sb) {
