@@ -20,7 +20,7 @@
 
 enum creaturen : unsigned char {
 	Commoner, Tenderpaws,
-}
+};
 
 enum skilln : unsigned char {
 	Nature, Will, Health, Resources, Circles,
@@ -33,6 +33,7 @@ enum skilln : unsigned char {
 	Survivalist, WeatherWatcher, Weaver,
 	LastSkill = Weaver
 };
+
 enum traitn : unsigned char {
 	Alert, Bigpaw, Bitter, Bodyguard, Bold,
 	Brave, Calm, Clever, Compassionate, Cunning,
@@ -71,4 +72,4 @@ struct creature {
 
 struct character : creature, skillable, traitable {
 	void update();
-}
+};

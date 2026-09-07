@@ -85,6 +85,7 @@
 		<Unit filename="../atg/stringbuilder.h" />
 		<Unit filename="../atg/stringset.cpp" />
 		<Unit filename="../atg/stringset.h" />
+		<Unit filename="creature.cpp" />
 		<Unit filename="creature.h" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
