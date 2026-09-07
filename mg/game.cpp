@@ -26,8 +26,6 @@
 #include "rand.h"
 #include "stringbuilder.h"
 
-const int yards_in_miles = 1000;
-
 gamei game;
 
 static void paint_main_menu() {

@@ -138,7 +138,7 @@ static bool party_present() {
 	return find_creature(Enemy, false, true);
 }
 
-static bool apply_combat(actionn v, bool run) {
+bool apply_combat(actionn v, bool run) {
 	switch(v) {
 	case MakeCharge:
 		if(player->is(MeleeFight))
@@ -179,7 +179,7 @@ static bool apply_combat(actionn v, bool run) {
 	return true;
 }
 
-static bool apply_camp(actionn v, bool run) {
+bool apply_camp(actionn v, bool run) {
 	switch(v) {
 	case MemorizeSpells:
 		if(run)

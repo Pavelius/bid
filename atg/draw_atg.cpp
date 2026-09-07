@@ -486,7 +486,6 @@ static int atg_initialize() {
 }
 
 int main(int argc, char* argv[]) {
-	initialize_png();
 	auto r = atg_initialize();
 	if(r)
 		return r;

@@ -1,0 +1,215 @@
+# depslib dependency file v1.0
+1788761240 source:/home/user-331/projects/bid/atg/answers.cpp
+	"answers.h"
+	"draw.h"
+	"pushvalue.h"
+	"rand.h"
+
+1788761240 /home/user-331/projects/bid/atg/answers.h
+	"adat.h"
+	"stringbuilder.h"
+
+1788441957 /home/user-331/projects/bid/atg/adat.h
+	"slice.h"
+
+1788442262 /home/user-331/projects/bid/atg/slice.h
+
+1788761240 /home/user-331/projects/bid/atg/stringbuilder.h
+	"slice.h"
+	<stdarg.h>
+
+1788442083 /home/user-331/projects/bid/atg/draw.h
+	"color.h"
+	"point.h"
+
+1788442050 /home/user-331/projects/bid/atg/color.h
+
+1788442221 /home/user-331/projects/bid/atg/point.h
+	"rect.h"
+
+1788442254 /home/user-331/projects/bid/atg/rect.h
+
+1788442239 /home/user-331/projects/bid/atg/pushvalue.h
+
+1788442247 /home/user-331/projects/bid/atg/rand.h
+
+1788441972 source:/home/user-331/projects/bid/atg/array.cpp
+	"array.h"
+	"math.h"
+	"stringbuilder.h"
+
+1788441977 /home/user-331/projects/bid/atg/array.h
+	"slice.h"
+
+1788442184 /home/user-331/projects/bid/atg/math.h
+
+1788415208 source:/home/user-331/projects/bid/atg/bin_font.cpp
+
+1788415208 source:/home/user-331/projects/bid/atg/bin_h1.cpp
+
+1788415208 source:/home/user-331/projects/bid/atg/bin_h2.cpp
+
+1788415208 source:/home/user-331/projects/bid/atg/bin_h3.cpp
+
+1788441992 source:/home/user-331/projects/bid/atg/bstream.cpp
+	"bstream.h"
+
+1788441998 /home/user-331/projects/bid/atg/bstream.h
+
+1788442018 source:/home/user-331/projects/bid/atg/collection.cpp
+	"collection.h"
+	"math.h"
+	"rand.h"
+	"stringbuilder.h"
+
+1788442023 /home/user-331/projects/bid/atg/collection.h
+	"adat.h"
+	"slice.h"
+
+1788761240 source:/home/user-331/projects/bid/atg/collectiona.cpp
+	"collectiona.h"
+	"math.h"
+	"rand.h"
+	"stringbuilder.h"
+
+1788761240 /home/user-331/projects/bid/atg/collectiona.h
+	"adat.h"
+
+1788442045 source:/home/user-331/projects/bid/atg/color.cpp
+	"color.h"
+	"math.h"
+	"slice.h"
+
+1788442058 source:/home/user-331/projects/bid/atg/dice.cpp
+	"dice.h"
+	"rand.h"
+
+1788442065 /home/user-331/projects/bid/atg/dice.h
+
+1788442070 source:/home/user-331/projects/bid/atg/draw.cpp
+	"draw.h"
+	"math.h"
+
+1788763827 source:/home/user-331/projects/bid/atg/draw_atg.cpp
+	"answers.h"
+	"draw.h"
+	"draw_atg.h"
+	"io_stream.h"
+	"print.h"
+	"pushvalue.h"
+	"stringbuilder.h"
+
+1788761240 /home/user-331/projects/bid/atg/draw_atg.h
+	"stringbuilder.h"
+
+1788442171 /home/user-331/projects/bid/atg/io_stream.h
+
+1788442234 /home/user-331/projects/bid/atg/print.h
+
+1788442113 source:/home/user-331/projects/bid/atg/draw_surface.cpp
+	"draw.h"
+	"io_stream.h"
+	"math.h"
+	"slice.h"
+
+1788442120 source:/home/user-331/projects/bid/atg/draw_text.cpp
+	"draw.h"
+
+1788442126 source:/home/user-331/projects/bid/atg/draw_textf.cpp
+	"draw.h"
+	"slice.h"
+	"stringbuilder.h"
+
+1788442150 source:/home/user-331/projects/bid/atg/draw_theme.cpp
+	"draw.h"
+
+1788761240 source:/home/user-331/projects/bid/atg/gender.cpp
+	"gender.h"
+	"stringbuilder.h"
+
+1788761240 /home/user-331/projects/bid/atg/gender.h
+
+1788442165 source:/home/user-331/projects/bid/atg/io_stream.cpp
+	"io_stream.h"
+	"stringbuilder.h"
+	"slice.h"
+
+1788442178 source:/home/user-331/projects/bid/atg/math.cpp
+	"math.h"
+
+1788442189 source:/home/user-331/projects/bid/atg/nix_draw3x.cpp
+	<X11/keysym.h>
+	<X11/Xlib.h>
+	<X11/Xutil.h>
+	<X11/XKBlib.h>
+	<cstdlib>
+	"draw.h"
+	"stringbuilder.h"
+
+1788442195 source:/home/user-331/projects/bid/atg/nix_io_file.cpp
+	<cstdio>
+	<unistd.h>
+	<dirent.h>
+	"io_stream.h"
+	"stringbuilder.h"
+
+1788442202 source:/home/user-331/projects/bid/atg/nix_time.cpp
+	<time.h>
+
+1788442216 source:/home/user-331/projects/bid/atg/point.cpp
+	"math.h"
+	"point.h"
+
+1788442227 source:/home/user-331/projects/bid/atg/print.cpp
+	"print.h"
+	"stringbuilder.h"
+
+1788442302 source:/home/user-331/projects/bid/atg/stringbuilder.cpp
+	"stringbuilder.h"
+	"slice.h"
+
+1788761240 source:/home/user-331/projects/bid/atg/stringset.cpp
+	"rand.h"
+	"stringbuilder.h"
+	"stringset.h"
+
+1788761240 /home/user-331/projects/bid/atg/stringset.h
+
+1788442316 source:/home/user-331/projects/bid/atg/stringvar.cpp
+	"bsdata.h"
+	"stringvar.h"
+
+1788761240 /home/user-331/projects/bid/atg/bsdata.h
+	"array.h"
+
+1788442320 /home/user-331/projects/bid/atg/stringvar.h
+	"stringbuilder.h"
+
+1788761240 source:/home/user-331/projects/bid/atg/draw_res.cpp
+	"draw.h"
+	"io_stream.h"
+	"math.h"
+	"stringbuilder.h"
+	"adat.h"
+
+1788763913 source:/home/user-331/projects/bid/mg/game.cpp
+	"answers.h"
+	"bsdata.h"
+	"collection.h"
+	"collectiona.h"
+	"draw.h"
+	"draw_atg.h"
+	"game.h"
+	"print.h"
+	"pushvalue.h"
+	"rand.h"
+	"stringbuilder.h"
+
+1788761240 /home/user-331/projects/bid/mg/game.h
+
+1788761240 source:/home/user-331/projects/bid/mg/locale_ru.cpp
+	"bsdata.h"
+	"game.h"
+	"stringbuilder.h"
+	"stringset.h"
+
