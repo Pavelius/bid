@@ -2,8 +2,8 @@
 
 enum messagen : unsigned char {
 	AppTitle,
-	ChooseGuardRang,
-	LastMessage = ChooseGuardRang,
+	ChooseGuardRang, ChooseBirthPlace, ChooseBirthPlaceSkill,
+	LastMessage = ChooseBirthPlaceSkill,
 };
 
 extern const char* message_names[LastMessage + 1];

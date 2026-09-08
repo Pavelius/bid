@@ -19,6 +19,8 @@
 #include "flagable.h"
 #include "item.h"
 
+enum arean : unsigned char;
+
 enum creaturen : unsigned char {
 	Commoner,
 	Tenderpaw, Guardmouse, PatrolGuard, PatrolLeader, GuardCaptain,
@@ -81,6 +83,7 @@ struct creature {
 };
 
 struct character : creature, skillable, wearable {
+	arean home;
 	skilln speciality;
 	traitf traits, traits_upgraded;
 	conditionf conditions;

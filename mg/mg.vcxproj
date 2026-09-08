@@ -137,7 +137,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="area.cpp" />
     <ClCompile Include="creature.cpp" />
+    <ClCompile Include="creature_generate.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_roll.cpp" />
     <ClCompile Include="locale_ru.cpp" />

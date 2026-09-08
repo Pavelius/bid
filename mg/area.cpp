@@ -14,13 +14,5 @@
 	limitations under the License.77
 */
 
-#include "answers.h"
-#include "creature.h"
-#include "message.h"
-#include "rand.h"
+#include "area.h"
 
-character* player;
-character character_data[32];
-
-void character::update() {
-}

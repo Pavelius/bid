@@ -14,9 +14,10 @@
 	limitations under the License.77
 */
 
-#include "bsdata.h"
+#include "area.h"
 #include "creature.h"
 #include "game.h"
+#include "message.h"
 #include "stringbuilder.h"
 #include "stringset.h"
 
@@ -30,9 +31,20 @@ const char* creature_names[LastCreature + 1] = {
 	"Новичек", "Страж", "Патрульный", "Лидер", "Капитан"
 };
 
-const char* message_names[] = {
+const char* message_names[LastMessage + 1] = {
 	"Mouse guard 0.1",
-	"Какое положение занимает мышь в гвардии?"
+	"Какое положение занимает мышь в гвардии?",
+	"Откуда вы родом?",
+	"Чему вас учили дома?",
+};
+
+const char* area_names[LastArea + 1] = {
+	"Древоград", "Меднолесье", "Моховяз", "Плющи", "Локхэйвен", "Порт-Сумах", "Сланцевая нора", "Подьельник",
+};
+
+const char* skill_names[LastSkill + 1] = {
+	"Натура", "Воля", "Здоровье", "Ресурсы", "Связи",
+	"Администратор", "Пчеловод", "Архивариус", "Кузнец", "Пекарь", "Лодочник",
 };
 
 stringset stringset_data[] = {
