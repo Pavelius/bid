@@ -138,11 +138,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="area.cpp" />
+    <ClCompile Include="bin_avatars.cpp" />
+    <ClCompile Include="bin_images.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="creature_generate.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_roll.cpp" />
+    <ClCompile Include="game_run.cpp" />
     <ClCompile Include="locale_ru.cpp" />
+    <ClCompile Include="main_util.cpp" />
+    <ClCompile Include="wise.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
@@ -150,6 +155,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="message.h" />
+    <ClInclude Include="wise.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

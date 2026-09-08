@@ -48,7 +48,7 @@ void collection::group(fncgroup proc) {
 void collection::select(unsigned char v1, unsigned char v2) {
 	auto ps = data;
 	auto pe = endof();
-	for(auto v = v1; v != v2; v++) {
+	for(auto v = v1; v <= v2; v++) {
 		if(ps >= pe)
 			break;
 		*ps++ = v;
@@ -63,7 +63,7 @@ void collection::select(unsigned char v1, unsigned char v2, fncfilter proc, bool
 	}
 	auto ps = data;
 	auto pe = endof();
-	for(auto v = v1; v!=v2; v++) {
+	for(auto v = v1; v <= v2; v++) {
 		if(ps >= pe)
 			break;
 		if(proc(v) != keep)

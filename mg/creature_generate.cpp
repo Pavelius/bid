@@ -17,11 +17,16 @@
 #include "answers.h"
 #include "area.h"
 #include "creature.h"
+#include "collection.h"
+#include "gender.h"
 #include "message.h"
+#include "pushvalue.h"
 #include "rand.h"
 #include "wise.h"
 
 #define DSARR(N) N, sizeof(N)/sizeof(N[0])
+
+typedef bool(*fntestname)(short unsigned);
 
 struct cityskilli {
 	arean area;
@@ -56,7 +61,7 @@ static skilln general_skills[] = {
 
 static skilln parent_profession_skills[] = {
 	Apiarist, Carpenter, Potter,
-	Archivist,  Cartographer, Smith,
+	Archivist, Cartographer, Smith,
 	Armorer, Glazier, Stonemason,
 	Baker, Harvester, Weaver,
 	Boatcrafter, Insectrist, Brewer, Miller
@@ -81,6 +86,38 @@ static skilln mentor_stressing_skills[] = {
 	WeatherWatcher
 };
 
+static traitn general_traits[] = {
+	Bigpaw, Bitter, Bodyguard, Bold, Brave,
+	Calm, Clever, Compassionate, Cunning, Curious,
+	DeepEar, Defender, Determined, Driven, EarlyRiser,
+	Extrovert, Fat, Fearful, Fearless, Fiery,
+	Generous, Graceful, GuardsHonor, Innocent, Jaded,
+	Leader, Longtail, Lost, NaturalBearings, Nimble,
+	Nocturnal, Oldfur, QuickWitted, Quiet, Scarred,
+	SharpEyed, Sharptooth, Short, Skeptical, Skinny,
+	Stoic, Stubborn, Suspicious, Tall, Thoughtful,
+	Tough, WeatherSense, Wise, WolfsSnout, Young
+};
+
+static traitn tenderpaw_traits[] = {
+	Bigpaw, Brave, Calm, Clever, Compassionate,
+	Curious, DeepEar, Defender, Determined, EarlyRiser,
+	Extrovert, Fearful, Fearless, Fiery, Generous,
+	Graceful, Longtail, Lost, NaturalBearings, Nimble,
+	QuickWitted, Quiet, Scarred, Sharptooth, Short,
+	Skeptical, Skinny, Stubborn, Suspicious, Tall,
+	Tough, WolfsSnout
+};
+
+static traitn life_on_road_traits[] = {
+	Bitter, Bodyguard, Brave, Calm, Clever,
+	Compassionate, Cunning, Curious, Defender, Driven,
+	EarlyRiser, Fearful, Fearless, Jaded, Leader,
+	NaturalBearings, Nocturnal, Oldfur, Quiet, Scarred,
+	SharpEyed, Skeptical, Skinny, Stoic, Thoughtful,
+	Tough, WeatherSense, Wise
+};
+
 static traitn kind_traits[] = {
 	Bold, Generous
 };
@@ -89,80 +126,121 @@ static traitn fearless_traits[] = {
 	Fearless, Brave
 };
 
-void character::setbirth(creaturen v) {
-	switch(type) {
+static wisen tenderpaw_wises[] = {
+	CodeOfGuardWise, LegendesOfGuardWise
+};
+
+static wisen guard_captain_wises[] = {
+	LockhavenWise, MatriachWise
+};
+
+static int get_life_experience() {
+	switch(player->type) {
+	case Tenderpaw: case GuardCaptain: return 2;
+	case Guardmouse: case PatrolGuard: case PatrolLeader: return 1;
+	default: return 0;
+	}
+}
+
+static int get_mentor_stressing() {
+	switch(player->type) {
+	case PatrolLeader: return 2;
+	default: return 1;
+	}
+}
+
+static int get_wises() {
+	switch(player->type) {
+	case Tenderpaw: return 1;
+	case Guardmouse: return 1;
+	case PatrolGuard: return 2;
+	case PatrolLeader: return 3;
+	case GuardCaptain: return 4;
+	default: return 0;
+	}
+}
+
+static void add_value(creaturen v) {
+	switch(v) {
 	case Tenderpaw:
-		xrand(1135, 1138);
-		add(Will, 2);
-		add(Health, 6);
-		add(Pathfinder, 2);
-		add(Scout, 2);
-		add(Laborer, 2);
+		player->birth = xrand(1135, 1138);
+		player->add(Will, 2);
+		player->add(Health, 6);
+		player->add(Pathfinder, 2);
+		player->add(Scout, 2);
+		player->add(Laborer, 2);
 		break;
 	case Guardmouse:
-		xrand(1127, 1134);
-		add(Will, 3);
-		add(Health, 5);
-		add(Fighter, 3);
-		add(Haggler, 2);
-		add(Scout, 2);
-		add(Pathfinder, 3);
-		add(Survivalist, 2);
+		player->birth = xrand(1127, 1134);
+		player->add(Will, 3);
+		player->add(Health, 5);
+		player->add(Fighter, 3);
+		player->add(Haggler, 2);
+		player->add(Scout, 2);
+		player->add(Pathfinder, 3);
+		player->add(Survivalist, 2);
 		break;
 	case PatrolGuard:
-		xrand(1102, 1131);
-		add(Will, 4);
-		add(Health, 4);
-		add(Cook, 2);
-		add(Fighter, 3);
-		add(Hunter, 3);
-		add(Scout, 2);
-		add(Healer, 2);
-		add(Pathfinder, 2);
-		add(Survivalist, 2);
-		add(WeatherWatcher, 2);
+		player->birth = xrand(1102, 1131);
+		player->add(Will, 4);
+		player->add(Health, 4);
+		player->add(Cook, 2);
+		player->add(Fighter, 3);
+		player->add(Hunter, 3);
+		player->add(Scout, 2);
+		player->add(Healer, 2);
+		player->add(Pathfinder, 2);
+		player->add(Survivalist, 2);
+		player->add(WeatherWatcher, 2);
 		break;
 	case PatrolLeader:
-		xrand(1092, 1131);
-		add(Will, 5);
-		add(Health, 4);
-		add(Fighter, 3);
-		add(Hunter, 3);
-		add(Instructor, 2);
-		add(Loremouse, 2);
-		add(Persuader, 2);
-		add(Pathfinder, 3);
-		add(Scout, 2);
-		add(Survivalist, 3);
-		add(WeatherWatcher, 2);
+		player->birth = xrand(1092, 1131);
+		player->add(Will, 5);
+		player->add(Health, 4);
+		player->add(Fighter, 3);
+		player->add(Hunter, 3);
+		player->add(Instructor, 2);
+		player->add(Loremouse, 2);
+		player->add(Persuader, 2);
+		player->add(Pathfinder, 3);
+		player->add(Scout, 2);
+		player->add(Survivalist, 3);
+		player->add(WeatherWatcher, 2);
 		break;
 	case GuardCaptain:
-		xrand(1092, 1111);
-		add(Will, 6);
-		add(Health, 3);
-		add(Administrator, 3);
-		add(Fighter, 3);
-		add(Healer, 2);
-		add(Hunter, 3);
-		add(Instructor, 2);
-		add(Militarist, 3);
-		add(Orator, 2);
-		add(Pathfinder, 3);
-		add(Scout, 3);
-		add(Survivalist, 3);
-		add(WeatherWatcher, 3);
+		player->birth = xrand(1092, 1111);
+		player->add(Will, 6);
+		player->add(Health, 3);
+		player->add(Administrator, 3);
+		player->add(Fighter, 3);
+		player->add(Healer, 2);
+		player->add(Hunter, 3);
+		player->add(Instructor, 2);
+		player->add(Militarist, 3);
+		player->add(Orator, 2);
+		player->add(Pathfinder, 3);
+		player->add(Scout, 3);
+		player->add(Survivalist, 3);
+		player->add(WeatherWatcher, 3);
 		break;
 	default:
-		xrand(1130, 1140);
+		player->birth = xrand(1130, 1140);
 		break;
 	}
 }
 
-static void add_value(skilln v) {
-	if(!player->skills[v])
-		player->skills[v] = 2;
-	else
-		player->skills[v]++;
+static void add_value(skilln v, int value = 1) {
+	if(value > 0) {
+		if(!player->skills[v])
+			player->skills[v] = 2;
+		else
+			player->skills[v] += value;
+	} else if(value < 0) {
+		value += player->skills[v];
+		if(value < 0)
+			value = 0;
+		player->skills[v] = value;
+	}
 }
 
 static void add_value(traitn v) {
@@ -183,15 +261,18 @@ static skilln choose_skills(messagen id, slice<skilln> source) {
 	return (skilln)choose_answers(message_names[id], 0, -1);
 }
 
-static traitn choose_traits(messagen id, slice<traitn> source) {
-	for(auto n : source)
+static traitn choose_traits(messagen id) {
+	for(auto n = (traitn)0; n <= LastTrait; n = (traitn)(n + 1))
 		an.add(n, trait_names[n]);
 	an.sort();
 	return (traitn)choose_answers(message_names[id]);
 }
 
-static void add_traits(messagen id, slice<traitn> source) {
-	add_value(choose_traits(id, source));
+static traitn choose_traits(messagen id, slice<traitn> source) {
+	for(auto n : source)
+		an.add(n, trait_names[n]);
+	an.sort();
+	return (traitn)choose_answers(message_names[id], 0, -1);
 }
 
 static void add_traits(messagen id, traitn t1, traitn t2) {
@@ -207,12 +288,12 @@ static void choose_birth_place() {
 	for(auto& e : city_data)
 		an.add(e.area, area_names[e.area]);
 	player->home = (arean)choose_answers(message_names[ChooseBirthPlace]);
-	auto city_skill = choose_skills(ChooseBirthPlaceSkill, city_data[player->home].skills); add_value(city_skill);
+	add_value(choose_skills(ChooseBirthPlaceSkill, city_data[player->home].skills));
 	add_traits(ChooseBirthPlaceTrait, city_data[player->home].trait, city_data[player->home].trait_addition);
 }
 
 static void choose_skills(messagen id, slice<skilln> source, int count) {
-	flagable<1 + LastSkill/32, unsigned> marked_skills;
+	flagable<1 + LastSkill / 32, unsigned> marked_skills;
 	marked_skills.clear();
 	for(auto i = 0; i < count; i++) {
 		for(auto v : source) {
@@ -227,12 +308,17 @@ static void choose_skills(messagen id, slice<skilln> source, int count) {
 	}
 }
 
-character* add_character() {
+static void add_character() {
+	player = 0;
 	for(auto& e : character_data) {
-		if(!e)
-			return &e;
+		if(!e) {
+			player = &e;
+			break;
+		}
 	}
-	return character_data;
+	memset(player, 0, sizeof(*player));
+	player->customname = 0xFF;
+	player->gender = Male;
 }
 
 static void add_skill(skilln v) {
@@ -244,22 +330,7 @@ static void add_skill(skilln v) {
 
 static void choose_rang() {
 	player->type = (creaturen)choose_value(Tenderpaw, PatrolLeader, 0, creature_names, message_names[ChooseGuardRang], 0, false);
-	player->setbirth(player->type);
-}
-
-static int get_life_experience() {
-	switch(player->type) {
-	case Tenderpaw: case GuardCaptain: return 2;
-	case Guardmouse: case PatrolGuard: case PatrolLeader: return 1;
-	default: return 0;
-	}
-}
-
-static int get_mentor_stressing() {
-	switch(player->type) {
-	case PatrolLeader: return 2;
-	default: return 1;
-	}
+	add_value(player->type);
 }
 
 static void add_character(character** source, int count, character* player) {
@@ -274,7 +345,7 @@ static void add_character(character** source, int count, character* player) {
 }
 
 void add_party() {
-	add_character(party, sizeof(party)/sizeof(party[0]), player);
+	add_character(party, sizeof(party) / sizeof(party[0]), player);
 }
 
 static int choose_question(messagen id, messagen v1, messagen v2) {
@@ -296,10 +367,10 @@ static void choose_resources() {
 
 static void choose_circles() {
 	switch(player->type) {
-	case Tenderpaw: player->add(Resources, 1); break;
-	case Guardmouse: player->add(Resources, 2); break;
-	case PatrolGuard: case PatrolLeader: player->add(Resources, 3); break;
-	case GuardCaptain: player->add(Resources, 4); break;
+	case Tenderpaw: player->add(Circles, 1); break;
+	case Guardmouse: player->add(Circles, 2); break;
+	case PatrolGuard: case PatrolLeader: player->add(Circles, 3); break;
+	case GuardCaptain: player->add(Circles, 4); break;
 	default: break;
 	}
 }
@@ -308,41 +379,115 @@ static void choose_nature() {
 	player->add(Nature, 3);
 	// Do you save for winter?
 	switch(choose_question(DoYouSaveForWinter, Yes, No)) {
-	case 1: player->add(Nature, 1); break;
-	case 2: add_traits(ChooseTrait, kind_traits); break;
+	case 1: add_value(Nature, 1); break;
+	case 2: add_value(choose_traits(ChooseTrait, kind_traits)); break;
 	default: break;
 	}
 	// Do you stand ground and fight?
 	switch(choose_question(DoYouStandGroundAndFight, Yes, No)) {
 	case 1: break;
-	case 2: player->add(Nature, 1); player->add(Fighter, -1); break;
+	case 2: add_value(Nature, 1); add_value(Fighter, -1); break;
 	default: break;
 	}
 	// Do you fear predators?
 	switch(choose_question(DoYouFearPredators, Yes, No)) {
-	case 1: player->add(Nature, 1); break;
-	case 2: add_traits(ChooseTrait, fearless_traits); break;
+	case 1: add_value(Nature, 1); break;
+	case 2: add_value(choose_traits(ChooseTrait, fearless_traits)); break;
 	default: break;
 	}
 }
 
+static wisen choose_wises(messagen id, slice<wisen> source) {
+	for(auto n : source)
+		an.add(n, wise_names[n]);
+	an.sort();
+	return (wisen)choose_answers(message_names[id], 0, -1);
+}
+
+static void choose_wises(messagen id, int count) {
+	flagable<1 + LastSkill / 32, unsigned> marked;
+	for(auto i = 0; i < count; i++) {
+		for(auto n = (wisen)0; n <= LastWise; n = (wisen)(n + 1)) {
+			if(marked.is(n))
+				continue;
+			an.add(n, wise_names[n]);
+		}
+		auto v = (wisen)choose_answers(message_names[id], 0, -1);
+		marked.set(v);
+		add_value(v);
+	}
+}
+
 static void choose_wises() {
-	add_value((wisen)choose_value(0, LastWise, 0, wise_names, message_names[ChooseWises], 0, true, -1));
+	switch(player->type) {
+	case Tenderpaw:
+		add_value(choose_wises(ChooseWises, tenderpaw_wises));
+		break;
+	case GuardCaptain:
+		add_value(choose_wises(ChooseWises, guard_captain_wises));
+		choose_wises(ChooseWises, get_wises() - 1);
+		break;
+	default:
+		choose_wises(ChooseWises, get_wises());
+		break;
+	}
+}
+
+static void choose_traits() {
+	add_value(choose_traits(ChooseTrait, general_traits));
+	switch(player->type) {
+	case Tenderpaw:
+		add_value(choose_traits(ChooseTrait, tenderpaw_traits));
+		break;
+	case GuardCaptain: case PatrolLeader:
+		add_value(choose_traits(ChooseTrait, life_on_road_traits));
+		break;
+	default:
+		break;
+	}
+}
+
+static bool is_party_name(unsigned char v) {
+	for(auto p : party) {
+		if(p && p->customname == v)
+			return true;
+	}
+	return false;
+}
+
+static void choose_name() {
+	static unsigned char start_by_gender[Female + 1] = {0, 0, name_count_per_gender};
+	collection source;
+	auto gender = player->gender;
+	source.select(start_by_gender[gender], start_by_gender[gender] + name_count_per_gender - 1, is_party_name, false);
+	source.shuffle();
+	source.top(10);
+	for(auto v : source)
+		an.add(v, name_names[v]);
+	an.sort();
+	auto v = choose_answers(message_names[ChooseName]);
 }
 
 void create_character() {
-	player = add_character();
+	add_character();
+	choose_name();
 	choose_rang();
 	add_party();
 	choose_birth_place();
 	choose_skills(ChooseLifeExperience, general_skills, get_life_experience());
 	auto parent_skills = choose_skills(ChooseParentProffession, parent_profession_skills); add_skill(parent_skills);
-	auto converse_skill = choose_skills(ChooseConversationSkills, conversation_skills); add_skill(converse_skill);
+	player->conversation = choose_skills(ChooseConversationSkills, conversation_skills); add_skill(player->conversation);
 	auto senior_artisan = choose_skills(ChooseSeniorArtisanTeaching, senior_artisan_skills); add_skill(senior_artisan);
 	choose_skills(ChooseMentorTeaching, mentor_stressing_skills, get_mentor_stressing());
-	auto you_speciality = choose_skills(ChooseYouSpeciality, mentor_stressing_skills); add_skill(you_speciality);
+	player->speciality = choose_skills(ChooseYouSpeciality, mentor_stressing_skills); add_skill(player->speciality);
 	choose_nature();
 	choose_wises();
 	choose_resources();
 	choose_circles();
+	choose_traits();
+}
+
+void create_character_silent() {
+	pushvalue push(answers::interactive, false);
+	create_character();
 }

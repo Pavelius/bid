@@ -18,7 +18,7 @@
 
 enum messagen : unsigned char {
 	AppTitle, Yes, No,
-	ChooseWises,
+	ChooseName, ChooseWises,
 	ChooseGuardRang, ChooseBirthPlace, ChooseBirthPlaceSkill, ChooseBirthPlaceTrait, ChooseLifeExperience,
 	ChooseParentProffession, ChooseConversationSkills, ChooseSeniorArtisanTeaching, ChooseMentorTeaching, ChooseYouSpeciality,
 	DoYouSaveForWinter, DoYouStandGroundAndFight, DoYouFearPredators,

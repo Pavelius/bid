@@ -25,5 +25,16 @@ character* player;
 character* party[4];
 character character_data[32];
 
-void character::update() {
+int character::index() const {
+	return this - character_data;
+}
+
+bool character::allow(traitn v) const {
+	switch(v) {
+	case Brave: return !is(Fearful);
+	case Fearful: return !is(Brave);
+	case Oldfur: return !is(Young);
+	case Young: return !is(Oldfur);
+	default: return true;
+	}
 }

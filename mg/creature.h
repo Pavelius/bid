@@ -20,6 +20,7 @@
 #include "item.h"
 
 enum arean : unsigned char;
+enum gendern : unsigned char;
 enum wisen : unsigned char;
 
 enum creaturen : unsigned char {
@@ -66,7 +67,10 @@ typedef flagable<1 + LastSkill / 32, unsigned> skillf;
 typedef flagable<1, unsigned char> conditionf;
 typedef flagable<1, unsigned> wisef;
 
+const int name_count_per_gender = 33;
+
 extern const char* creature_names[LastCreature + 1];
+extern const char* name_names[name_count_per_gender * 2];
 extern const char* skill_names[LastSkill + 1];
 extern const char* trait_names[LastTrait + 1];
 
@@ -78,25 +82,30 @@ struct skillable {
 };
 
 struct creature {
-	creaturen type;
-	char nature;
-	short unsigned birth;
+	creaturen		type;
+	gendern			gender;
+	char			nature;
+	unsigned char	customname;
+	short unsigned	birth;
 	constexpr explicit operator bool() const { return birth != 0; }
 	void setbirth(creaturen type);
 };
 
 struct character : creature, skillable, wearable {
-	arean home;
-	skilln speciality;
-	char traits[LastTrait+1];
-	conditionf conditions;
-	wisef wises;
+	arean		home;
+	skilln		speciality, conversation;
+	char		traits[LastTrait + 1];
+	wisef		wises;
+	conditionf	conditions;
+	int index() const;
 	void add(skilln v, int i) { skills[v] += i; }
 	void add(wisen v) { wises.set(v); }
+	bool allow(traitn v) const;
 	bool is(skilln v) const { return skills[v] > 0; }
 	bool is(conditionn v) const { return conditions.is(v); }
+	bool is(traitn v) const { return traits[v] > 0; }
 	bool is(wisen v) const { return wises.is(v); }
-	void setbirth(creaturen v);
+	void setname();
 	void update();
 };
 extern character* player;
@@ -106,4 +115,5 @@ extern creature	creature_data[64];
 
 void add_party();
 void create_character();
+void create_character_silent();
 

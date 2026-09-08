@@ -25,8 +25,9 @@ enum commandn : unsigned char {
 };
 
 enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern
+	ImageBoating, ImageCity, ImageCityElm, ImageWeapon, ImageTreasureFound,
+	ImageHamlet, ImageInvestigateRoom, ImageKingFight, ImageParty, ImageSwearn,
+	ImagePathfind, ImageTaint, ImageTreasure, ImageVillage
 };
 
 extern character* party[4];
@@ -38,5 +39,6 @@ extern int last_number;
 extern char roll_difficult, roll_dices[16];
 
 void apply_result();
+void create_game();
 void pause();
 void pause(const char* format);
