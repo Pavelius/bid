@@ -29,7 +29,7 @@ struct adat {
 	explicit operator bool() const { return count != 0; }
 	constexpr operator slice<T> () { return slice<T>(data, count);}
 	T* add() { if(count < count_max) return data + (count++); return data; }
-	void add(const T& e) { if(count < count_max) data[count++] = e; }
+	constexpr void add(const T& e) { if(count < count_max) data[count++] = e; }
 	void addu(const T& e) { if(!have(e)) add(e); }
 	T* begin() { return data; }
 	const T* begin() const { return data; }

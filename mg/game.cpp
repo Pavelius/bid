@@ -26,11 +26,9 @@
 #include "rand.h"
 #include "stringbuilder.h"
 
-static void paint_main_menu() {
-}
-
-//////////////////////////////////////////////////////
-// START GAME
+void stringbuilder_custom(stringbuilder& sb, const char* id);
+void main_util();
+bool pass_test();
 
 void pause(const char* format) {
 	choose_answers(0, format);
@@ -40,13 +38,50 @@ static void test_game() {
 	create_character();
 }
 
-void stringbuilder_custom(stringbuilder& sb, const char* id);
-
-void main_util();
-bool pass_test();
-
 extern unsigned char bin_avatars[];
 extern unsigned char bin_images[];
+
+static void paint_value(skilln id) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add("/x 120 text %2i\n%1", skill_names[id], player->skills[id]);
+	paint_button(temp, 0, false);
+	if(button_hilited && tips_text[0] == 0) {
+		stringbuilder sb(tips_text);
+		sb.add("Test");
+	}
+}
+
+static int get_avatar(const void* object) {
+	return 0;
+}
+
+static int get_hits(const void* object) {
+	return 100;
+}
+
+static void paint_avatars() {
+	paint_avatars((void**)party, sizeof(party)/sizeof(party[0]), get_avatar, player, get_hits);
+}
+
+static void page_characters() {
+	paint_avatars();
+	pushvalue push(player, (character*)current_avatar);
+	if(!player)
+		return;
+	for(auto n = Nature; n<=Circles; n = (skilln)(n+1)) {
+		if(player->skills[n])
+			paint_value(n);
+	}
+	paint_separator();
+	for(auto n = (skilln)Administrator; n<=LastSkill; n = (skilln)(n+1)) {
+		if(player->skills[n])
+			paint_value(n);
+	}
+}
+
+static void paint_main_menu() {
+	paint_bar(command_names[PageCharacter], page_characters);
+}
 
 static void initialize_resources() {
 	// metrics::avatars = (sprite*)bin_avatars;

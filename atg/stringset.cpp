@@ -35,3 +35,12 @@ const char* test_stringset() {
 	}
 	return 0;
 }
+
+static unsigned get_hash() {
+	unsigned r = 0;
+	unsigned i = 0;
+	for(auto p = stringset_data; *p; p++)
+		r += p->count * (++i);
+	return r;
+}
+

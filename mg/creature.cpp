@@ -20,6 +20,7 @@
 #include "rand.h"
 
 character* player;
+character* party[4];
 character character_data[32];
 
 void character::update() {

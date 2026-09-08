@@ -20,21 +20,72 @@
 #include "message.h"
 #include "rand.h"
 
+#define DSARR(N) N, sizeof(N)/sizeof(N[0])
+
 struct cityskilli {
 	arean area;
 	skilln skills[4];
-	traitn traits[2];
+	traitn trait, trait_addition;
 };
 
 static cityskilli city_data[] = {
-	{Barkstone, {Carpenter, Potter, Glazier}, {SteadyPaws}},
-	{Copperwood, {Smith, Haggler}, {Independent}},
-	{Elmoss, {Carpenter, Harvester}, {Alert}},
-	{Ivydale, {Harvester, Baker}, {HardWorker}},
-	{Lockhaven, {Weaver, Armorer}, {Generous, GuardsHonor}},
-	{PortSumac, {Boatcrafter, WeatherWatcher}, {Tough, WeatherSense}},
-	{Shaleburrow, {Stonemason, Harvester, Miller}, {OpenMinded}},
-	{Sprucetuck, {Scientist, Loremouse}, {Inquisitive, Rational}},
+	{Barkstone, {Carpenter, Potter, Glazier}, SteadyPaws},
+	{Copperwood, {Smith, Haggler}, Independent},
+	{Elmoss, {Carpenter, Harvester}, Alert},
+	{Ivydale, {Harvester, Baker}, HardWorker},
+	{Lockhaven, {Weaver, Armorer}, Generous, GuardsHonor},
+	{PortSumac, {Boatcrafter, WeatherWatcher}, Tough, WeatherSense},
+	{Shaleburrow, {Stonemason, Harvester, Miller}, OpenMinded},
+	{Sprucetuck, {Scientist, Loremouse}, Inquisitive, Rational},
+};
+
+static skilln general_skills[] = {
+	Administrator, Glazier, Pathfinder,
+	Apiarist, Haggler, Persuader,
+	Archivist, Harvester, Potter,
+	Armorer, Healer, Scientist,
+	Baker, Hunter, Scout,
+	Boatcrafter, Insectrist, Smith,
+	Brewer, Instructor, Stonemason,
+	Carpenter, Laborer, Survivalist,
+	Cartographer, Loremouse, Cook, Militarist, WeatherWatcher,
+	Manipulator, Miller, Weaver,
+	Fighter, Orator
+};
+
+static skilln parent_profession_skills[] = {
+	Apiarist, Carpenter, Potter,
+	Archivist,  Cartographer, Smith,
+	Armorer, Glazier, Stonemason,
+	Baker, Harvester, Weaver,
+	Boatcrafter, Insectrist, Brewer, Miller
+};
+
+static skilln conversation_skills[] = {
+	Manipulator, Orator, Persuader,
+};
+
+static skilln senior_artisan_skills[] = {
+	Apiarist, Cartographer, Laborer,
+	Archivist, Cook, Miller,
+	Armorer, Glazier, Potter,
+	Baker, Harvester, Smith,
+	Brewer, Healer, Stonemason,
+	Carpenter, Insectrist, Weaver,
+};
+
+static skilln mentor_stressing_skills[] = {
+	Fighter, Instructor, Survivalist,
+	Healer, Pathfinder, Hunter, Scout,
+	WeatherWatcher
+};
+
+static traitn kind_traits[] = {
+	Bold, Generous
+};
+
+static traitn fearless_traits[] = {
+	Fearless, Brave
 };
 
 void character::setbirth(creaturen v) {
@@ -106,17 +157,66 @@ void character::setbirth(creaturen v) {
 	}
 }
 
-static void add_skills(messagen id, skilln* skills) {
-	for(auto p = skills; *p; p++)
-		an.add(*p, skill_names[*p]);
-	auto v = (skilln)choose_answers(message_names[id]);
+static void add_value(skilln v) {
+	if(!player->skills[v])
+		player->skills[v] = 2;
+	else
+		player->skills[v]++;
+}
+
+static void add_value(traitn v) {
+	player->traits[v]++;
+}
+
+static skilln choose_skills(messagen id, slice<skilln> source) {
+	for(auto v : source) {
+		if(!v)
+			continue;
+		an.add(v, skill_names[v]);
+	}
+	return (skilln)choose_answers(message_names[id], 0, -1);
+}
+
+static traitn choose_traits(messagen id, slice<traitn> source) {
+	for(auto n : source)
+		an.add(n, trait_names[n]);
+	return (traitn)choose_answers(message_names[id]);
+}
+
+static void add_traits(messagen id, slice<traitn> source) {
+	add_value(choose_traits(id, source));
+}
+
+static void add_traits(messagen id, traitn t1, traitn t2) {
+	adat<traitn, 4> source;
+	source.add(t1);
+	if(t2)
+		source.add(t2);
+	auto v = choose_traits(id, source);
+	add_value(v);
 }
 
 static void choose_birth_place() {
 	for(auto& e : city_data)
 		an.add(e.area, area_names[e.area]);
 	player->home = (arean)choose_answers(message_names[ChooseBirthPlace]);
-	add_skills(ChooseBirthPlaceSkill, city_data[player->home].skills);
+	auto city_skill = choose_skills(ChooseBirthPlaceSkill, city_data[player->home].skills); add_value(city_skill);
+	add_traits(ChooseBirthPlaceTrait, city_data[player->home].trait, city_data[player->home].trait_addition);
+}
+
+static void choose_skills(messagen id, slice<skilln> source, int count) {
+	flagable<1 + LastSkill/32, unsigned> marked_skills;
+	marked_skills.clear();
+	for(auto i = 0; i < count; i++) {
+		for(auto v : source) {
+			if(marked_skills.is(v))
+				continue;
+			an.add(v, skill_names[v]);
+		}
+		auto v = (skilln)choose_answers(message_names[id], 0, -1);
+		add_value(v);
+		marked_skills.set(v);
+	}
 }
 
 character* add_character() {
@@ -135,12 +235,88 @@ static void add_skill(skilln v) {
 }
 
 static void choose_rang() {
-	auto v = (creaturen)choose_value(Tenderpaw, PatrolLeader, 0, creature_names, message_names[ChooseGuardRang], 0, false);
-	player->setbirth(v);
+	player->type = (creaturen)choose_value(Tenderpaw, PatrolLeader, 0, creature_names, message_names[ChooseGuardRang], 0, false);
+	player->setbirth(player->type);
+}
+
+static int get_life_experience() {
+	switch(player->type) {
+	case Tenderpaw: case GuardCaptain: return 2;
+	case Guardmouse: case PatrolGuard: case PatrolLeader: return 1;
+	default: return 0;
+	}
+}
+
+static int get_mentor_stressing() {
+	switch(player->type) {
+	case PatrolLeader: return 2;
+	default: return 1;
+	}
+}
+
+static void add_character(character** source, int count, character* player) {
+	if(!player)
+		return;
+	for(auto i = 0; i < count; i++) {
+		if(source[i])
+			continue;
+		source[i] = player;
+		break;
+	}
+}
+
+void add_party() {
+	add_character(party, sizeof(party)/sizeof(party[0]), player);
+}
+
+static int choose_question(messagen id, messagen v1, messagen v2) {
+	an.add(1, message_names[v1]);
+	an.add(2, message_names[v2]);
+	return choose_answers(message_names[id]);
+}
+
+static void choose_resources() {
+	switch(player->type) {
+	case Tenderpaw: player->add(Resources, 1); break;
+	case Guardmouse: player->add(Resources, 2); break;
+	case PatrolGuard: player->add(Resources, 3); break;
+	case PatrolLeader: player->add(Resources, 4); break;
+	case GuardCaptain: player->add(Resources, 5); break;
+	default: break;
+	}
+}
+
+static void choose_circles() {
+	switch(player->type) {
+	case Tenderpaw: player->add(Resources, 1); break;
+	case Guardmouse: player->add(Resources, 2); break;
+	case PatrolGuard: case PatrolLeader: player->add(Resources, 3); break;
+	case GuardCaptain: player->add(Resources, 4); break;
+	default: break;
+	}
+}
+
+static void choose_nature() {
+	player->add(Nature, 3);
+	// Do you fear predators?
+	switch(choose_question(DoYouFearPredators, Yes, No)) {
+	case 1: player->add(Nature, 1); break;
+	case 2: add_traits(ChooseTrait, fearless_traits); break;
+	}
 }
 
 void create_character() {
 	player = add_character();
 	choose_rang();
+	add_party();
 	choose_birth_place();
+	choose_skills(ChooseLifeExperience, general_skills, get_life_experience());
+	auto parent_skills = choose_skills(ChooseParentProffession, parent_profession_skills); add_skill(parent_skills);
+	auto converse_skill = choose_skills(ChooseConversationSkills, conversation_skills); add_skill(converse_skill);
+	auto senior_artisan = choose_skills(ChooseSeniorArtisanTeaching, senior_artisan_skills); add_skill(senior_artisan);
+	choose_skills(ChooseMentorTeaching, mentor_stressing_skills, get_mentor_stressing());
+	auto you_speciality = choose_skills(ChooseYouSpeciality, mentor_stressing_skills); add_skill(you_speciality);
+	choose_nature();
+	choose_resources();
+	choose_circles();
 }

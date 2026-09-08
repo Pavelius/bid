@@ -43,9 +43,9 @@ int answer_columns_def() {
 	if(!count)
 		return 1;
 	auto result = 1;
-	if(count > 3 && (count % 3) == 0 && allow(an, 13))
+	if(count > 15 && allow(an, 13))
 		result = 3;
-	else if((count % 2) == 0)
+	else if(count > 8)
 		result = 2;
 	return result;
 }
@@ -54,6 +54,8 @@ unsigned anhotkey(int index) {
 	static char hotkeys[] = {
 		'1', '2', '3', '4', '5', '6', '7', '8', '9', 'A',
 		'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
+		'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
+		'V', 'W', 'X', 'Y', 'Z'
 	};
 	if((size_t)index > sizeof(hotkeys) / sizeof(hotkeys[0]) - 1)
 		index = sizeof(hotkeys) / sizeof(hotkeys[0]) - 1;

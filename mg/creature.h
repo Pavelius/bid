@@ -66,6 +66,7 @@ typedef flagable<1, unsigned char> conditionf;
 
 extern const char* creature_names[LastCreature + 1];
 extern const char* skill_names[LastSkill + 1];
+extern const char* trait_names[LastTrait + 1];
 
 struct skillable {
 	char skills[LastSkill + 1];
@@ -85,17 +86,19 @@ struct creature {
 struct character : creature, skillable, wearable {
 	arean home;
 	skilln speciality;
-	traitf traits, traits_upgraded;
+	char traits[LastTrait+1];
 	conditionf conditions;
 	void add(skilln v, int i) { skills[v] += i; }
 	bool is(skilln v) const { return skills[v] > 0; }
-	bool is(traitn v) const { return traits.is(v); }
 	bool is(conditionn v) const { return conditions.is(v); }
 	void setbirth(creaturen v);
 	void update();
 };
 extern character* player;
+extern character* party[4];
 extern character character_data[32];
 extern creature	creature_data[64];
 
+void add_party();
 void create_character();
+

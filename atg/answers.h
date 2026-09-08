@@ -34,7 +34,7 @@ struct answers {
 	};
 	char buffer[2048];
 	stringbuilder sc;
-	adat<element, 32> elements;
+	adat<element, 36> elements;
 	static bool	interactive;
 	static const char* string;
 	static bool show_tips;
