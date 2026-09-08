@@ -440,7 +440,7 @@ long choose_answers(const char* title, const char* cancel_text, int columns) {
 	return r;
 }
 
-long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel, bool need_sort) {
+long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel, bool need_sort, int columns) {
 	an.clear();
 	for(auto i = t1; i <= t2; i++) {
 		if(condition && !condition((unsigned char)i))
@@ -449,7 +449,7 @@ long choose_value(long t1, long t2, fnuctest condition, const char** names, cons
 	}
 	if(need_sort)
 		an.sort();
-	return choose_answers(title, cancel);
+	return choose_answers(title, cancel, columns);
 }
 
 void fixmsg(messagen id) {

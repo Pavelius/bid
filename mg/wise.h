@@ -28,4 +28,6 @@ enum wisen : unsigned char {
 
 extern variant wise_data[LastWise + 1];
 
+extern const char* wise_names[LastWise + 1];
+
 wisen find_wise(variant v);

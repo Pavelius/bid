@@ -65,4 +65,4 @@ const char* find_separator(const char* p);
 
 void answers_paint(fnabutton paintcell, int columns, const char* cancel_text);
 long choose_answers(const char* title = 0, const char* cancel_text = 0, int columns = 1);
-long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel_text = 0, bool need_sort = true);
+long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel_text = 0, bool need_sort = true, int columns = 1);

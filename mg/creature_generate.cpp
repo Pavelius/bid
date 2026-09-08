@@ -19,6 +19,7 @@
 #include "creature.h"
 #include "message.h"
 #include "rand.h"
+#include "wise.h"
 
 #define DSARR(N) N, sizeof(N)/sizeof(N[0])
 
@@ -166,6 +167,10 @@ static void add_value(skilln v) {
 
 static void add_value(traitn v) {
 	player->traits[v]++;
+}
+
+static void add_value(wisen v) {
+	player->wises.set(v);
 }
 
 static skilln choose_skills(messagen id, slice<skilln> source) {
@@ -321,6 +326,10 @@ static void choose_nature() {
 	}
 }
 
+static void choose_wises() {
+	add_value((wisen)choose_value(0, LastWise, 0, wise_names, message_names[ChooseWises], 0, true, -1));
+}
+
 void create_character() {
 	player = add_character();
 	choose_rang();
@@ -333,6 +342,7 @@ void create_character() {
 	choose_skills(ChooseMentorTeaching, mentor_stressing_skills, get_mentor_stressing());
 	auto you_speciality = choose_skills(ChooseYouSpeciality, mentor_stressing_skills); add_skill(you_speciality);
 	choose_nature();
+	choose_wises();
 	choose_resources();
 	choose_circles();
 }
