@@ -56,4 +56,5 @@ void paint_window_center(const char* format);
 void paint_window_info(const char* format);
 bool running_scene();
 void set_hilite_state(const char* format);
+void set_tab(fnevent proc);
 void stringbuilder_custom(stringbuilder& sb, const char* id);

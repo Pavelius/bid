@@ -73,6 +73,13 @@ static void page_characters() {
 			paint_value(n);
 	}
 	paint_separator();
+}
+
+static void page_skills() {
+	paint_avatars();
+	pushvalue push(player, (character*)current_avatar);
+	if(!player)
+		return;
 	for(auto n = (skilln)Administrator; n<=LastSkill; n = (skilln)(n+1)) {
 		if(player->skills[n])
 			paint_value(n);
@@ -81,6 +88,7 @@ static void page_characters() {
 
 static void paint_main_menu() {
 	paint_bar(command_names[PageCharacter], page_characters);
+	paint_bar(command_names[PageSkills], page_skills);
 }
 
 static void initialize_resources() {

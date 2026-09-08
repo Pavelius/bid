@@ -14,29 +14,21 @@
 	limitations under the License.77
 */
 
-#pragma once
+#include "area.h"
+#include "creature.h"
+#include "variant.h"
+#include "wise.h"
 
-struct character;
-
-enum commandn : unsigned char {
-	Cancel, Continue,
-	PageCharacter, PageSkills, PageItems, PageCombatants,
-	LastCommand = PageCombatants,
+variant wise_data[LastWise + 1] = {
+	Barkstone, Copperwood, Elmoss, Ivydale, Lockhaven, PortSumac, Shaleburrow, Sprucetuck,
+	Forest, Lakes, Streams, TallGrass, Swamps, Mud, Thorns, LeafCover, RockyTerrain, Coast, OpenGround,
+	Darkheather,
 };
 
-enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern
-};
-
-extern character* party[4];
-
-extern const char* command_names[LastCommand + 1];
-
-extern int last_number;
-
-extern char roll_difficult, roll_dices[16];
-
-void apply_result();
-void pause();
-void pause(const char* format);
+wisen find_wise(variant v) {
+	for(auto& e : wise_data) {
+		if(e==v)
+			return wisen(&e - wise_data);
+	}
+	return NoWise;
+}

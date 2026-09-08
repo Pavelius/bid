@@ -90,7 +90,7 @@
 	"draw.h"
 	"math.h"
 
-1788848544 source:/home/user-331/projects/bid/atg/draw_atg.cpp
+1788876777 source:/home/user-331/projects/bid/atg/draw_atg.cpp
 	"answers.h"
 	"draw.h"
 	"draw_atg.h"
@@ -99,7 +99,7 @@
 	"pushvalue.h"
 	"stringbuilder.h"
 
-1788761240 /home/user-331/projects/bid/atg/draw_atg.h
+1788876741 /home/user-331/projects/bid/atg/draw_atg.h
 	"stringbuilder.h"
 
 1788442171 /home/user-331/projects/bid/atg/io_stream.h
@@ -192,7 +192,7 @@
 	"stringbuilder.h"
 	"adat.h"
 
-1788864259 source:/home/user-331/projects/bid/mg/game.cpp
+1788877007 source:/home/user-331/projects/bid/mg/game.cpp
 	"answers.h"
 	"collection.h"
 	"collectiona.h"
@@ -205,23 +205,26 @@
 	"rand.h"
 	"stringbuilder.h"
 
-1788848544 /home/user-331/projects/bid/mg/game.h
+1788877014 /home/user-331/projects/bid/mg/game.h
 
-1788865459 source:/home/user-331/projects/bid/mg/locale_ru.cpp
+1788877200 source:/home/user-331/projects/bid/mg/locale_ru.cpp
 	"area.h"
 	"creature.h"
 	"game.h"
 	"message.h"
 	"stringbuilder.h"
 	"stringset.h"
+	"wise.h"
 
-1788863512 source:/home/user-331/projects/bid/mg/creature.cpp
+1788872332 source:/home/user-331/projects/bid/mg/creature.cpp
 	"answers.h"
+	"area.h"
 	"creature.h"
 	"message.h"
 	"rand.h"
+	"wise.h"
 
-1788863760 /home/user-331/projects/bid/mg/creature.h
+1788872374 /home/user-331/projects/bid/mg/creature.h
 	"flagable.h"
 	"item.h"
 
@@ -229,11 +232,11 @@
 
 1788848544 /home/user-331/projects/bid/mg/item.h
 
-1788865649 /home/user-331/projects/bid/mg/message.h
+1788867920 /home/user-331/projects/bid/mg/message.h
 
-1788865110 /home/user-331/projects/bid/mg/area.h
+1788867900 /home/user-331/projects/bid/mg/area.h
 
-1788865746 source:/home/user-331/projects/bid/mg/creature_generate.cpp
+1788870927 source:/home/user-331/projects/bid/mg/creature_generate.cpp
 	"answers.h"
 	"area.h"
 	"creature.h"
@@ -243,6 +246,17 @@
 1788848544 source:/home/user-331/projects/bid/mg/game_roll.cpp
 	"game.h"
 
-1788848544 source:/home/user-331/projects/bid/mg/area.cpp
+1788867873 source:/home/user-331/projects/bid/mg/area.cpp
 	"area.h"
+
+1788870504 source:/home/user-331/projects/bid/mg/wise.cpp
+	"area.h"
+	"creature.h"
+	"variant.h"
+	"wise.h"
+
+1788868722 /home/user-331/projects/bid/mg/variant.h
+
+1788876067 /home/user-331/projects/bid/mg/wise.h
+	"variant.h"
 

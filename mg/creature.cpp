@@ -15,9 +15,11 @@
 */
 
 #include "answers.h"
+#include "area.h"
 #include "creature.h"
 #include "message.h"
 #include "rand.h"
+#include "wise.h"
 
 character* player;
 character* party[4];

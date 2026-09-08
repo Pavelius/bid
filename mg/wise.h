@@ -16,27 +16,16 @@
 
 #pragma once
 
-struct character;
+#include "variant.h"
 
-enum commandn : unsigned char {
-	Cancel, Continue,
-	PageCharacter, PageSkills, PageItems, PageCombatants,
-	LastCommand = PageCombatants,
+enum wisen : unsigned char {
+	BarkstoneWise, CopperwoodWise, ElmossWise, IvydaleWise, LockhavenWise, PortSumacWise, ShaleburrowWise, SprucetuckWise,
+	ForestWise, LakesWise, StreamsWise, TallGrassWise, SwampsWise, MudWise, ThornsWise, LeafCoverWise, RockyTerrainWise, CoastWise, OpenGroundWise,
+	DarkheatherWise,
+	LastWise = DarkheatherWise,
+	NoWise = 0xFF,
 };
 
-enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern
-};
+extern variant wise_data[LastWise + 1];
 
-extern character* party[4];
-
-extern const char* command_names[LastCommand + 1];
-
-extern int last_number;
-
-extern char roll_difficult, roll_dices[16];
-
-void apply_result();
-void pause();
-void pause(const char* format);
+wisen find_wise(variant v);

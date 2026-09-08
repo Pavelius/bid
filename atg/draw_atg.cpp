@@ -415,6 +415,10 @@ static void choose_answers_scene() {
 	answers_paint(atg_paintcell, answer_columns, answer_cancel_text);
 }
 
+void set_tab(fnevent proc) {
+	current_tab = (void*)proc;
+}
+
 long choose_answers(const char* title, const char* cancel_text, int columns) {
 	if(!an.elements) {
 		if(!cancel_text)

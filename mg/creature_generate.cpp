@@ -174,12 +174,14 @@ static skilln choose_skills(messagen id, slice<skilln> source) {
 			continue;
 		an.add(v, skill_names[v]);
 	}
+	an.sort();
 	return (skilln)choose_answers(message_names[id], 0, -1);
 }
 
 static traitn choose_traits(messagen id, slice<traitn> source) {
 	for(auto n : source)
 		an.add(n, trait_names[n]);
+	an.sort();
 	return (traitn)choose_answers(message_names[id]);
 }
 
@@ -213,6 +215,7 @@ static void choose_skills(messagen id, slice<skilln> source, int count) {
 				continue;
 			an.add(v, skill_names[v]);
 		}
+		an.sort();
 		auto v = (skilln)choose_answers(message_names[id], 0, -1);
 		add_value(v);
 		marked_skills.set(v);
@@ -298,10 +301,23 @@ static void choose_circles() {
 
 static void choose_nature() {
 	player->add(Nature, 3);
+	// Do you save for winter?
+	switch(choose_question(DoYouSaveForWinter, Yes, No)) {
+	case 1: player->add(Nature, 1); break;
+	case 2: add_traits(ChooseTrait, kind_traits); break;
+	default: break;
+	}
+	// Do you stand ground and fight?
+	switch(choose_question(DoYouStandGroundAndFight, Yes, No)) {
+	case 1: break;
+	case 2: player->add(Nature, 1); player->add(Fighter, -1); break;
+	default: break;
+	}
 	// Do you fear predators?
 	switch(choose_question(DoYouFearPredators, Yes, No)) {
 	case 1: player->add(Nature, 1); break;
 	case 2: add_traits(ChooseTrait, fearless_traits); break;
+	default: break;
 	}
 }
 

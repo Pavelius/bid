@@ -20,6 +20,7 @@
 #include "item.h"
 
 enum arean : unsigned char;
+enum wisen : unsigned char;
 
 enum creaturen : unsigned char {
 	Commoner,
@@ -63,6 +64,7 @@ typedef flagable<1 + LastTrait / 32, unsigned> traitf;
 typedef flagable<1 + LastSkill / 32, unsigned> skillf;
 typedef flagable<1 + LastSkill / 32, unsigned> skillf;
 typedef flagable<1, unsigned char> conditionf;
+typedef flagable<1, unsigned> wisef;
 
 extern const char* creature_names[LastCreature + 1];
 extern const char* skill_names[LastSkill + 1];
@@ -88,9 +90,12 @@ struct character : creature, skillable, wearable {
 	skilln speciality;
 	char traits[LastTrait+1];
 	conditionf conditions;
+	wisef wises;
 	void add(skilln v, int i) { skills[v] += i; }
+	void add(wisen v) { wises.set(v); }
 	bool is(skilln v) const { return skills[v] > 0; }
 	bool is(conditionn v) const { return conditions.is(v); }
+	bool is(wisen v) const { return wises.is(v); }
 	void setbirth(creaturen v);
 	void update();
 };

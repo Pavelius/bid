@@ -45,10 +45,10 @@
 	"rand.h"
 	"stringbuilder.h"
 
-1788441957 /home/user-331/projects/bid/atg//adat.h
+1788850494 /home/user-331/projects/bid/atg//adat.h
 	"slice.h"
 
-1788761240 /home/user-331/projects/bid/atg//answers.h
+1788855865 /home/user-331/projects/bid/atg//answers.h
 	"adat.h"
 	"stringbuilder.h"
 
@@ -409,17 +409,17 @@
 1757139960 source:/home/user-331/projects/atg/zip.cpp
 	"slice.h"
 
-1788761240 source:/home/user-331/projects/bid/atg/answers.cpp
+1788855982 source:/home/user-331/projects/bid/atg/answers.cpp
 	"answers.h"
 	"draw.h"
 	"pushvalue.h"
 	"rand.h"
 
-1788761240 /home/user-331/projects/bid/atg/answers.h
+1788855865 /home/user-331/projects/bid/atg/answers.h
 	"adat.h"
 	"stringbuilder.h"
 
-1788441957 /home/user-331/projects/bid/atg/adat.h
+1788850494 /home/user-331/projects/bid/atg/adat.h
 	"slice.h"
 
 1788442262 /home/user-331/projects/bid/atg/slice.h
@@ -496,7 +496,7 @@
 	"answers.h"
 	"draw.h"
 
-1788763827 source:/home/user-331/projects/bid/atg/draw_atg.cpp
+1788848544 source:/home/user-331/projects/bid/atg/draw_atg.cpp
 	"answers.h"
 	"draw.h"
 	"draw_atg.h"
@@ -633,7 +633,7 @@
 
 1788761240 /home/user-331/projects/bid/atg/gender.h
 
-1788761240 source:/home/user-331/projects/bid/atg/stringset.cpp
+1788792828 source:/home/user-331/projects/bid/atg/stringset.cpp
 	"rand.h"
 	"stringbuilder.h"
 	"stringset.h"

@@ -16,27 +16,24 @@
 
 #pragma once
 
-struct character;
+enum arean : unsigned char;
+enum creaturen : unsigned char;
 
-enum commandn : unsigned char {
-	Cancel, Continue,
-	PageCharacter, PageSkills, PageItems, PageCombatants,
-	LastCommand = PageCombatants,
+enum variantn : unsigned char {
+	Variant,
+	Area, Creature,
 };
 
-enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern
+union variant {
+	short unsigned u;
+	struct {
+		variantn type;
+		unsigned char value;
+	};
+	constexpr variant() : type(Variant), value(0) {}
+	constexpr variant(variantn type, unsigned char value) : type(type), value(value) {}
+	constexpr variant(arean v) : type(Area), value(v) {}
+	constexpr variant(creaturen v) : type(Creature), value(v) {}
+	constexpr explicit operator bool() const { return u!=0; }
+	constexpr bool operator==(variant v) const { return u!=v.u; }
 };
-
-extern character* party[4];
-
-extern const char* command_names[LastCommand + 1];
-
-extern int last_number;
-
-extern char roll_difficult, roll_dices[16];
-
-void apply_result();
-void pause();
-void pause(const char* format);
