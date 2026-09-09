@@ -22,13 +22,13 @@
 
 1788442262 /home/user-331/projects/bid/atg//slice.h
 
-1788761240 /home/user-331/projects/bid/ose/game.h
+1788961061 /home/user-331/projects/bid/ose/game.h
 
-1788761240 /home/user-331/projects/bid/atg//stringbuilder.h
+1788933949 /home/user-331/projects/bid/atg//stringbuilder.h
 	"slice.h"
 	<stdarg.h>
 
-1788761240 source:/home/user-331/projects/bid/ose/creature.cpp
+1788961109 source:/home/user-331/projects/bid/ose/creature.cpp
 	"adat.h"
 	"answers.h"
 	"area.h"
@@ -48,7 +48,7 @@
 1788850494 /home/user-331/projects/bid/atg//adat.h
 	"slice.h"
 
-1788855865 /home/user-331/projects/bid/atg//answers.h
+1788879084 /home/user-331/projects/bid/atg//answers.h
 	"adat.h"
 	"stringbuilder.h"
 
@@ -78,18 +78,18 @@
 
 1788442065 /home/user-331/projects/bid/atg//dice.h
 
-1788761240 /home/user-331/projects/bid/atg//draw_atg.h
+1788949852 /home/user-331/projects/bid/atg//draw_atg.h
 	"stringbuilder.h"
 
 1788442184 /home/user-331/projects/bid/atg//math.h
 
-1788761240 /home/user-331/projects/bid/ose/message.h
+1788960968 /home/user-331/projects/bid/ose/message.h
 
 1788442239 /home/user-331/projects/bid/atg//pushvalue.h
 
 1788442247 /home/user-331/projects/bid/atg//rand.h
 
-1788761285 source:/home/user-331/projects/bid/ose/game.cpp
+1788961118 source:/home/user-331/projects/bid/ose/game.cpp
 	"area.h"
 	"answers.h"
 	"bsdata.h"
@@ -164,7 +164,7 @@
 1788761240 source:/home/user-331/projects/bid/ose/itema.cpp
 	"itema.h"
 
-1788768755 source:/home/user-331/projects/bid/ose/locale_ru.cpp
+1788961057 source:/home/user-331/projects/bid/ose/locale_ru.cpp
 	"bsdata.h"
 	"area.h"
 	"creature.h"
@@ -415,7 +415,7 @@
 	"pushvalue.h"
 	"rand.h"
 
-1788855865 /home/user-331/projects/bid/atg/answers.h
+1788879084 /home/user-331/projects/bid/atg/answers.h
 	"adat.h"
 	"stringbuilder.h"
 
@@ -424,7 +424,7 @@
 
 1788442262 /home/user-331/projects/bid/atg/slice.h
 
-1788761240 /home/user-331/projects/bid/atg/stringbuilder.h
+1788933949 /home/user-331/projects/bid/atg/stringbuilder.h
 	"slice.h"
 	<stdarg.h>
 
@@ -447,7 +447,7 @@
 
 1788441998 /home/user-331/projects/bid/atg/bstream.h
 
-1788442018 source:/home/user-331/projects/bid/atg/collection.cpp
+1788933949 source:/home/user-331/projects/bid/atg/collection.cpp
 	"collection.h"
 	"math.h"
 	"rand.h"
@@ -496,7 +496,7 @@
 	"answers.h"
 	"draw.h"
 
-1788848544 source:/home/user-331/projects/bid/atg/draw_atg.cpp
+1788939678 source:/home/user-331/projects/bid/atg/draw_atg.cpp
 	"answers.h"
 	"draw.h"
 	"draw_atg.h"
@@ -505,7 +505,7 @@
 	"pushvalue.h"
 	"stringbuilder.h"
 
-1788761240 /home/user-331/projects/bid/atg/draw_atg.h
+1788949852 /home/user-331/projects/bid/atg/draw_atg.h
 	"stringbuilder.h"
 
 1788442171 /home/user-331/projects/bid/atg/io_stream.h
@@ -640,7 +640,7 @@
 
 1788761240 /home/user-331/projects/bid/atg/stringset.h
 
-1788761240 source:/home/user-331/projects/bid/ose/game_settlement.cpp
+1788961098 source:/home/user-331/projects/bid/ose/game_settlement.cpp
 	"answers.h"
 	"area.h"
 	"adat.h"

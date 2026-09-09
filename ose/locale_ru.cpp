@@ -89,7 +89,8 @@ const char* action_names[LastAction + 1] = {
 };
 
 const char* message_names[LastMessage + 1] = {
-	"Old School Hack Esscential Engine 0.1",
+	"Old School Hack Esscential Engine 0.1", "Продолжить", "Отмена", "Очистить все", "Принять",
+	"Персонаж", "Предметы", "Бой",
 	"и",
 	"монет", "медных", "серебрянных", "электрумых", "золотых", "платиновых",
 	"%Player набросился на врага.",
@@ -131,11 +132,6 @@ const char* message_names[LastMessage + 1] = {
 	"Подготовить какое заклинание %1i уровня?",
 	"Что будет делать %Player?",
 	"Что будете делать?",
-};
-
-const char* command_names[PageCombatants + 1] = {
-	"Отменить", "Продолжить", "Очистить все", "Подтвердить",
-	"Персонаж", "Предметы", "Бой",
 };
 
 const char* class_names[LastClass + 1] = {

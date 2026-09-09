@@ -930,8 +930,8 @@ static void modify_spells(messagen id, spellable& e, int level) {
 				an.add(v, spell_names[v]);
 		}
 		an.sort();
-		an.add(-2, command_names[ClearAllList]);
-		an.add(-1, command_names[Confirm]);
+		an.add(-2, message_names[ClearAllList]);
+		an.add(-1, message_names[Confirm]);
 		sbn.clear(); sbn.add(message_names[AskMemorizeSpells], level);
 		addleft(sbn, prepare_spells, maximum_spells);
 		auto result = choose_answers(temp);
@@ -960,7 +960,7 @@ void make_prepare_spells(messagen id) {
 					an.add(i, action_names[ChangeSpellsByLevel], i);
 			}
 		}
-		auto level = choose_player_option(command_names[Confirm]);
+		auto level = choose_player_option(message_names[Confirm]);
 		if(!level) {
 			sb.clear();
 			break;

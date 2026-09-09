@@ -46,18 +46,6 @@ extern collectiona items;
 template<> variant::variant(const area* p) : variant(AreaRef, p - bsdata<area>::elements) {}
 template<> variant::variant(const creature* p) : variant(CreatureRef, p - bsdata<creature>::elements) {}
 
-void pause(const char* format) {
-	if(sb) {
-		an.add(2, format);
-		choose_answers();
-		sb.clear();
-	}
-}
-
-void pause() {
-	pause(command_names[Continue]);
-}
-
 void pass_turn() {
 	game.add(Turns, 1);
 }
@@ -551,10 +539,10 @@ static void page_combatants() {
 }
 
 static void paint_main_menu() {
-	paint_bar(command_names[PageCharacter], page_characters);
-	paint_bar(command_names[PageItems], page_items);
+	paint_bar(message_names[PageCharacter], page_characters);
+	paint_bar(message_names[PageItems], page_items);
 	if(creatures && enemy_present())
-		paint_bar(command_names[PageCombatants], page_combatants);
+		paint_bar(message_names[PageCombatants], page_combatants);
 }
 
 //////////////////////////////////////////////////////

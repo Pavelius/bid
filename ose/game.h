@@ -21,10 +21,6 @@ typedef void(*fnevent)();
 
 enum classn : unsigned char;
 
-enum commandn : unsigned char {
-	Cancel, Continue, ClearAllList, Confirm,
-	PageCharacter, PageItems, PageCombatants,
-};
 enum actionn : unsigned char {
 	MakeCharge, MakeMeleeAttack, MakeMissileAttack, MakeThrownAttack, MakeRunAway,
 	MakeHunting, MakeTreatIllness, MakeTendingWounds, MakeGearRepairing, MakeForaging,
@@ -45,7 +41,6 @@ enum picturen : unsigned char {
 };
 
 extern const char* action_names[LastAction + 1];
-extern const char* command_names[PageCombatants + 1];
 
 struct gamei {
 	unsigned variables[PartyCoins + 1];

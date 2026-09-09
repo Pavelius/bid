@@ -21,6 +21,26 @@
 #include "slice.h"
 #include "stringbuilder.h"
 
+struct skilli {
+	skilln skill;
+	char factors;
+	skillf help;
+};
+
+static skilli skill_roll_data[] = {
+	{Administrator, 2, {Archivist, Orator}},
+	{Apiarist, 3, {Scientist, Insectrist, Loremouse}},
+	{Archivist, 2, {Cartographer, Administrator}},
+	{Armorer, 2, {Smith, Scientist}},
+//	Apiarist, Archivist, Armorer, Baker, Boatcrafter,
+//	Brewer, Carpenter, Cartographer, Cook, Fighter,
+//	Glazier, Haggler, Harvester, Healer, Hunter,
+//	Insectrist, Instructor, Laborer, Loremouse, Manipulator,
+//	Militarist, Miller, Orator, Pathfinder, Persuader,
+//	Potter, Scientist, Scout, Smith, Stonemason,
+//	Survivalist, WeatherWatcher, Weaver,
+};
+
 static skilln roll_skill;
 
 char roll_base, roll_difficult, roll_dices[16];

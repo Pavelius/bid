@@ -17,7 +17,8 @@
 #pragma once
 
 enum messagen : unsigned char {
-	GameTitle,
+	GameTitle, Continue, Cancel, ClearAllList, Confirm,
+	PageCharacter, PageItems, PageCombatants,
 	MsgAnd,
 	CoinsPl, CoinsCP, CoinsSP, CoinsEP, CoinsGP, CoinsPP,
 	PlayerCharged,

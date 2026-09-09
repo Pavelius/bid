@@ -70,7 +70,7 @@ static item* choose_item(itema& source, messagen v, fnitemget price) {
 	while(true) {
 		for(auto& e : source)
 			addopt(e, v, price);
-		auto result = (item*)choose_player_option(command_names[Cancel]);
+		auto result = (item*)choose_player_option(message_names[Cancel]);
 		if(((long)result) == Continue)
 			continue;
 		return result;
@@ -84,7 +84,7 @@ static item* choose_item(wearable& source, messagen v, fnitemget price) {
 			if(*p)
 				addopt(*p, v, price);
 		}
-		auto result = (item*)choose_player_option(command_names[Cancel]);
+		auto result = (item*)choose_player_option(message_names[Cancel]);
 		if(((long)result) == Continue)
 			continue;
 		return result;
