@@ -92,6 +92,7 @@ struct creature {
 	short unsigned	birth;
 	colorn			skin, ornament;
 	constexpr explicit operator bool() const { return birth != 0; }
+	const char* name() const { return (customname == 0xFF) ? creature_names[type] : name_names[customname]; }
 };
 
 struct character : creature, skillable, wearable {

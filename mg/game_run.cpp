@@ -37,8 +37,8 @@ static void paint_value(skilln id) {
 	sb.add("/x 130 text %2i\n%1", skill_names[id], player->skills[id]);
 	paint_button(temp, 0, false);
 	if(button_hilited && tips_text[0] == 0) {
-		//stringbuilder sb(tips_text);
-		//sb.add("Test");
+		stringbuilder sb(tips_text);
+		fistatus<skilln>(id, sb);
 	}
 }
 

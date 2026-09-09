@@ -139,7 +139,7 @@ const char*	psidf(const char* p, stringbuilder& result);
 
 void default_string(stringbuilder& sb, const char* id);
 
-template<class T> void fistatus(const void* object, stringbuilder& sb);
+template<class T> void fistatus(unsigned char id, stringbuilder& sb);
 
 //template<typename T>
 //struct bsenum {

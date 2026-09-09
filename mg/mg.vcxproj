@@ -145,6 +145,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="game_roll.cpp" />
     <ClCompile Include="game_run.cpp" />
+    <ClCompile Include="information.cpp" />
     <ClCompile Include="locale_ru.cpp" />
     <ClCompile Include="main_util.cpp" />
     <ClCompile Include="wise.cpp" />

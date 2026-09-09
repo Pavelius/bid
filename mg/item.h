@@ -20,6 +20,7 @@ enum itemn : unsigned char {
 	NoItem,
 	Axe, Bow, Halberd, HookAndLine, Knife, Shield, Sling, Spear, Staff, Sword,
 	LightArmor, HeavyArmor,
+	LastItem = HeavyArmor
 };
 
 enum wearn : unsigned char {
@@ -27,6 +28,8 @@ enum wearn : unsigned char {
 	Weapon, Armor,
 	LastWear = Armor
 };
+
+extern const char* item_names[LastItem + 1];
 
 struct item {
 	itemn type;
@@ -36,6 +39,7 @@ struct item {
 			unsigned char lost : 1;
 		};
 	};
+	const char* name() const { return item_names[type]; }
 };
 
 struct wearable {
