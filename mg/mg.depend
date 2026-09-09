@@ -14,7 +14,7 @@
 
 1788442262 /home/user-331/projects/bid/atg/slice.h
 
-1788761240 /home/user-331/projects/bid/atg/stringbuilder.h
+1788933949 /home/user-331/projects/bid/atg/stringbuilder.h
 	"slice.h"
 	<stdarg.h>
 
@@ -56,7 +56,7 @@
 
 1788441998 /home/user-331/projects/bid/atg/bstream.h
 
-1788442018 source:/home/user-331/projects/bid/atg/collection.cpp
+1788933949 source:/home/user-331/projects/bid/atg/collection.cpp
 	"collection.h"
 	"math.h"
 	"rand.h"
@@ -90,7 +90,7 @@
 	"draw.h"
 	"math.h"
 
-1788879021 source:/home/user-331/projects/bid/atg/draw_atg.cpp
+1788939678 source:/home/user-331/projects/bid/atg/draw_atg.cpp
 	"answers.h"
 	"draw.h"
 	"draw_atg.h"
@@ -99,7 +99,7 @@
 	"pushvalue.h"
 	"stringbuilder.h"
 
-1788876741 /home/user-331/projects/bid/atg/draw_atg.h
+1788949852 /home/user-331/projects/bid/atg/draw_atg.h
 	"stringbuilder.h"
 
 1788442171 /home/user-331/projects/bid/atg/io_stream.h
@@ -192,22 +192,16 @@
 	"stringbuilder.h"
 	"adat.h"
 
-1788877007 source:/home/user-331/projects/bid/mg/game.cpp
+1788957717 source:/home/user-331/projects/bid/mg/game.cpp
 	"answers.h"
-	"collection.h"
-	"collectiona.h"
 	"creature.h"
-	"draw.h"
 	"draw_atg.h"
 	"game.h"
-	"print.h"
-	"pushvalue.h"
-	"rand.h"
-	"stringbuilder.h"
+	"message.h"
 
-1788877014 /home/user-331/projects/bid/mg/game.h
+1788939642 /home/user-331/projects/bid/mg/game.h
 
-1788878795 source:/home/user-331/projects/bid/mg/locale_ru.cpp
+1788957798 source:/home/user-331/projects/bid/mg/locale_ru.cpp
 	"area.h"
 	"creature.h"
 	"game.h"
@@ -216,36 +210,46 @@
 	"stringset.h"
 	"wise.h"
 
-1788872332 source:/home/user-331/projects/bid/mg/creature.cpp
+1788958453 source:/home/user-331/projects/bid/mg/creature.cpp
 	"answers.h"
 	"area.h"
 	"creature.h"
+	"gender.h"
 	"message.h"
 	"rand.h"
 	"wise.h"
 
-1788872374 /home/user-331/projects/bid/mg/creature.h
+1788958407 /home/user-331/projects/bid/mg/creature.h
 	"flagable.h"
 	"item.h"
 
 1788442159 /home/user-331/projects/bid/atg/flagable.h
 
-1788848544 /home/user-331/projects/bid/mg/item.h
+1788933949 /home/user-331/projects/bid/mg/item.h
 
-1788878764 /home/user-331/projects/bid/mg/message.h
+1788957812 /home/user-331/projects/bid/mg/message.h
 
 1788867900 /home/user-331/projects/bid/mg/area.h
 
-1788878994 source:/home/user-331/projects/bid/mg/creature_generate.cpp
+1788950709 source:/home/user-331/projects/bid/mg/creature_generate.cpp
 	"answers.h"
 	"area.h"
 	"creature.h"
+	"collection.h"
+	"game.h"
+	"gender.h"
 	"message.h"
+	"pushvalue.h"
 	"rand.h"
 	"wise.h"
 
-1788848544 source:/home/user-331/projects/bid/mg/game_roll.cpp
+1788959157 source:/home/user-331/projects/bid/mg/game_roll.cpp
+	"answers.h"
+	"creature.h"
 	"game.h"
+	"message.h"
+	"slice.h"
+	"stringbuilder.h"
 
 1788867873 source:/home/user-331/projects/bid/mg/area.cpp
 	"area.h"
@@ -258,6 +262,31 @@
 
 1788868722 /home/user-331/projects/bid/mg/variant.h
 
-1788878900 /home/user-331/projects/bid/mg/wise.h
+1788933949 /home/user-331/projects/bid/mg/wise.h
 	"variant.h"
+
+1788933949 source:/home/user-331/projects/bid/mg/bin_avatars.cpp
+
+1788933949 source:/home/user-331/projects/bid/mg/bin_images.cpp
+
+1788934179 source:/home/user-331/projects/bid/mg/game_run.cpp
+	"answers.h"
+	"creature.h"
+	"draw.h"
+	"draw_atg.h"
+	"game.h"
+	"message.h"
+	"print.h"
+	"pushvalue.h"
+	"rand.h"
+	"stringbuilder.h"
+	"wise.h"
+
+1788958438 source:/home/user-331/projects/bid/mg/information.cpp
+	"bsdata.h"
+	"creature.h"
+	"game.h"
+	"message.h"
+	"stringbuilder.h"
+	"stringvar.h"
 

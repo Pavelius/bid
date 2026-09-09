@@ -15,29 +15,16 @@
 */
 
 #include "answers.h"
-#include "collection.h"
-#include "collectiona.h"
 #include "creature.h"
-#include "draw.h"
 #include "draw_atg.h"
 #include "game.h"
-#include "print.h"
-#include "pushvalue.h"
-#include "rand.h"
-#include "stringbuilder.h"
-
-void pause(const char* format) {
-	choose_answers(0, format);
-}
-
-void pause() {
-	pause(command_names[Continue]);
-}
+#include "message.h"
 
 void create_game() {
 	answer_picture = ImageSwearn;
 	create_character_silent();
 	create_character_silent();
 	create_character_silent();
-	pause();
+	sb.add("Show characters");
+	make_roll(Fighter, 3);
 }

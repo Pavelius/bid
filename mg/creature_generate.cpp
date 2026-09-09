@@ -18,6 +18,7 @@
 #include "area.h"
 #include "creature.h"
 #include "collection.h"
+#include "game.h"
 #include "gender.h"
 #include "message.h"
 #include "pushvalue.h"
@@ -312,7 +313,7 @@ static colorn choose(messagen id, slice<colorn> source) {
 	for(auto v : source)
 		an.add(v, color_names[v]);
 	an.sort();
-	return (colorn)choose_answers(message_names[id], 0, -1);
+	return (colorn)choose_answers(id, NoMessage, -1);
 }
 
 static character* new_character() {
@@ -321,6 +322,14 @@ static character* new_character() {
 			return &e;
 	}
 	return character_data;
+}
+
+static creature* new_creature() {
+	for(auto& e : creature_data) {
+		if(!e)
+			return &e;
+	}
+	return creature_data;
 }
 
 static void add_skill(skilln v) {
@@ -403,7 +412,7 @@ static wisen choose_wises(messagen id, slice<wisen> source) {
 	for(auto n : source)
 		an.add(n, wise_names[n]);
 	an.sort();
-	return (wisen)choose_answers(message_names[id], 0, -1);
+	return (wisen)choose_answers(id, NoMessage, -1);
 }
 
 static void choose_wises(messagen id, int count) {
@@ -414,7 +423,7 @@ static void choose_wises(messagen id, int count) {
 				continue;
 			an.add(n, wise_names[n]);
 		}
-		auto v = (wisen)choose_answers(message_names[id], 0, -1);
+		auto v = (wisen)choose_answers(id, NoMessage, -1);
 		marked.set(v);
 		add_value(v);
 	}
@@ -467,7 +476,21 @@ static void choose_name() {
 	for(auto v : source)
 		an.add(v, name_names[v]);
 	an.sort();
-	auto v = choose_answers(message_names[ChooseName]);
+	player->customname = (unsigned char)choose_answers(ChooseName);
+}
+
+static unsigned char random_name() {
+	collection source;
+	source.select(0, name_count_per_gender - 1, 0, false);
+	return source.random();
+}
+
+static creature* create_creature(gendern gender, creaturen type, skilln skill) {
+	auto p = new_creature();
+	p->clear();
+	p->gender = gender;
+	p->type = type;
+	p->customname = random_name();
 }
 
 void create_character() {
@@ -483,6 +506,7 @@ void create_character() {
 	auto senior_artisan = choose(ChooseSeniorArtisanTeaching, senior_artisan_skills); add_skill(senior_artisan);
 	choose(ChooseMentorTeaching, mentor_stressing_skills, get_mentor_stressing());
 	player->speciality = choose(ChooseYouSpeciality, mentor_stressing_skills); add_skill(player->speciality);
+	player->parent = create_creature(Male, Commoner, parent_skills)->index();
 	choose_nature();
 	choose_wises();
 	choose_resources();

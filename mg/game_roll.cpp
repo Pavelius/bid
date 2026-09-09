@@ -14,7 +14,37 @@
 	limitations under the License.77
 */
 
+#include "answers.h"
+#include "creature.h"
 #include "game.h"
+#include "message.h"
+#include "slice.h"
+#include "stringbuilder.h"
+
+static skilln roll_skill;
+
+char roll_base, roll_difficult, roll_dices[16];
+
+static void clear_parcipant() {
+	memset(parcipants, 0, sizeof(parcipants));
+}
+
+static long choose_before_roll() {
+	char temp[260]; stringbuilder sb(temp);
+	sb.adds(message_names[AskMakeRoll], player->name(), skill_names[roll_skill]);
+	if(roll_difficult)
+		sb.adds(message_names[AskVsDifficult], roll_difficult);
+	sb.add(".");
+	return choose_answers(temp, message_names[MakeRoll], 1);
+}
+
+void make_roll(skilln skill, int difficult) {
+	clear_parcipant();
+	roll_skill = skill;
+	roll_base = player->get(skill);
+	roll_difficult = difficult;
+	choose_before_roll();
+}
 
 
 

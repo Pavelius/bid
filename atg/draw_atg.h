@@ -54,6 +54,8 @@ void paint_status_bar();
 void paint_status_text();
 void paint_window_center(const char* format);
 void paint_window_info(const char* format);
+void pause();
+void pause(const char* format);
 bool running_scene();
 void set_hilite_state(const char* format);
 void set_tab(fnevent proc);

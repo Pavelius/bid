@@ -17,11 +17,13 @@
 #pragma once
 
 enum messagen : unsigned char {
-	AppTitle, Yes, No,
+	NoMessage, Continue, Cancel, Yes, No, And,
 	Passed, Failed,
+	PageCharacter, PageSkills, PageItems, PageCombatants,
 	ChooseName, ChooseWises, ChooseFurColor, ChooseCloackColor,
 	ChooseGuardRang, ChooseBirthPlace, ChooseBirthPlaceSkill, ChooseBirthPlaceTrait, ChooseLifeExperience,
 	ChooseParentProffession, ChooseConversationSkills, ChooseSeniorArtisanTeaching, ChooseMentorTeaching, ChooseYouSpeciality,
+	AskMakeRoll, AskVsDifficult, MakeRoll,
 	DoYouSaveForWinter, DoYouStandGroundAndFight, DoYouFearPredators,
 	ChooseTrait,
 	LastMessage = ChooseTrait,

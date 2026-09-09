@@ -24,16 +24,27 @@
 
 character* player;
 character* party[4];
+character* parcipants[4];
 character character_data[32];
+creature creature_data[128];
 
-void character::clear() {
-	memset(this, 0, sizeof(*this));
-	memset(player, 0, sizeof(*player));
-	player->customname = 0xFF;
-	player->gender = Male;
+unsigned char creature::index() const {
+	return this - creature_data;
 }
 
-int character::index() const {
+void creature::clear() {
+	memset((void*)this, 0, sizeof(*this));
+	customname = 0xFF;
+	gender = Male;
+}
+
+void character::clear() {
+	memset((void*)this, 0, sizeof(*this));
+	customname = 0xFF;
+	gender = Male;
+}
+
+unsigned char character::index() const {
 	return this - character_data;
 }
 
@@ -46,3 +57,23 @@ bool character::allow(traitn v) const {
 	default: return true;
 	}
 }
+
+bool character::parcipant() const {
+	for(auto p : parcipants) {
+		if(p==this)
+			return true;
+	}
+	return false;
+}
+
+void character::addparcipant() {
+	if(player->parcipant())
+		return;
+	for(auto& e : parcipants) {
+		if(!e) {
+			e = player;
+			break;
+		}
+	}
+}
+

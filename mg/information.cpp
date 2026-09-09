@@ -41,6 +41,25 @@ static void player_weapon(stringbuilder& sb) {
 	sb.add(player->wears[Weapon].name());
 }
 
+static void parcipants_names(stringbuilder& sb) {
+	auto count = 0;
+	for(auto p : parcipants) {
+		if(p && *p)
+			count++;
+	}
+	auto index = 0;
+	for(auto p : parcipants) {
+		if(p && *p) {
+			if(index==count-1)
+				sb.adds(message_names[And]);
+			else if(index)
+				sb.adds(", ");
+			sb.adds(p->name());
+			index++;
+		}
+	}
+}
+
 template<> void fistatus<skilln>(unsigned char id, stringbuilder& sb) {
 	auto v = (skilln)id;
 	auto n = player->skills[v];
@@ -51,6 +70,7 @@ template<> void fistatus<skilln>(unsigned char id, stringbuilder& sb) {
 
 BSDATA(stringvari) = {
 	{"Class", player_class},
+	{"Parcipants", parcipants_names},
 	{"Player", player_name},
 	{"Weapon", player_weapon},
 };

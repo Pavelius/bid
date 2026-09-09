@@ -88,37 +88,47 @@ struct creature {
 	creaturen		type;
 	gendern			gender;
 	char			nature;
-	unsigned char	customname;
+	unsigned char	customname; // 0xFF if no custom name.
 	short unsigned	birth;
+	skilln			speciality;
 	colorn			skin, ornament;
+	unsigned char	parent; // Your father
 	constexpr explicit operator bool() const { return birth != 0; }
 	const char* name() const { return (customname == 0xFF) ? creature_names[type] : name_names[customname]; }
+	unsigned char index() const;
+	void clear();
 };
 
 struct character : creature, skillable, wearable {
-	arean		home;
-	skilln		speciality, conversation;
-	char		traits[LastTrait + 1];
-	wisef		wises;
-	conditionf	conditions;
-	int index() const;
+	arean			home;
+	skilln			conversation;
+	char			traits[LastTrait + 1];
+	wisef			wises;
+	conditionf		conditions;
+	unsigned char index() const;
+	int get(skilln v) const { return skills[v]; };
 	void add(skilln v, int i) { skills[v] += i; }
 	void add(wisen v) { wises.set(v); }
+	void addparcipant();
 	bool allow(traitn v) const;
 	void clear();
 	bool is(skilln v) const { return skills[v] > 0; }
 	bool is(conditionn v) const { return conditions.is(v); }
 	bool is(traitn v) const { return traits[v] > 0; }
 	bool is(wisen v) const { return wises.is(v); }
+	bool parcipant() const;
 	void setname();
 	void update();
 };
 extern character* player;
 extern character* party[4];
+extern character* parcipants[4];
 extern character character_data[32];
-extern creature	creature_data[64];
+extern creature	creature_data[128];
 
+void add_parcipant(character* player);
 void add_party();
 void create_character();
 void create_character_silent();
+void make_roll(skilln skill, int difficult);
 

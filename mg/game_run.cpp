@@ -19,6 +19,7 @@
 #include "draw.h"
 #include "draw_atg.h"
 #include "game.h"
+#include "message.h"
 #include "print.h"
 #include "pushvalue.h"
 #include "rand.h"
@@ -109,8 +110,8 @@ static void page_skills() {
 }
 
 static void paint_main_menu() {
-	paint_bar(command_names[PageCharacter], page_characters);
-	paint_bar(command_names[PageSkills], page_skills);
+	paint_bar(message_names[PageCharacter], page_characters);
+	paint_bar(message_names[PageSkills], page_skills);
 }
 
 static void initialize_resources() {

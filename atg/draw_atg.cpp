@@ -440,6 +440,10 @@ long choose_answers(const char* title, const char* cancel_text, int columns) {
 	return r;
 }
 
+long choose_answers(messagen title, messagen cancel_text, int columns) {
+	return choose_answers(title ? message_names[title] : 0, cancel_text ? message_names[cancel_text] : 0, columns);
+}
+
 long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel, bool need_sort, int columns) {
 	an.clear();
 	for(auto i = t1; i <= t2; i++) {
@@ -450,6 +454,17 @@ long choose_value(long t1, long t2, fnuctest condition, const char** names, cons
 	if(need_sort)
 		an.sort();
 	return choose_answers(title, cancel, columns);
+}
+
+void pause(const char* format) {
+	if(sb) {
+		choose_answers(0, format);
+		sb.clear();
+	}
+}
+
+void pause() {
+	pause(message_names[1]);
 }
 
 void fixmsg(messagen id) {
