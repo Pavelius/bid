@@ -17,6 +17,7 @@
 #include "answers.h"
 #include "area.h"
 #include "creature.h"
+#include "gender.h"
 #include "message.h"
 #include "rand.h"
 #include "wise.h"
@@ -24,6 +25,13 @@
 character* player;
 character* party[4];
 character character_data[32];
+
+void character::clear() {
+	memset(this, 0, sizeof(*this));
+	memset(player, 0, sizeof(*player));
+	player->customname = 0xFF;
+	player->gender = Male;
+}
 
 int character::index() const {
 	return this - character_data;

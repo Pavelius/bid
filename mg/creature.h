@@ -28,7 +28,6 @@ enum creaturen : unsigned char {
 	Tenderpaw, Guardmouse, PatrolGuard, PatrolLeader, GuardCaptain,
 	LastCreature = GuardCaptain
 };
-
 enum skilln : unsigned char {
 	Nature, Will, Health, Resources, Circles,
 	Administrator, Apiarist, Archivist, Armorer, Baker, Boatcrafter,
@@ -40,7 +39,6 @@ enum skilln : unsigned char {
 	Survivalist, WeatherWatcher, Weaver,
 	LastSkill = Weaver
 };
-
 enum traitn : unsigned char {
 	Alert, Bigpaw, Bitter, Bodyguard, Bold,
 	Brave, Calm, Clever, Compassionate, Cunning,
@@ -56,9 +54,13 @@ enum traitn : unsigned char {
 	WolfsSnout, Young,
 	LastTrait = Young
 };
-
 enum conditionn : unsigned char {
 	HungryAndThirsty, Angry, Tired, Injured, Sick,
+};
+enum colorn : unsigned char {
+	NoColor, White, Black, Gray,
+	Red, Green, Blue, Yellow, Brown,
+	LastColor = Brown,
 };
 
 typedef flagable<1 + LastTrait / 32, unsigned> traitf;
@@ -69,6 +71,7 @@ typedef flagable<1, unsigned> wisef;
 
 const int name_count_per_gender = 33;
 
+extern const char* color_names[LastColor + 1];
 extern const char* creature_names[LastCreature + 1];
 extern const char* name_names[name_count_per_gender * 2];
 extern const char* skill_names[LastSkill + 1];
@@ -87,8 +90,8 @@ struct creature {
 	char			nature;
 	unsigned char	customname;
 	short unsigned	birth;
+	colorn			skin, ornament;
 	constexpr explicit operator bool() const { return birth != 0; }
-	void setbirth(creaturen type);
 };
 
 struct character : creature, skillable, wearable {
@@ -101,6 +104,7 @@ struct character : creature, skillable, wearable {
 	void add(skilln v, int i) { skills[v] += i; }
 	void add(wisen v) { wises.set(v); }
 	bool allow(traitn v) const;
+	void clear();
 	bool is(skilln v) const { return skills[v] > 0; }
 	bool is(conditionn v) const { return conditions.is(v); }
 	bool is(traitn v) const { return traits[v] > 0; }

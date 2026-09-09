@@ -134,6 +134,14 @@ static wisen guard_captain_wises[] = {
 	LockhavenWise, MatriachWise
 };
 
+static colorn fur_colors[] = {
+	Black, White, Gray, Brown
+};
+
+static colorn cloack_colors[] = {
+	Black, Gray, Brown, Red, Green, Blue, Yellow
+};
+
 static int get_life_experience() {
 	switch(player->type) {
 	case Tenderpaw: case GuardCaptain: return 2;
@@ -251,7 +259,7 @@ static void add_value(wisen v) {
 	player->wises.set(v);
 }
 
-static skilln choose_skills(messagen id, slice<skilln> source) {
+static skilln choose(messagen id, slice<skilln> source) {
 	for(auto v : source) {
 		if(!v)
 			continue;
@@ -261,38 +269,30 @@ static skilln choose_skills(messagen id, slice<skilln> source) {
 	return (skilln)choose_answers(message_names[id], 0, -1);
 }
 
-static traitn choose_traits(messagen id) {
-	for(auto n = (traitn)0; n <= LastTrait; n = (traitn)(n + 1))
-		an.add(n, trait_names[n]);
-	an.sort();
-	return (traitn)choose_answers(message_names[id]);
-}
-
-static traitn choose_traits(messagen id, slice<traitn> source) {
+static traitn choose(messagen id, slice<traitn> source) {
 	for(auto n : source)
 		an.add(n, trait_names[n]);
 	an.sort();
 	return (traitn)choose_answers(message_names[id], 0, -1);
 }
 
-static void add_traits(messagen id, traitn t1, traitn t2) {
+static traitn choose(messagen id, traitn t1, traitn t2) {
 	adat<traitn, 4> source;
 	source.add(t1);
 	if(t2)
 		source.add(t2);
-	auto v = choose_traits(id, source);
-	add_value(v);
+	return choose(id, source);
 }
 
 static void choose_birth_place() {
 	for(auto& e : city_data)
 		an.add(e.area, area_names[e.area]);
 	player->home = (arean)choose_answers(message_names[ChooseBirthPlace]);
-	add_value(choose_skills(ChooseBirthPlaceSkill, city_data[player->home].skills));
-	add_traits(ChooseBirthPlaceTrait, city_data[player->home].trait, city_data[player->home].trait_addition);
+	add_value(choose(ChooseBirthPlaceSkill, city_data[player->home].skills));
+	add_value(choose(ChooseBirthPlaceTrait, city_data[player->home].trait, city_data[player->home].trait_addition));
 }
 
-static void choose_skills(messagen id, slice<skilln> source, int count) {
+static void choose(messagen id, slice<skilln> source, int count) {
 	flagable<1 + LastSkill / 32, unsigned> marked_skills;
 	marked_skills.clear();
 	for(auto i = 0; i < count; i++) {
@@ -308,17 +308,19 @@ static void choose_skills(messagen id, slice<skilln> source, int count) {
 	}
 }
 
-static void add_character() {
-	player = 0;
+static colorn choose(messagen id, slice<colorn> source) {
+	for(auto v : source)
+		an.add(v, color_names[v]);
+	an.sort();
+	return (colorn)choose_answers(message_names[id], 0, -1);
+}
+
+static character* new_character() {
 	for(auto& e : character_data) {
-		if(!e) {
-			player = &e;
-			break;
-		}
+		if(!e)
+			return &e;
 	}
-	memset(player, 0, sizeof(*player));
-	player->customname = 0xFF;
-	player->gender = Male;
+	return character_data;
 }
 
 static void add_skill(skilln v) {
@@ -380,7 +382,7 @@ static void choose_nature() {
 	// Do you save for winter?
 	switch(choose_question(DoYouSaveForWinter, Yes, No)) {
 	case 1: add_value(Nature, 1); break;
-	case 2: add_value(choose_traits(ChooseTrait, kind_traits)); break;
+	case 2: add_value(choose(ChooseTrait, kind_traits)); break;
 	default: break;
 	}
 	// Do you stand ground and fight?
@@ -392,7 +394,7 @@ static void choose_nature() {
 	// Do you fear predators?
 	switch(choose_question(DoYouFearPredators, Yes, No)) {
 	case 1: add_value(Nature, 1); break;
-	case 2: add_value(choose_traits(ChooseTrait, fearless_traits)); break;
+	case 2: add_value(choose(ChooseTrait, fearless_traits)); break;
 	default: break;
 	}
 }
@@ -434,13 +436,13 @@ static void choose_wises() {
 }
 
 static void choose_traits() {
-	add_value(choose_traits(ChooseTrait, general_traits));
+	add_value(choose(ChooseTrait, general_traits));
 	switch(player->type) {
 	case Tenderpaw:
-		add_value(choose_traits(ChooseTrait, tenderpaw_traits));
+		add_value(choose(ChooseTrait, tenderpaw_traits));
 		break;
 	case GuardCaptain: case PatrolLeader:
-		add_value(choose_traits(ChooseTrait, life_on_road_traits));
+		add_value(choose(ChooseTrait, life_on_road_traits));
 		break;
 	default:
 		break;
@@ -469,22 +471,25 @@ static void choose_name() {
 }
 
 void create_character() {
-	add_character();
+	player = new_character();
+	player->clear();
 	choose_name();
 	choose_rang();
 	add_party();
 	choose_birth_place();
-	choose_skills(ChooseLifeExperience, general_skills, get_life_experience());
-	auto parent_skills = choose_skills(ChooseParentProffession, parent_profession_skills); add_skill(parent_skills);
-	player->conversation = choose_skills(ChooseConversationSkills, conversation_skills); add_skill(player->conversation);
-	auto senior_artisan = choose_skills(ChooseSeniorArtisanTeaching, senior_artisan_skills); add_skill(senior_artisan);
-	choose_skills(ChooseMentorTeaching, mentor_stressing_skills, get_mentor_stressing());
-	player->speciality = choose_skills(ChooseYouSpeciality, mentor_stressing_skills); add_skill(player->speciality);
+	choose(ChooseLifeExperience, general_skills, get_life_experience());
+	auto parent_skills = choose(ChooseParentProffession, parent_profession_skills); add_skill(parent_skills);
+	player->conversation = choose(ChooseConversationSkills, conversation_skills); add_skill(player->conversation);
+	auto senior_artisan = choose(ChooseSeniorArtisanTeaching, senior_artisan_skills); add_skill(senior_artisan);
+	choose(ChooseMentorTeaching, mentor_stressing_skills, get_mentor_stressing());
+	player->speciality = choose(ChooseYouSpeciality, mentor_stressing_skills); add_skill(player->speciality);
 	choose_nature();
 	choose_wises();
 	choose_resources();
 	choose_circles();
 	choose_traits();
+	player->skin = choose(ChooseFurColor, fur_colors);
+	player->ornament = choose(ChooseCloackColor, cloack_colors);
 }
 
 void create_character_silent() {

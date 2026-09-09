@@ -155,6 +155,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="message.h" />
+    <ClInclude Include="variant.h" />
     <ClInclude Include="wise.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

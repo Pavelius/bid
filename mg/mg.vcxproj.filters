@@ -20,5 +20,6 @@
     <ClInclude Include="area.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="wise.h" />
+    <ClInclude Include="variant.h" />
   </ItemGroup>
 </Project>
