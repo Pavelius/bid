@@ -32,6 +32,7 @@ enum creaturen : unsigned char {
 };
 enum skilln : unsigned char {
 	Nature, Will, Health, Resources, Circles,
+	FreeChecks, PersonaPoints, FatePoints,
 	Administrator, Apiarist, Archivist, Armorer, Baker, Boatcrafter,
 	Brewer, Carpenter, Cartographer, Cook, Fighter,
 	Glazier, Haggler, Harvester, Healer, Hunter,
@@ -54,7 +55,8 @@ enum traitn : unsigned char {
 	Skinny, SteadyPaws, Stoic, Stubborn, Suspicious,
 	Tall, Thoughtful, Tough, WeatherSense, Wise,
 	WolfsSnout, Young,
-	LastTrait = Young
+	LastTrait = Young,
+	NoTrait = 0xFF
 };
 enum wisen : unsigned char {
 	BarkstoneWise, CopperwoodWise, ElmossWise, IvydaleWise, LockhavenWise, PortSumacWise, ShaleburrowWise, SprucetuckWise,
@@ -136,10 +138,11 @@ extern character* parcipants[4];
 extern character character_data[32];
 extern creature	creature_data[128];
 
-void add_parcipant(character* player);
 void add_party();
 bool can_use_wise(wisen v);
 void create_character();
 void create_character_silent();
-void make_roll(skilln skill, int difficult);
+
+int make_roll(skilln skill, int difficult);
+int make_roll_silent(skilln skill, int difficult);
 

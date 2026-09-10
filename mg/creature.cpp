@@ -34,6 +34,7 @@ unsigned char creature::index() const {
 void creature::clear() {
 	memset((void*)this, 0, sizeof(*this));
 	customname = 0xFF;
+	parent = 0xFF;
 	gender = Male;
 }
 
@@ -64,15 +65,3 @@ bool character::parcipant() const {
 	}
 	return false;
 }
-
-void add_parcipant(character* p) {
-	if(p->parcipant())
-		return;
-	for(auto& e : parcipants) {
-		if(!e) {
-			e = p;
-			break;
-		}
-	}
-}
-

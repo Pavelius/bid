@@ -60,6 +60,20 @@ static void parcipants_names(stringbuilder& sb) {
 	}
 }
 
+static void rolled_dices_result(stringbuilder& sb) {
+	auto ps = sb.get(); ps[0] = 0;
+	for(auto n : roll_dices) {
+		if(!n)
+			break;
+		if(ps[0])
+			sb.add(", ");
+		if(n >= 4)
+			sb.add("[%1i]", n);
+		else
+			sb.add("%1i", n);
+	}
+}
+
 template<> void fistatus<skilln>(unsigned char id, stringbuilder& sb) {
 	auto v = (skilln)id;
 	auto n = player->skills[v];
@@ -72,6 +86,7 @@ BSDATA(stringvari) = {
 	{"Class", player_class},
 	{"Parcipants", parcipants_names},
 	{"Player", player_name},
+	{"RolledDices", rolled_dices_result},
 	{"Weapon", player_weapon},
 };
 BSDATAF(stringvari)

@@ -19,8 +19,10 @@
 #include "creature.h"
 #include "game.h"
 #include "gender.h"
+#include "math.h"
 #include "message.h"
 #include "pushvalue.h"
+#include "rand.h"
 #include "slice.h"
 #include "stringbuilder.h"
 #include "variant.h"
@@ -29,7 +31,7 @@ struct rolluse {
 	variant	type;
 	character* player;
 	int param;
-	constexpr explicit operator bool() const { return player!=0; }
+	constexpr explicit operator bool() const { return player != 0; }
 	void clear() { memset((void*)this, 0, sizeof(*this)); }
 };
 
@@ -53,9 +55,10 @@ struct wiseuse {
 
 static skilluse skill_use[LastSkill + 1] = {
 	{Nature}, {Will}, {Health}, {Resources}, {Circles},
+	{}, {}, {},
 	{Administrator, Will, {Archivist, Orator}},
-	{Apiarist, Will,{Scientist, Insectrist, Loremouse}},
-	{Archivist, Will,{Cartographer, Administrator}},
+	{Apiarist, Will, {Scientist, Insectrist, Loremouse}},
+	{Archivist, Will, {Cartographer, Administrator}},
 	{Armorer, Health, {Smith, Scientist}},
 	{Baker, Health, {Scientist}},
 	{Boatcrafter, Health, {Carpenter, Scientist}},
@@ -149,11 +152,11 @@ static traituse trait_use[LastTrait + 1] = {
 	{Young},
 };
 
-static wiseuse wise_use_data[] = {
+static wiseuse wise_use[] = {
 	{LegendsWise, {Manipulator, Orator, Persuader, Scientist, Insectrist, Loremouse, Hunter, Pathfinder}},
 };
 
-static variant wise_data[LastWise + 1] = {
+static variant wise_context[LastWise + 1] = {
 	Barkstone, Copperwood, Elmoss, Ivydale, Lockhaven, PortSumac, Shaleburrow, Sprucetuck,
 	Forest, Lakes, Streams, TallGrass, Swamps, Mud, Thorns, LeafCover, RockyTerrain, Coast, OpenGround,
 	Darkheather,
@@ -166,9 +169,9 @@ static skilln roll_skill;
 char roll_base, roll_result, roll_difficult, roll_dices[16];
 
 bool can_use_wise(wisen v) {
-	auto data = wise_data[v];
-	switch(data.type) {
-	case Area: return data.value == location;
+	auto context = wise_context[v];
+	switch(context.type) {
+	case Area: return context.value == location;
 	default: return false;
 	}
 }
@@ -177,9 +180,9 @@ static bool can_help_trait(traitn v) {
 	return false;
 }
 
-static bool ishelp(variantn type) {
+static bool use(variantn type) {
 	for(auto& e : roll_use) {
-		if(e && e.type.type==type)
+		if(e && e.type.type == type)
 			return &e;
 	}
 	return 0;
@@ -187,7 +190,7 @@ static bool ishelp(variantn type) {
 
 static rolluse* find_help(variant type, character* player, int param) {
 	for(auto& e : roll_use) {
-		if(e.type==type && e.player==player && e.param==param)
+		if(e.type == type && e.player == player && e.param == param)
 			return &e;
 	}
 	return 0;
@@ -225,13 +228,13 @@ static void add_impende() {
 	breakmodal(Continue);
 }
 
-static wisen find_wise(variant v) {
-	for(auto& e : wise_data) {
-		if(e==v)
-			return wisen(&e - wise_data);
-	}
-	return NoWise;
-}
+//static wisen find_wise(variant v) {
+//	for(auto& e : wise_context) {
+//		if(e == v)
+//			return wisen(&e - wise_context);
+//	}
+//	return NoWise;
+//}
 
 static skilln can_help(character* p, skilln skill) {
 	if(p->skills[skill] > 0)
@@ -263,7 +266,7 @@ static void add_help_skill() {
 }
 
 static void add_help_iam_wise() {
-	if(ishelp(WiseVariant))
+	if(use(WiseVariant))
 		return;
 	for(auto p : party) {
 		if(!p)
@@ -278,19 +281,30 @@ static void add_help_iam_wise() {
 }
 
 static void add_help_trait() {
-	if(ishelp(Trait))
+	if(use(Trait))
 		return;
 	for(auto n = (traitn)0; n <= LastTrait; n = (traitn)(n + 1)) {
 		auto level = player->traits[n];
-		if(level>=3 || level==0)
+		if(level >= 3 || level == 0)
 			continue;
-		if(player->traits_use[n]>=level)
+		if(player->traits_use[n] >= level)
 			continue;
 		if(trait_use[n].benefit.is(roll_skill))
 			an.addp(add_benefit, variant(n), player, message_names[AskTraitBenefit], player->name(), trait_names[n]);
 		if(trait_use[n].penalty.is(roll_skill))
 			an.addp(add_impende, variant(n), player, message_names[AskTraitImpende], player->name(), trait_names[n]);
 	}
+}
+
+static traitn get_active_trait() {
+	for(auto n = (traitn)0; n <= LastTrait; n = (traitn)(n + 1)) {
+		auto level = player->traits[n];
+		if(level == 0)
+			continue;
+		if(trait_use[n].penalty.is(roll_skill))
+			return n;
+	}
+	return NoTrait;
 }
 
 static void update_roll_result() {
@@ -325,6 +339,33 @@ static void fixgroup(stringbuilder& sb, messagen id) {
 	sb.adds(message_names[id]);
 }
 
+static int get_dices_result(int margin) {
+	auto r = 0;
+	for(auto n : roll_dices) {
+		if(n && n >= margin)
+			r++;
+	}
+	return r;
+}
+
+static int compare_dice(const void* v1, const void* v2) {
+	return *((char*)v2) - *((char*)v1);
+}
+
+static void make_roll_dices(int count) {
+	for(auto i = 0; i < count; i++)
+		roll_dices[i] = 1 + rand() % 6;
+	qsort(roll_dices, sizeof(roll_dices), sizeof(roll_dices[0]), compare_dice);
+}
+
+static void reroll_dices(int what) {
+	for(auto i = 0; i < sizeof(roll_dices) / sizeof(roll_dices[0]); i++) {
+		if(roll_dices[i] >= what)
+			roll_dices[i] = 1 + rand() % 6;
+	}
+	qsort(roll_dices, sizeof(roll_dices), sizeof(roll_dices[0]), compare_dice);
+}
+
 static void apply_before_roll() {
 	char temp[260]; stringbuilder sb(temp);
 	while(true) {
@@ -342,23 +383,54 @@ static void apply_before_roll() {
 		add_help_iam_wise();
 		if(roll_use[0])
 			an.addp(clear_roll_use, 0, 0, message_names[AskClearAllAndStartAgain]);
-		auto result = choose_answers(temp, message_names[MakeRoll], 1);
-		if(!result)
+		if(!choose_answers(temp, message_names[MakeRoll], 1))
 			break; // Start roll
 	}
 }
 
-int make_roll_silent(skilln skill, int difficult) {
-	return 0;
+static int apply_after_roll() {
+	char temp[260]; stringbuilder sb(temp);
+	make_roll_dices(roll_result);
+	while(true) {
+		roll_result = get_dices_result(4);
+		sb.clear();
+		sb.adds(message_names[MsgRollResult], roll_result);
+		if(roll_difficult)
+			sb.adds(message_names[MsgVsDifficult], roll_difficult);
+		sb.add(".");
+		if(roll_difficult > 0) {
+			if(roll_result > roll_difficult)
+				sb.adds("[%1].", message_names[Passed]);
+			else if(roll_result < roll_difficult)
+				sb.adds("[-%1].", message_names[Failed]);
+			else
+				sb.adds("[-%1].", message_names[Tied]);
+		}
+		roll_result -= roll_difficult;
+		// Break tie
+		if(!roll_result) {
+			auto trait = get_active_trait();
+			if(trait != NoTrait)
+				an.add(Tied, message_names[AskTraitBreakTie], trait_names[trait]);
+		}
+		auto result = choose_answers(temp, message_names[ApplyRollResult], 1);
+		if(!result) {
+			return roll_result;
+		} else if(result == Tied)
+			return -1;
+	}
 }
 
-void make_roll(skilln skill, int difficult) {
+int make_roll(skilln skill, int difficult) {
 	clear_roll_use();
 	roll_skill = skill;
 	roll_base = player->get(skill);
 	roll_difficult = difficult;
 	apply_before_roll();
+	return apply_after_roll();
 }
 
-
-
+int make_roll_silent(skilln skill, int difficult) {
+	make_roll_dices(player->get(skill));
+	return imax(0, get_dices_result(4) - difficult);
+}

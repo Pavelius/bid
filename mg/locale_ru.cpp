@@ -1,19 +1,3 @@
-/*
-	Copyright 2026 by Pavel Chistyakov
-
-	Licensed under the Apache License, Version 2.0 (the "License");
-	you may not use this file except in compliance with the License.
-	You may obtain a copy of the License at
-
-	http://www.apache.org/licenses/LICENSE-2.0
-
-	Unless required by applicable law or agreed to in writing, software
-	distributed under the License is distributed on an "AS IS" BASIS,
-	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	See the License for the specific language governing permissions and
-	limitations under the License.77
-*/
-
 #include "area.h"
 #include "creature.h"
 #include "game.h"
@@ -21,20 +5,9 @@
 #include "stringbuilder.h"
 #include "stringset.h"
 
-const char* creature_names[LastCreature + 1] = {
-	"Крестьянин",
-	"Новичек", "Страж", "Патрульный", "Лидер", "Капитан"
-};
-
-const char* item_names[LastItem + 1] = {
-	"Нет",
-	"Топор", "Лук", "Алебарда", "Крюк на палке", "Нож", "Щит", "Пращя", "Копье", "Посох", "Меч",
-	"Легкая броня", "Тяжелая броня"
-};
-
 const char* message_names[LastMessage + 1] = {
 	"Mouse guard 0.1", "Продолжить", "Отменить", "Да", "Нет", "и",
-	"Пройдено", "Провалено",
+	"Пройдено", "Провалено", "Ничья",
 	"Персонаж", "Навыки", "Предметы", "Сражение",
 	"Выбирайте имя персонажа",
 	"Выбирайте знания персонажа",
@@ -54,16 +27,30 @@ const char* message_names[LastMessage + 1] = {
 	"против сложности [%1i]",
 	"Бросайте [%1i] кубиков.",
 	"%Parcipants приним%ает участие.",
+	"Результат броска %RolledDices",
 	"%1 поможет своим навыком %2, что даст +1К.",
 	"%1 умный и может применить %2, что даст +1К.",
 	"Особенность [+%2] даст бонус +1К.",
-	"Особенность [+%2] ограничит на -1К, но даст [1] проверочный бросок.",
+	"Особенность [+%2] ограничит на -1К, но даст [++1] проверку на ходе игрока.",
+	"Использовать особенность [+%1] для разрешения ничьи не в вашу пользу. Вы получите [++2] проверки на ходе игрока, но провалите бросок.",
 	"Очистить все и начать сначала.",
 	"Выполнить бросок кубиков.",
+	"Принять результат броска.",
 	"Вы будете готовиться к зиме, даже если прямо сейчас в этом нет необходимости?",
 	"Когда вступаете в конфронтацию вы готовы стоять и драться или будете бежать и прятаться?",
 	"Вы боитесь сов, ласок или волков?",
 	"Выбирайте особенность",
+};
+
+const char* creature_names[LastCreature + 1] = {
+	"Крестьянин",
+	"Новичек", "Страж", "Патрульный", "Лидер", "Капитан"
+};
+
+const char* item_names[LastItem + 1] = {
+	"Нет",
+	"Топор", "Лук", "Алебарда", "Крюк на палке", "Нож", "Щит", "Пращя", "Копье", "Посох", "Меч",
+	"Легкая броня", "Тяжелая броня"
 };
 
 const char* area_names[LastArea + 1] = {
@@ -72,6 +59,7 @@ const char* area_names[LastArea + 1] = {
 
 const char* skill_names[LastSkill + 1] = {
 	"Натура", "Воля", "Здоровье", "Ресурсы", "Связи",
+	"Проверки", "Очко личности", "Очко судьбы",
 	"Администратор", "Пчеловод", "Архивариус", "Оружейник", "Пекарь",
 	"Лодочник", "Пивовар", "Плотник", "Картограф", "Повар",
 	"Боец", "Стекольщик", "Торгаш", "Жнец", "Целитель",

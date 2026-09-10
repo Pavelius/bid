@@ -18,13 +18,14 @@
 
 enum messagen : unsigned char {
 	NoMessage, Continue, Cancel, Yes, No, And,
-	Passed, Failed,
+	Passed, Failed, Tied,
 	PageCharacter, PageSkills, PageItems, PageCombatants,
 	ChooseName, ChooseWises, ChooseFurColor, ChooseCloackColor,
 	ChooseGuardRang, ChooseBirthPlace, ChooseBirthPlaceSkill, ChooseBirthPlaceTrait, ChooseLifeExperience,
 	ChooseParentProffession, ChooseConversationSkills, ChooseSeniorArtisanTeaching, ChooseMentorTeaching, ChooseYouSpeciality,
-	MsgMakeRoll, MsgVsDifficult, MsgNumberDicesRoll, MsgParcipants,
-	AskCanHelp, AskCanHelpWise, AskTraitBenefit, AskTraitImpende, AskClearAllAndStartAgain, MakeRoll,
+	MsgMakeRoll, MsgVsDifficult, MsgNumberDicesRoll, MsgParcipants, MsgRollResult,
+	AskCanHelp, AskCanHelpWise, AskTraitBenefit, AskTraitImpende, AskTraitBreakTie, AskClearAllAndStartAgain,
+	MakeRoll, ApplyRollResult,
 	DoYouSaveForWinter, DoYouStandGroundAndFight, DoYouFearPredators,
 	ChooseTrait,
 	LastMessage = ChooseTrait,

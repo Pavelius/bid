@@ -514,6 +514,8 @@ void create_character() {
 	choose_traits();
 	player->skin = choose(ChooseFurColor, fur_colors);
 	player->ornament = choose(ChooseCloackColor, cloack_colors);
+	player->add(PersonaPoints, 1);
+	player->add(FatePoints, 1);
 }
 
 void create_character_silent() {
