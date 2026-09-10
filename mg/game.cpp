@@ -15,6 +15,7 @@
 */
 
 #include "answers.h"
+#include "area.h"
 #include "creature.h"
 #include "draw_atg.h"
 #include "game.h"
@@ -22,6 +23,7 @@
 
 void create_game() {
 	answer_picture = ImageSwearn;
+	location = Copperwood;
 	create_character_silent();
 	create_character_silent();
 	create_character_silent();

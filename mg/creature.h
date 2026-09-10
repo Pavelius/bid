@@ -112,11 +112,11 @@ struct creature {
 };
 
 struct character : creature, skillable, wearable {
-	arean			home;
-	skilln			conversation;
-	char			traits[LastTrait + 1], traits_use[LastTrait + 1];
-	wisef			wises;
-	conditionf		conditions;
+	arean		home;
+	skilln		conversation;
+	char		traits[LastTrait + 1], traits_use[LastTrait + 1];
+	wisef		wises, wises_success, wises_fail, wises_deeper, wises_ofcourse;
+	conditionf	conditions;
 	unsigned char index() const;
 	int get(skilln v) const { return skills[v]; };
 	void add(skilln v, int i) { skills[v] += i; }
@@ -129,7 +129,6 @@ struct character : creature, skillable, wearable {
 	bool is(wisen v) const { return wises.is(v); }
 	bool parcipant() const;
 	void setname();
-	void update();
 };
 
 extern character* player;
@@ -139,10 +138,9 @@ extern character character_data[32];
 extern creature	creature_data[128];
 
 void add_party();
-bool can_use_wise(wisen v);
 void create_character();
 void create_character_silent();
 
-int make_roll(skilln skill, int difficult);
+int make_roll(skilln skill, int difficult, bool mark_progress = true);
 int make_roll_silent(skilln skill, int difficult);
 

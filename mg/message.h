@@ -24,7 +24,7 @@ enum messagen : unsigned char {
 	ChooseGuardRang, ChooseBirthPlace, ChooseBirthPlaceSkill, ChooseBirthPlaceTrait, ChooseLifeExperience,
 	ChooseParentProffession, ChooseConversationSkills, ChooseSeniorArtisanTeaching, ChooseMentorTeaching, ChooseYouSpeciality,
 	MsgMakeRoll, MsgVsDifficult, MsgNumberDicesRoll, MsgParcipants, MsgRollResult,
-	AskCanHelp, AskCanHelpWise, AskTraitBenefit, AskTraitImpende, AskTraitBreakTie, AskClearAllAndStartAgain,
+	AskCanHelp, AskCanHelpWise, AskUseOfCourseWise, AskUseDeeperWise, AskTraitBenefit, AskTraitImpende, AskTraitBreakTie, AskClearAllAndStartAgain,
 	MakeRoll, ApplyRollResult,
 	DoYouSaveForWinter, DoYouStandGroundAndFight, DoYouFearPredators,
 	ChooseTrait,

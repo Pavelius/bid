@@ -168,7 +168,7 @@ static skilln roll_skill;
 
 char roll_base, roll_result, roll_difficult, roll_dices[16];
 
-bool can_use_wise(wisen v) {
+static bool can_use_wise(wisen v) {
 	auto context = wise_context[v];
 	switch(context.type) {
 	case Area: return context.value == location;
@@ -176,7 +176,7 @@ bool can_use_wise(wisen v) {
 	}
 }
 
-static bool can_help_trait(traitn v) {
+static bool can_use_trait(traitn v) {
 	return false;
 }
 
@@ -188,6 +188,16 @@ static bool use(variantn type) {
 	return 0;
 }
 
+static int compare_dice(const void* v1, const void* v2) {
+	return *((char*)v2) - *((char*)v1);
+}
+
+static void make_roll_dices(int count) {
+	for(auto i = 0; i < count; i++)
+		roll_dices[i] = 1 + rand() % 6;
+	qsort(roll_dices, sizeof(roll_dices), sizeof(roll_dices[0]), compare_dice);
+}
+
 static rolluse* find_help(variant type, character* player, int param) {
 	for(auto& e : roll_use) {
 		if(e.type == type && e.player == player && e.param == param)
@@ -196,18 +206,17 @@ static rolluse* find_help(variant type, character* player, int param) {
 	return 0;
 }
 
-static rolluse* new_help() {
-	for(auto& e : roll_use) {
-		if(!e)
-			return &e;
-	}
-	return roll_use;
-}
-
 static void add_help(variant type, character* player, int param) {
 	auto p = find_help(type, player, param);
-	if(!p)
-		p = new_help();
+	if(!p) {
+		p = roll_use;
+		for(auto& e : roll_use) {
+			if(!e) {
+				p = &e;
+				break;
+			}
+		}
+	}
 	p->type = type;
 	p->player = player;
 	p->param = param;
@@ -227,14 +236,6 @@ static void add_impende() {
 	add_help((short unsigned)hparam, (character*)hobject, -1);
 	breakmodal(Continue);
 }
-
-//static wisen find_wise(variant v) {
-//	for(auto& e : wise_context) {
-//		if(e == v)
-//			return wisen(&e - wise_context);
-//	}
-//	return NoWise;
-//}
 
 static skilln can_help(character* p, skilln skill) {
 	if(p->skills[skill] > 0)
@@ -312,11 +313,32 @@ static void update_roll_result() {
 	auto ps = parcipants;
 	for(auto& e : roll_use) {
 		switch(e.type.type) {
-		case WiseVariant: roll_result += e.param; break;
+		case WiseVariant: roll_result += 1; break;
 		case Skill: roll_result += 1; *ps++ = e.player; break;
-		case Trait: roll_result += 1; break;
+		case Trait: roll_result += e.param; break;
 		default: break;
 		}
+	}
+}
+
+static void mark_trait_use() {
+	for(auto& e : roll_use) {
+		if(e.type.type == Trait)
+			e.player->traits_use[e.param]++;
+	}
+}
+
+static void mark_iam_wise_success() {
+	for(auto& e : roll_use) {
+		if(e.type.type == Trait)
+			e.player->wises_success.set(e.param);
+	}
+}
+
+static void mark_iam_wise_fail() {
+	for(auto& e : roll_use) {
+		if(e.type.type == Trait)
+			e.player->wises_success.set(e.param);
 	}
 }
 
@@ -348,24 +370,6 @@ static int get_dices_result(int margin) {
 	return r;
 }
 
-static int compare_dice(const void* v1, const void* v2) {
-	return *((char*)v2) - *((char*)v1);
-}
-
-static void make_roll_dices(int count) {
-	for(auto i = 0; i < count; i++)
-		roll_dices[i] = 1 + rand() % 6;
-	qsort(roll_dices, sizeof(roll_dices), sizeof(roll_dices[0]), compare_dice);
-}
-
-static void reroll_dices(int what) {
-	for(auto i = 0; i < sizeof(roll_dices) / sizeof(roll_dices[0]); i++) {
-		if(roll_dices[i] >= what)
-			roll_dices[i] = 1 + rand() % 6;
-	}
-	qsort(roll_dices, sizeof(roll_dices), sizeof(roll_dices[0]), compare_dice);
-}
-
 static void apply_before_roll() {
 	char temp[260]; stringbuilder sb(temp);
 	while(true) {
@@ -388,10 +392,90 @@ static void apply_before_roll() {
 	}
 }
 
+static int failed_dices() {
+	auto r = 0;
+	for(auto n : roll_dices) {
+		if(n && n < 4)
+			r++;
+	}
+	return r;
+}
+
+static void apply_of_cource() {
+	auto p = (character*)hobject;
+	auto n = (traitn)hparam;
+	p->add(PersonaPoints, -1);
+	p->wises_ofcourse.set(n);
+	// Reroll all failed dices
+	for(auto& e : roll_dices) {
+		if(e && e < 4)
+			e = 1 + rand() % 6;
+	}
+	breakmodal();
+}
+
+static void add_of_course_wises() {
+	if(!failed_dices())
+		return;
+	for(auto p : party) {
+		if(!p)
+			continue;
+		if(!p->get(PersonaPoints))
+			continue;
+		for(auto n = (wisen)0; n <= LastWise; n = (wisen)(n + 1)) {
+			if(!can_use_wise(n))
+				continue;
+			if(p->is(n))
+				an.addp(apply_of_cource, n, p, message_names[AskUseOfCourseWise], p->name(), wise_names[n]);
+		}
+	}
+}
+
+static void apply_deeper_undestand() {
+	auto p = (character*)hobject;
+	auto n = (traitn)hparam;
+	p->add(FatePoints, -1);
+	p->wises_deeper.set(n);
+	// Reroll all failed dices
+	for(auto& e : roll_dices) {
+		if(e && e < 4) {
+			e = 1 + rand() % 6;
+			break; // Just sigle one
+		}
+	}
+	breakmodal();
+}
+
+static void add_deeper_undestand_wises() {
+	if(!failed_dices())
+		return;
+	for(auto p : party) {
+		if(!p)
+			continue;
+		if(!p->get(FatePoints))
+			continue;
+		for(auto n = (wisen)0; n <= LastWise; n = (wisen)(n + 1)) {
+			if(!can_use_wise(n))
+				continue;
+			if(p->is(n))
+				an.addp(apply_deeper_undestand, n, p, message_names[AskUseDeeperWise], p->name(), wise_names[n]);
+		}
+	}
+}
+
+static void add_break_tie_trait() {
+	if(!roll_result) {
+		auto trait = get_active_trait();
+		if(trait != NoTrait)
+			an.add(Tied, message_names[AskTraitBreakTie], trait_names[trait]);
+	}
+}
+
 static int apply_after_roll() {
 	char temp[260]; stringbuilder sb(temp);
 	make_roll_dices(roll_result);
 	while(true) {
+		qsort(roll_dices, sizeof(roll_dices), sizeof(roll_dices[0]), compare_dice);
 		roll_result = get_dices_result(4);
 		sb.clear();
 		sb.adds(message_names[MsgRollResult], roll_result);
@@ -400,34 +484,45 @@ static int apply_after_roll() {
 		sb.add(".");
 		if(roll_difficult > 0) {
 			if(roll_result > roll_difficult)
-				sb.adds("[%1].", message_names[Passed]);
+				sb.adds("[+%1].", message_names[Passed]);
 			else if(roll_result < roll_difficult)
 				sb.adds("[-%1].", message_names[Failed]);
 			else
-				sb.adds("[-%1].", message_names[Tied]);
+				sb.adds("%1.", message_names[Tied]);
 		}
 		roll_result -= roll_difficult;
-		// Break tie
-		if(!roll_result) {
-			auto trait = get_active_trait();
-			if(trait != NoTrait)
-				an.add(Tied, message_names[AskTraitBreakTie], trait_names[trait]);
-		}
+		add_break_tie_trait();
+		add_of_course_wises();
+		add_deeper_undestand_wises();
 		auto result = choose_answers(temp, message_names[ApplyRollResult], 1);
 		if(!result) {
 			return roll_result;
-		} else if(result == Tied)
+		} else if(result == Tied) {
+			player->add(FreeChecks, 2);
 			return -1;
+		}
 	}
 }
 
-int make_roll(skilln skill, int difficult) {
+int make_roll(skilln skill, int difficult, bool mark_progress) {
 	clear_roll_use();
 	roll_skill = skill;
 	roll_base = player->get(skill);
 	roll_difficult = difficult;
 	apply_before_roll();
-	return apply_after_roll();
+	mark_trait_use();
+	auto result = apply_after_roll();
+	if(mark_progress) {
+		if(result > 0)
+			player->success[skill]++;
+		else
+			player->fail[skill]++;
+	}
+	if(result > 0)
+		mark_iam_wise_success();
+	else
+		mark_iam_wise_fail();
+	return result;
 }
 
 int make_roll_silent(skilln skill, int difficult) {
