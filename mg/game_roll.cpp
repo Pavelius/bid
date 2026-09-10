@@ -23,6 +23,14 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
+struct rolluse {
+	variant	type;
+	character* player;
+	int param;
+	constexpr explicit operator bool() const { return player!=0; }
+	void clear() { memset((void*)this, 0, sizeof(*this)); }
+};
+
 struct skilluse {
 	skilln id;
 	skilln basic;
@@ -36,7 +44,7 @@ struct traituse {
 	skillf benefit, penalty;
 };
 
-struct wiseusei {
+struct wiseuse {
 	wisen id;
 	skillf help;
 };
@@ -87,6 +95,12 @@ static traituse trait_use[LastTrait + 1] = {
 	{Bold, {Fighter, Scout, Pathfinder, Haggler, Hunter, Laborer, Militarist}, {Fighter, Scout, Pathfinder, Haggler, Harvester, Hunter, Laborer, Militarist}},
 	{Brave, {Apiarist, Fighter, Hunter, Insectrist, Militarist, Orator}, {Manipulator}},
 	{Calm, {Administrator, Haggler, Healer, Manipulator, Scientist}, {Orator, Persuader}},
+	{Cleaver, {Administrator, Apiarist, Archivist, Cartographer, Haggler, Healer, Insectrist, Loremouse, Manipulator, Militarist, Orator, Persuader, Scientist, WeatherWatcher}, {Fighter, Hunter, Harvester, Laborer}},
+	{Compassionate, {Haggler, Orator, Healer, Persuader}, {Fighter, Insectrist, Manipulator, Loremouse}},
+};
+
+static wiseuse wise_use_data[] = {
+	{LegendsWise, {Manipulator, Orator, Persuader, Scientist, Insectrist, Loremouse, Hunter, Pathfinder}},
 };
 
 static variant wise_data[LastWise + 1] = {
@@ -95,18 +109,7 @@ static variant wise_data[LastWise + 1] = {
 	Darkheather,
 };
 
-static wiseusei wise_use_data[] = {
-	{LegendsWise, {Manipulator, Orator, Persuader, Scientist, Insectrist, Loremouse, Hunter, Pathfinder}},
-};
-
-struct rolli {
-	variant	type;
-	character* player;
-	int param;
-	constexpr explicit operator bool() const { return player!=0; }
-	void clear() { memset((void*)this, 0, sizeof(*this)); }
-};
-static rolli roll_data[8];
+static rolluse roll_use[8];
 
 static skilln roll_skill;
 
@@ -125,27 +128,27 @@ static bool can_help_trait(traitn v) {
 }
 
 static bool ishelp(variantn type) {
-	for(auto& e : roll_data) {
+	for(auto& e : roll_use) {
 		if(e && e.type.type==type)
 			return &e;
 	}
 	return 0;
 }
 
-static rolli* find_help(variant type, character* player, int param) {
-	for(auto& e : roll_data) {
+static rolluse* find_help(variant type, character* player, int param) {
+	for(auto& e : roll_use) {
 		if(e.type==type && e.player==player && e.param==param)
 			return &e;
 	}
 	return 0;
 }
 
-static rolli* new_help() {
-	for(auto& e : roll_data) {
+static rolluse* new_help() {
+	for(auto& e : roll_use) {
 		if(!e)
 			return &e;
 	}
-	return roll_data;
+	return roll_use;
 }
 
 static void add_help(variant type, character* player, int param) {
@@ -244,22 +247,19 @@ static void add_help_trait() {
 	}
 }
 
-static long choose_before_roll() {
-	char temp[260]; stringbuilder sb(temp);
-	sb.adds(message_names[MsgMakeRoll], player->name(), skill_names[roll_skill]);
-	if(roll_difficult)
-		sb.adds(message_names[MsgVsDifficult], roll_difficult);
-	sb.add(".");
-	sb.adds(message_names[MsgNumberDicesRoll], roll_base);
-	add_help_trait();
-	add_help_skill();
-	add_help_iam_wise();
-	return choose_answers(temp, message_names[MakeRoll], 1);
-}
-
 static void apply_before_roll() {
+	char temp[260]; stringbuilder sb(temp);
 	while(true) {
-		auto result = choose_before_roll();
+		sb.clear();
+		sb.adds(message_names[MsgMakeRoll], player->name(), skill_names[roll_skill]);
+		if(roll_difficult)
+			sb.adds(message_names[MsgVsDifficult], roll_difficult);
+		sb.add(".");
+		sb.adds(message_names[MsgNumberDicesRoll], roll_base);
+		add_help_trait();
+		add_help_skill();
+		add_help_iam_wise();
+		auto result = choose_answers(temp, message_names[MakeRoll], 1);
 		if(!result)
 			break; // Start roll
 	}
