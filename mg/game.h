@@ -18,8 +18,6 @@
 
 struct character;
 
-enum messagen : unsigned char;
-
 enum picturen : unsigned char {
 	ImageBoating, ImageCity, ImageCityElm, ImageWeapon, ImageTreasureFound,
 	ImageHamlet, ImageInvestigateRoom, ImageKingFight, ImageParty, ImageSwearn,
@@ -33,6 +31,5 @@ extern int last_number;
 extern char roll_difficult, roll_dices[16];
 
 void apply_result();
-long choose_answers(messagen title, messagen cancel_text = (messagen)0, int columns = 1);
 void create_game();
 void pause();

@@ -160,7 +160,7 @@ struct surface {
 	void write(const char* url, color* pallette);
 };
 
-extern long	hparam, hparam2; // Command context or parameters
+extern long	hparam; // Command context or parameters
 extern const void* hobject; // Command object
 
 extern color fore, fore_stroke;
@@ -240,7 +240,7 @@ void circlef(int size);
 void dragdrop(fnevent proc);
 void fillform();
 void fillwindow();
-void fire(fnevent proc, long param = 0, long param2 = 0, const void* object = 0);
+void fire(fnevent proc, long param = 0, const void* object = 0);
 void fhexagon();
 void glyph(int sym, unsigned flags);
 void gradv(const color c1, const color c2, int skip = 0);
@@ -294,7 +294,7 @@ void breakmodal(long result);
 void buttoncancel();
 void buttonok();
 void buttonparam();
-void execute(fnevent proc, long value = 0, long value2 = 0, const void* object = 0);
+void execute(fnevent proc, long value = 0, const void* object = 0);
 long getresult();
 bool ismodal();
 bool running_scene();

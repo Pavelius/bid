@@ -66,12 +66,12 @@ bool character::parcipant() const {
 	return false;
 }
 
-void character::addparcipant() {
-	if(player->parcipant())
+void add_parcipant(character* p) {
+	if(p->parcipant())
 		return;
 	for(auto& e : parcipants) {
 		if(!e) {
-			e = player;
+			e = p;
 			break;
 		}
 	}

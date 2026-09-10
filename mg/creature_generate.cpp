@@ -313,7 +313,7 @@ static colorn choose(messagen id, slice<colorn> source) {
 	for(auto v : source)
 		an.add(v, color_names[v]);
 	an.sort();
-	return (colorn)choose_answers(id, NoMessage, -1);
+	return (colorn)choose_answers(message_names[id], 0, -1);
 }
 
 static character* new_character() {
@@ -412,7 +412,7 @@ static wisen choose_wises(messagen id, slice<wisen> source) {
 	for(auto n : source)
 		an.add(n, wise_names[n]);
 	an.sort();
-	return (wisen)choose_answers(id, NoMessage, -1);
+	return (wisen)choose_answers(message_names[id], 0, -1);
 }
 
 static void choose_wises(messagen id, int count) {
@@ -423,7 +423,7 @@ static void choose_wises(messagen id, int count) {
 				continue;
 			an.add(n, wise_names[n]);
 		}
-		auto v = (wisen)choose_answers(id, NoMessage, -1);
+		auto v = (wisen)choose_answers(message_names[id], 0, -1);
 		marked.set(v);
 		add_value(v);
 	}
@@ -476,7 +476,7 @@ static void choose_name() {
 	for(auto v : source)
 		an.add(v, name_names[v]);
 	an.sort();
-	player->customname = (unsigned char)choose_answers(ChooseName);
+	player->customname = (unsigned char)choose_answers(message_names[ChooseName]);
 }
 
 static unsigned char random_name() {
@@ -491,6 +491,7 @@ static creature* create_creature(gendern gender, creaturen type, skilln skill) {
 	p->gender = gender;
 	p->type = type;
 	p->customname = random_name();
+	return p;
 }
 
 void create_character() {

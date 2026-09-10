@@ -23,7 +23,7 @@ enum messagen : unsigned char {
 	ChooseName, ChooseWises, ChooseFurColor, ChooseCloackColor,
 	ChooseGuardRang, ChooseBirthPlace, ChooseBirthPlaceSkill, ChooseBirthPlaceTrait, ChooseLifeExperience,
 	ChooseParentProffession, ChooseConversationSkills, ChooseSeniorArtisanTeaching, ChooseMentorTeaching, ChooseYouSpeciality,
-	AskMakeRoll, AskVsDifficult, MakeRoll,
+	MsgMakeRoll, MsgVsDifficult, MsgNumberDicesRoll, AskCanHelp, MakeRoll,
 	DoYouSaveForWinter, DoYouStandGroundAndFight, DoYouFearPredators,
 	ChooseTrait,
 	LastMessage = ChooseTrait,

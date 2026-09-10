@@ -109,7 +109,6 @@ struct character : creature, skillable, wearable {
 	int get(skilln v) const { return skills[v]; };
 	void add(skilln v, int i) { skills[v] += i; }
 	void add(wisen v) { wises.set(v); }
-	void addparcipant();
 	bool allow(traitn v) const;
 	void clear();
 	bool is(skilln v) const { return skills[v] > 0; }

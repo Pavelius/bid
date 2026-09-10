@@ -44,7 +44,7 @@ color colors::special;
 color colors::tips::text;
 color colors::tips::back;
 
-long hparam, hparam2;
+long hparam;
 const void* hobject;
 color fore, fore_stroke; // Current context colors
 point hmouse = {-5000, -5000}, dragmouse, caret, camera, text_next, tips_pos; // Current context points (camera, caret, tips)
@@ -2070,11 +2070,10 @@ void dragdrop(fnevent proc) {
 	drag_active = push_drag;
 }
 
-void execute(fnevent proc, long value, long value2, const void* object) {
+void execute(fnevent proc, long value, const void* object) {
 	domodal = proc;
 	hkey = 0; // Это важно, так как мы никогда не обнуляем эту переменную при исполнении не стандартной команды. Если не делать, будет зацикливание.
 	hparam = value;
-	hparam2 = value2;
 	hobject = object;
 }
 
@@ -2193,9 +2192,9 @@ void button_check(unsigned key, bool execute_by_press) {
 		button_pressed = true;
 }
 
-void fire(fnevent proc, long param, long param2, const void* object) {
+void fire(fnevent proc, long param, const void* object) {
 	if(button_executed && proc)
-		execute(proc, param, param2, object);
+		execute(proc, param, object);
 }
 
 void fillform() {

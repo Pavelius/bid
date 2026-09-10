@@ -19,6 +19,7 @@
 #include "adat.h"
 #include "stringbuilder.h"
 
+typedef void(*fnevent)();
 typedef bool(*fnuctest)(int v);
 typedef void(*fnabutton)(int index, long value, const char* text);
 
@@ -29,6 +30,7 @@ extern const char* answer_header;
 
 struct answers {
 	struct element {
+		fnevent		proc;
 		long		value;
 		const char* text;
 	};
@@ -49,7 +51,7 @@ struct answers {
 	int	getcount() const { return elements.getcount(); }
 	int	indexof(const void* v) const { return elements.indexof(v); }
 	void add(long value, const char* name, ...);
-	void addv(long value, const char* name, const char* format);
+	void addv(fnevent proc, long value, const char* name, const char* format);
 	void clear();
 	long random() const;
 	void remove(int index) { elements.remove(index, 1); }

@@ -175,7 +175,7 @@ void paint_bar(const char* name, fnevent proc) {
 		bar_text_selected(name);
 	} else
 		texta(name, AlignCenterCenter);
-	fire(cbsetptr, (long)proc, 0, &current_tab);
+	fire(cbsetptr, (long)proc, &current_tab);
 	caret = push_caret;
 	caret.x += width;
 	height = push_height;
@@ -327,7 +327,7 @@ static void paint_avatar(const sprite* ps, int id, const void* player, unsigned 
 		setoffset(1, 1);
 		rectb();
 	}
-	fire(change_avatar, (long)player, 0, &current_avatar);
+	fire(change_avatar, (long)player, &current_avatar);
 }
 
 void paint_picture(int id) {
@@ -438,10 +438,6 @@ long choose_answers(const char* title, const char* cancel_text, int columns) {
 	auto r = getresult();
 	an.clear();
 	return r;
-}
-
-long choose_answers(messagen title, messagen cancel_text, int columns) {
-	return choose_answers(title ? message_names[title] : 0, cancel_text ? message_names[cancel_text] : 0, columns);
 }
 
 long choose_value(long t1, long t2, fnuctest condition, const char** names, const char* title, const char* cancel, bool need_sort, int columns) {

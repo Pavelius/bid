@@ -22,9 +22,9 @@
 #include "stringbuilder.h"
 
 struct skilli {
-	skilln skill;
-	char factors;
-	skillf help;
+	skilln	skill;
+	char	factors;
+	skillf	help;
 };
 
 static skilli skill_roll_data[] = {
@@ -32,30 +32,92 @@ static skilli skill_roll_data[] = {
 	{Apiarist, 3, {Scientist, Insectrist, Loremouse}},
 	{Archivist, 2, {Cartographer, Administrator}},
 	{Armorer, 2, {Smith, Scientist}},
-//	Apiarist, Archivist, Armorer, Baker, Boatcrafter,
-//	Brewer, Carpenter, Cartographer, Cook, Fighter,
-//	Glazier, Haggler, Harvester, Healer, Hunter,
-//	Insectrist, Instructor, Laborer, Loremouse, Manipulator,
-//	Militarist, Miller, Orator, Pathfinder, Persuader,
-//	Potter, Scientist, Scout, Smith, Stonemason,
-//	Survivalist, WeatherWatcher, Weaver,
+	{Baker, 2, {Scientist}},
+	{Boatcrafter, 2, {Carpenter, Scientist}},
+	{Fighter, 0, {Hunter}},
+	//	Brewer, Carpenter, Cartographer, Cook, Fighter,
+	//	Glazier, Haggler, Harvester, Healer, Hunter,
+	//	Insectrist, Instructor, Laborer, Loremouse, Manipulator,
+	//	Militarist, Miller, Orator, Pathfinder, Persuader,
+	//	Potter, Scientist, Scout, Smith, Stonemason,
+	//	Survivalist, WeatherWatcher, Weaver,
 };
 
 static skilln roll_skill;
 
 char roll_base, roll_difficult, roll_dices[16];
 
+static skilli* find_skill(skilln v) {
+	for(auto& e : skill_roll_data) {
+		if(e.skill == v)
+			return &e;
+	}
+	return 0;
+}
+
 static void clear_parcipant() {
 	memset(parcipants, 0, sizeof(parcipants));
 }
 
+static skilln can_help(character* p, skilln skill) {
+	if(p->skills[skill] > 0)
+		return skill;
+	auto ps = find_skill(skill);
+	if(!ps)
+		return (skilln)0;
+	for(auto i = (skilln)1; i <= LastSkill; i = (skilln)(i + 1)) {
+		if(!p->skills[i])
+			continue;
+		if(ps->help.is(i))
+			return i;
+	}
+	return (skilln)0;
+}
+
+static void add_help() {
+	for(auto p : party) {
+		if(!p)
+			continue;
+		if(p == player)
+			continue;
+		if(p->parcipant())
+			continue;
+		auto help_skill = can_help(p, roll_skill);
+		if(!help_skill)
+			continue;
+		an.add((long)p, message_names[AskCanHelp], p->name(), skill_names[help_skill]);
+	}
+}
+
 static long choose_before_roll() {
 	char temp[260]; stringbuilder sb(temp);
-	sb.adds(message_names[AskMakeRoll], player->name(), skill_names[roll_skill]);
+	sb.adds(message_names[MsgMakeRoll], player->name(), skill_names[roll_skill]);
 	if(roll_difficult)
-		sb.adds(message_names[AskVsDifficult], roll_difficult);
+		sb.adds(message_names[MsgVsDifficult], roll_difficult);
 	sb.add(".");
+	sb.adds(message_names[MsgNumberDicesRoll], roll_base);
+	add_help();
 	return choose_answers(temp, message_names[MakeRoll], 1);
+}
+
+static bool is_party(long pv) {
+	for(auto p : party) {
+		if(p == (void*)pv)
+			return true;
+	}
+	return false;
+}
+
+static void apply_before_roll() {
+	while(true) {
+		auto result = choose_before_roll();
+		if(!result)
+			break; // Start roll
+		if(is_party(result)) {
+			add_parcipant((character*)result);
+			roll_base++;
+		}
+	}
 }
 
 void make_roll(skilln skill, int difficult) {
@@ -63,7 +125,7 @@ void make_roll(skilln skill, int difficult) {
 	roll_skill = skill;
 	roll_base = player->get(skill);
 	roll_difficult = difficult;
-	choose_before_roll();
+	apply_before_roll();
 }
 
 
