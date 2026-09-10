@@ -506,7 +506,7 @@ void create_character() {
 	auto senior_artisan = choose(ChooseSeniorArtisanTeaching, senior_artisan_skills); add_skill(senior_artisan);
 	choose(ChooseMentorTeaching, mentor_stressing_skills, get_mentor_stressing());
 	player->speciality = choose(ChooseYouSpeciality, mentor_stressing_skills); add_skill(player->speciality);
-	player->parent = create_creature(Male, Commoner, parent_skills)->index();
+	player->parent = create_creature(Male, Mouse, parent_skills)->index();
 	choose_nature();
 	choose_wises();
 	choose_resources();

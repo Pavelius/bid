@@ -80,8 +80,8 @@ static void paint_avatars() {
 	paint_avatars((void**)party, sizeof(party) / sizeof(party[0]), get_avatar, player, get_hits);
 	if(!po && hilite_object) {
 		stringbuilder sb(tips_text);
-		auto p = (character*)hilite_object;
-		sb.add(p->name());
+		pushvalue push(player, (character*)hilite_object);
+		sb.add(message_names[MsgCharacterInfo]);
 	}
 }
 

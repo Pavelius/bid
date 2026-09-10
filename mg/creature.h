@@ -20,12 +20,14 @@
 #include "item.h"
 #include "variant.h"
 
+class stringbuilder;
+
 enum arean : unsigned char;
 enum gendern : unsigned char;
 enum wisen : unsigned char;
 
 enum creaturen : unsigned char {
-	Commoner,
+	Mouse,
 	Tenderpaw, Guardmouse, PatrolGuard, PatrolLeader, GuardCaptain,
 	Weasel,
 	LastCreature = Weasel
@@ -123,6 +125,7 @@ struct character : creature, skillable, wearable {
 	void add(wisen v) { wises.set(v); }
 	bool allow(traitn v) const;
 	void clear();
+	void info(stringbuilder& sb) const;
 	bool is(skilln v) const { return skills[v] > 0; }
 	bool is(conditionn v) const { return conditions.is(v); }
 	bool is(traitn v) const { return traits[v] > 0; }

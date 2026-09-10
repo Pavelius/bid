@@ -74,6 +74,11 @@ static void rolled_dices_result(stringbuilder& sb) {
 	}
 }
 
+static void player_speciality(stringbuilder& sb) {
+	if(player->speciality)
+		sb.add(skill_names[player->speciality]);
+}
+
 template<> void fistatus<skilln>(unsigned char id, stringbuilder& sb) {
 	auto v = (skilln)id;
 	auto n = player->skills[v];
@@ -87,6 +92,7 @@ BSDATA(stringvari) = {
 	{"Parcipants", parcipants_names},
 	{"Player", player_name},
 	{"RolledDices", rolled_dices_result},
+	{"Speciality", player_speciality},
 	{"Weapon", player_weapon},
 };
 BSDATAF(stringvari)
