@@ -14,21 +14,8 @@
 	limitations under the License.77
 */
 
-#include "area.h"
-#include "creature.h"
-#include "variant.h"
-#include "wise.h"
+#pragma once
 
-variant wise_data[LastWise + 1] = {
-	Barkstone, Copperwood, Elmoss, Ivydale, Lockhaven, PortSumac, Shaleburrow, Sprucetuck,
-	Forest, Lakes, Streams, TallGrass, Swamps, Mud, Thorns, LeafCover, RockyTerrain, Coast, OpenGround,
-	Darkheather,
+enum seasonn : unsigned char {
+	Sprint, Summer, Authum, Winter,
 };
-
-wisen find_wise(variant v) {
-	for(auto& e : wise_data) {
-		if(e==v)
-			return wisen(&e - wise_data);
-	}
-	return NoWise;
-}

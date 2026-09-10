@@ -20,7 +20,6 @@
 #include "gender.h"
 #include "message.h"
 #include "rand.h"
-#include "wise.h"
 
 character* player;
 character* party[4];

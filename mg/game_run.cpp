@@ -24,7 +24,6 @@
 #include "pushvalue.h"
 #include "rand.h"
 #include "stringbuilder.h"
-#include "wise.h"
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);
 void main_util();
@@ -122,8 +121,8 @@ static void initialize_resources() {
 }
 
 void game_run() {
-	srand(rseed());
-	// srand(1281);
+	// srand(rseed());
+	srand(112281);
 	initialize_resources();
 	//if(!pass_test())
 	//	return;

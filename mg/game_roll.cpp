@@ -15,46 +15,94 @@
 */
 
 #include "answers.h"
+#include "area.h"
 #include "creature.h"
 #include "game.h"
 #include "message.h"
 #include "slice.h"
 #include "stringbuilder.h"
 #include "variant.h"
-#include "wise.h"
 
-struct skillusei {
-	skilln	skill;
-	char	factors;
-	skillf	help;
+struct skilluse {
+	skilln id;
+	skilln basic;
+	skillf help;
+	traitf traits, penalty;
+	wisef wises;
 };
-static skillusei skill_roll_data[] = {
-	{Administrator, 2, {Archivist, Orator}},
-	{Apiarist, 3, {Scientist, Insectrist, Loremouse}},
-	{Archivist, 2, {Cartographer, Administrator}},
-	{Armorer, 2, {Smith, Scientist}},
-	{Baker, 2, {Scientist}},
-	{Boatcrafter, 2, {Carpenter, Scientist}},
-	{Fighter, 0, {Hunter}},
-	//	Brewer, Carpenter, Cartographer, Cook, Fighter,
-	//	Glazier, Haggler, Harvester, Healer, Hunter,
-	//	Insectrist, Instructor, Laborer, Loremouse, Manipulator,
-	//	Militarist, Miller, Orator, Pathfinder, Persuader,
-	//	Potter, Scientist, Scout, Smith, Stonemason,
-	//	Survivalist, WeatherWatcher, Weaver,
+
+struct traituse {
+	traitn id;
+	skillf benefit, penalty;
 };
 
 struct wiseusei {
-	wisen	skill;
-	skillf	help;
+	wisen id;
+	skillf help;
 };
+
+static skilluse skill_use[LastSkill + 1] = {
+	{Nature}, {Will}, {Health}, {Resources}, {Circles},
+	{Administrator, Will, {Archivist, Orator}},
+	{Apiarist, Will,{Scientist, Insectrist, Loremouse}},
+	{Archivist, Will,{Cartographer, Administrator}},
+	{Armorer, Health, {Smith, Scientist}},
+	{Baker, Health, {Scientist}},
+	{Boatcrafter, Health, {Carpenter, Scientist}},
+	{Brewer, Will, {}},
+	{Carpenter, Health, {}},
+	{Cartographer, Will, {}},
+	{Cook, Will, {}},
+	{Fighter, Health, {Hunter}},
+	{Glazier, Health, {}},
+	{Haggler, Will, {}},
+	{Harvester, Health, {}},
+	{Healer, Will, {}},
+	{Hunter, Health, {}},
+	{Insectrist, Will, {}},
+	{Instructor, Will, {}},
+	{Laborer, Health, {}},
+	{Loremouse, Will, {}},
+	{Manipulator, Will, {}},
+	{Militarist, Will, {}},
+	{Miller, Health, {}},
+	{Orator, Will, {}},
+	{Pathfinder, Will, {}},
+	{Persuader, Will, {}},
+	{Potter, Health, {}},
+	{Scientist, Will, {}},
+	{Scout, Will, {}},
+	{Smith, Health, {}},
+	{Stonemason, Health, {}},
+	{Survivalist, Health, {}},
+	{WeatherWatcher, Will, {}},
+	{Weaver, Will, {}},
+};
+
+static traituse trait_use[LastTrait + 1] = {
+	{Alert, {Apiarist, Fighter, Harvester, Healer, Hunter, Insectrist, Laborer, Militarist, Pathfinder, Survivalist}, {Manipulator, Orator, Administrator, Haggler, WeatherWatcher}},
+	{Bigpaw, {Armorer, Carpenter, Fighter, Harvester, Hunter, Insectrist, Laborer, Militarist, Smith, Stonemason, Weaver}, {Administrator, Cook, Glazier, Potter, Cartographer}},
+	{Bitter, {Haggler, Manipulator}, {Administrator, Orator, Manipulator, Persuader, Instructor}},
+	{Bodyguard, {Fighter, Healer}, {Administrator, Instructor}},
+	{Bold, {Fighter, Scout, Pathfinder, Haggler, Hunter, Laborer, Militarist}, {Fighter, Scout, Pathfinder, Haggler, Harvester, Hunter, Laborer, Militarist}},
+	{Brave, {Apiarist, Fighter, Hunter, Insectrist, Militarist, Orator}, {Manipulator}},
+	{Calm, {Administrator, Haggler, Healer, Manipulator, Scientist}, {Orator, Persuader}},
+};
+
+static variant wise_data[LastWise + 1] = {
+	Barkstone, Copperwood, Elmoss, Ivydale, Lockhaven, PortSumac, Shaleburrow, Sprucetuck,
+	Forest, Lakes, Streams, TallGrass, Swamps, Mud, Thorns, LeafCover, RockyTerrain, Coast, OpenGround,
+	Darkheather,
+};
+
 static wiseusei wise_use_data[] = {
 	{LegendsWise, {Manipulator, Orator, Persuader, Scientist, Insectrist, Loremouse, Hunter, Pathfinder}},
 };
 
 struct rolli {
-	variant		type;
-	character*	player;
+	variant	type;
+	character* player;
+	int param;
 	constexpr explicit operator bool() const { return player!=0; }
 	void clear() { memset((void*)this, 0, sizeof(*this)); }
 };
@@ -64,17 +112,29 @@ static skilln roll_skill;
 
 char roll_base, roll_difficult, roll_dices[16];
 
-static rolli* find_help(variant type, character* player) {
+bool can_use_wise(wisen v) {
+	auto data = wise_data[v];
+	switch(data.type) {
+	case Area: return data.value == location;
+	default: return false;
+	}
+}
+
+static bool can_help_trait(traitn v) {
+	return false;
+}
+
+static bool ishelp(variantn type) {
 	for(auto& e : roll_data) {
-		if(e.type==type && e.player==player)
+		if(e && e.type.type==type)
 			return &e;
 	}
 	return 0;
 }
 
-static rolli* find_help_type(variantn type) {
+static rolli* find_help(variant type, character* player, int param) {
 	for(auto& e : roll_data) {
-		if(e && e.type.type==type)
+		if(e.type==type && e.player==player && e.param==param)
 			return &e;
 	}
 	return 0;
@@ -88,25 +148,36 @@ static rolli* new_help() {
 	return roll_data;
 }
 
-static void add_help(variant type, character* player) {
-	auto p = find_help(type, player);
+static void add_help(variant type, character* player, int param) {
+	auto p = find_help(type, player, param);
 	if(!p)
 		p = new_help();
 	p->type = type;
 	p->player = player;
+	p->param = param;
 }
 
 static void add_help() {
-	add_help(hparam, (character*)hobject);
+	add_help(hparam, (character*)hobject, 0);
 	breakmodal(Continue);
 }
 
-static skillusei* find_use(skilln v) {
-	for(auto& e : skill_roll_data) {
-		if(e.skill == v)
-			return &e;
+static void add_benefit() {
+	add_help(hparam, (character*)hobject, 1);
+	breakmodal(Continue);
+}
+
+static void add_impende() {
+	add_help(hparam, (character*)hobject, -1);
+	breakmodal(Continue);
+}
+
+static wisen find_wise(variant v) {
+	for(auto& e : wise_data) {
+		if(e==v)
+			return wisen(&e - wise_data);
 	}
-	return 0;
+	return NoWise;
 }
 
 static void clear_parcipant() {
@@ -116,13 +187,10 @@ static void clear_parcipant() {
 static skilln can_help(character* p, skilln skill) {
 	if(p->skills[skill] > 0)
 		return skill;
-	auto ps = find_use(skill);
-	if(!ps)
-		return (skilln)0;
 	for(auto i = (skilln)1; i <= LastSkill; i = (skilln)(i + 1)) {
 		if(!p->skills[i])
 			continue;
-		if(ps->help.is(i))
+		if(skill_use[skill].help.is(i))
 			return i;
 	}
 	return (skilln)0;
@@ -133,28 +201,46 @@ static void add_help_skill() {
 		if(!p)
 			continue;
 		if(p == player)
-			continue;
+			continue; // Can't help itelf.
 		if(p->parcipant())
 			continue;
 		auto n = can_help(p, roll_skill);
 		if(!n)
 			continue;
-		if(find_help(variant(n), p))
+		if(find_help(variant(n), p, 0))
 			continue;
 		an.addp(add_help, variant(n), p, message_names[AskCanHelp], p->name(), skill_names[n]);
 	}
 }
 
 static void add_help_iam_wise() {
-	if(find_help_type(Wises))
+	if(ishelp(WiseVariant))
 		return;
 	for(auto p : party) {
 		if(!p)
 			continue;
 		for(auto n = (wisen)0; n <= LastWise; n = (wisen)(n + 1)) {
+			if(!can_use_wise(n))
+				continue;
 			if(p->is(n))
 				an.addp(add_help, variant(n), p, message_names[AskCanHelpWise], p->name(), wise_names[n]);
 		}
+	}
+}
+
+static void add_help_trait() {
+	if(ishelp(Trait))
+		return;
+	for(auto n = (traitn)0; n <= LastTrait; n = (traitn)(n + 1)) {
+		auto level = player->traits[n];
+		if(level>=3 || level==0)
+			continue;
+		if(player->traits_use[n]>=level)
+			continue;
+		if(trait_use[n].benefit.is(roll_skill))
+			an.addp(add_benefit, variant(n), player, message_names[AskTraitBenefit], player->name(), trait_names[n]);
+		if(trait_use[n].penalty.is(roll_skill))
+			an.addp(add_impende, variant(n), player, message_names[AskTraitImpende], player->name(), trait_names[n]);
 	}
 }
 
@@ -165,6 +251,7 @@ static long choose_before_roll() {
 		sb.adds(message_names[MsgVsDifficult], roll_difficult);
 	sb.add(".");
 	sb.adds(message_names[MsgNumberDicesRoll], roll_base);
+	add_help_trait();
 	add_help_skill();
 	add_help_iam_wise();
 	return choose_answers(temp, message_names[MakeRoll], 1);
@@ -176,6 +263,10 @@ static void apply_before_roll() {
 		if(!result)
 			break; // Start roll
 	}
+}
+
+int make_roll_silent(skilln skill, int difficult) {
+	return 0;
 }
 
 void make_roll(skilln skill, int difficult) {

@@ -18,6 +18,7 @@
 
 #include "flagable.h"
 #include "item.h"
+#include "variant.h"
 
 enum arean : unsigned char;
 enum gendern : unsigned char;
@@ -26,7 +27,8 @@ enum wisen : unsigned char;
 enum creaturen : unsigned char {
 	Commoner,
 	Tenderpaw, Guardmouse, PatrolGuard, PatrolLeader, GuardCaptain,
-	LastCreature = GuardCaptain
+	Weasel,
+	LastCreature = Weasel
 };
 enum skilln : unsigned char {
 	Nature, Will, Health, Resources, Circles,
@@ -54,6 +56,13 @@ enum traitn : unsigned char {
 	WolfsSnout, Young,
 	LastTrait = Young
 };
+enum wisen : unsigned char {
+	BarkstoneWise, CopperwoodWise, ElmossWise, IvydaleWise, LockhavenWise, PortSumacWise, ShaleburrowWise, SprucetuckWise,
+	ForestWise, LakesWise, StreamsWise, TallGrassWise, SwampsWise, MudWise, ThornsWise, LeafCoverWise, RockyTerrainWise, CoastWise, OpenGroundWise,
+	DarkheatherWise, CodeOfGuardWise, MatriachWise, LegendsWise,
+	LastWise = LegendsWise,
+	NoWise = 0xFF,
+};
 enum conditionn : unsigned char {
 	HungryAndThirsty, Angry, Tired, Injured, Sick,
 };
@@ -76,6 +85,7 @@ extern const char* creature_names[LastCreature + 1];
 extern const char* name_names[name_count_per_gender * 2];
 extern const char* skill_names[LastSkill + 1];
 extern const char* trait_names[LastTrait + 1];
+extern const char* wise_names[LastWise + 1];
 
 struct skillable {
 	char skills[LastSkill + 1];
@@ -102,7 +112,7 @@ struct creature {
 struct character : creature, skillable, wearable {
 	arean			home;
 	skilln			conversation;
-	char			traits[LastTrait + 1];
+	char			traits[LastTrait + 1], traits_use[LastTrait + 1];
 	wisef			wises;
 	conditionf		conditions;
 	unsigned char index() const;
@@ -119,6 +129,7 @@ struct character : creature, skillable, wearable {
 	void setname();
 	void update();
 };
+
 extern character* player;
 extern character* party[4];
 extern character* parcipants[4];
@@ -127,6 +138,7 @@ extern creature	creature_data[128];
 
 void add_parcipant(character* player);
 void add_party();
+bool can_use_wise(wisen v);
 void create_character();
 void create_character_silent();
 void make_roll(skilln skill, int difficult);

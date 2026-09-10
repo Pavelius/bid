@@ -23,7 +23,6 @@
 #include "message.h"
 #include "pushvalue.h"
 #include "rand.h"
-#include "wise.h"
 
 #define DSARR(N) N, sizeof(N)/sizeof(N[0])
 

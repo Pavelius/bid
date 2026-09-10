@@ -99,9 +99,8 @@
 		<Unit filename="information.cpp" />
 		<Unit filename="locale_ru.cpp" />
 		<Unit filename="message.h" />
+		<Unit filename="season.h" />
 		<Unit filename="variant.h" />
-		<Unit filename="wise.cpp" />
-		<Unit filename="wise.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
