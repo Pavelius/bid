@@ -178,7 +178,7 @@ static const char* wholeline(const char* p) {
 static const char* word(const char* text) {
 	if(text[0] == ':')
 		return text + 1;
-	while(((unsigned char)*text) > 0x20 && *text != '*' && *text != '[' && *text != ']' && *text != ':')
+	while(((unsigned char)*text) > 0x20 && *text != '[' && *text != ']' && *text != ':')
 		text++;
 	return text;
 }
@@ -207,24 +207,7 @@ static const char* textfln(const char* p, int x1, int x2, color new_fore, const 
 	char temp[4096]; temp[0] = 0;
 	unsigned flags = text_flags;
 	while(true) {
-		if(p[0] == '*' && p[1] == '*') {
-			p += 2;
-			if(flags & TextBold)
-				flags &= ~TextBold;
-			else
-				flags |= TextBold;
-			continue;
-		} else if(p[0] == '*') {
-			p++;
-			if(flags & TextItalic)
-				flags &= ~TextItalic;
-			else {
-				if((flags & TextItalic) == 0)
-					caret.x += texth() / 3;
-				flags |= TextItalic;
-			}
-			continue;
-		} else if(p[0] == '[' && p[1] == '[')
+		if(p[0] == '[' && p[1] == '[')
 			p++;
 		else if(p[0] == ']' && p[1] == ']')
 			p++;

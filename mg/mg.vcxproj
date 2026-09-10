@@ -148,7 +148,6 @@
     <ClCompile Include="information.cpp" />
     <ClCompile Include="locale_ru.cpp" />
     <ClCompile Include="main_util.cpp" />
-    <ClCompile Include="wise.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />
@@ -157,7 +156,6 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="message.h" />
     <ClInclude Include="variant.h" />
-    <ClInclude Include="wise.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

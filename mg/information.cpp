@@ -44,13 +44,13 @@ static void player_weapon(stringbuilder& sb) {
 static void parcipants_names(stringbuilder& sb) {
 	auto count = 0;
 	for(auto p : parcipants) {
-		if(p && *p)
+		if(p)
 			count++;
 	}
 	auto index = 0;
 	for(auto p : parcipants) {
-		if(p && *p) {
-			if(index==count-1)
+		if(p) {
+			if(count > 1 && index == count - 1)
 				sb.adds(message_names[And]);
 			else if(index)
 				sb.adds(", ");

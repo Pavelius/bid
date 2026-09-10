@@ -19,11 +19,14 @@
 #include "draw.h"
 #include "draw_atg.h"
 #include "game.h"
+#include "gender.h"
 #include "message.h"
 #include "print.h"
 #include "pushvalue.h"
 #include "rand.h"
 #include "stringbuilder.h"
+#include "stringset.h"
+#include "stringvar.h"
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);
 void main_util();
@@ -73,7 +76,13 @@ static int get_hits(const void* object) {
 }
 
 static void paint_avatars() {
+	auto po = hilite_object;
 	paint_avatars((void**)party, sizeof(party) / sizeof(party[0]), get_avatar, player, get_hits);
+	if(!po && hilite_object) {
+		stringbuilder sb(tips_text);
+		auto p = (character*)hilite_object;
+		sb.add(p->name());
+	}
 }
 
 static void page_characters() {
@@ -113,10 +122,20 @@ static void paint_main_menu() {
 	paint_bar(message_names[PageSkills], page_skills);
 }
 
+void stringbuilder_custom(stringbuilder& sb, const char* id) {
+	if(stringvar_identifier(sb, id))
+		return;
+	if(stringset_identifier(id, sb))
+		return;
+	if(apply_gender(id, sb, str_gender))
+		return;
+	default_string(sb, id);
+}
+
 static void initialize_resources() {
 	metrics::avatars = (sprite*)bin_avatars;
 	metrics::images = (sprite*)bin_images;
-	// stringbuilder::custom = stringbuilder_custom;
+	stringbuilder::custom = stringbuilder_custom;
 	atg_menu = paint_main_menu;
 }
 

@@ -31,7 +31,7 @@ extern character* party[4];
 
 extern int last_number;
 
-extern char roll_difficult, roll_dices[16];
+extern char roll_base, roll_result, roll_difficult, roll_dices[16];;
 
 void apply_result();
 void breakmodal(long result = 1);

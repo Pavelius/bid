@@ -18,7 +18,9 @@
 #include "area.h"
 #include "creature.h"
 #include "game.h"
+#include "gender.h"
 #include "message.h"
+#include "pushvalue.h"
 #include "slice.h"
 #include "stringbuilder.h"
 #include "variant.h"
@@ -95,8 +97,56 @@ static traituse trait_use[LastTrait + 1] = {
 	{Bold, {Fighter, Scout, Pathfinder, Haggler, Hunter, Laborer, Militarist}, {Fighter, Scout, Pathfinder, Haggler, Harvester, Hunter, Laborer, Militarist}},
 	{Brave, {Apiarist, Fighter, Hunter, Insectrist, Militarist, Orator}, {Manipulator}},
 	{Calm, {Administrator, Haggler, Healer, Manipulator, Scientist}, {Orator, Persuader}},
-	{Cleaver, {Administrator, Apiarist, Archivist, Cartographer, Haggler, Healer, Insectrist, Loremouse, Manipulator, Militarist, Orator, Persuader, Scientist, WeatherWatcher}, {Fighter, Hunter, Harvester, Laborer}},
+	{Clever, {Administrator, Apiarist, Archivist, Cartographer, Haggler, Healer, Insectrist, Loremouse, Manipulator, Militarist, Orator, Persuader, Scientist, WeatherWatcher}, {Fighter, Hunter, Harvester, Laborer}},
 	{Compassionate, {Haggler, Orator, Healer, Persuader}, {Fighter, Insectrist, Manipulator, Loremouse}},
+	{Cunning},
+	{Curious},
+	{DeepEar},
+	{Defender},
+	{Determined},
+	{Driven},
+	{EarlyRiser},
+	{Extrovert},
+	{Fat},
+	{Fearful},
+	{Fearless, {Fighter, Orator}, {Scout, Hunter, Haggler, Manipulator, Persuader}},
+	{Fiery},
+	{Generous},
+	{Graceful},
+	{GuardsHonor},
+	{HardWorker},
+	{Independent},
+	{Innocent},
+	{Inquisitive},
+	{Jaded},
+	{Leader},
+	{Longtail},
+	{Lost},
+	{NaturalBearings},
+	{Nimble},
+	{Nocturnal},
+	{Oldfur},
+	{OpenMinded},
+	{QuickWitted},
+	{Quiet},
+	{Rational},
+	{Scarred},
+	{SharpEyed},
+	{Sharptooth},
+	{Short},
+	{Skeptical},
+	{Skinny},
+	{SteadyPaws},
+	{Stoic},
+	{Stubborn},
+	{Suspicious},
+	{Tall},
+	{Thoughtful},
+	{Tough},
+	{WeatherSense},
+	{Wise},
+	{WolfsSnout},
+	{Young},
 };
 
 static wiseuse wise_use_data[] = {
@@ -113,7 +163,7 @@ static rolluse roll_use[8];
 
 static skilln roll_skill;
 
-char roll_base, roll_difficult, roll_dices[16];
+char roll_base, roll_result, roll_difficult, roll_dices[16];
 
 bool can_use_wise(wisen v) {
 	auto data = wise_data[v];
@@ -161,17 +211,17 @@ static void add_help(variant type, character* player, int param) {
 }
 
 static void add_help() {
-	add_help(hparam, (character*)hobject, 0);
+	add_help((short unsigned)hparam, (character*)hobject, 0);
 	breakmodal(Continue);
 }
 
 static void add_benefit() {
-	add_help(hparam, (character*)hobject, 1);
+	add_help((short unsigned)hparam, (character*)hobject, 1);
 	breakmodal(Continue);
 }
 
 static void add_impende() {
-	add_help(hparam, (character*)hobject, -1);
+	add_help((short unsigned)hparam, (character*)hobject, -1);
 	breakmodal(Continue);
 }
 
@@ -181,10 +231,6 @@ static wisen find_wise(variant v) {
 			return wisen(&e - wise_data);
 	}
 	return NoWise;
-}
-
-static void clear_parcipant() {
-	memset(parcipants, 0, sizeof(parcipants));
 }
 
 static skilln can_help(character* p, skilln skill) {
@@ -247,18 +293,55 @@ static void add_help_trait() {
 	}
 }
 
+static void update_roll_result() {
+	roll_result = roll_base;
+	auto ps = parcipants;
+	for(auto& e : roll_use) {
+		switch(e.type.type) {
+		case WiseVariant: roll_result += e.param; break;
+		case Skill: roll_result += 1; *ps++ = e.player; break;
+		case Trait: roll_result += 1; break;
+		default: break;
+		}
+	}
+}
+
+static void clear_roll_use() {
+	memset(parcipants, 0, sizeof(parcipants));
+	memset(roll_use, 0, sizeof(roll_use));
+	breakmodal();
+}
+
+static gendern get_parcipant_gender() {
+	if(parcipants[1] || !parcipants[0])
+		return NoGender;
+	else if(parcipants[0]->gender == Female)
+		return Female;
+	return Male;
+}
+
+static void fixgroup(stringbuilder& sb, messagen id) {
+	pushvalue push(str_gender, get_parcipant_gender());
+	sb.adds(message_names[id]);
+}
+
 static void apply_before_roll() {
 	char temp[260]; stringbuilder sb(temp);
 	while(true) {
+		update_roll_result();
 		sb.clear();
 		sb.adds(message_names[MsgMakeRoll], player->name(), skill_names[roll_skill]);
 		if(roll_difficult)
 			sb.adds(message_names[MsgVsDifficult], roll_difficult);
 		sb.add(".");
-		sb.adds(message_names[MsgNumberDicesRoll], roll_base);
+		if(parcipants[0])
+			fixgroup(sb, MsgParcipants);
+		sb.adds(message_names[MsgNumberDicesRoll], roll_result);
 		add_help_trait();
 		add_help_skill();
 		add_help_iam_wise();
+		if(roll_use[0])
+			an.addp(clear_roll_use, 0, 0, message_names[AskClearAllAndStartAgain]);
 		auto result = choose_answers(temp, message_names[MakeRoll], 1);
 		if(!result)
 			break; // Start roll
@@ -270,7 +353,7 @@ int make_roll_silent(skilln skill, int difficult) {
 }
 
 void make_roll(skilln skill, int difficult) {
-	clear_parcipant();
+	clear_roll_use();
 	roll_skill = skill;
 	roll_base = player->get(skill);
 	roll_difficult = difficult;
