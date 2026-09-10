@@ -37,6 +37,8 @@ union variant {
 	constexpr variant(creaturen v) : type(Creatures), value(v) {}
 	constexpr variant(skilln v) : type(Skills), value(v) {}
 	constexpr variant(wisen v) : type(Wises), value(v) {}
+	constexpr variant(short unsigned v) : u(v) {}
 	constexpr explicit operator bool() const { return u!=0; }
-	constexpr bool operator==(variant v) const { return u!=v.u; }
+	constexpr operator long() const { return u; }
+	constexpr bool operator==(variant v) const { return u==v.u; }
 };

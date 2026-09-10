@@ -52,10 +52,54 @@ static wiseusei wise_use_data[] = {
 	{LegendsWise, {Manipulator, Orator, Persuader, Scientist, Insectrist, Loremouse, Hunter, Pathfinder}},
 };
 
+struct rolli {
+	variant		type;
+	character*	player;
+	constexpr explicit operator bool() const { return player!=0; }
+	void clear() { memset((void*)this, 0, sizeof(*this)); }
+};
+static rolli roll_data[8];
+
 static skilln roll_skill;
-static bool wise_used;
 
 char roll_base, roll_difficult, roll_dices[16];
+
+static rolli* find_help(variant type, character* player) {
+	for(auto& e : roll_data) {
+		if(e.type==type && e.player==player)
+			return &e;
+	}
+	return 0;
+}
+
+static rolli* find_help_type(variantn type) {
+	for(auto& e : roll_data) {
+		if(e && e.type.type==type)
+			return &e;
+	}
+	return 0;
+}
+
+static rolli* new_help() {
+	for(auto& e : roll_data) {
+		if(!e)
+			return &e;
+	}
+	return roll_data;
+}
+
+static void add_help(variant type, character* player) {
+	auto p = find_help(type, player);
+	if(!p)
+		p = new_help();
+	p->type = type;
+	p->player = player;
+}
+
+static void add_help() {
+	add_help(hparam, (character*)hobject);
+	breakmodal(Continue);
+}
 
 static skillusei* find_use(skilln v) {
 	for(auto& e : skill_roll_data) {
@@ -84,14 +128,6 @@ static skilln can_help(character* p, skilln skill) {
 	return (skilln)0;
 }
 
-static void add_help_skill_command() {
-	auto skill = (skilln)hparam;
-	auto p = (character*)hobject;
-	add_parcipant(p);
-	roll_base++;
-	breakmodal(Continue);
-}
-
 static void add_help_skill() {
 	for(auto p : party) {
 		if(!p)
@@ -100,30 +136,24 @@ static void add_help_skill() {
 			continue;
 		if(p->parcipant())
 			continue;
-		auto help_skill = can_help(p, roll_skill);
-		if(!help_skill)
+		auto n = can_help(p, roll_skill);
+		if(!n)
 			continue;
-		an.addp(add_help_skill_command, help_skill, p, message_names[AskCanHelp], p->name(), skill_names[help_skill]);
+		if(find_help(variant(n), p))
+			continue;
+		an.addp(add_help, variant(n), p, message_names[AskCanHelp], p->name(), skill_names[n]);
 	}
 }
 
-static void add_help_iam_wise_command() {
-	auto skill = (wisen)hparam;
-	auto p = (character*)hobject;
-	roll_base++;
-	wise_used = true;
-	breakmodal(Continue);
-}
-
 static void add_help_iam_wise() {
-	if(wise_used)
+	if(find_help_type(Wises))
 		return;
 	for(auto p : party) {
 		if(!p)
 			continue;
 		for(auto n = (wisen)0; n <= LastWise; n = (wisen)(n + 1)) {
 			if(p->is(n))
-				an.addp(add_help_iam_wise_command, n, p, message_names[AskCanHelpWise], p->name(), wise_names[n]);
+				an.addp(add_help, variant(n), p, message_names[AskCanHelpWise], p->name(), wise_names[n]);
 		}
 	}
 }
@@ -150,7 +180,6 @@ static void apply_before_roll() {
 
 void make_roll(skilln skill, int difficult) {
 	clear_parcipant();
-	wise_used = false;
 	roll_skill = skill;
 	roll_base = player->get(skill);
 	roll_difficult = difficult;

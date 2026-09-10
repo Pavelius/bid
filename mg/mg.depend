@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1788855982 source:/home/user-331/projects/bid/atg/answers.cpp
+1789022023 source:/home/user-331/projects/bid/atg/answers.cpp
 	"answers.h"
 	"draw.h"
 	"pushvalue.h"
 	"rand.h"
 
-1788879084 /home/user-331/projects/bid/atg/answers.h
+1789022023 /home/user-331/projects/bid/atg/answers.h
 	"adat.h"
 	"stringbuilder.h"
 
@@ -14,11 +14,11 @@
 
 1788442262 /home/user-331/projects/bid/atg/slice.h
 
-1788933949 /home/user-331/projects/bid/atg/stringbuilder.h
+1789022574 /home/user-331/projects/bid/atg/stringbuilder.h
 	"slice.h"
 	<stdarg.h>
 
-1788442083 /home/user-331/projects/bid/atg/draw.h
+1789022023 /home/user-331/projects/bid/atg/draw.h
 	"color.h"
 	"point.h"
 
@@ -86,11 +86,11 @@
 
 1788442065 /home/user-331/projects/bid/atg/dice.h
 
-1788442070 source:/home/user-331/projects/bid/atg/draw.cpp
+1789022023 source:/home/user-331/projects/bid/atg/draw.cpp
 	"draw.h"
 	"math.h"
 
-1788939678 source:/home/user-331/projects/bid/atg/draw_atg.cpp
+1789022023 source:/home/user-331/projects/bid/atg/draw_atg.cpp
 	"answers.h"
 	"draw.h"
 	"draw_atg.h"
@@ -199,9 +199,9 @@
 	"game.h"
 	"message.h"
 
-1788939642 /home/user-331/projects/bid/mg/game.h
+1789022023 /home/user-331/projects/bid/mg/game.h
 
-1788959220 source:/home/user-331/projects/bid/mg/locale_ru.cpp
+1789022023 source:/home/user-331/projects/bid/mg/locale_ru.cpp
 	"area.h"
 	"creature.h"
 	"game.h"
@@ -210,7 +210,7 @@
 	"stringset.h"
 	"wise.h"
 
-1788958453 source:/home/user-331/projects/bid/mg/creature.cpp
+1789022023 source:/home/user-331/projects/bid/mg/creature.cpp
 	"answers.h"
 	"area.h"
 	"creature.h"
@@ -219,7 +219,7 @@
 	"rand.h"
 	"wise.h"
 
-1788958407 /home/user-331/projects/bid/mg/creature.h
+1789022023 /home/user-331/projects/bid/mg/creature.h
 	"flagable.h"
 	"item.h"
 
@@ -227,11 +227,11 @@
 
 1788933949 /home/user-331/projects/bid/mg/item.h
 
-1788957812 /home/user-331/projects/bid/mg/message.h
+1789022023 /home/user-331/projects/bid/mg/message.h
 
 1788867900 /home/user-331/projects/bid/mg/area.h
 
-1788950709 source:/home/user-331/projects/bid/mg/creature_generate.cpp
+1789022023 source:/home/user-331/projects/bid/mg/creature_generate.cpp
 	"answers.h"
 	"area.h"
 	"creature.h"
@@ -243,13 +243,15 @@
 	"rand.h"
 	"wise.h"
 
-1788959157 source:/home/user-331/projects/bid/mg/game_roll.cpp
+1789029134 source:/home/user-331/projects/bid/mg/game_roll.cpp
 	"answers.h"
 	"creature.h"
 	"game.h"
 	"message.h"
 	"slice.h"
 	"stringbuilder.h"
+	"variant.h"
+	"wise.h"
 
 1788867873 source:/home/user-331/projects/bid/mg/area.cpp
 	"area.h"
@@ -260,9 +262,9 @@
 	"variant.h"
 	"wise.h"
 
-1788868722 /home/user-331/projects/bid/mg/variant.h
+1789029553 /home/user-331/projects/bid/mg/variant.h
 
-1788933949 /home/user-331/projects/bid/mg/wise.h
+1789022023 /home/user-331/projects/bid/mg/wise.h
 	"variant.h"
 
 1788933949 source:/home/user-331/projects/bid/mg/bin_avatars.cpp

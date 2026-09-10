@@ -23,8 +23,8 @@
 #include <stdarg.h>
 struct xva_gcc_list {
 	int gpr, fpr;
-	const char *overflow_arg_area;
-	const char *reg_save_area;
+	const char* overflow_arg_area;
+	const char* reg_save_area;
 };
 #define XVA_FORMAT(V)\
 	va_list args;\
