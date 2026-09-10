@@ -24,6 +24,9 @@ enum picturen : unsigned char {
 	ImagePathfind, ImageTaint, ImageTreasure, ImageVillage
 };
 
+extern long	hparam; // Command context or parameters
+extern const void* hobject; // Command object
+
 extern character* party[4];
 
 extern int last_number;
@@ -31,5 +34,6 @@ extern int last_number;
 extern char roll_difficult, roll_dices[16];
 
 void apply_result();
+void breakmodal(long result = 1);
 void create_game();
 void pause();

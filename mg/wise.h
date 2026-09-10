@@ -21,8 +21,8 @@
 enum wisen : unsigned char {
 	BarkstoneWise, CopperwoodWise, ElmossWise, IvydaleWise, LockhavenWise, PortSumacWise, ShaleburrowWise, SprucetuckWise,
 	ForestWise, LakesWise, StreamsWise, TallGrassWise, SwampsWise, MudWise, ThornsWise, LeafCoverWise, RockyTerrainWise, CoastWise, OpenGroundWise,
-	DarkheatherWise, CodeOfGuardWise, MatriachWise, LegendesOfGuardWise,
-	LastWise = LegendesOfGuardWise,
+	DarkheatherWise, CodeOfGuardWise, MatriachWise, LegendsWise,
+	LastWise = LegendsWise,
 	NoWise = 0xFF,
 };
 

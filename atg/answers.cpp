@@ -89,7 +89,7 @@ void answers_paint(fnabutton paintcell, int columns, const char* cancel_text) {
 			fore = fore.mix(colors::header, 128);
 		paintcell(index, e.value, e.text);
 		caret.y += height + metrics::padding;
-		fire(buttonparam, (long)e.value, &e);
+		fire(e.proc, (long)e.value, e.object);
 		index++;
 		if(caret.y > y2)
 			y2 = caret.y;
@@ -121,9 +121,10 @@ int answers::compare(const void* v1, const void* v2) {
 	return szcmp(((answers::element*)v1)->text, ((answers::element*)v2)->text);
 }
 
-void answers::addv(fnevent proc, long value, const char* text, const char* format) {
+void answers::addv(fnevent proc, long value, void* object, const char* text, const char* format) {
 	auto p = elements.add();
 	p->proc = proc;
+	p->object = object;
 	p->value = value;
 	p->text = sc.get();
 	sc.addv(text, format);
@@ -132,7 +133,12 @@ void answers::addv(fnevent proc, long value, const char* text, const char* forma
 
 void answers::add(long value, const char* name, ...) {
 	XVA_FORMAT(name);
-	addv(buttonparam, value, name, format_param);
+	addv(buttonparam, value, 0, name, format_param);
+}
+
+void answers::addp(fnevent proc, long value, void* object, const char* name, ...) {
+	XVA_FORMAT(name);
+	addv(proc, value, object, name, format_param);
 }
 
 void answers::sort() {

@@ -20,14 +20,15 @@
 #include "message.h"
 #include "slice.h"
 #include "stringbuilder.h"
+#include "variant.h"
+#include "wise.h"
 
-struct skilli {
+struct skillusei {
 	skilln	skill;
 	char	factors;
 	skillf	help;
 };
-
-static skilli skill_roll_data[] = {
+static skillusei skill_roll_data[] = {
 	{Administrator, 2, {Archivist, Orator}},
 	{Apiarist, 3, {Scientist, Insectrist, Loremouse}},
 	{Archivist, 2, {Cartographer, Administrator}},
@@ -43,11 +44,20 @@ static skilli skill_roll_data[] = {
 	//	Survivalist, WeatherWatcher, Weaver,
 };
 
+struct wiseusei {
+	wisen	skill;
+	skillf	help;
+};
+static wiseusei wise_use_data[] = {
+	{LegendsWise, {Manipulator, Orator, Persuader, Scientist, Insectrist, Loremouse, Hunter, Pathfinder}},
+};
+
 static skilln roll_skill;
+static bool wise_used;
 
 char roll_base, roll_difficult, roll_dices[16];
 
-static skilli* find_skill(skilln v) {
+static skillusei* find_use(skilln v) {
 	for(auto& e : skill_roll_data) {
 		if(e.skill == v)
 			return &e;
@@ -62,7 +72,7 @@ static void clear_parcipant() {
 static skilln can_help(character* p, skilln skill) {
 	if(p->skills[skill] > 0)
 		return skill;
-	auto ps = find_skill(skill);
+	auto ps = find_use(skill);
 	if(!ps)
 		return (skilln)0;
 	for(auto i = (skilln)1; i <= LastSkill; i = (skilln)(i + 1)) {
@@ -74,7 +84,15 @@ static skilln can_help(character* p, skilln skill) {
 	return (skilln)0;
 }
 
-static void add_help() {
+static void add_help_skill_command() {
+	auto skill = (skilln)hparam;
+	auto p = (character*)hobject;
+	add_parcipant(p);
+	roll_base++;
+	breakmodal(Continue);
+}
+
+static void add_help_skill() {
 	for(auto p : party) {
 		if(!p)
 			continue;
@@ -85,7 +103,28 @@ static void add_help() {
 		auto help_skill = can_help(p, roll_skill);
 		if(!help_skill)
 			continue;
-		an.add((long)p, message_names[AskCanHelp], p->name(), skill_names[help_skill]);
+		an.addp(add_help_skill_command, help_skill, p, message_names[AskCanHelp], p->name(), skill_names[help_skill]);
+	}
+}
+
+static void add_help_iam_wise_command() {
+	auto skill = (wisen)hparam;
+	auto p = (character*)hobject;
+	roll_base++;
+	wise_used = true;
+	breakmodal(Continue);
+}
+
+static void add_help_iam_wise() {
+	if(wise_used)
+		return;
+	for(auto p : party) {
+		if(!p)
+			continue;
+		for(auto n = (wisen)0; n <= LastWise; n = (wisen)(n + 1)) {
+			if(p->is(n))
+				an.addp(add_help_iam_wise_command, n, p, message_names[AskCanHelpWise], p->name(), wise_names[n]);
+		}
 	}
 }
 
@@ -96,16 +135,9 @@ static long choose_before_roll() {
 		sb.adds(message_names[MsgVsDifficult], roll_difficult);
 	sb.add(".");
 	sb.adds(message_names[MsgNumberDicesRoll], roll_base);
-	add_help();
+	add_help_skill();
+	add_help_iam_wise();
 	return choose_answers(temp, message_names[MakeRoll], 1);
-}
-
-static bool is_party(long pv) {
-	for(auto p : party) {
-		if(p == (void*)pv)
-			return true;
-	}
-	return false;
 }
 
 static void apply_before_roll() {
@@ -113,15 +145,12 @@ static void apply_before_roll() {
 		auto result = choose_before_roll();
 		if(!result)
 			break; // Start roll
-		if(is_party(result)) {
-			add_parcipant((character*)result);
-			roll_base++;
-		}
 	}
 }
 
 void make_roll(skilln skill, int difficult) {
 	clear_parcipant();
+	wise_used = false;
 	roll_skill = skill;
 	roll_base = player->get(skill);
 	roll_difficult = difficult;

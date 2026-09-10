@@ -18,10 +18,11 @@
 
 enum arean : unsigned char;
 enum creaturen : unsigned char;
+enum skilln : unsigned char;
+enum wisen : unsigned char;
 
 enum variantn : unsigned char {
-	Variant,
-	Area, Creature,
+	Variant, Areas, Creatures, Skills, Wises,
 };
 
 union variant {
@@ -32,8 +33,10 @@ union variant {
 	};
 	constexpr variant() : type(Variant), value(0) {}
 	constexpr variant(variantn type, unsigned char value) : type(type), value(value) {}
-	constexpr variant(arean v) : type(Area), value(v) {}
-	constexpr variant(creaturen v) : type(Creature), value(v) {}
+	constexpr variant(arean v) : type(Areas), value(v) {}
+	constexpr variant(creaturen v) : type(Creatures), value(v) {}
+	constexpr variant(skilln v) : type(Skills), value(v) {}
+	constexpr variant(wisen v) : type(Wises), value(v) {}
 	constexpr explicit operator bool() const { return u!=0; }
 	constexpr bool operator==(variant v) const { return u!=v.u; }
 };

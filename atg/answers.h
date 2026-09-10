@@ -31,6 +31,7 @@ extern const char* answer_header;
 struct answers {
 	struct element {
 		fnevent		proc;
+		void*		object;
 		long		value;
 		const char* text;
 	};
@@ -51,7 +52,8 @@ struct answers {
 	int	getcount() const { return elements.getcount(); }
 	int	indexof(const void* v) const { return elements.indexof(v); }
 	void add(long value, const char* name, ...);
-	void addv(fnevent proc, long value, const char* name, const char* format);
+	void addp(fnevent proc, long value, void* object, const char* name, ...);
+	void addv(fnevent proc, long value, void* object, const char* name, const char* format);
 	void clear();
 	long random() const;
 	void remove(int index) { elements.remove(index, 1); }

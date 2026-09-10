@@ -128,7 +128,7 @@ static traitn fearless_traits[] = {
 };
 
 static wisen tenderpaw_wises[] = {
-	CodeOfGuardWise, LegendesOfGuardWise
+	CodeOfGuardWise, LegendsWise
 };
 
 static wisen guard_captain_wises[] = {
