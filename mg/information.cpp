@@ -79,6 +79,14 @@ static void player_speciality(stringbuilder& sb) {
 		sb.add(skill_names[player->speciality]);
 }
 
+static void animal_name(stringbuilder& sb) {
+	sb.add(creature_names[animal]);
+}
+
+static void conflict_name(stringbuilder& sb) {
+	sb.add(conflict_names[conflict]);
+}
+
 template<> void fistatus<skilln>(unsigned char id, stringbuilder& sb) {
 	auto v = (skilln)id;
 	auto n = player->skills[v];
@@ -88,7 +96,9 @@ template<> void fistatus<skilln>(unsigned char id, stringbuilder& sb) {
 }
 
 BSDATA(stringvari) = {
+	{"Animal", animal_name},
 	{"Class", player_class},
+	{"Conflict", conflict_name},
 	{"Parcipants", parcipants_names},
 	{"Player", player_name},
 	{"RolledDices", rolled_dices_result},

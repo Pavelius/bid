@@ -29,7 +29,7 @@ enum wisen : unsigned char;
 enum creaturen : unsigned char {
 	Mouse,
 	Tenderpaw, Guardmouse, PatrolGuard, PatrolLeader, GuardCaptain,
-	Weasel,
+	Snake, Weasel,
 	LastCreature = Weasel
 };
 enum skilln : unsigned char {
@@ -100,8 +100,8 @@ struct skillable {
 
 struct creature {
 	creaturen		type;
-	gendern			gender;
 	char			nature;
+	gendern			gender;
 	unsigned char	customname; // 0xFF if no custom name.
 	short unsigned	birth;
 	skilln			speciality;
@@ -134,6 +134,7 @@ struct character : creature, skillable, wearable {
 	void setname();
 };
 
+extern creaturen animal;
 extern character* player;
 extern character* party[4];
 extern character* parcipants[4];
@@ -144,6 +145,8 @@ void add_party();
 void create_character();
 void create_character_silent();
 
+int make_conflict();
+int make_roll_dices(int number, int difficult);
 int make_roll(skilln skill, int difficult, bool mark_progress = true);
 int make_roll_silent(skilln skill, int difficult);
 

@@ -14,16 +14,8 @@
 	limitations under the License.77
 */
 
-#pragma once
+#include "season.h"
 
-enum seasonn : unsigned char {
-	Sprint, Summer, Fall, Winter,
-};
-enum weathern : unsigned char {
-	ClearAndWarm, SpringRain, SpringStorms, SpringUnseasonablyCold, SpringUnseasonablyWarm,
-	WarmAndHumid, SummerRain, Thunderstorms, HeatWaves,
-	AutumnStorms, ColdRain, FallUnseasonablyCold, FallUnseasonablyWarm,
-	ClearAndCold, Blizzard, ColdSnap, IceStorm, WinterUnseasonablyWarm,
-};
-extern seasonn season;
-extern weathern weather;
+weathern weather;
+seasonn season;
+

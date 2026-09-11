@@ -27,6 +27,6 @@ void create_game() {
 	create_character_silent();
 	create_character_silent();
 	create_character_silent();
-	sb.add("Show characters");
-	make_roll(Fighter, 3);
+	make_conflict();
+	// make_roll(Fighter, 3);
 }

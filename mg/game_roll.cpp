@@ -525,7 +525,11 @@ int make_roll(skilln skill, int difficult, bool mark_progress) {
 	return result;
 }
 
-int make_roll_silent(skilln skill, int difficult) {
-	make_roll_dices(player->get(skill));
+int make_roll_dices(int number, int difficult) {
+	make_roll_dices(number);
 	return imax(0, get_dices_result(4) - difficult);
+}
+
+int make_roll_silent(skilln skill, int difficult) {
+	return make_roll_dices(player->get(skill), difficult);
 }

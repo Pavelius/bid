@@ -26,6 +26,7 @@ character* party[4];
 character* parcipants[4];
 character character_data[32];
 creature creature_data[128];
+creaturen animal;
 
 unsigned char creature::index() const {
 	return this - creature_data;

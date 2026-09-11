@@ -20,6 +20,7 @@ enum messagen : unsigned char {
 	NoMessage, Continue, Cancel, Yes, No, And,
 	Passed, Failed, Tied,
 	PageCharacter, PageSkills, PageTraits, PageItems, PageCombatants,
+	ChooseCaptain,
 	ChooseName, ChooseWises, ChooseFurColor, ChooseCloackColor,
 	ChooseGuardRang, ChooseBirthPlace, ChooseBirthPlaceSkill, ChooseBirthPlaceTrait, ChooseLifeExperience,
 	ChooseParentProffession, ChooseConversationSkills, ChooseSeniorArtisanTeaching, ChooseMentorTeaching, ChooseYouSpeciality,

@@ -23,10 +23,21 @@ enum picturen : unsigned char {
 	ImageHamlet, ImageInvestigateRoom, ImageKingFight, ImageParty, ImageSwearn,
 	ImagePathfind, ImageTaint, ImageTreasure, ImageVillage
 };
+enum conflictn : unsigned char {
+	ChaseConflict, FightConflict, WarConflict,
+	LastConflict = WarConflict
+};
+enum actionn : unsigned char {
+	Attack, Defend, Feint, Maneuver
+};
 
 extern long	hparam; // Command context or parameters
 extern const void* hobject; // Command object
 
+extern const char* action_names[Maneuver + 1];
+extern const char* conflict_names[LastConflict + 1];
+
+extern conflictn conflict;
 extern character* party[4];
 
 extern int last_number;

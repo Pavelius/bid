@@ -85,6 +85,8 @@
 		<Unit filename="../atg/stringbuilder.h" />
 		<Unit filename="../atg/stringset.cpp" />
 		<Unit filename="../atg/stringset.h" />
+		<Unit filename="../atg/stringvar.cpp" />
+		<Unit filename="../atg/stringvar.h" />
 		<Unit filename="area.cpp" />
 		<Unit filename="area.h" />
 		<Unit filename="bin_avatars.cpp" />
@@ -94,11 +96,13 @@
 		<Unit filename="creature_generate.cpp" />
 		<Unit filename="game.cpp" />
 		<Unit filename="game.h" />
+		<Unit filename="game_conflict.cpp" />
 		<Unit filename="game_roll.cpp" />
 		<Unit filename="game_run.cpp" />
 		<Unit filename="information.cpp" />
 		<Unit filename="locale_ru.cpp" />
 		<Unit filename="message.h" />
+		<Unit filename="season.cpp" />
 		<Unit filename="season.h" />
 		<Unit filename="variant.h" />
 		<Extensions />
