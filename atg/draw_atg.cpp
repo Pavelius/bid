@@ -22,8 +22,6 @@
 #include "pushvalue.h"
 #include "stringbuilder.h"
 
-// #define NOART
-
 static int answer_columns;
 
 static char sb_console[4096];
@@ -33,6 +31,7 @@ static const char* answer_title;
 static const char* answer_cancel_text;
 static void* current_tab;
 static point last_separator;
+static point top_caret, last_caret;
 
 fnevent atg_menu;
 fnevent atg_change_avatar;
@@ -127,13 +126,11 @@ static void atg_paintcell(int index, long value, const char* title) {
 }
 
 static void paint_picture() {
-#ifndef NOART
 	auto p = metrics::images;
 	if(!p)
 		return;
 	image(caret.x, caret.y, p, answer_picture, 0);
 	caret.y += p->get(0).sy + metrics::border + metrics::padding;
-#endif // NOART
 }
 
 static void stroke_bar() {
@@ -261,6 +258,62 @@ bool allow_paint() {
 	return caret.in(clipping);
 }
 
+void set_button_columns(int number, int line_number) {
+	top_caret = caret;
+	last_caret = caret;
+	last_caret.y += line_number * (texth() + metrics::padding * 2);
+	last_caret.x += width;
+	width = (width - (number - 1) * metrics::padding) / number;
+}
+
+void reach_columns_bottom() {
+	if(top_caret != last_caret) {
+		caret.x = top_caret.x;
+		caret.y = last_caret.y;
+		width = last_caret.x - top_caret.x;
+		top_caret.clear();
+		last_caret.clear();
+	}
+}
+
+static void correct_caret() {
+	if(top_caret != last_caret) {
+		if(caret.y >= last_caret.y) {
+			caret.x += width + metrics::padding;
+			if(caret.x == last_caret.x) {
+				caret.x = top_caret.x;
+				last_caret.clear();
+				top_caret.clear();
+			} else
+				caret.y = top_caret.y;
+		}
+	}
+}
+
+void paint_buttom_center(const char* format, long param, bool choose) {
+	if(!format || format[0] == 0)
+		return;
+	if(!allow_paint())
+		return;
+	auto padding = metrics::padding;
+	auto push_caret = caret;
+	auto push_width = width;
+	height = texth() + padding;
+	width = textw(format) + padding * 2;
+	caret.x += (push_width - width) / 2;
+	button_check(0);
+	paint_hilite();
+	caret.y += padding / 2;
+	caret.x += padding;
+	text(format);
+	width = push_width;
+	caret = push_caret;
+	caret.y += height;
+	if(button_executed && choose)
+		execute(buttonparam, param);
+	correct_caret();
+}
+
 void paint_button(const char* format, long param, bool choose, int padding) {
 	if(!format || format[0] == 0)
 		return;
@@ -279,6 +332,7 @@ void paint_button(const char* format, long param, bool choose, int padding) {
 	if(button_executed && choose)
 		execute(buttonparam, param);
 	caret.y += padding / 2;
+	correct_caret();
 }
 
 static int find_avatars(void** source, int count, void* current) {
@@ -296,10 +350,8 @@ static void change_avatar() {
 }
 
 static void paint_avatar(const sprite* ps, int id, const void* player, unsigned key, bool mark_player, int hit_percent) {
-#ifndef NOART
 	if(ps)
 		image(ps, id, 0);
-#endif // NOART
 	if(hit_percent != 100) {
 		pushrect push;
 		auto push_alpha = alpha; alpha = 192;

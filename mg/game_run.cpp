@@ -45,6 +45,16 @@ static void paint_value(skilln id) {
 	}
 }
 
+static void paint_center_value(skilln id) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add("%1 %2i", skill_names[id], player->skills[id]);
+	paint_button(temp, 0, false);
+	if(button_hilited && tips_text[0] == 0) {
+		stringbuilder sb(tips_text);
+		fistatus<skilln>(id, sb);
+	}
+}
+
 static void paint_value(traitn id) {
 	char temp[260]; stringbuilder sb(temp);
 	auto level = player->traits[id];
@@ -95,6 +105,30 @@ static void page_characters() {
 			paint_value(n);
 	}
 	paint_separator();
+	paint_value(PersonaPoints);
+	paint_value(FatePoints);
+	paint_value(FreeChecks);
+	// paint_separator();
+}
+
+static void page_skills() {
+	paint_avatars();
+	pushvalue push(player, (character*)current_avatar);
+	if(!player)
+		return;
+	set_button_columns(2, 12);
+	for(auto n = (skilln)Administrator; n <= LastSkill; n = (skilln)(n + 1)) {
+		if(player->skills[n])
+			paint_value(n);
+	}
+	reach_columns_bottom();
+}
+
+static void page_traits() {
+	paint_avatars();
+	pushvalue push(player, (character*)current_avatar);
+	if(!player)
+		return;
 	for(auto n = (traitn)0; n <= LastTrait; n = (traitn)(n + 1)) {
 		if(player->traits[n])
 			paint_value(n);
@@ -106,20 +140,10 @@ static void page_characters() {
 	}
 }
 
-static void page_skills() {
-	paint_avatars();
-	pushvalue push(player, (character*)current_avatar);
-	if(!player)
-		return;
-	for(auto n = (skilln)Administrator; n <= LastSkill; n = (skilln)(n + 1)) {
-		if(player->skills[n])
-			paint_value(n);
-	}
-}
-
 static void paint_main_menu() {
 	paint_bar(message_names[PageCharacter], page_characters);
 	paint_bar(message_names[PageSkills], page_skills);
+	paint_bar(message_names[PageTraits], page_traits);
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id) {
