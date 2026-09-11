@@ -54,7 +54,11 @@ struct wiseuse {
 };
 
 static skilluse skill_use[LastSkill + 1] = {
-	{Nature}, {Will}, {Health}, {Resources}, {Circles},
+	{Nature},
+	{Will},
+	{Health},
+	{Resources},
+	{Circles},
 	{}, {}, {},
 	{Administrator, Will, {Archivist, Orator}},
 	{Apiarist, Will, {Scientist, Insectrist, Loremouse}},
@@ -150,10 +154,6 @@ static traituse trait_use[LastTrait + 1] = {
 	{Wise},
 	{WolfsSnout},
 	{Young},
-};
-
-static wiseuse wise_use[] = {
-	{LegendsWise, {Manipulator, Orator, Persuader, Scientist, Insectrist, Loremouse, Hunter, Pathfinder}},
 };
 
 static variant wise_context[LastWise + 1] = {
