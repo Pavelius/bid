@@ -63,7 +63,7 @@ static void addopt(const item& e, messagen v, fnitemget price) {
 		sb.add(message_names[AvailableCount], e.count);
 		sb.adds("]");
 	}
-	an.addv((long)&e, temp, 0);
+	an.addv(buttonparam, (long)&e, 0, temp, 0);
 }
 
 static item* choose_item(itema& source, messagen v, fnitemget price) {

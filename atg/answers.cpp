@@ -28,8 +28,6 @@ bool answers::interactive = true;
 
 answers an;
 
-void buttonparam();
-
 static bool allow(const answers& an, size_t max_width) {
 	for(auto& e : an) {
 		if(zlen(e.text) > max_width)
