@@ -17,5 +17,11 @@
 #pragma once
 
 enum seasonn : unsigned char {
-	Sprint, Summer, Authum, Winter,
+	Sprint, Summer, Fall, Winter,
+};
+enum weathern : unsigned char {
+	ClearAndWarm, SpringRain, SpringStorms, SpringUnseasonablyCold, SpringUnseasonablyWarm,
+	WarmAndHumid, SummerRain, Thunderstorms, HeatWaves,
+	AutumnStorms, ColdRain, FallUnseasonablyCold, FallUnseasonablyWarm,
+	ClearAndCold, Blizzard, ColdSnap, IceStorm, WinterUnseasonablyWarm,
 };
