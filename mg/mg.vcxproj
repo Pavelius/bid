@@ -143,6 +143,7 @@
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="creature_generate.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="game_conflict.cpp" />
     <ClCompile Include="game_roll.cpp" />
     <ClCompile Include="game_run.cpp" />
     <ClCompile Include="information.cpp" />

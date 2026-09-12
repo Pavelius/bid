@@ -12,6 +12,7 @@
     <ClCompile Include="game_run.cpp" />
     <ClCompile Include="bin_avatars.cpp" />
     <ClCompile Include="information.cpp" />
+    <ClCompile Include="game_conflict.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h" />

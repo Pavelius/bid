@@ -33,31 +33,70 @@ int enemy_disposition;
 int enemy_nature;
 int party_disposition;
 
+static character* captain;
+static character* party_actor[3];
 static actionn enemy_actions[3];
 static actionn party_actions[3];
 
+static int get_nature(creaturen type) {
+	switch(type) {
+	case Snake: return 6;
+	default: return 0;
+	}
+}
+
 static void determine_disposition() {
-	answer_header = "%Animal. %Conflict.";
 	// Enemy disposition
 	enemy_disposition = enemy_nature;
 	enemy_disposition += make_roll_dices(enemy_nature, 0);
 	// Player disposition
+	player = captain;
 	party_disposition = imax(player->get(Nature), player->get(Fighter));
 	party_disposition += make_roll(Fighter, 0, true);
 }
 
-static void choose_captain() {
+static character* choose_party_member(messagen id) {
 	for(auto p : party) {
 		if(p)
 			an.add((long)p, p->name());
 	}
-	player = (character*)choose_answers(message_names[ChooseCaptain], 0, 0);
+	return (character*)choose_answers(message_names[id], 0, 0);
+}
+
+static bool is_party_actor(const character* pv) {
+	for(auto p : party_actor) {
+		if(p == pv)
+			return true;
+	}
+	return false;
+}
+
+static void choose_party_actions() {
+	memset(party_actions, 0, sizeof(party_actions));
+	memset(party_actor, 0, sizeof(party_actor));
+	for(auto i = 0; i < 3; i++) {
+		for(auto p : party) {
+			if(!p || is_party_actor(p))
+				continue;
+			an.add((long)p, p->name());
+		}
+		party_actor[i] = (character*)choose_answers(message_names[ChooseCaptain], 0, 0);
+	}
+}
+
+static void apply_action_result(int index) {
 }
 
 int make_conflict() {
-	choose_captain();
+	answer_header = "%Animal. %Conflict.";
+	enemy_nature = get_nature(animal);
+	captain = choose_party_member(ChooseCaptain);
 	determine_disposition();
-	while(enemy_disposition>0 && party_disposition > 0) {
-
+	while(enemy_disposition > 0 && party_disposition > 0) {
+		choose_party_actions();
+		apply_action_result(1);
+		apply_action_result(2);
+		apply_action_result(3);
 	}
+	return 0;
 }

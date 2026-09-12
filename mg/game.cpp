@@ -27,6 +27,8 @@ void create_game() {
 	create_character_silent();
 	create_character_silent();
 	create_character_silent();
+	animal = Snake;
+	conflict = FightConflict;
 	make_conflict();
 	// make_roll(Fighter, 3);
 }
