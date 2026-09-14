@@ -45,6 +45,7 @@ int enemy_nature;
 int party_disposition;
 
 static int party_bonus, enemy_bonus;
+static wearable enemy_weapons;
 
 static character* captain;
 static character* party_actor[3];
