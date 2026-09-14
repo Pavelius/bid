@@ -27,11 +27,24 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
+enum reactionn : unsigned char {
+	NotRoll, Versus, Independed,
+};
+
+static reactionn reaction_type[Maneuver + 1][Maneuver + 1] = {
+	{Independed, Versus, Independed, Versus},
+	{Versus, Independed, NotRoll, Versus},
+	{NotRoll, Independed, Versus, Independed},
+	{Versus, Versus, Independed, Independed},
+};
+
 conflictn conflict;
 
 int enemy_disposition;
 int enemy_nature;
 int party_disposition;
+
+static int party_bonus, enemy_bonus;
 
 static character* captain;
 static character* party_actor[3];
@@ -81,10 +94,58 @@ static void choose_party_actions() {
 			an.add((long)p, p->name());
 		}
 		party_actor[i] = (character*)choose_answers(message_names[ChooseCaptain], 0, 0);
+		party_actions[i] = (actionn)choose_value(Attack, Maneuver, 0, action_names, message_names[ChooseAction]);
+	}
+}
+
+static skilln get_party_skill(actionn action) {
+	return Fighter;
+}
+
+static void apply_result(actionn action, int value, bool enemy) {
+	switch(action) {
+	case Feint: case Attack:
+		if(enemy)
+			party_disposition -= value;
+		else
+			enemy_disposition -= value;
+		break;
+	case Defend:
+		if(enemy)
+			enemy_disposition += value;
+		else
+			party_disposition += value;
+		break;
+	case Maneuver:
+		break;
 	}
 }
 
 static void apply_action_result(int index) {
+	auto action = party_actions[index];
+	auto enemy_action = enemy_actions[index];
+	auto skill = get_party_skill(action);
+	auto enemy_roll = make_roll_dices(enemy_nature, 0);
+	switch(reaction_type[action][enemy_action]) {
+	case Versus:
+		make_roll(skill, enemy_roll, false);
+		if(roll_result > 0)
+			apply_result(action, roll_result, false);
+		else
+			apply_result(enemy_action, -roll_result, true);
+		break;
+	case Independed:
+		make_roll(skill, 0, false);
+		if(roll_result > 0)
+			apply_result(action, roll_result, false);
+		if(enemy_roll > 0)
+			apply_result(action, enemy_roll, true);
+		break;
+	case NotRoll:
+		break;
+	default:
+		break;
+	}
 }
 
 int make_conflict() {

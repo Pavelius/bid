@@ -511,18 +511,18 @@ int make_roll(skilln skill, int difficult, bool mark_progress) {
 	roll_difficult = difficult;
 	apply_before_roll();
 	mark_trait_use();
-	auto result = apply_after_roll();
+	roll_result = apply_after_roll();
 	if(mark_progress) {
-		if(result > 0)
+		if(roll_result > 0)
 			player->success[skill]++;
 		else
 			player->fail[skill]++;
 	}
-	if(result > 0)
+	if(roll_result > 0)
 		mark_iam_wise_success();
 	else
 		mark_iam_wise_fail();
-	return result;
+	return roll_result;
 }
 
 int make_roll_dices(int number, int difficult) {
