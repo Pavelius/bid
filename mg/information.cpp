@@ -87,6 +87,14 @@ static void conflict_name(stringbuilder& sb) {
 	sb.add(conflict_names[conflict]);
 }
 
+static void print_party_disposition(stringbuilder& sb) {
+	sb.add("%1i", party_disposition);
+}
+
+static void print_enemy_disposition(stringbuilder& sb) {
+	sb.add("%1i", enemy_disposition);
+}
+
 template<> void fistatus<skilln>(unsigned char id, stringbuilder& sb) {
 	auto v = (skilln)id;
 	auto n = player->skills[v];
@@ -99,7 +107,9 @@ BSDATA(stringvari) = {
 	{"Animal", animal_name},
 	{"Class", player_class},
 	{"Conflict", conflict_name},
+	{"EnemyDisposition", print_enemy_disposition},
 	{"Parcipants", parcipants_names},
+	{"PartyDisposition", print_party_disposition},
 	{"Player", player_name},
 	{"RolledDices", rolled_dices_result},
 	{"Speciality", player_speciality},

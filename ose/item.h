@@ -105,7 +105,7 @@ struct itemi {
 	attacki	combat;
 	bool is(damagen v) const { return flags.is(v); }
 };
-extern itemi item_data[LastItem+1];
+extern itemi itemsa[LastItem+1];
 
 struct item {
 	itemn type;
@@ -124,7 +124,7 @@ struct item {
 	constexpr explicit operator bool() const { return type != (itemn)0; }
 	constexpr bool countable() const { return type >= FirstCountable; }
 	constexpr bool native() const { return type <= LastNative; }
-	constexpr const itemi& geti() const { return item_data[type]; }
+	constexpr const itemi& geti() const { return itemsa[type]; }
 	constexpr itemn ammo() const { return geti().combat.ammo; }
 	constexpr itemn parent() const { return geti().parent; }
 	constexpr powern power() const { return countable() ? NoPower : (powern)modification; }

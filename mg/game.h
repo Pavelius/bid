@@ -41,6 +41,7 @@ extern conflictn conflict;
 extern character* party[4];
 
 extern int last_number;
+extern int enemy_disposition, party_disposition;
 
 extern char roll_base, roll_result, roll_difficult, roll_dices[16];;
 

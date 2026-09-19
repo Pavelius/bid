@@ -37,7 +37,7 @@ enum globalvarn : unsigned char {
 };
 enum picturen : unsigned char {
 	ImageWasteland, ImageWastelandNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern
+	ImagePlainVillage, ImageVillageMarket, ImageTavern, ImageHotel,
 };
 
 extern const char* action_names[LastAction + 1];

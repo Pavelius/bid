@@ -17,6 +17,7 @@
 #include "answers.h"
 #include "area.h"
 #include "creature.h"
+#include "draw_atg.h"
 #include "game.h"
 #include "gender.h"
 #include "math.h"
@@ -40,9 +41,8 @@ static reactionn reaction_type[Maneuver + 1][Maneuver + 1] = {
 
 conflictn conflict;
 
-int enemy_disposition;
+int enemy_disposition, party_disposition;
 int enemy_nature;
-int party_disposition;
 
 static int party_bonus, enemy_bonus;
 static wearable enemy_weapons;
@@ -85,6 +85,10 @@ static bool is_party_actor(const character* pv) {
 	return false;
 }
 
+static void print_disposition() {
+	sb.addn(message_names[MsgDisposition]);
+}
+
 static void choose_party_actions() {
 	memset(party_actions, 0, sizeof(party_actions));
 	memset(party_actor, 0, sizeof(party_actor));
@@ -94,6 +98,8 @@ static void choose_party_actions() {
 				continue;
 			an.add((long)p, p->name());
 		}
+		sb.clear();
+		print_disposition();
 		party_actor[i] = (character*)choose_answers(message_names[ChooseCaptain], 0, 0);
 		party_actions[i] = (actionn)choose_value(Attack, Maneuver, 0, action_names, message_names[ChooseAction]);
 	}
@@ -127,6 +133,8 @@ static void apply_action_result(int index) {
 	auto enemy_action = enemy_actions[index];
 	auto skill = get_party_skill(action);
 	auto enemy_roll = make_roll_dices(enemy_nature, 0);
+	sb.clear();
+	print_disposition();
 	switch(reaction_type[action][enemy_action]) {
 	case Versus:
 		make_roll(skill, enemy_roll, false);

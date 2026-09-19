@@ -44,7 +44,7 @@ areai area_data[] = {
 	{LeaveBack, {BuyTradeGoods, SellTradeGoods}, ImageVillageMarket}, // Market
 	{LeaveOutside}, // Garden
 	{LeaveOutside}, // Temple
-	{LeaveOutside}, // Inn
+	{LeaveOutside, {}, ImageHotel}, // Inn
 	{LeaveOutside, {GatherInformation}, ImageTavern}, // Tavern
 	{}, // Palace
 };

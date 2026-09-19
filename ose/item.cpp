@@ -77,9 +77,9 @@ static itemn random_weapons[] = {Dagger, Dagger, HandAxe, HandAxe, Javelin, Spea
 static itemn random_rod_staff_wand[] = {Rod, Staff, Staff, Staff, Wand, Wand};
 static itemn random_food[] = {Bread, Bread, Corn, RawMeat, RawMeat};
 static itemn random_market_good[] = {LeatherArmor, Shield, Spear, Dagger, Mace, Staff, Boots, Bracers, Candle,
-	Cloack, Carpet, Gauntlets, Gridle, Helm, Horseshoes, Incense, Jug, Mirror, Net, Oil, Robe, Rope, Saw, Scarab, Spade};
+Cloack, Carpet, Gauntlets, Gridle, Helm, Horseshoes, Incense, Jug, Mirror, Net, Oil, Robe, Rope, Saw, Scarab, Spade};
 
-itemi item_data[LastItem + 1] = {
+itemi itemsa[LastItem + 1] = {
 	{MeleeWeapon, Fist, 0, 0, 0, {{1, 2}}},
 	{MeleeWeapon, Claws1d4, 0, 0, 0, {{1, 4}, 0, 2}},
 	{MeleeWeapon, Claws1d4, 0, 0, 0, {{1, 6}, 0, 2}},
@@ -276,7 +276,7 @@ void clear_items() {
 
 void add_items(short unsigned index) {
 	for(auto& e : bsdata<itemground>()) {
-		if(!e || e.index!=index)
+		if(!e || e.index != index)
 			continue;
 		items.add(&e);
 	}
@@ -379,7 +379,7 @@ void item::drop(short unsigned index) {
 			clear();
 			last_item = &e;
 			return;
-		} else if(e.index!=index)
+		} else if(e.index != index)
 			continue;
 		e.join(*this);
 		if(!(*this))
@@ -457,17 +457,17 @@ bool is_item_food(const void* object) {
 }
 
 const char* test_item() {
-	if(item_data[WarHammer].parent!=WarHammer)
+	if(itemsa[WarHammer].parent != WarHammer)
 		return "Not valid item for warhammer";
-	if(item_data[Cloack].parent!=Cloack)
+	if(itemsa[Cloack].parent != Cloack)
 		return "Not valid item for Cloack";
-	if(item_data[Gauntlets].parent!=Gauntlets)
+	if(itemsa[Gauntlets].parent != Gauntlets)
 		return "Not valid item for Gauntlets";
-	if(item_data[RawMeat].parent!=RawMeat)
+	if(itemsa[RawMeat].parent != RawMeat)
 		return "Not valid item for RawMeat";
-	if(item_data[SignetRing].parent!=SignetRing)
+	if(itemsa[SignetRing].parent != SignetRing)
 		return "Not valid item for SignetRing";
-	if(item_data[PP].parent != PP)
+	if(itemsa[PP].parent != PP)
 		return "Not valid item for PP";
 	return 0;
 }

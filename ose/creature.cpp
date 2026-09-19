@@ -414,7 +414,7 @@ static void apply_weapon_magic(powern power) {
 static void apply_wear_magic(itemn type, powern power) {
 	if(!power)
 		return;
-	switch(item_data[type].wear) {
+	switch(itemsa[type].wear) {
 	case Body:
 		player->abilities[AC] += get_magic(power);
 		break;
@@ -688,7 +688,7 @@ static int critical_damage(const item& weapon, const attacki& attack) {
 }
 
 static void get_attack(attacki& result, creature* attacker, abilityn id, const item& weapon, int bonus) {
-	result = item_data[weapon.type].combat;
+	result = itemsa[weapon.type].combat;
 	result.damage.m += attacker->abilities[id];
 	if(id == MeleeAttack)
 		result.damage.b += attacker->abilities[MeleeDamage];
