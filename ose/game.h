@@ -95,6 +95,7 @@ bool apply_combat(actionn v, bool run);
 void area_move();
 void breakactions();
 void buttonparam();
+void clear_messages();
 bool chance(int v);
 long choose_party_option(const char* cancel_text);
 long choose_player_option(const char* cancel_text);

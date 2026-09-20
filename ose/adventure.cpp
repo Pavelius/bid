@@ -62,7 +62,7 @@ static void consume_food() {
 }
 
 static void night_encounter() {
-	// sb.clear();
+	clear_messages();
 	if(check_encounter()) {
 		player->act(PlayerHearNoiseOnWatch);
 		pause();
@@ -91,14 +91,14 @@ static void camp_actions() {
 }
 
 static void camp_move() {
-	// sb.clear();
+	clear_messages();
 	addhdr(getimagenight(enviroment));
 	addmsn(MakeCampInOpenLand);
 	camp_actions();
 	while(true) {
 		if(player->getspells(1))
 			addopt(MemorizeSpells);
-		auto result = choose_player_option(message_names[RestParty]);
+		auto result = choose_player_option(action_names[RestParty]);
 		if(!result)
 			break;
 		else if(result == Continue)

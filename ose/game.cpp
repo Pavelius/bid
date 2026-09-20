@@ -296,13 +296,12 @@ static void combat_encounter() {
 
 picturen getimage(arean v) {
 	switch(v) {
-	case Village: case Hamlet: case SmallTown: case LargeTown:
-		return ImagePlainVillage;
+	case Village: case Hamlet: case SmallTown: case LargeTown: return ImagePlainVillage;
 	case Market: return ImageVillageMarket;
 	case Inn: return ImageHotel;
 	case Tavern: return ImageTavern;
-	default:
-		return ImagePlains;
+	case Temple: return ImageTemple;
+	default: return ImagePlains;
 	}
 }
 
@@ -327,6 +326,10 @@ void breakactions() {
 	need_break_actions = true;
 }
 
+void clear_messages() {
+	sb.clear();
+}
+
 void addhdr(picturen picture, const char* header) {
 	answer_picture = picture;
 	answer_header = header;
@@ -342,6 +345,7 @@ void add_look() {
 }
 
 void addmsg(messagen n) {
+	sb.addsep(' ');
 	sb.addv(message_names[n], 0);
 }
 
@@ -479,7 +483,7 @@ static void test_game() {
 	// add_magic_item(RandomMagicItem);
 	// make_player_move(take_items_options);
 	// adventure_move(50);
-	last_settlement = find_settlement(MiddleKindom, Village);
+	last_settlement = find_settlement(MiddleKindom, LargeTown);
 	if(!last_settlement)
 		last_settlement = find_settlement(MiddleKindom, SmallTown);
 	create_market_items();

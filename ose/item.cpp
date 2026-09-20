@@ -250,6 +250,10 @@ bool is_cursed(const void* object) {
 	return (n == Cursed || n == Weakness || n == Delusion);
 }
 
+bool is_countable(const void* object) {
+	return ((item*)object)->countable();
+}
+
 bool is_damaged(const void* object) {
 	return ((item*)object)->broken > 0;
 }

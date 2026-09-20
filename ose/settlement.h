@@ -11,17 +11,20 @@ enum kindomn : unsigned char {
 };
 
 extern const char* kindom_names[FrozenNorth + 1];
+extern const char* settlement_names[(FrozenNorth + 1) * 8];
 
 struct settlement {
 	arean		type;
 	kindomn		kindom;
 	unsigned	buildings;
 	unsigned	flags;
+	unsigned char name_id;
 	constexpr explicit operator bool() const { return type != (arean)0; }
-	bool		is(arean v) const { return (buildings & (1 << v)) != 0; }
-	bool		is(areafn v) const { return (flags & (1 << v)) != 0; }
-	void		set(arean v) { buildings |= (1 << v); }
-	void		set(areafn v) { flags |= (1 << v); }
+	const char* name() const { return settlement_names[name_id]; }
+	bool is(arean v) const { return (buildings & (1 << v)) != 0; }
+	bool is(areafn v) const { return (flags & (1 << v)) != 0; }
+	void set(arean v) { buildings |= (1 << v); }
+	void set(areafn v) { flags |= (1 << v); }
 };
 extern settlement settlements[settlement_maximum]; // All world settlements
 extern settlement* last_settlement;

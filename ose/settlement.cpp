@@ -20,12 +20,51 @@ static actionn market_actions[] = {BuyTradeGoods, SellTradeGoods};
 static actionn inn_actions[] = {RentRoomOnNight};
 static actionn tavern_actions[] = {GatherInformation};
 
+static bool is_exist_name(unsigned char v) {
+	for(auto& e : settlements) {
+		if(e && e.name_id == v)
+			return true;
+	}
+	return false;
+}
+
+static unsigned char get_random_name(kindomn kindom, arean type) {
+	adat<unsigned char, (FrozenNorth + 1) * 8> source;
+	unsigned char i1 = kindom * 8 + ((type == Village || type == Hamlet) ? 4 : 0);
+	for(auto i = i1; i < i1 + 4; i++) {
+		if(is_exist_name(i))
+			continue;
+		source.add(i);
+	}
+	if(!source) {
+		unsigned char i1 = kindom * 8;
+		for(auto i = i1; i < i1 + 8; i++) {
+			if(is_exist_name(i))
+				continue;
+			source.add(i);
+		}
+	}
+	if(!source) {
+		unsigned char i1 = 0;
+		for(auto i = i1; i < i1 + 5 * 8; i++) {
+			if(is_exist_name(i))
+				continue;
+			source.add(i);
+		}
+	}
+	if(!source)
+		return 0;
+	return source.data[rand() % source.count];
+}
+
 static void create_settlement(int& index, kindomn kindom, arean type) {
 	if(index >= settlement_maximum)
 		return;
+	auto n = get_random_name(kindom, type);
 	auto p = settlements + (index++);
 	p->kindom = kindom;
 	p->type = type;
+	p->name_id = n;
 	p->set(Market);
 	switch(p->type) {
 	case LargeTown:
@@ -50,12 +89,9 @@ static void create_settlement(int& index, kindomn kindom, arean type) {
 }
 
 static arean get_settlement_type(int index) {
-	static arean second_types[] = {SmallTown, SmallTown, Village};
-	static arean third_types[] = {Village, Hamlet, Hamlet};
+	static arean third_types[] = {SmallTown, Village, Village, Hamlet, Hamlet};
 	switch(index) {
 	case 0: return LargeTown; // Only one capital city
-	case 1: return SmallTown;
-	case 2: case 3: return maprnd(second_types);
 	default: return maprnd(third_types);
 	}
 }
@@ -273,7 +309,8 @@ void settlement_move() {
 	last_settlement->set(Visited);
 	while(doactions()) {
 		enviroment = last_settlement->type;
-		addhdr(getimage(enviroment), "%AreaNameFull");
+		addhdr(getimage(enviroment), "%SettlementName");
+		sb.clear();
 		add_look();
 		for(auto i = (arean)1; i <= Palace; i = (arean)(i + 1)) {
 			if(last_settlement->is(i))
@@ -299,11 +336,21 @@ static int distance(settlement* p1, settlement* p2) {
 	return result * 24;
 }
 
+static const char* ask_visit_settlement(arean type, unsigned char name) {
+	static char temp[128]; stringbuilder sb(temp);
+	sb.clear();
+	sb.add(area_visit[type]);
+	sb.adds(settlement_names[name]);
+	return temp;
+}
+
 void kindom_adventure_move() {
 	auto kindom = last_settlement->kindom;
 	while(true) {
+		next_settlement = 0;
 		enviroment = Plains;
 		addhdr(getimage(enviroment));
+		sb.clear();
 		for(auto i = 0; i < settlement_maximum; i++) {
 			auto p = settlements + i;
 			if(p->kindom != kindom)
@@ -311,14 +358,16 @@ void kindom_adventure_move() {
 			if(p == last_settlement)
 				continue;
 			auto miles = distance(last_settlement, p);
-			an.add((long)p, message_names[AskRoadAdventure], area_names[settlements[i].type], get_range_name(miles));
+			an.add((long)p, message_names[AskRoadAdventure], area_names_to[settlements[i].type], get_range_name(miles), p->name());
 		}
-		next_settlement = (settlement*)choose_party_option(0);
+		auto cancel_text = ask_visit_settlement(last_settlement->type, last_settlement->name_id);
+		next_settlement = (settlement*)choose_party_option(cancel_text);
 		if(!next_settlement)
 			settlement_move();
 		else {
 			auto miles = distance(last_settlement, next_settlement);
 			adventure_move(miles);
+			last_settlement = next_settlement;
 		}
 	}
 }

@@ -175,6 +175,7 @@ item* find_item(short unsigned index, unsigned char level);
 itemn random(itemn v);
 itemn random_basic(itemn v);
 
+bool is_countable(const void* object);
 bool is_cursed(const void* object);
 bool is_damaged(const void* object);
 bool is_identified(const void* object);

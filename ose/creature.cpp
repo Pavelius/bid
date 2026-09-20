@@ -124,14 +124,14 @@ static char reaction_bonus[19] = {
 	-3, -3, -3, -2, -1, -1, -1, -1, -1, 0,
 	0, 0, 0, 1, 1, 1, 1, 1, 2
 };
-static int base_experience[21*2] = {
+static int base_experience[21 * 2] = {
 	5, 10, 15, 20, 25, 35, 50, 75, 125, 175,
 	225, 275, 350, 450, 450, 650, 650, 900, 900, 900, // 10
 	900, 1100, 1100, 1100, 1100, 1350, 1350, 1350, 1350, 1350, // 20
 	1350, 1350, 1350, 2000, 2000, 2000, 2000, 2000, 2000, // 30
 	2000, 2000, 2500
 };
-static int additional_experience[21*2] = {
+static int additional_experience[21 * 2] = {
 	1, 3, 4, 5, 10, 15, 25, 50, 75, 125,
 	175, 225, 300, 400, 400, 550, 550, 700, 700, 700, // 10
 	700, 800, 800, 800, 800, 950, 950, 950, 950, 950, // 20
@@ -829,6 +829,8 @@ bool use_skill(actionn id, int bonus, bool run) {
 	auto target_count = 1;
 	switch(id) {
 	case MakeTendingWounds:
+		if(!(player->type == Fighter || player->type == Cleric || player->type == Elf))
+			return false;
 		targets = creatures;
 		targets.match(is_enemy, false);
 		targets.match(is_wounded, true);
@@ -836,12 +838,17 @@ bool use_skill(actionn id, int bonus, bool run) {
 			return false;
 		break;
 	case MakeGearRepairing:
+		if(!(player->type == Fighter || player->type == Dwarf || player->type == Theif))
+			return false;
 		select_party_items();
+		targets.match(is_countable, false);
 		targets.match(is_damaged, true);
 		if(!targets)
 			return false;
 		break;
 	case MakeTreatIllness:
+		if(!(player->type == Cleric || player->type == Elf))
+			return false;
 		targets = creatures;
 		targets.match(is_enemy, false);
 		targets.match(is_diseased, true);

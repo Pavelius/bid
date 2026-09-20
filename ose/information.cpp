@@ -24,6 +24,7 @@
 #include "gender.h"
 #include "math.h"
 #include "rand.h"
+#include "settlement.h"
 #include "stringbuilder.h"
 #include "stringset.h"
 #include "stringvar.h"
@@ -120,6 +121,10 @@ static void area_type(stringbuilder& sb) {
 	sb.add(area_names[enviroment]);
 }
 
+static void settlement_name(stringbuilder& sb) {
+	sb.add(last_settlement->name());
+}
+
 static void print_last_number(stringbuilder& sb) {
 	sb.add("%1i", last_number);
 }
@@ -145,6 +150,7 @@ BSDATA(stringvari) = {
 	{"Name", print_name},
 	{"Number", print_last_number},
 	{"Player", player_name},
+	{"SettlementName", settlement_name},
 	{"TreasureCoins", treasure_coins_name},
 	{"Weapon", player_weapon},
 };
