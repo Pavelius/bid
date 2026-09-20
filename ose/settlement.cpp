@@ -1,3 +1,4 @@
+#include "answers.h"
 #include "area.h"
 #include "creature.h"
 #include "itema.h"
@@ -97,18 +98,6 @@ settlement* find_settlement(kindomn kindom, arean type, settlement* start) {
 			return p;
 	}
 	return 0;
-}
-
-static picturen getimage(arean v) {
-	switch(v) {
-	case Village: case Hamlet: case SmallTown: case LargeTown:
-		return ImagePlainVillage;
-	case Market: return ImageVillageMarket;
-	case Inn: return ImageHotel;
-	case Tavern: return ImageTavern;
-	default:
-		return ImagePlains;
-	}
 }
 
 static void add_market(itemn v) {
@@ -264,7 +253,7 @@ static actionn get_leave_action(arean v) {
 static void enter_building(arean place_to_go) {
 	while(doactions()) {
 		enviroment = place_to_go;
-		add_header(getimage(enviroment), "%AreaNameFull");
+		addhdr(getimage(enviroment), "%AreaNameFull");
 		add_look();
 		for(auto n : getactions(enviroment)) {
 			if(apply(n, false))
@@ -284,7 +273,7 @@ void settlement_move() {
 	last_settlement->set(Visited);
 	while(doactions()) {
 		enviroment = last_settlement->type;
-		add_header(getimage(enviroment), "%AreaNameFull");
+		addhdr(getimage(enviroment), "%AreaNameFull");
 		add_look();
 		for(auto i = (arean)1; i <= Palace; i = (arean)(i + 1)) {
 			if(last_settlement->is(i))
@@ -294,5 +283,42 @@ void settlement_move() {
 		if(!result)
 			break;
 		enter_building((arean)result);
+	}
+}
+
+static int distance(settlement* p1, settlement* p2) {
+	auto result = 0;
+	if(p1->is(Far))
+		result += 4;
+	if(p2->is(Far))
+		result += 4;
+	if(p1->is(Near) || p2->is(Near))
+		result += 2;
+	else
+		result += 4;
+	return result * 24;
+}
+
+void kindom_adventure_move() {
+	auto kindom = last_settlement->kindom;
+	while(true) {
+		enviroment = Plains;
+		addhdr(getimage(enviroment));
+		for(auto i = 0; i < settlement_maximum; i++) {
+			auto p = settlements + i;
+			if(p->kindom != kindom)
+				continue;
+			if(p == last_settlement)
+				continue;
+			auto miles = distance(last_settlement, p);
+			an.add((long)p, message_names[AskRoadAdventure], area_names[settlements[i].type], get_range_name(miles));
+		}
+		next_settlement = (settlement*)choose_party_option(0);
+		if(!next_settlement)
+			settlement_move();
+		else {
+			auto miles = distance(last_settlement, next_settlement);
+			adventure_move(miles);
+		}
 	}
 }

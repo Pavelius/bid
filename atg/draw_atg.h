@@ -41,7 +41,6 @@ extern fnevent atg_change_avatar;
 void* choose_record(const char* id, const char* source_id, fnvisible allow = 0);
 
 bool allow_paint();
-void fixmsg(messagen id);
 void game_run(); // Main game entry point
 void main_util(); // External function
 void next_scene(fnevent v);

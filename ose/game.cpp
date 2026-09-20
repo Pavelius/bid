@@ -30,8 +30,6 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
-const int yards_in_miles = 1000;
-
 static variant last_result;
 static bool need_break_actions;
 
@@ -192,77 +190,6 @@ bool apply_camp(actionn v, bool run) {
 	return true;
 }
 
-static void use_skill(actionn id) {
-	auto bonus = skill_bonus(id, player->type) - 2;
-	use_skill(id, bonus, true);
-}
-
-static void camp_actions() {
-	pushvalue push(player);
-	for(auto p : party) {
-		if(!p)
-			continue;
-		player = p;
-		use_skill(MakeGearRepairing);
-		use_skill(MakeTendingWounds);
-		use_skill(MakeTreatIllness);
-		use_skill(MakeHunting);
-		use_skill(MakeForaging);
-	}
-}
-
-static bool consume(itemn v) {
-	for(auto p : party) {
-		if(p && p->consume(v))
-			return true;
-	}
-	return false;
-}
-
-static void consume_food() {
-	if(consume(RawMeat))
-		return;
-	if(consume(Mushrooms))
-		return;
-	if(consume(Berry))
-		return;
-	if(consume(Ration))
-		return;
-	player->act(PlayerSufferStarvation);
-	player->starvation += d6();
-}
-
-static void camp_move() {
-	answer_picture = ImageWastelandNight;
-	sb.clear();
-	fixmsg(MakeCampInOpenLand);
-	camp_actions();
-	while(true) {
-		addopt(RestParty);
-		if(player->getspells(1))
-			addopt(MemorizeSpells);
-		make_player_move();
-		if(!last_result)
-			break;
-		else if(last_result == Continue)
-			continue;
-		apply_result();
-	}
-}
-
-static void check_movement() {
-	auto value = yards_in_miles * (party_average(Movement) * 10 / 5);
-	auto modifier = get_movement_modifier(enviroment);
-	value = value * modifier / 100;
-	move_distance -= value;
-}
-
-static void take_items_options() {
-	update_area_items();
-	sb.add("Среди сундуков были горы разнообразных монет. В общей сложности вы насчитали %TreasureCoins монет. В куче монет вы заметили %Items.");
-	an.add(0, "Забрать все");
-}
-
 static void generate_loot(classn type, int count) {
 	treasure_generate(get_treasure(encounter_monsters), false, true, false);
 	for(auto i = 0; i < count; i++)
@@ -286,7 +213,7 @@ static void loot_enemies() {
 		return;
 	generate_loot(encounter_monsters, creature_count(true, false));
 	pause(message_names[SearchBodies]);
-	fixmsg(NothingValuableHere);
+	addmsn(NothingValuableHere);
 	pause();
 }
 
@@ -341,52 +268,6 @@ static void combat_encounter() {
 	}
 }
 
-static void animal_encounter() {
-	pushvalue push_player(player);
-	encounter_monsters = random_animal(enviroment);
-	create_monsters(encounter_monsters, true);
-	player->act(PlayerJumpFromBrush);
-	combat_encounter();
-}
-
-static bool check_encounter(int chance = 1) {
-	auto result = 1 + rand() % 6;
-	return result <= chance;
-}
-
-static void night_encounter() {
-	sb.clear();
-	if(check_encounter()) {
-		player->act(PlayerHearNoiseOnWatch);
-		pause();
-		animal_encounter();
-	} else
-		player->act(CampNightEnd);
-}
-
-static void adventure_move() {
-	pushvalue push_header(answer_header, "%AreaName");
-	while(true) {
-		add_header(ImageWasteland, "%AreaName");
-		addopt(MakeCamp);
-		make_party_move();
-		camp_move();
-		for_each_party(consume_food);
-		check_movement();
-		if(move_distance <= 0) {
-			break;
-		} else {
-			night_encounter();
-			sb.adds(message_names[AdventureNextDay]);
-		}
-	}
-}
-
-static void adventure_move(int miles) {
-	move_distance += miles * yards_in_miles;
-	adventure_move();
-}
-
 //void area_move() {
 //	last_area->set(Known);
 //	last_area->set(Visited);
@@ -413,6 +294,27 @@ static void adventure_move(int miles) {
 //////////////////////////////////////////////////////
 // WORK WITH SCENE
 
+picturen getimage(arean v) {
+	switch(v) {
+	case Village: case Hamlet: case SmallTown: case LargeTown:
+		return ImagePlainVillage;
+	case Market: return ImageVillageMarket;
+	case Inn: return ImageHotel;
+	case Tavern: return ImageTavern;
+	default:
+		return ImagePlains;
+	}
+}
+
+picturen getimagenight(arean v) {
+	switch(v) {
+	case Plains: return ImagePlainsNight;
+	case Forest: return ImageForestNight;
+	case Wastes: return ImageWastelandNight;
+	default: return ImagePlainsNight;
+	}
+}
+
 bool doactions() {
 	if(need_break_actions) {
 		need_break_actions = false;
@@ -425,14 +327,27 @@ void breakactions() {
 	need_break_actions = true;
 }
 
-void add_header(picturen picture, const char* header) {
+void addhdr(picturen picture, const char* header) {
 	answer_picture = picture;
 	answer_header = header;
+}
+
+void addhdr(picturen picture) {
+	answer_picture = picture;
 }
 
 void add_look() {
 	sb.clear();
 	sb.addn(area_look[enviroment]);
+}
+
+void addmsg(messagen n) {
+	sb.addv(message_names[n], 0);
+}
+
+void addmsn(messagen id) {
+	sb.addsep('\n');
+	sb.addv(message_names[id], 0);
 }
 
 void addopt(const item& e, messagen v, fnitemget price) {
@@ -568,7 +483,7 @@ static void test_game() {
 	if(!last_settlement)
 		last_settlement = find_settlement(MiddleKindom, SmallTown);
 	create_market_items();
-	settlement_move();
+	kindom_adventure_move();
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);

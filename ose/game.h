@@ -54,7 +54,7 @@ enum messagen : unsigned char {
 	PlayerThink, PlayerSay, PlayerCry,
 	SayWhoIsHere,
 	BuyItemForCost, SellItemForCost, AvailableCount,
-	AskLeft, AskMemorizeSpells, AskWhatToDoPlayer, AskWhatToDo,
+	AskLeft, AskRoadAdventure, AskEnterSettlement, AskMemorizeSpells, AskWhatToDoPlayer, AskWhatToDo,
 	LastMessage = AskWhatToDo,
 };
 enum reactionn : unsigned char {
@@ -77,9 +77,15 @@ extern reactionn last_reaction;
 extern classn encounter_monsters;
 extern int last_number;
 
+picturen getimage(arean v);
+picturen getimagenight(arean v);
+
 void add_look();
-void add_header(picturen picture, const char* header);
 void add_var(globalvarn v, int i);
+void addhdr(picturen picture);
+void addhdr(picturen picture, const char* header);
+void addmsg(messagen id);
+void addmsn(messagen id);
 void addopt(actionn n);
 void addopt(arean v);
 void addopt(const item& e, messagen v, fnitemget price);

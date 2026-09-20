@@ -14,7 +14,6 @@
 	limitations under the License.77
 */
 
-#include "bsdata.h"
 #include "creature.h"
 #include "collectiona.h"
 #include "dice.h"
@@ -32,8 +31,8 @@ const int ep = 50;
 const int gp = 100;
 const int pp = 500;
 
-BSDATAC(itemground, 4096)
 collectiona items;
+static itemground itemgrounds[1024 * 4];
 
 item* last_item;
 bool need_update_items;
@@ -274,25 +273,24 @@ void clear_items() {
 	items.clear();
 }
 
-void add_items(short unsigned index) {
-	for(auto& e : bsdata<itemground>()) {
-		if(!e || e.index != index)
-			continue;
-		items.add(&e);
+void add_items(short unsigned index, unsigned char level) {
+	for(auto& e : itemgrounds) {
+		if(e && e.index == index && e.level == level)
+			items.add(&e);
 	}
 }
 
-item* find_item(short unsigned index) {
-	for(auto& e : bsdata<itemground>()) {
-		if(e && e.index == index)
+item* find_item(short unsigned index, unsigned char level) {
+	for(auto& e : itemgrounds) {
+		if(e && e.index == index && e.level == level)
 			return &e;
 	}
 	return 0;
 }
 
-void clear_items(short unsigned index) {
-	for(auto& e : bsdata<itemground>()) {
-		if(e && e.index == index)
+void clear_items(short unsigned index, unsigned char level) {
+	for(auto& e : itemgrounds) {
+		if(e && e.index == index && e.level == level)
 			e.clear();
 	}
 }
@@ -370,12 +368,13 @@ void item::act(messagen id) const {
 	sb.addv(message_names[id], 0);
 }
 
-void item::drop(short unsigned index) {
-	for(auto& e : bsdata<itemground>()) {
+void item::drop(short unsigned index, unsigned char level) {
+	for(auto& e : itemgrounds) {
 		if(!e) {
 			e.type = type;
 			e.count = count;
 			e.index = index;
+			e.index = level;
 			clear();
 			last_item = &e;
 			return;
@@ -385,12 +384,6 @@ void item::drop(short unsigned index) {
 		if(!(*this))
 			return;
 	}
-	auto p = bsdata<itemground>::add();
-	p->type = type;
-	p->count = count;
-	p->index = index;
-	clear();
-	last_item = p;
 }
 
 bool wearable::isusable(const item& it) const {

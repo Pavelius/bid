@@ -140,7 +140,7 @@ struct item {
 	void clear() { type = (itemn)0; count = 0; need_update_items = true; }
 	void consume(messagen crush = (messagen)0, messagen damaged = (messagen)0);
 	bool damaged() const { return broken > 0; }
-	void drop(short unsigned index);
+	void drop(short unsigned index, unsigned char level);
 	bool is(damagen v) const { return geti().is(v); }
 	bool is(itemn v) const { return type == v; }
 	bool is(wearn v) const { return wear() == v; }
@@ -150,7 +150,8 @@ struct item {
 extern item* last_item;
 
 struct itemground : item {
-	short unsigned index;
+	short unsigned	index;
+	unsigned char	level;
 };
 
 struct wearable {
@@ -169,7 +170,7 @@ struct wearable {
 
 extern int treasure_coins[PP - CP + 1];
 
-item* find_item(short unsigned index);
+item* find_item(short unsigned index, unsigned char level);
 
 itemn random(itemn v);
 itemn random_basic(itemn v);
@@ -184,7 +185,7 @@ bool is_item_food(const void* object);
 item some(itemn type, int count = 8);
 
 void add_magic_item(itemn type);
-void add_items(short unsigned index);
+void add_items(short unsigned index, unsigned char level);
 void clear_items();
-void clear_items(short unsigned index);
+void clear_items(short unsigned index, unsigned char level);
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual);

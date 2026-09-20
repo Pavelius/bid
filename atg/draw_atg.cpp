@@ -515,11 +515,6 @@ void pause() {
 	pause(message_names[1]);
 }
 
-void fixmsg(messagen id) {
-	sb.addsep('\n');
-	sb.addv(message_names[id], 0);
-}
-
 void set_hilite_state(const char* format) {
 	if(!button_hilited)
 		return;

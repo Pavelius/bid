@@ -30,4 +30,6 @@ extern settlement* next_settlement; // If none path is not choose
 settlement* find_settlement(kindomn kindom, arean type);
 settlement* find_settlement(kindomn kindom, arean type, settlement* start);
 
+void adventure_move(int miles);
+void kindom_adventure_move();
 void settlement_move();

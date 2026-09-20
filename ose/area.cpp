@@ -15,17 +15,13 @@
 */
 
 #include "area.h"
-#include "answers.h"
-#include "bsdata.h"
 #include "game.h"
 #include "item.h"
 #include "slice.h"
 #include "stringbuilder.h"
-#include "variant.h"
+#include "math.h"
 
 arean enviroment;
-
-int move_distance;
 
 const char* get_name(arean type, int p1, int p2) {
 	static char temp[260]; stringbuilder sb(temp);
@@ -39,12 +35,9 @@ const char* get_name(arean type, int p1, int p2) {
 	return temp;
 }
 
-int get_movement_modifier(arean type) {
-	switch(type) {
-	case Mountains: case Jungle: case Swamps: return 50;
-	case Sands: case Wastes: case Hills: return 67;
-	default: return 100;
-	}
+const char* get_range_name(int miles) {
+	auto n = miles / 24;
+	return maptbl(DayDistance, n);
 }
 
 bool is_outdoor(unsigned char v) {

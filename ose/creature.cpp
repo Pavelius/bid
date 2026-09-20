@@ -922,7 +922,7 @@ static void modify_spells(messagen id, spellable& e, int level) {
 		auto prepare_spells = e.total(records);
 		auto maximum_spells = player->getspells(level);
 		sb.clear();
-		fixmsg(id);
+		addmsn(id);
 		fixlist(e);
 		if(prepare_spells < maximum_spells) {
 			for(auto v : records)
@@ -947,7 +947,7 @@ static void modify_spells(messagen id, spellable& e, int level) {
 void make_prepare_spells(messagen id) {
 	while(true) {
 		sb.clear();
-		fixmsg(id);
+		addmsn(id);
 		fixlist(player->prepare);
 		for(auto i = 1; i <= 6; i++) {
 			auto total = player->getspells(i);

@@ -39,14 +39,12 @@ extern const char* area_visit[LastArea + 1];
 
 extern const char* LocationFemaleFirstName[];
 extern const char* LocationMaleFirstName[];
+extern const char* DayDistance[9];
 
 extern arean enviroment;
 
-extern int move_distance;
-
-int get_movement_modifier(arean type);
-
 const char* get_name(arean type, int p1, int p2);
+const char* get_range_name(int miles);
 
 bool is_outdoor(unsigned char v);
 bool is_settlement(unsigned char v);
