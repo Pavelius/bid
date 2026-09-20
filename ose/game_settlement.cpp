@@ -180,5 +180,7 @@ bool apply_settlement(actionn v, bool run) {
 	case RentRoomOnNight: return true;
 	default: return false;
 	}
-	return true;
+}
+
+void world_generate() {
 }

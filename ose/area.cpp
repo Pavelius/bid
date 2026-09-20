@@ -26,7 +26,7 @@
 BSDATAC(area, 256)
 
 areai areasa[LastArea + 1] = {
-	{}, // Plains
+	{{}, {}, ImagePlains}, // Plains
 	{}, // Sands
 	{}, // Wastes
 	{}, // Swamps
@@ -49,6 +49,8 @@ areai areasa[LastArea + 1] = {
 	{}, // Palace
 };
 
+arean enviroment;
+
 area* last_area;
 area* next_area;
 
@@ -69,19 +71,6 @@ const char* get_name(arean type, int p1, int p2) {
 void area::clear() {
 	memset((void*)this, 0, sizeof(*this));
 	parent_id = 0xFFFF;
-}
-
-bool area::outdoor() const {
-	switch(type) {
-	case Sands:
-	case Wastes:
-	case Hills:
-	case Mountains:
-	case Forest:
-		return true;
-	default:
-		return false;
-	}
 }
 
 const char* area::namefull() const {
@@ -120,4 +109,18 @@ void update_area_items() {
 	clear_items();
 	add_items(variant(last_area));
 	need_update_items = false;
+}
+
+bool is_outdoor(unsigned char v) {
+	switch(v) {
+	case Sands: case Wastes: case Hills: case Mountains: case Forest: return true;
+	default: return false;
+	}
+}
+
+bool is_settlement(unsigned char v) {
+	switch(v) {
+	case Hamlet: case Village: case SmallTown: case LargeTown: return true;
+	default: return false;
+	}
 }

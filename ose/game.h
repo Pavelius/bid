@@ -57,10 +57,10 @@ enum reactionn : unsigned char {
 	Hostile, Unfriendly, Neutral, Indifferent, Friendly,
 };
 enum globalvarn : unsigned char {
-	Turns, Blessing, PartyCoins,
+	Turns, Reputation, Blessing, PartyCoins,
 };
 enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight,
+	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight,
 	ImagePlainVillage, ImageVillageMarket, ImageTavern, ImageHotel,
 };
 
@@ -94,3 +94,4 @@ void make_player_move(const char* cancel_text = 0);
 void pass_turn();
 void pause();
 void pause(const char* format);
+void world_generate();
