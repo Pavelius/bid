@@ -14,13 +14,13 @@
 	limitations under the License.77
 */
 
-#include "bsdata.h"
 #include "stringvar.h"
 
 bool stringvar_identifier(stringbuilder& sb, const char* identifier) {
-	auto pn = bsdata<stringvari>::find(identifier);
-	if(pn) {
-		pn->proc(sb);
+	for(auto p = stringvars; p->id; p++) {
+		if(!equal(p->id, identifier))
+			continue;
+		p->proc(sb);
 		return true;
 	}
 	return false;

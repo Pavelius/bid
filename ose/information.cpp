@@ -15,7 +15,6 @@
 */
 
 #include "area.h"
-#include "bsdata.h"
 #include "collectiona.h"
 #include "creature.h"
 #include "dice.h"
@@ -139,7 +138,7 @@ void stringbuilder_custom(stringbuilder& sb, const char* id) {
 	default_string(sb, id);
 }
 
-BSDATA(stringvari) = {
+stringvari stringvars[] = {
 	{"Area", area_type},
 	{"Class", player_class},
 	{"Item", item_name},
@@ -152,5 +151,4 @@ BSDATA(stringvari) = {
 	{"SettlementTypeOf", settlement_type_of},
 	{"TreasureCoins", treasure_coins_name},
 	{"Weapon", player_weapon},
-};
-BSDATAF(stringvari)
+	{}};

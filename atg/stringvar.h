@@ -22,5 +22,6 @@ struct stringvari {
 	const char*	id;
 	fnprint		proc;
 };
+extern stringvari stringvars[];
 
 bool stringvar_identifier(stringbuilder& sb, const char* identifier);
