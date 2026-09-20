@@ -65,7 +65,7 @@ enum variablen : unsigned char {
 };
 enum picturen : unsigned char {
 	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight, ImageForest, ImageForestNight,
-	ImageVillage, ImageLargeCity,
+	ImageVillage, ImageSmallCity, ImageLargeCity,
 	ImageVillageMarket, ImageTavern, ImageHotel, ImageTemple,
 };
 
@@ -89,7 +89,7 @@ void addn(messagen id);
 void addopt(actionn n);
 void addopt(arean v);
 void addopt(const item& e, messagen v, fnitemget price);
-void breakactions();
+void breakactions(int level = 1);
 void clear_messages();
 bool chance(int v);
 long choose_answers_random();

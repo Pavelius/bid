@@ -11,7 +11,7 @@ static int move_distance, move_distance_original;
 
 static void animal_encounter() {
 	pushvalue push_player(player);
-	encounter_monsters = random_animal(enviroment);
+	encounter_monsters = random_animal(area);
 	create_monsters(encounter_monsters, true);
 	player->act(PlayerJumpFromBrush);
 	combat_encounter();
@@ -27,7 +27,7 @@ static int get_movement_modifier(arean type) {
 
 static void check_movement() {
 	auto value = yards_in_miles * (party_average(Movement) * 10 / 5);
-	auto modifier = get_movement_modifier(enviroment);
+	auto modifier = get_movement_modifier(area);
 	value = value * modifier / 100;
 	move_distance -= value;
 }
@@ -96,12 +96,8 @@ static bool apply_camp(actionn v, bool run) {
 		if(run)
 			make_prepare_spells(PlayerMemorizeSpells);
 		break;
-	case RestParty:
-		break;
-	case MakeCamp:
-		break;
 	default:
-		return false;
+		break;
 	}
 	return true;
 }
@@ -109,10 +105,10 @@ static bool apply_camp(actionn v, bool run) {
 static void camp_move() {
 	static actionn actions[] = {MemorizeSpells};
 	clear_messages();
-	addhdr(getimagenight(enviroment));
+	addhdr(getimagenight(area));
 	addn(MakeCampInOpenLand);
 	camp_actions();
-	while(true) {
+	while(doactions()) {
 		for(auto n : actions) {
 			if(apply_camp(n, false))
 				addopt(n);
@@ -127,9 +123,9 @@ static void camp_move() {
 }
 
 static void adventure_move() {
-	while(true) {
+	while(doactions()) {
 		pause();
-		addhdr(getimage(enviroment), "%Area");
+		addhdr(getimage(area), "%Area");
 		adds(AdventureNextDay);
 		addopt(MakeCamp);
 		auto result = (actionn)choose_party_option(0);

@@ -110,7 +110,7 @@ static void location_name(stringbuilder& sb) {
 }
 
 static void area_type(stringbuilder& sb) {
-	sb.add(area_names[enviroment]);
+	sb.add(area_names[area]);
 }
 
 static void settlement_type(stringbuilder& sb) {

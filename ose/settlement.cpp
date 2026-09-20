@@ -288,14 +288,14 @@ static actionn get_leave_action(arean v) {
 
 static void enter_building(arean place_to_go) {
 	while(doactions()) {
-		enviroment = place_to_go;
-		addhdr(getimage(enviroment), "%Area");
+		area = place_to_go;
+		addhdr(getimage(area), "%Area");
 		add_look();
-		for(auto n : getactions(enviroment)) {
+		for(auto n : getactions(area)) {
 			if(apply(n, false))
 				addopt(n);
 		}
-		auto result = choose_player_option(action_names[get_leave_action(enviroment)]);
+		auto result = choose_player_option(action_names[get_leave_action(area)]);
 		if(!result)
 			break;
 		else if(result == Continue)
@@ -308,8 +308,8 @@ void settlement_move() {
 	last_settlement->set(Known);
 	last_settlement->set(Visited);
 	while(doactions()) {
-		enviroment = last_settlement->type;
-		addhdr(getimage(enviroment), "%SettlementName");
+		area = last_settlement->type;
+		addhdr(getimage(area), "%SettlementName");
 		sb.clear();
 		add_look();
 		for(auto i = (arean)1; i <= Palace; i = (arean)(i + 1)) {
@@ -346,10 +346,10 @@ static const char* ask_visit_settlement(arean type, unsigned char name) {
 
 void kindom_adventure_move() {
 	auto kindom = last_settlement->kindom;
-	while(true) {
+	while(doactions()) {
 		next_settlement = 0;
-		enviroment = Plains;
-		addhdr(getimage(enviroment));
+		area = Plains;
+		addhdr(getimage(area));
 		sb.clear();
 		for(auto i = 0; i < settlement_maximum; i++) {
 			auto p = settlements + i;

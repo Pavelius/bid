@@ -29,7 +29,7 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
-static bool need_break_actions;
+static int break_actions_level;
 
 unsigned game_var[PartyCoins + 1];
 
@@ -87,15 +87,19 @@ picturen getimagenight(arean v) {
 }
 
 bool doactions() {
-	if(need_break_actions) {
-		need_break_actions = false;
+	if(!running_scene()) {
+		break_actions_level = 0;
+		return false;
+	}
+	if(break_actions_level > 0) {
+		break_actions_level--;
 		return false;
 	}
 	return true;
 }
 
-void breakactions() {
-	need_break_actions = true;
+void breakactions(int level) {
+	break_actions_level = level;
 }
 
 void clear_messages() {
@@ -128,17 +132,17 @@ void addhdr(picturen picture) {
 
 void add_look() {
 	sb.clear();
-	sb.addn(area_look[enviroment]);
+	sb.addn(area_look[area]);
 }
 
-void adds(messagen n) {
+void adds(messagen v) {
 	sb.addsep(' ');
-	sb.addv(message_names[n], 0);
+	sb.addv(message_names[v], 0);
 }
 
-void addn(messagen id) {
+void addn(messagen v) {
 	sb.addsep('\n');
-	sb.addv(message_names[id], 0);
+	sb.addv(message_names[v], 0);
 }
 
 void addopt(const item& e, messagen v, fnitemget price) {
@@ -265,24 +269,12 @@ static void test_game() {
 	create_creature(Cleric, Female);
 	raise_level(3);
 	join_party();
-	// treasure_generate("A", true, false, false);
-	// add_magic_item(RandomMagicItem);
-	// make_player_move(take_items_options);
-	// adventure_move(50);
 	last_settlement = find_settlement(MiddleKindom, LargeTown);
 	if(!last_settlement)
 		last_settlement = find_settlement(MiddleKindom, SmallTown);
 	create_market_items();
 	kindom_adventure_move();
 }
-
-void stringbuilder_custom(stringbuilder& sb, const char* id);
-
-void main_util();
-bool pass_test();
-
-extern unsigned char bin_avatars[];
-extern unsigned char bin_images[];
 
 static void initialize_resources() {
 	metrics::avatars = (sprite*)bin_avatars;

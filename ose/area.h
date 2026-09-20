@@ -34,16 +34,16 @@ enum arean : unsigned char {
 };
 
 extern const char* area_look[LastArea + 1];
+extern const char* area_visit[LastArea + 1];
 extern const char* area_names[LastArea + 1];
 extern const char* area_names_of[LastArea + 1];
 extern const char* area_names_to[LastArea + 1];
-extern const char* area_visit[LastArea + 1];
 
 extern const char* LocationFemaleFirstName[];
 extern const char* LocationMaleFirstName[];
 extern const char* DayDistance[9];
 
-extern arean enviroment;
+extern arean area;
 
 const char* get_name(arean type, int p1, int p2);
 const char* get_range_name(int miles);

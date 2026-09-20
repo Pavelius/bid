@@ -31,6 +31,9 @@ extern sprite* avatars;
 extern sprite* images;
 }
 
+extern unsigned char bin_avatars[];
+extern unsigned char bin_images[];
+
 extern const char* message_names[];
 
 extern stringbuilder sb;
@@ -40,9 +43,12 @@ extern fnevent atg_change_avatar;
 
 void* choose_record(const char* id, const char* source_id, fnvisible allow = 0);
 
+extern void main_util(); // External function from main_util.cpp
+extern bool pass_test(); // External function from testing.cpp
+extern void stringbuilder_custom(stringbuilder& sb, const char* id); // External function from information.cpp
+
 bool allow_paint();
 void game_run(); // Main game entry point
-void main_util(); // External function
 void next_scene(fnevent v);
 void paint_avatars(void** source, int count, fngetnum getavatar, void* current_player, fngetnum gethits);
 void paint_bar(const char* name, fnevent proc);
@@ -61,4 +67,3 @@ bool running_scene();
 void set_button_columns(int number, int line_number);
 void set_hilite_state(const char* format);
 void set_tab(fnevent proc);
-void stringbuilder_custom(stringbuilder& sb, const char* id);

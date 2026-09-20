@@ -21,7 +21,7 @@
 #include "stringbuilder.h"
 #include "math.h"
 
-arean enviroment;
+arean area;
 
 const char* get_name(arean type, int p1, int p2) {
 	static char temp[260]; stringbuilder sb(temp);

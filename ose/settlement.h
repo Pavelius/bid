@@ -19,6 +19,7 @@ extern const char* settlement_names[(FrozenNorth + 1) * 8];
 
 struct settlement {
 	arean		type;
+	arean		landscape;
 	kindomn		kindom;
 	unsigned	buildings;
 	unsigned	flags;

@@ -134,7 +134,7 @@ void combat_encounter() {
 	pushvalue push_player(player);
 	select_creatures();
 	initiative_roll();
-	while(enemy_present()) {
+	while(doactions() && enemy_present()) {
 		for(auto p : creatures.records<creature>()) {
 			if(!p->isready())
 				continue;
