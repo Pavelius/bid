@@ -131,6 +131,8 @@ public:
 	const char* psstr(const char* p, char end_symbol);
 	const char* psstrlf(const char* p);
 };
+extern stringbuilder sb; // Default string console (not required, can be undefined)
+
 typedef const char* (*fntext)(const void* object, stringbuilder& sb);
 typedef void (*fnstatus)(const void* object, stringbuilder& sb);
 typedef void (*fnprint)(stringbuilder& sb);
@@ -140,9 +142,3 @@ const char*	psidf(const char* p, stringbuilder& result);
 void default_string(stringbuilder& sb, const char* id);
 
 template<class T> void fistatus(unsigned char id, stringbuilder& sb);
-
-//template<typename T>
-//struct bsenum {
-//	static const char* names[];
-//};
-//template<typename T> const char* getname(T v) { return bsenum<T>::names[v]; }

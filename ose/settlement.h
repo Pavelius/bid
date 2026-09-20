@@ -9,11 +9,11 @@ enum kindomn : unsigned char {
 	MiddleKindom, NothernKindom, SouthernKindom, WesternKindom, EasternKindom,
 	ElvishLand, DwarvenMountains, FrozenNorth,
 };
-enum diretionn : unsigned char {
-	Center, North, East, South, West, NorthEast, NorthWest, SouthEast, SouthWest,
+enum directionn : unsigned char {
+	Center, North, East, South, West,
 };
 
-extern const char* direction_names[SouthWest + 1];
+extern const char* direction_names[West + 1];
 extern const char* kindom_names[FrozenNorth + 1];
 extern const char* settlement_names[(FrozenNorth + 1) * 8];
 
@@ -21,11 +21,13 @@ struct settlement {
 	arean		type;
 	arean		landscape;
 	kindomn		kindom;
+	directionn	side;
 	unsigned	buildings;
 	unsigned	flags;
 	unsigned char name_id;
 	constexpr explicit operator bool() const { return type != (arean)0; }
 	const char* name() const { return settlement_names[name_id]; }
+	int index() const;
 	bool is(arean v) const { return (buildings & (1 << v)) != 0; }
 	bool is(areafn v) const { return (flags & (1 << v)) != 0; }
 	void set(arean v) { buildings |= (1 << v); }
@@ -36,9 +38,8 @@ extern settlement* last_settlement;
 extern settlement* next_settlement; // If none path is not choose
 
 struct kindomi {
-	unsigned char sides[West + 1];
-	settlement* capital() const { return settlements + sides[0]; }
-	settlement* get(diretionn v) const;
+	unsigned char capital_id;
+	settlement* capital() const { return settlements + capital_id; }
 };
 extern kindomi kindoms[FrozenNorth + 1];
 

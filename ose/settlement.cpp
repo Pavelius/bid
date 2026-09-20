@@ -8,7 +8,7 @@
 #include "settlement.h"
 #include "stringbuilder.h"
 
-extern stringbuilder sb;
+kindomi kindoms[FrozenNorth + 1];
 
 settlement settlements[32];
 settlement* last_settlement;
@@ -19,6 +19,23 @@ static itema market_items;
 static actionn market_actions[] = {BuyTradeGoods, SellTradeGoods};
 static actionn inn_actions[] = {RentRoomOnNight};
 static actionn tavern_actions[] = {GatherInformation};
+static arean small_settlements[] = {SmallTown, Village, Village, Hamlet};
+static directionn random_direction[] = {North, South, West, East};
+static directionn opposite_direction[West+1] = {Center, South, West, North, East};
+static directionn kindom_sides[FrozenNorth + 1][5] = {
+	{Center, North, East, South, West},
+	{Center, South, North, West, East},
+	{Center, North, South, West, East},
+	{Center, East, West, South, North},
+	{Center, West, East, North, South},
+	{Center, East, West, North, South},
+	{Center, West, East, South, North},
+	{Center, South, North, East, West},
+};
+
+int settlement::index() const {
+	return this - settlements;
+}
 
 static bool is_exist_name(unsigned char v) {
 	for(auto& e : settlements) {
@@ -57,7 +74,7 @@ static unsigned char get_random_name(kindomn kindom, arean type) {
 	return source.data[rand() % source.count];
 }
 
-static void create_settlement(int& index, kindomn kindom, arean type) {
+static void create_settlement(int& index, kindomn kindom, arean type, int number) {
 	if(index >= settlement_maximum)
 		return;
 	auto n = get_random_name(kindom, type);
@@ -65,6 +82,10 @@ static void create_settlement(int& index, kindomn kindom, arean type) {
 	p->kindom = kindom;
 	p->type = type;
 	p->name_id = n;
+	if(number < sizeof(kindom_sides[0]) / sizeof(kindom_sides[0][0]))
+		p->side = kindom_sides[kindom][number];
+	else
+		p->side = maprnd(random_direction);
 	p->set(Market);
 	switch(p->type) {
 	case LargeTown:
@@ -75,46 +96,46 @@ static void create_settlement(int& index, kindomn kindom, arean type) {
 		break;
 	case SmallTown:
 		p->set(Inn);
-		p->set(Tavern);
+		if(chance(60))
+			p->set(Tavern);
 		if(chance(60))
 			p->set(Temple);
 		break;
 	default:
-		if(chance(60))
+		if(chance(50))
 			p->set(Inn);
-		if(chance(40))
+		if(chance(30))
 			p->set(Tavern);
 		break;
 	}
 }
 
-static arean get_settlement_type(int index) {
-	static arean third_types[] = {SmallTown, Village, Village, Hamlet, Hamlet};
-	switch(index) {
-	case 0: return LargeTown; // Only one capital city
-	default: return maprnd(third_types);
-	}
+static void add_small_villages(int& index, kindomn type, int min, int max) {
+	if(max <= 0)
+		return;
+	auto count = xrand(min, max);
+	for(auto i = 0; i < count; i++)
+		create_settlement(index, type, maprnd(small_settlements), i + 1);
+}
+
+static void clear_world() {
+	memset(kindoms, 0, sizeof(kindoms));
+	memset(settlements, 0, sizeof(settlements));
 }
 
 void generate_world() {
 	int index = 0;
-	memset(settlements, 0, sizeof(settlements));
-	// 1 - Generate human kindoms
-	for(auto i = MiddleKindom; i <= EasternKindom; i = (kindomn)(i + 1)) {
-		auto settlement_count = xrand(3, 6);
-		for(auto n = 0; n < settlement_count; n++)
-			create_settlement(index, i, get_settlement_type(n));
-	}
-	// 2 - Mistic lands
-	create_settlement(index, DwarvenMountains, SmallTown);
-	create_settlement(index, ElvishLand, SmallTown); // Elves have no large settlements
-	for(auto i = 1 + rand() % 3; i > 0; i--)
-		create_settlement(index, DwarvenMountains, get_settlement_type(4));
-	for(auto i = rand() % 4; i > 0; i--)
-		create_settlement(index, ElvishLand, get_settlement_type(4));
-	// 3 - Frozen north
-	while(index < settlement_maximum)
-		create_settlement(index, FrozenNorth, get_settlement_type(4));
+	clear_world();
+	for(auto i = MiddleKindom; i <= EasternKindom; i = (kindomn)(i + 1))
+		create_settlement(index, i, LargeTown, 0);
+	create_settlement(index, DwarvenMountains, SmallTown, 0);
+	create_settlement(index, ElvishLand, SmallTown, 0);
+	create_settlement(index, FrozenNorth, SmallTown, 0);
+	for(auto i = MiddleKindom; i <= EasternKindom; i = (kindomn)(i + 1))
+		add_small_villages(index, i, 3, 6);
+	add_small_villages(index, DwarvenMountains, 1, 3);
+	add_small_villages(index, DwarvenMountains, 0, 3);
+	add_small_villages(index, FrozenNorth, settlement_maximum - index, settlement_maximum - index);
 }
 
 settlement* find_settlement(kindomn kindom, arean type) {
@@ -323,17 +344,17 @@ void settlement_move() {
 	}
 }
 
+static bool opposite(directionn d1, directionn d2) {
+	return opposite_direction[d1] == d2;
+}
+
 static int distance(settlement* p1, settlement* p2) {
-	auto result = 0;
-	if(p1->is(Far))
-		result += 4;
-	if(p2->is(Far))
-		result += 4;
-	if(p1->is(Near) || p2->is(Near))
-		result += 2;
-	else
-		result += 4;
-	return result * 24;
+	auto days = 2 + (p1->index() + p2->index()) % 3;
+	if(opposite(p1->side, p2->side))
+		days += 4;
+	else if(p1->side != Center && p2->side != Center)
+		days += 2;
+	return days * 24;
 }
 
 static const char* ask_visit_settlement(arean type, unsigned char name) {
@@ -369,22 +390,5 @@ void kindom_adventure_move() {
 			adventure_move(miles);
 			last_settlement = next_settlement;
 		}
-	}
-}
-
-static settlement* get_settlement(unsigned char v1, unsigned char v2) {
-	if(v1 == 0xFF)
-		v1 = v2;
-	return settlements + v1;
-}
-
-settlement* kindomi::get(diretionn v) const {
-	auto v1 = sides[Center];
-	switch(v) {
-	case North: return get_settlement(sides[North], v1);
-	case South: return get_settlement(sides[South], v1);
-	case West: return get_settlement(sides[West], v1);
-	case East: return get_settlement(sides[East], v1);
-	default: return settlements + v1;
 	}
 }
