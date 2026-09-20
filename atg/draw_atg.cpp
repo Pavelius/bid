@@ -471,16 +471,19 @@ void set_tab(fnevent proc) {
 	current_tab = (void*)proc;
 }
 
+long choose_answers_random() {
+	auto r = an.random();
+	an.clear();
+	return r;
+}
+
 long choose_answers(const char* title, const char* cancel_text, int columns) {
 	if(!an.elements) {
 		if(!cancel_text)
 			return 0;
 	}
-	if(!answers::interactive) {
-		auto r = an.random();
-		an.clear();
-		return r;
-	}
+	if(!answers::interactive)
+		return choose_answers_random();
 	if(columns == -1)
 		columns = answer_columns_def();
 	answer_title = title;

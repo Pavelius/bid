@@ -966,6 +966,7 @@ DLL int WINAPI				MapWindowPoints(void*, void*, POINT*, UINT);
 DLL unsigned WINAPI			MapVirtualKeyA(unsigned, unsigned);
 DLL int WINAPI				MessageBoxA(void* hWnd, const char* lpText, const char* lpCaption, unsigned uType);
 DLL int WINAPI				OpenClipboard(HWND);
+DLL void WINAPI				OutputDebugStringA(const char* lpOutputString);
 DLL int WINAPI				PathFileExistsA(const char* pszPath);
 DLL int WINAPI				PeekMessageA(MSG*, void*, UINT, UINT, UINT);
 DLL LRESULT WINAPI			PostMessageA(void*, UINT, int, int);

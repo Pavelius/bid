@@ -16,7 +16,6 @@
 
 #include "area.h"
 #include "answers.h"
-// #include "bsdata.h"
 #include "collection.h"
 #include "collectiona.h"
 #include "creature.h"

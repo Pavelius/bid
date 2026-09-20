@@ -206,6 +206,9 @@
     <ClCompile Include="stringset.cpp">
       <Filter>Strings</Filter>
     </ClCompile>
+    <ClCompile Include="win_debug.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\LICENSE.txt">

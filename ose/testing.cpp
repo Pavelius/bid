@@ -16,10 +16,12 @@
 
 #include "draw_atg.h"
 #include "item.h"
-#include "print.h"
+#include "pushvalue.h"
 #include "stringset.h"
 
 typedef const char*(fnautotest)();
+
+void print_debug(const char* format);
 
 const char* test_item();
 
@@ -28,7 +30,7 @@ static int error_count;
 static void pass_test(fnautotest proc) {
 	auto error_message = proc();
 	if(error_message) {
-		sb.addn(error_message);
+		print_debug(error_message);
 		error_count++;
 	}
 }

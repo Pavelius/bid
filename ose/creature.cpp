@@ -14,7 +14,6 @@
 	limitations under the License.77
 */
 
-#include "adat.h"
 #include "answers.h"
 #include "area.h"
 #include "creature.h"
@@ -33,12 +32,11 @@ creature* opponent;
 creature* party[4];
 
 collectiona creatures;
-
 extern adat<enchanti, 256> enchants;
+creature creaturesd[256];
 
 static bool critical_hit, critical_miss;
 static int attack_roll;
-static adat<creature, 256> creaturesd;
 
 static char saving_thrown_monsters[][5] = {
 	{14, 15, 16, 17, 18},// 0
@@ -183,7 +181,7 @@ bool creature::isparty() const {
 }
 
 int creature::index() const {
-	return this - creaturesd.data;
+	return this - creaturesd;
 }
 
 static int get_caster(classn v) {
@@ -600,7 +598,7 @@ static creature* new_creature() {
 		if(!e)
 			return &e;
 	}
-	return creaturesd.add();
+	return creaturesd;
 }
 
 void create_creature(classn type, gendern gender) {

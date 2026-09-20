@@ -35,6 +35,7 @@ enum arean : unsigned char {
 
 extern const char* area_look[LastArea + 1];
 extern const char* area_names[LastArea + 1];
+extern const char* area_names_of[LastArea + 1];
 extern const char* area_names_to[LastArea + 1];
 extern const char* area_visit[LastArea + 1];
 

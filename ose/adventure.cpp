@@ -128,7 +128,7 @@ static void camp_move() {
 static void adventure_move() {
 	while(true) {
 		pause();
-		addhdr(getimage(enviroment), "%AreaName");
+		addhdr(getimage(enviroment), "%Area");
 		adds(AdventureNextDay);
 		addopt(MakeCamp);
 		auto result = (actionn)choose_party_option(0);

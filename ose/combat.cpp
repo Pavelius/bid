@@ -124,8 +124,13 @@ static void combat_experience() {
 	}
 }
 
+static void addoptv(actionn v) {
+	if(apply_combat(v, false))
+		addopt(v);
+}
+
 void combat_encounter() {
-	variant result;
+	actionn result;
 	pushvalue push_player(player);
 	select_creatures();
 	initiative_roll();
@@ -138,19 +143,16 @@ void combat_encounter() {
 			if(!opponent)
 				continue;
 			sb.addsep('\n');
-			addopt(MakeCharge);
-			addopt(MakeMeleeAttack);
-			addopt(MakeThrownAttack);
-			addopt(MakeMissileAttack);
+			addoptv(MakeCharge);
+			addoptv(MakeMeleeAttack);
+			addoptv(MakeThrownAttack);
+			addoptv(MakeMissileAttack);
 			if(player->isparty()) {
-				addopt(MakeRunAway);
-				result.u = (unsigned short)choose_answers(what_to_do());
+				addoptv(MakeRunAway);
+				result = (actionn)choose_answers(what_to_do());
 			} else
-				result.u = (unsigned short)an.random();
-			switch(result.type) {
-			case Action: apply_combat((actionn)result.value, true); break;
-			default: break;
-			}
+				result = (actionn)choose_answers_random();
+			apply_combat(result, true);
 		}
 		if(enemy_present())
 			pause();

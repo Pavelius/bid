@@ -120,6 +120,7 @@ struct creature : npc, statable, wearable, spellable {
 extern creature* player;
 extern creature* opponent;
 extern creature* party[4];
+extern creature creaturesd[256];
 
 abilityn get_primary(classn v);
 portraitn random_portrait(classn type, gendern gender, fncfilter filter = 0);

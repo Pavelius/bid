@@ -109,16 +109,16 @@ static void location_name(stringbuilder& sb) {
 	sb.addv(get_name(Forest, random_index(LocationMaleFirstName), rand()), 0);
 }
 
-static void area_name(stringbuilder& sb) {
-	sb.add(area_names[enviroment]);
-}
-
-static void area_namefull(stringbuilder& sb) {
-	sb.add(area_names[enviroment]);
-}
-
 static void area_type(stringbuilder& sb) {
 	sb.add(area_names[enviroment]);
+}
+
+static void settlement_type(stringbuilder& sb) {
+	sb.add(area_names[last_settlement->type]);
+}
+
+static void settlement_type_of(stringbuilder& sb) {
+	sb.add(area_names_of[last_settlement->type]);
 }
 
 static void settlement_name(stringbuilder& sb) {
@@ -140,9 +140,7 @@ void stringbuilder_custom(stringbuilder& sb, const char* id) {
 }
 
 BSDATA(stringvari) = {
-	{"AreaName", area_name},
-	{"AreaNameFull", area_namefull},
-	{"AreaType", area_type},
+	{"Area", area_type},
 	{"Class", player_class},
 	{"Item", item_name},
 	{"Items", item_collection},
@@ -151,6 +149,8 @@ BSDATA(stringvari) = {
 	{"Number", print_last_number},
 	{"Player", player_name},
 	{"SettlementName", settlement_name},
+	{"SettlementType", settlement_type},
+	{"SettlementTypeOf", settlement_type_of},
 	{"TreasureCoins", treasure_coins_name},
 	{"Weapon", player_weapon},
 };

@@ -289,7 +289,7 @@ static actionn get_leave_action(arean v) {
 static void enter_building(arean place_to_go) {
 	while(doactions()) {
 		enviroment = place_to_go;
-		addhdr(getimage(enviroment), "%AreaNameFull");
+		addhdr(getimage(enviroment), "%Area");
 		add_look();
 		for(auto n : getactions(enviroment)) {
 			if(apply(n, false))
@@ -369,5 +369,22 @@ void kindom_adventure_move() {
 			adventure_move(miles);
 			last_settlement = next_settlement;
 		}
+	}
+}
+
+static settlement* get_settlement(unsigned char v1, unsigned char v2) {
+	if(v1 == 0xFF)
+		v1 = v2;
+	return settlements + v1;
+}
+
+settlement* kindomi::get(diretionn v) const {
+	auto v1 = sides[Center];
+	switch(v) {
+	case North: return get_settlement(sides[North], v1);
+	case South: return get_settlement(sides[South], v1);
+	case West: return get_settlement(sides[West], v1);
+	case East: return get_settlement(sides[East], v1);
+	default: return settlements + v1;
 	}
 }

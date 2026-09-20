@@ -34,6 +34,13 @@ extern settlement settlements[settlement_maximum]; // All world settlements
 extern settlement* last_settlement;
 extern settlement* next_settlement; // If none path is not choose
 
+struct kindomi {
+	unsigned char sides[West + 1];
+	settlement* capital() const { return settlements + sides[0]; }
+	settlement* get(diretionn v) const;
+};
+extern kindomi kindoms[FrozenNorth + 1];
+
 settlement* find_settlement(kindomn kindom, arean type);
 settlement* find_settlement(kindomn kindom, arean type, settlement* start);
 
