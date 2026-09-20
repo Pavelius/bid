@@ -4,7 +4,7 @@
 #include "bsdata.h"
 #include "character.h"
 #include "collection.h"
-#include "message.h"
+#include "game.h"
 #include "pushvalue.h"
 #include "rand.h"
 #include "scene.h"
@@ -43,7 +43,7 @@ static void paint_avatars() {
 
 static void paint_value(attributen v) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.add("/cb fill ct\n%1", getname(v));
+	sb.add("/cb fill ct\n%1", action_names[v]);
 	paint_button(temp, 0, false, 2);
 }
 

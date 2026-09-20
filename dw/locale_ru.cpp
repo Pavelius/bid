@@ -1,7 +1,5 @@
-#include "bsdata.h"
 #include "item.h"
 #include "game.h"
-#include "stringbuilder.h"
 
 const char* message_names[LastMessage + 1] = {
 	"Мир подземелий", "Далее",

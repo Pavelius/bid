@@ -9,6 +9,7 @@ enum attributen : unsigned char {
 };
 enum actionn : unsigned char {
 	Attune, Command, Consort, Finesse, Hunt, Prowl, Skirmish, Study, Survey, Sway, Tinker, Wreck,
+	LastAction = Wreck
 };
 enum charactern : unsigned char {
 	None,
@@ -24,12 +25,20 @@ enum vicen : unsigned char {
 	Faith, Gambling, Luxury, Obligation, Pleasure, Stupor, Weird,
 };
 
+extern const char* action_names[LastAction + 1];
+extern const char* attribute_names[Resolve + 1];
+extern const char* background_names[Underworld + 1];
+extern const char* character_names[Whisper + 1];
+extern const char* heiretage_names[Tycheros + 1];
+extern const char* npc_names[];
+extern const char* vice_names[Weird + 1];
+
 struct npci {
-	namen		name;
+	unsigned char name_id;
 	gendern		gender;
 	heiretagen	heiretage;
 	backgroundn	background;
-	const char* getname() const;
+	const char* name() const { return npc_names[name_id]; }
 	void		setname();
 };
 struct actiona {
@@ -51,7 +60,9 @@ struct character : npci, actiona {
 	int			getindex() const;
 };
 
-extern const char* action_info[Wreck + 1];
+extern const char* action_info[LastAction + 1];
+
+inline const char* getname(actionn v) { return action_names[v]; }
 
 extern character* roll_help;
 extern character* player;

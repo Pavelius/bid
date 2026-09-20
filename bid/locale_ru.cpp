@@ -1,10 +1,7 @@
-#include "bsdata.h"
 #include "character.h"
-#include "message.h"
-#include "stringbuilder.h"
-#include "stringlocale.h"
+#include "game.h"
 
-BSENUM(messagen) = {
+const char* message_names[LastMessage + 1] = {
 	"Клинки во тьме",
 	"Действия", "Предметы",
 	"%Player получил%а %1i стресса.",
@@ -18,41 +15,11 @@ BSENUM(messagen) = {
 	"Откуда вы родом?",
 	"Кем вы были в прошлом?",
 };
-assert_enum(messagen, ChooseBackground)
-
-BSENUM(charactern) = {
-	"Нет",
-	"Головорез", "Ищейка", "Умелец", "Проныра", "Артист", "Кукловод", "Мистик"
-};
-assert_enum(charactern, Whisper)
-
-BSENUM(heiretagen) = {
-	"Акорос", "Ирувия", "Кинжальные острова", "Сиверос", "Сковлан", "Тихерос"
-};
-assert_enum(heiretagen, Tycheros)
-
-BSENUM(vicen) = {
-	"Религия", "Азартные игры", "Роскошь", "Долг", "Удовольствие", "Беспамятство", "Потустороннее",
-};
-assert_enum(vicen, Weird)
-
-BSENUM(backgroundn) = {
-	"Ученный", "Рабочий", "Законник", "Торговец", "Военный", "Аристократ", "Шпана",
-};
-assert_enum(backgroundn, Underworld)
-
-BSENUM(attributen) = {
-	"Чутье", "Удаль", "Воля",
-};
-assert_enum(attributen, Resolve)
-
-BSENUM(actionn) = {
+const char* action_names[LastAction + 1] = {
 	"Резонанс", "Приказ", "Общение", "Сноровка", "Охота",
 	"Проникновение", "Драка", "Изучение", "Разведка", "Манипуляция",
 	"Ремесло", "Разрушение",
 };
-assert_enum(actionn, Wreck)
-
 const char* action_info[Wreck + 1] = {
 	"В резонансе ты открываешь свой разум призрачному полю или направляешь через своё тело электроплазменную энергию.",
 	"Отдавая приказ, ты добиваешься немедленного повиновения.",
@@ -67,8 +34,23 @@ const char* action_info[Wreck + 1] = {
 	"Ремесло помогает тебе работать с устройствами и конструкциями.",
 	"Разрушение - это прямое физическое уничтожение.",
 };
-
-BSENUM(namen) = {
+const char* attribute_names[Resolve + 1] = {
+	"Чутье", "Удаль", "Воля",
+};
+const char* character_names[Whisper + 1] = {
+	"Нет",
+	"Головорез", "Ищейка", "Умелец", "Проныра", "Артист", "Кукловод", "Мистик"
+};
+const char* heiretage_names[Tycheros + 1] = {
+	"Акорос", "Ирувия", "Кинжальные острова", "Сиверос", "Сковлан", "Тихерос"
+};
+const char* background_names[Underworld + 1] = {
+	"Ученный", "Рабочий", "Законник", "Торговец", "Военный", "Аристократ", "Шпана",
+};
+const char* vice_names[Weird + 1] = {
+	"Религия", "Азартные игры", "Роскошь", "Долг", "Удовольствие", "Беспамятство", "Потустороннее",
+};
+const char* npc_names[] = {
 	"Адельард", "Агата", "Аймерик", "Агнес", "Алан",
 	"Аделина", "Альбрехт", "Алиса", "Амори", "Амалия",
 	"Арнульф", "Анастасия", "Артур", "Анна", "Бальдуин",

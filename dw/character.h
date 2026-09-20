@@ -109,6 +109,7 @@ struct character : monsteri, wearable {
 };
 extern character* player;
 extern character* party[4];
+extern character charactersa[16];
 
 bool allow_class(int v);
 void generate_character();

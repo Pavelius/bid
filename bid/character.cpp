@@ -1,13 +1,12 @@
 #include "answers.h"
 #include "character.h"
 #include "game.h"
-#include "message.h"
 #include "rand.h"
 #include "scene.h"
 
-character*	player;
-character*	roll_help;
-character	players[3];
+character* player;
+character* roll_help;
+character players[3];
 
 actionn attributes[3][4] = {
 	{Hunt, Study, Survey, Tinker},
@@ -77,10 +76,10 @@ void actiona::apply(charactern type) {
 static void add_player() {
 	player->clear();
 	player->setname();
-	player->type = (charactern)choose_value(0, Whisper, allow_character, bsenum<charactern>::names, getname(ChoosePlaybook));
+	player->type = (charactern)choose_value(0, Whisper, allow_character, character_names, getname(ChoosePlaybook));
 	player->apply(player->type);
-	player->heiretage = (heiretagen)choose_value(0, Weird, 0, bsenum<heiretagen>::names, getname(ChooseHeiretage));
-	player->background = (backgroundn)choose_value(0, Underworld, 0, bsenum<backgroundn>::names, getname(ChooseBackground));
+	player->heiretage = (heiretagen)choose_value(0, Weird, 0, heiretage_names, getname(ChooseHeiretage));
+	player->background = (backgroundn)choose_value(0, Underworld, 0, background_names, getname(ChooseBackground));
 	add_actions(*player, 4, 2);
 }
 
@@ -91,12 +90,8 @@ void add_players() {
 	}
 }
 
-const char* npci::getname() const {
-	return ::getname(name);
-}
-
 void npci::setname() {
-	name = namen((rand() % 50) * 2 + gender);
+	name_id = (unsigned char)((rand() % 50) * 2 + gender);
 }
 
 void character::clear() {

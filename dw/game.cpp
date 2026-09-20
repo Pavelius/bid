@@ -1,5 +1,5 @@
-#include "answers.h"
 #include "bsdata.h"
+#include "answers.h"
 #include "character.h"
 #include "draw_atg.h"
 #include "game.h"
@@ -220,7 +220,7 @@ void game_run() {
 	stringbuilder::custom = stringbuilder_custom;
 	enemy.create(Skeleton);
 	srand(2311);
-	player = bsdata<character>::add();
+	player = charactersa;
 	move_hack_and_slash(true);
 	fixclear();
 }

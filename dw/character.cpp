@@ -1,11 +1,9 @@
-#include "bsdata.h"
 #include "character.h"
 #include "draw_atg.h"
 #include "pushvalue.h"
 #include "math.h"
 
-BSDATAC(character, 8)
-
+character charactersa[16];
 character* player;
 character* party[4];
 
