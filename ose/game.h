@@ -65,7 +65,8 @@ enum variablen : unsigned char {
 	Turns, Reputation, Blessing, PartyCoins,
 };
 enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight, ImageForest, ImageForestNight,
+	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight,
+	ImageForest, ImageForestNight, ImageHills, ImageHillsNight,
 	ImageVillage, ImageSmallCity, ImageLargeCity,
 	ImageVillageMarket, ImageTavern, ImageHotel, ImageTemple,
 };
@@ -73,7 +74,7 @@ enum picturen : unsigned char {
 extern const char* action_names[LastAction + 1];
 extern const char* message_names[LastMessage + 1];
 
-extern unsigned game_var[PartyCoins + 1];
+extern unsigned variables[PartyCoins + 1];
 
 extern reactionn last_reaction;
 extern classn encounter_monsters;

@@ -32,6 +32,8 @@ static directionn kindom_sides[FrozenNorth + 1][5] = {
 	{Center, West, East, South, North},
 	{Center, South, North, East, West},
 };
+static arean normal_landscape[] = {Plains, Plains, Hills, Forest};
+static arean wet_landscapre[] = {Wastes, Sands, Jungle};
 
 int settlement::index() const {
 	return this - settlements;
@@ -43,6 +45,10 @@ static bool is_exist_name(unsigned char v) {
 			return true;
 	}
 	return false;
+}
+
+static arean random_settlement_landscape(kindomn type) {
+	return maprnd(normal_landscape);
 }
 
 static unsigned char get_random_name(kindomn kindom, arean type) {
@@ -81,6 +87,7 @@ static void create_settlement(int& index, kindomn kindom, arean type, int number
 	auto p = settlements + (index++);
 	p->kindom = kindom;
 	p->type = type;
+	p->landscape = random_settlement_landscape(kindom);
 	p->name_id = n;
 	if(number < sizeof(kindom_sides[0]) / sizeof(kindom_sides[0][0]))
 		p->side = kindom_sides[kindom][number];
@@ -252,7 +259,7 @@ static bool sell_action(bool run) {
 			if(!pi)
 				break;
 			auto cost = get_sell_price(*pi);
-			game_var[PartyCoins] += cost;
+			variables[PartyCoins] += cost;
 			market_items.add(*pi);
 			pi->clear();
 			player->update();
@@ -325,25 +332,6 @@ static void enter_building(arean place_to_go) {
 	}
 }
 
-void settlement_move() {
-	last_settlement->set(Known);
-	last_settlement->set(Visited);
-	while(doactions()) {
-		area = last_settlement->type;
-		addhdr(getimage(area), "%SettlementName");
-		sb.clear();
-		add_look();
-		for(auto i = (arean)1; i <= Palace; i = (arean)(i + 1)) {
-			if(last_settlement->is(i))
-				addopt(i);
-		}
-		auto result = choose_party_option(action_names[LeaveSettlement]);
-		if(!result)
-			break;
-		enter_building((arean)result);
-	}
-}
-
 static bool opposite(directionn d1, directionn d2) {
 	return opposite_direction[d1] == d2;
 }
@@ -365,13 +353,13 @@ static const char* ask_visit_settlement(arean type, unsigned char name) {
 	return temp;
 }
 
-void kindom_adventure_move() {
+static void kindom_adventure_move() {
 	auto kindom = last_settlement->kindom;
 	while(doactions()) {
 		next_settlement = 0;
-		area = Plains;
-		addhdr(getimage(area));
-		sb.clear();
+		area = last_settlement->landscape;
+		addhdr(getimage(area), "%Area");
+		add_look();
 		for(auto i = 0; i < settlement_maximum; i++) {
 			auto p = settlements + i;
 			if(p->kindom != kindom)
@@ -384,11 +372,31 @@ void kindom_adventure_move() {
 		auto cancel_text = ask_visit_settlement(last_settlement->type, last_settlement->name_id);
 		next_settlement = (settlement*)choose_way_to_go(cancel_text);
 		if(!next_settlement)
-			settlement_move();
+			break;
 		else {
 			auto miles = distance(last_settlement, next_settlement);
 			adventure_move(miles);
 			last_settlement = next_settlement;
 		}
+	}
+}
+
+void settlement_move() {
+	while(doactions()) {
+		last_settlement->set(Known);
+		last_settlement->set(Visited);
+		area = last_settlement->type;
+		addhdr(getimage(area), "%SettlementName");
+		sb.clear();
+		add_look();
+		for(auto i = (arean)1; i <= Palace; i = (arean)(i + 1)) {
+			if(last_settlement->is(i))
+				addopt(i);
+		}
+		auto result = choose_party_option(action_names[LeaveSettlement]);
+		if(result)
+			enter_building((arean)result);
+		else
+			kindom_adventure_move();
 	}
 }

@@ -17,7 +17,6 @@
 #include "area.h"
 #include "game.h"
 #include "item.h"
-#include "slice.h"
 #include "stringbuilder.h"
 #include "math.h"
 
@@ -42,7 +41,7 @@ const char* get_range_name(int miles) {
 
 bool is_outdoor(unsigned char v) {
 	switch(v) {
-	case Sands: case Wastes: case Hills: case Mountains: case Forest: return true;
+	case Sands: case Wastes: case Hills: case Mountains: case Forest: case Jungle: return true;
 	default: return false;
 	}
 }

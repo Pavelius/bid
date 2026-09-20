@@ -31,7 +31,7 @@
 
 static int break_actions_level;
 
-unsigned game_var[PartyCoins + 1];
+unsigned variables[PartyCoins + 1];
 
 int last_number;
 
@@ -44,7 +44,7 @@ template<> variant::variant(const settlement* p) : variant(Settlement, p - settl
 template<> variant::variant(const creature* p) : variant(Creature, p->index()) {}
 
 void pass_turn() {
-	game_var[Turns]++;
+	variables[Turns]++;
 }
 
 bool chance(int v) {
@@ -73,6 +73,9 @@ picturen getimage(arean v) {
 	case Inn: return ImageHotel;
 	case Tavern: return ImageTavern;
 	case Temple: return ImageTemple;
+	case Hills: return ImageHills;
+	case Wastes: return ImageWasteland;
+	case Forest: return ImageForest;
 	default: return ImagePlains;
 	}
 }
@@ -81,6 +84,7 @@ picturen getimagenight(arean v) {
 	switch(v) {
 	case Plains: return ImagePlainsNight;
 	case Forest: return ImageForestNight;
+	case Hills: return ImageHillsNight;
 	case Wastes: return ImageWastelandNight;
 	default: return ImagePlainsNight;
 	}
@@ -262,7 +266,7 @@ static void paint_main_menu() {
 // START GAME
 
 static void test_game() {
-	game_var[Turns] = 1000;
+	variables[Turns] = 1000;
 	generate_world();
 	create_creature(Fighter, Male);
 	join_party();
@@ -277,7 +281,7 @@ static void test_game() {
 	if(!last_settlement)
 		last_settlement = find_settlement(MiddleKindom, SmallTown);
 	create_market_items();
-	kindom_adventure_move();
+	settlement_move();
 }
 
 static void initialize_resources() {
