@@ -281,7 +281,8 @@ void creature::act(messagen id) const {
 }
 
 void creature::actv(char separator, const char* format, const char* format_param) const {
-	pushvalue push_gender(str_gender, player->gender);
+	pushvalue push_gender(str_gender, gender);
+	pushvalue push_name(str_name, name());
 	sb.addsep(separator);
 	sb.addv(format, format_param);
 }

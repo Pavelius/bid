@@ -60,7 +60,8 @@ static void consume_food() {
 
 static void night_encounter() {
 	clear_messages();
-	if(check_encounter()) {
+	auto encounter_chance = 1;
+	if(check_encounter(encounter_chance)) {
 		player->act(PlayerHearNoiseOnWatch);
 		pause();
 		animal_encounter();
