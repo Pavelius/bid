@@ -109,15 +109,15 @@ static void location_name(stringbuilder& sb) {
 }
 
 static void area_name(stringbuilder& sb) {
-	sb.add(last_area->name());
+	sb.add(area_names[enviroment]);
 }
 
 static void area_namefull(stringbuilder& sb) {
-	sb.add(last_area->namefull());
+	sb.add(area_names[enviroment]);
 }
 
 static void area_type(stringbuilder& sb) {
-	sb.add(last_area->name());
+	sb.add(area_names[enviroment]);
 }
 
 static void print_last_number(stringbuilder& sb) {

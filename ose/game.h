@@ -16,9 +16,13 @@
 
 #pragma once
 
+struct item;
+
 typedef bool(*fnaction)(bool run);
 typedef void(*fnevent)();
+typedef int(*fnitemget)(const item& v);
 
+enum arean : unsigned char;
 enum classn : unsigned char;
 
 enum actionn : unsigned char {
@@ -60,33 +64,36 @@ enum globalvarn : unsigned char {
 	Turns, Reputation, Blessing, PartyCoins,
 };
 enum picturen : unsigned char {
-	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern, ImageHotel,
+	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight, ImageForest, ImageForestNight,
+	ImagePlainVillage, ImageVillageMarket, ImageTavern, ImageHotel, ImageTemple,
 };
 
 extern const char* action_names[LastAction + 1];
 extern const char* message_names[LastMessage + 1];
 
-struct gamei {
-	unsigned variables[PartyCoins + 1];
-	void add(globalvarn v, int i) { variables[v] += i; }
-	unsigned get(globalvarn v) const { return variables[v]; }
-};
+extern unsigned game_var[PartyCoins + 1];
 
-extern gamei game;
 extern reactionn last_reaction;
 extern classn encounter_monsters;
 extern int last_number;
 
+void add_look();
+void add_header(picturen picture, const char* header);
+void add_var(globalvarn v, int i);
 void addopt(actionn n);
-void addoptn(actionn n);
+void addopt(arean v);
+void addopt(const item& e, messagen v, fnitemget price);
 void apply_result();
 bool apply_camp(actionn v, bool run);
 bool apply_combat(actionn v, bool run);
-bool apply_settlement(actionn v, bool run);
 void area_move();
+void breakactions();
+void buttonparam();
+bool chance(int v);
+long choose_party_option(const char* cancel_text);
 long choose_player_option(const char* cancel_text);
 void create_market_items();
+bool doactions();
 void make_any_player_move(const char* cancel_text = 0);
 void make_reaction_roll(int bonus);
 void make_party_move(const char* cancel_text = 0);
@@ -94,4 +101,4 @@ void make_player_move(const char* cancel_text = 0);
 void pass_turn();
 void pause();
 void pause(const char* format);
-void world_generate();
+void generate_world();

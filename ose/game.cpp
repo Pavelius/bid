@@ -26,27 +26,33 @@
 #include "print.h"
 #include "pushvalue.h"
 #include "rand.h"
+#include "settlement.h"
 #include "stringbuilder.h"
 #include "variant.h"
 
 const int yards_in_miles = 1000;
 
 static variant last_result;
+static bool need_break_actions;
 
-gamei game;
+unsigned game_var[PartyCoins + 1];
+
 int last_number;
 
 classn encounter_monsters;
 reactionn last_reaction;
 
 extern collectiona creatures;
-extern collectiona items;
 
-template<> variant::variant(const area* p) : variant(AreaRef, p - bsdata<area>::elements) {}
+template<> variant::variant(const settlement* p) : variant(Settlement, p - settlements) {}
 template<> variant::variant(const creature* p) : variant(CreatureRef, p - bsdata<creature>::elements) {}
 
 void pass_turn() {
-	game.add(Turns, 1);
+	game_var[Turns]++;
+}
+
+bool chance(int v) {
+	return (rand() % 100) < v;
 }
 
 void make_reaction_roll(int bonus) {
@@ -70,6 +76,10 @@ void make_party_move(const char* cancel_text) {
 static void change_player() {
 	player = (creature*)current_avatar;
 	breakmodal(1);
+}
+
+long choose_party_option(const char* cancel_text) {
+	return choose_answers(message_names[AskWhatToDo], cancel_text);
 }
 
 long choose_player_option(const char* cancel_text) {
@@ -182,44 +192,6 @@ bool apply_camp(actionn v, bool run) {
 	return true;
 }
 
-static bool apply_effect(actionn v, bool run) {
-	if(apply_combat(v, run))
-		return true;
-	if(apply_camp(v, run))
-		return true;
-	if(apply_settlement(v, run))
-		return true;
-	return false;
-}
-
-void addopt(actionn n) {
-	an.add(variant(n), action_names[n]);
-}
-
-void addoptn(actionn n) {
-	if(apply_effect(n, false))
-		addopt(n);
-}
-
-static void area_move(area* p) {
-	pushvalue push(last_area, p);
-	area_move();
-}
-
-void apply_result() {
-	switch(last_result.type) {
-	case Action:
-		apply_effect((actionn)last_result.value, true);
-		break;
-	case AreaRef:
-		pass_turn();
-		area_move(bsdata<area>::elements + last_result.value);
-		break;
-	default:
-		break;
-	}
-}
-
 static void use_skill(actionn id) {
 	auto bonus = skill_bonus(id, player->type) - 2;
 	use_skill(id, bonus, true);
@@ -266,9 +238,9 @@ static void camp_move() {
 	fixmsg(MakeCampInOpenLand);
 	camp_actions();
 	while(true) {
-		addoptn(RestParty);
+		addopt(RestParty);
 		if(player->getspells(1))
-			addoptn(MemorizeSpells);
+			addopt(MemorizeSpells);
 		make_player_move();
 		if(!last_result)
 			break;
@@ -280,7 +252,7 @@ static void camp_move() {
 
 static void check_movement() {
 	auto value = yards_in_miles * (party_average(Movement) * 10 / 5);
-	auto modifier = get_movement_modifier(last_area->type);
+	auto modifier = get_movement_modifier(enviroment);
 	value = value * modifier / 100;
 	move_distance -= value;
 }
@@ -349,12 +321,12 @@ static void combat_encounter() {
 			if(!opponent)
 				continue;
 			sb.addsep('\n');
-			addoptn(MakeCharge);
-			addoptn(MakeMeleeAttack);
-			addoptn(MakeThrownAttack);
-			addoptn(MakeMissileAttack);
+			addopt(MakeCharge);
+			addopt(MakeMeleeAttack);
+			addopt(MakeThrownAttack);
+			addopt(MakeMissileAttack);
 			if(player->isparty()) {
-				addoptn(MakeRunAway);
+				addopt(MakeRunAway);
 				make_player_move();
 			} else
 				last_result.u = (unsigned short)an.random();
@@ -371,7 +343,7 @@ static void combat_encounter() {
 
 static void animal_encounter() {
 	pushvalue push_player(player);
-	encounter_monsters = random_animal(last_area->type);
+	encounter_monsters = random_animal(enviroment);
 	create_monsters(encounter_monsters, true);
 	player->act(PlayerJumpFromBrush);
 	combat_encounter();
@@ -395,9 +367,8 @@ static void night_encounter() {
 static void adventure_move() {
 	pushvalue push_header(answer_header, "%AreaName");
 	while(true) {
-		answer_picture = ImageWasteland;
-		sb.addn(area_look[last_area->type]);
-		addoptn(MakeCamp);
+		add_header(ImageWasteland, "%AreaName");
+		addopt(MakeCamp);
 		make_party_move();
 		camp_move();
 		for_each_party(consume_food);
@@ -416,42 +387,71 @@ static void adventure_move(int miles) {
 	adventure_move();
 }
 
-static void add_area_visit(short unsigned parent) {
-	for(auto& e : bsdata<area>()) {
-		if(e.parent_id != parent)
-			continue;
-		an.add(variant(&e), area_visit[e.type]);
+//void area_move() {
+//	last_area->set(Known);
+//	last_area->set(Visited);
+//	while(true) {
+//		auto type = last_area->type;
+//		answer_picture = areasa[type].picture;
+//		answer_header = "%AreaNameFull";
+//		sb.clear();
+//		sb.addn(area_look[type]);
+//		add_area_visit(last_area->index());
+//		add_area_actions(type);
+//		const char* cancel_text = 0;
+//		if(areasa[type].leave)
+//			cancel_text = action_names[areasa[type].leave];
+//		make_any_player_move(cancel_text);
+//		if(!last_result)
+//			break;
+//		else if(last_result == Continue)
+//			continue;
+//		apply_result();
+//	}
+//}
+
+//////////////////////////////////////////////////////
+// WORK WITH SCENE
+
+bool doactions() {
+	if(need_break_actions) {
+		need_break_actions = false;
+		return false;
 	}
+	return true;
 }
 
-static void add_area_actions(arean type) {
-	for(auto n = (actionn)0; n < LastAction; n = (actionn)(n + 1)) {
-		if(areasa[type].actions.is(n))
-			addoptn(n);
-	}
+void breakactions() {
+	need_break_actions = true;
 }
 
-void area_move() {
-	last_area->set(Known);
-	last_area->set(Visited);
-	while(true) {
-		auto type = last_area->type;
-		answer_picture = areasa[type].picture;
-		answer_header = "%AreaNameFull";
-		sb.clear();
-		sb.addn(area_look[type]);
-		add_area_visit(last_area->index());
-		add_area_actions(type);
-		const char* cancel_text = 0;
-		if(areasa[type].leave)
-			cancel_text = action_names[areasa[type].leave];
-		make_any_player_move(cancel_text);
-		if(!last_result)
-			break;
-		else if(last_result == Continue)
-			continue;
-		apply_result();
+void add_header(picturen picture, const char* header) {
+	answer_picture = picture;
+	answer_header = header;
+}
+
+void add_look() {
+	sb.clear();
+	sb.addn(area_look[enviroment]);
+}
+
+void addopt(const item& e, messagen v, fnitemget price) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add(message_names[v], e.name(), price(e));
+	if(e.countable() && e.count > 1) {
+		sb.adds("[~");
+		sb.add(message_names[AvailableCount], e.count);
+		sb.adds("]");
 	}
+	an.addv(buttonparam, (long)&e, 0, temp, 0);
+}
+
+void addopt(actionn n) {
+	an.add(variant(n), action_names[n]);
+}
+
+void addopt(arean v) {
+	an.add(v, area_visit[v]);
 }
 
 //////////////////////////////////////////////////////
@@ -548,8 +548,8 @@ static void paint_main_menu() {
 // START GAME
 
 static void test_game() {
-	game.add(Turns, 1000);
-	create_area(Wastes, 0);
+	game_var[Turns] = 1000;
+	generate_world();
 	create_creature(Fighter, Male);
 	join_party();
 	create_creature(Elf, Female);
@@ -564,14 +564,11 @@ static void test_game() {
 	// add_magic_item(RandomMagicItem);
 	// make_player_move(take_items_options);
 	// adventure_move(50);
-	create_area(Village, 0);
-	auto parent = last_area->index();
-	create_area(Market, parent);
-	create_area(Tavern, parent);
-	create_area(Inn, parent);
-	last_area = bsdata<area>::elements + parent;
+	last_settlement = find_settlement(MiddleKindom, Village);
+	if(!last_settlement)
+		last_settlement = find_settlement(MiddleKindom, SmallTown);
 	create_market_items();
-	area_move();
+	settlement_move();
 }
 
 void stringbuilder_custom(stringbuilder& sb, const char* id);
@@ -599,4 +596,4 @@ void game_run() {
 	main_util();
 #endif
 	test_game();
-}
+};

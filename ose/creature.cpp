@@ -849,7 +849,7 @@ bool use_skill(actionn id, int bonus, bool run) {
 			return false;
 		break;
 	case MakeForaging:
-		if(!is_outdoor(last_area->type))
+		if(!is_outdoor(enviroment))
 			return false;
 		break;
 	case MakeHunting:

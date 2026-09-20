@@ -23,36 +23,7 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
-BSDATAC(area, 256)
-
-areai areasa[LastArea + 1] = {
-	{{}, {}, ImagePlains}, // Plains
-	{}, // Sands
-	{}, // Wastes
-	{}, // Swamps
-	{}, // Hills
-	{}, // Mountains
-	{}, // Jungle
-	{}, // Forest
-	{}, // Hamlet
-	{LeaveSettlement, {}, ImagePlainVillage}, // Village
-	{LeaveSettlement}, // SmallTown
-	{LeaveSettlement}, // LargeTown
-	{LeaveOutside}, // Cave
-	{LeaveOutside}, // Dungeon
-	{LeaveOutside}, // Ruins
-	{LeaveBack, {BuyTradeGoods, SellTradeGoods}, ImageVillageMarket}, // Market
-	{LeaveOutside}, // Garden
-	{LeaveOutside}, // Temple
-	{LeaveOutside, {RentRoomOnNight}, ImageHotel}, // Inn
-	{LeaveOutside, {GatherInformation}, ImageTavern}, // Tavern
-	{}, // Palace
-};
-
 arean enviroment;
-
-area* last_area;
-area* next_area;
 
 int move_distance;
 
@@ -68,47 +39,12 @@ const char* get_name(arean type, int p1, int p2) {
 	return temp;
 }
 
-void area::clear() {
-	memset((void*)this, 0, sizeof(*this));
-	parent_id = 0xFFFF;
-}
-
-const char* area::namefull() const {
-	return get_name(type, names[0], names[1]);
-}
-
-short unsigned area::index() const {
-	return this - bsdata<area>::elements;
-}
-
-area* area::parent() const {
-	if(parent_id == 0xFFFF)
-		return 0;
-	return bsdata<area>::elements + parent_id;
-}
-
-void create_area(arean id, short unsigned parent_id) {
-	last_area = bsdata<area>::addz();
-	last_area->clear();
-	last_area->type = id;
-	last_area->timestamp = game.get(Turns);
-	last_area->parent_id = parent_id;
-}
-
 int get_movement_modifier(arean type) {
 	switch(type) {
 	case Mountains: case Jungle: case Swamps: return 50;
 	case Sands: case Wastes: case Hills: return 67;
 	default: return 100;
 	}
-}
-
-void update_area_items() {
-	if(!need_update_items)
-		return;
-	clear_items();
-	add_items(variant(last_area));
-	need_update_items = false;
 }
 
 bool is_outdoor(unsigned char v) {
@@ -123,4 +59,12 @@ bool is_settlement(unsigned char v) {
 	case Hamlet: case Village: case SmallTown: case LargeTown: return true;
 	default: return false;
 	}
+}
+
+void update_area_items() {
+	if(!need_update_items)
+		return;
+	clear_items();
+	// add_items(variant(last_area));
+	need_update_items = false;
 }
