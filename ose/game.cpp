@@ -115,6 +115,10 @@ long choose_party_option(const char* cancel_text) {
 	return choose_answers(message_names[AskWhatToDo], cancel_text);
 }
 
+long choose_way_to_go(const char* cancel_text) {
+	return choose_answers(message_names[AskWichWayToGo], cancel_text);
+}
+
 long choose_player_option(const char* cancel_text) {
 	pushvalue push(atg_change_avatar, change_player);
 	current_avatar = (void*)player;

@@ -379,10 +379,10 @@ void kindom_adventure_move() {
 			if(p == last_settlement)
 				continue;
 			auto miles = distance(last_settlement, p);
-			an.add((long)p, message_names[AskRoadAdventure], area_names_to[settlements[i].type], get_range_name(miles), p->name());
+			an.add((long)p, message_names[AskRoadAdventure], area_names_to[settlements[i].type], get_range_name(miles), p->name(), direction_names[p->side]);
 		}
 		auto cancel_text = ask_visit_settlement(last_settlement->type, last_settlement->name_id);
-		next_settlement = (settlement*)choose_party_option(cancel_text);
+		next_settlement = (settlement*)choose_way_to_go(cancel_text);
 		if(!next_settlement)
 			settlement_move();
 		else {

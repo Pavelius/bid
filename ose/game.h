@@ -55,7 +55,8 @@ enum messagen : unsigned char {
 	SayWhoIsHere,
 	BuyItemForCost, SellItemForCost, AvailableCount,
 	AskLeft, AskRoadAdventure, AskEnterSettlement, AskMemorizeSpells, AskWhatToDoPlayer, AskWhatToDo,
-	LastMessage = AskWhatToDo,
+	AskWichWayToGo,
+	LastMessage = AskWichWayToGo,
 };
 enum reactionn : unsigned char {
 	Hostile, Unfriendly, Neutral, Indifferent, Friendly,
@@ -95,6 +96,7 @@ bool chance(int v);
 long choose_answers_random();
 long choose_party_option(const char* cancel_text);
 long choose_player_option(const char* cancel_text);
+long choose_way_to_go(const char* cancel_text);
 void combat_encounter();
 void create_market_items();
 bool doactions();
