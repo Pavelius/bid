@@ -26,9 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="message.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
     <ClInclude Include="character.h">
       <Filter>Logic</Filter>
     </ClInclude>

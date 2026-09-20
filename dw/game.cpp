@@ -4,7 +4,6 @@
 #include "draw_atg.h"
 #include "game.h"
 #include "math.h"
-#include "message.h"
 #include "rand.h"
 #include "roll.h"
 #include "stringvar.h"
@@ -231,11 +230,11 @@ static void print_hands(stringbuilder& sb) {
 }
 
 static void print_player(stringbuilder& sb) {
-	sb.add(player->getname());
+	sb.add(player->name());
 }
 
 static void print_enemy(stringbuilder& sb) {
-	sb.add(enemy.getname());
+	sb.add(enemy.name());
 }
 
 BSDATA(stringvari) = {

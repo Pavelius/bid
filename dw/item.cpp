@@ -1,7 +1,6 @@
 #include "bsdata.h"
 #include "item.h"
 #include "stringbuilder.h"
-#include "stringlocale.h"
 
 BSDATA(item) = {
 	{},
@@ -13,10 +12,6 @@ BSDATA(item) = {
 	{ElvenArrows, {Ammo4, Weight1}, 20},
 	{Club, {Close, Weight2}, 1},
 };
-
-const char* item::name() const {
-	return getname(type);
-}
 
 itemn item::ammunition() const {
 	switch(type) {

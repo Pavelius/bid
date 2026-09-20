@@ -24,7 +24,8 @@ enum itemn : unsigned char {
 	Map, Note, Journal,
 	Alexandrite, Aquamarine, BlackPearl, Topaz,
 	Poison,
-	SilverCoins, GoldCoins
+	SilverCoins, GoldCoins,
+	LastItem = GoldCoins,
 };
 enum itemfn : unsigned char {
 	Intimate, Close, Reach, Near, Far,
@@ -38,6 +39,9 @@ enum itemfn : unsigned char {
 	// Item upgrades
 	Spiked, Sharp, PerfectlyWeighted, SerratedEdges, Glows, HugeWeapon, Versatile, WellCrafted,
 };
+
+extern const char* item_names[LastItem + 1];
+
 typedef flagable<2, unsigned> itemf;
 
 struct item {
@@ -47,7 +51,7 @@ struct item {
 	constexpr explicit operator bool() const { return type != (itemn)0; }
 	itemn		ammunition() const;
 	itemn		basic() const;
-	const char*	name() const;
+	const char*	name() const { return item_names[type]; }
 	bool		is(itemfn v) const { return flags.is(v); }
 	bool		isweapon() const { return is(Intimate) || is(Close) || is(Near) || is(Far) || is(Reach); }
 };

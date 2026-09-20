@@ -61,7 +61,7 @@ enum dicen : unsigned char {
 	D3, D4, D6, D8, D10, D12, D20,
 };
 
-typedef flagable<(EnemyCatchMelee + 31) / 32, unsigned> movef;
+typedef flagable<1 + EnemyCatchMelee/ 32, unsigned> movef;
 
 struct monsteri {
 	monstern		type;
@@ -77,7 +77,7 @@ struct monsteri {
 	explicit operator bool() const { return isalive(); }
 	void			create(monstern type);
 	dice			damage() const;
-	const char*		getname() const { return "Name"; }
+	const char*		name() const { return "Name"; }
 	bool			is(itemfn v) const { return flags.is(v); }
 	bool			is(monsterfn v) const { return flags_monsters.is(v); }
 	bool			is(organizationn v) const { return organization == v; }

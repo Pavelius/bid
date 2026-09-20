@@ -1,10 +1,9 @@
 #include "bsdata.h"
 #include "item.h"
-#include "message.h"
+#include "game.h"
 #include "stringbuilder.h"
-#include "stringlocale.h"
 
-BSENUM(messagen) = {
+const char* message_names[LastMessage + 1] = {
 	"Мир подземелий", "Далее",
 	"Выберите вариант:", "Выберите вариант (осталось %1i):",
 	"%Player достал%а %Hands.", "Но ...",
@@ -16,13 +15,10 @@ BSENUM(messagen) = {
 	"Большинство выстрелов прошли по касательной.",
 	"Вы вышли на открытую позицию, которой враг воспользовался.",
 };
-assert_enum(messagen, MsgVolleyEnemyMove)
-
-BSENUM(itemn) = {
+const char* item_names[LastItem + 1] = {
 	"Пусто",
 	"Лук", "Отличный лук", "Охотничий лук", "Арбалет",
 	"Стрелы", "Эльфийские стрелы",
 	"Дубина", "Посох",
 	"Нож", "Метательный кинжал",
 };
-assert_enum(itemn, ThrowingDagger)
