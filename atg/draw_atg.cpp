@@ -544,7 +544,7 @@ static int atg_initialize() {
 	ptips = paint_status_text;
 	answers::string = sb_console;
 	sys_create_window(-1, -1, 800, 600, 0, 32);
-	sys_caption(message_names[0]);
+	sys_caption(message_names[2]);
 	return 0;
 }
 

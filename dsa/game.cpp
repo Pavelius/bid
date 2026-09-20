@@ -49,17 +49,6 @@ void make_reaction_roll(int bonus) {
 		last_reaction = Friendly;
 }
 
-void make_party_move() {
-	last_result.u = (unsigned short)choose_answers(0, 0);
-	an.clear();
-}
-
-long make_player_move(const char* cancel_text) {
-	auto result = choose_answers(what_to_do(), cancel_text);
-	an.clear();
-	return result;
-}
-
 static void change_player() {
 	player = (creature*)current_avatar;
 }
@@ -125,13 +114,6 @@ static void apply_effect(actionn v) {
 		break;
 	default:
 		break;
-	}
-}
-
-static void apply_result() {
-	switch(last_result.type) {
-	case Action: apply_effect((actionn)last_result.value); break;
-	default: break;
 	}
 }
 

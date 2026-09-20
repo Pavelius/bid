@@ -9,7 +9,11 @@ enum kindomn : unsigned char {
 	MiddleKindom, NothernKindom, SouthernKindom, WesternKindom, EasternKindom,
 	ElvishLand, DwarvenMountains, FrozenNorth,
 };
+enum diretionn : unsigned char {
+	Center, North, East, South, West, NorthEast, NorthWest, SouthEast, SouthWest,
+};
 
+extern const char* direction_names[SouthWest + 1];
 extern const char* kindom_names[FrozenNorth + 1];
 extern const char* settlement_names[(FrozenNorth + 1) * 8];
 

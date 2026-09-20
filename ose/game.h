@@ -34,16 +34,16 @@ enum actionn : unsigned char {
 	LastAction = MakeCamp
 };
 enum messagen : unsigned char {
-	GameTitle, Continue, Cancel, ClearAllList, Confirm,
+	Cancel, Continue, GameTitle, ClearAllList, Confirm,
 	PageCharacter, PageItems, PageCombatants,
 	MsgAnd,
 	CoinsPl, CoinsCP, CoinsSP, CoinsEP, CoinsGP, CoinsPP,
 	PlayerCharged,
-	PlayerCriticalMiss, PlayerMiss, PlayerHit, PlayerCriticalHit, MsgDamage, MsgDamageAndDead,
+	PlayerCriticalMiss, PlayerMiss, PlayerHit, PlayerCriticalHit,
+	MsgDamage, MsgDamageAndDead,
 	PlayerStunned, PlayerSufferStarvation,
-	PlayerTreatedIllness, PlayerTreatedWounds,
-	PlayerForageItem, PlayerHuntingGame,
-	PlayerRepairGear, WeaponBroken, WeaponDamage,
+	PlayerTreatedIllness, PlayerTreatedWounds, PlayerForageItem, PlayerHuntingGame, PlayerRepairGear,
+	WeaponBroken, WeaponDamage,
 	PlayerMemorizeSpells,
 	PlayerJumpFromBrush, PlayerJumpFromTree,
 	PartyMakeCamp,
@@ -60,12 +60,13 @@ enum messagen : unsigned char {
 enum reactionn : unsigned char {
 	Hostile, Unfriendly, Neutral, Indifferent, Friendly,
 };
-enum globalvarn : unsigned char {
+enum variablen : unsigned char {
 	Turns, Reputation, Blessing, PartyCoins,
 };
 enum picturen : unsigned char {
 	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight, ImageForest, ImageForestNight,
-	ImagePlainVillage, ImageVillageMarket, ImageTavern, ImageHotel, ImageTemple,
+	ImageVillage, ImageLargeCity,
+	ImageVillageMarket, ImageTavern, ImageHotel, ImageTemple,
 };
 
 extern const char* action_names[LastAction + 1];
@@ -81,30 +82,26 @@ picturen getimage(arean v);
 picturen getimagenight(arean v);
 
 void add_look();
-void add_var(globalvarn v, int i);
 void addhdr(picturen picture);
 void addhdr(picturen picture, const char* header);
-void addmsg(messagen id);
-void addmsn(messagen id);
+void adds(messagen id);
+void addn(messagen id);
 void addopt(actionn n);
 void addopt(arean v);
 void addopt(const item& e, messagen v, fnitemget price);
 void apply_result();
 bool apply_camp(actionn v, bool run);
 bool apply_combat(actionn v, bool run);
-void area_move();
 void breakactions();
-void buttonparam();
 void clear_messages();
 bool chance(int v);
 long choose_party_option(const char* cancel_text);
 long choose_player_option(const char* cancel_text);
+void combat_encounter();
 void create_market_items();
 bool doactions();
 void make_any_player_move(const char* cancel_text = 0);
 void make_reaction_roll(int bonus);
-void make_party_move(const char* cancel_text = 0);
-void make_player_move(const char* cancel_text = 0);
 void pass_turn();
 void pause();
 void pause(const char* format);

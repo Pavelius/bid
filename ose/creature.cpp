@@ -17,7 +17,6 @@
 #include "adat.h"
 #include "answers.h"
 #include "area.h"
-#include "bsdata.h"
 #include "creature.h"
 #include "collection.h"
 #include "collectiona.h"
@@ -29,16 +28,17 @@
 #include "rand.h"
 #include "stringbuilder.h"
 
-BSDATAC(creature, 256)
-
 creature* player;
 creature* opponent;
 creature* party[4];
 
 collectiona creatures;
 
+extern adat<enchanti, 256> enchants;
+
 static bool critical_hit, critical_miss;
 static int attack_roll;
+static adat<creature, 256> creaturesd;
 
 static char saving_thrown_monsters[][5] = {
 	{14, 15, 16, 17, 18},// 0
@@ -180,6 +180,10 @@ bool creature::isparty() const {
 			return true;
 	}
 	return false;
+}
+
+int creature::index() const {
+	return this - creaturesd.data;
 }
 
 static int get_caster(classn v) {
@@ -454,7 +458,7 @@ static void update_wear() {
 static void update_enchant(variant object) {
 	if(!object)
 		return;
-	for(auto& e : bsdata<enchanti>()) {
+	for(auto& e : enchants) {
 		if(e.object == object)
 			player->active.set(e.spell);
 	}
@@ -591,8 +595,16 @@ static bool no_party_avatar(unsigned char i) {
 	return true;
 }
 
+static creature* new_creature() {
+	for(auto& e : creaturesd) {
+		if(!e)
+			return &e;
+	}
+	return creaturesd.add();
+}
+
 void create_creature(classn type, gendern gender) {
-	player = bsdata<creature>::addz();
+	player = new_creature();
 	player->clear();
 	player->type = type;
 	player->gender = gender;
@@ -617,7 +629,7 @@ static int get_dungeon_count(classn type) {
 }
 
 void create_monster(classn type) {
-	player = bsdata<creature>::addz();
+	player = new_creature();
 	player->clear();
 	player->type = type;
 	player->gender = Male;
@@ -929,7 +941,7 @@ static void modify_spells(messagen id, spellable& e, int level) {
 		auto prepare_spells = e.total(records);
 		auto maximum_spells = player->getspells(level);
 		sb.clear();
-		addmsn(id);
+		addn(id);
 		fixlist(e);
 		if(prepare_spells < maximum_spells) {
 			for(auto v : records)
@@ -954,7 +966,7 @@ static void modify_spells(messagen id, spellable& e, int level) {
 void make_prepare_spells(messagen id) {
 	while(true) {
 		sb.clear();
-		addmsn(id);
+		addn(id);
 		fixlist(player->prepare);
 		for(auto i = 1; i <= 6; i++) {
 			auto total = player->getspells(i);
@@ -993,4 +1005,12 @@ int party_average(abilityn v) {
 
 void sayone(classn type, messagen v1) {
 	sb.addn("- %1 - %2 %-3 - %4", message_names[v1], message_names[PlayerSay], class_names[type]);
+}
+
+void select_creatures() {
+	creatures.clear();
+	for(auto& e : creaturesd) {
+		if(e)
+			creatures.add(&e);
+	}
 }

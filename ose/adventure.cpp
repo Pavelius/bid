@@ -7,10 +7,7 @@
 
 const int yards_in_miles = 1000;
 
-static int move_distance;
-
-static void combat_encounter() {
-}
+static int move_distance, move_distance_original;
 
 static void animal_encounter() {
 	pushvalue push_player(player);
@@ -90,36 +87,61 @@ static void camp_actions() {
 	}
 }
 
+static bool apply_camp(actionn v, bool run) {
+	switch(v) {
+	case MemorizeSpells:
+		if(!player->getspells(1))
+			return false;
+		if(run)
+			make_prepare_spells(PlayerMemorizeSpells);
+		break;
+	case RestParty:
+		break;
+	case MakeCamp:
+		break;
+	default:
+		return false;
+	}
+	return true;
+}
+
 static void camp_move() {
+	static actionn actions[] = {MemorizeSpells};
 	clear_messages();
 	addhdr(getimagenight(enviroment));
-	addmsn(MakeCampInOpenLand);
+	addn(MakeCampInOpenLand);
 	camp_actions();
 	while(true) {
-		if(player->getspells(1))
-			addopt(MemorizeSpells);
+		for(auto n : actions) {
+			if(apply_camp(n, false))
+				addopt(n);
+		}
 		auto result = choose_player_option(action_names[RestParty]);
 		if(!result)
 			break;
 		else if(result == Continue)
 			continue;
+		apply_camp((actionn)result, true);
 	}
 }
 
 static void adventure_move() {
 	while(true) {
+		pause();
 		addhdr(getimage(enviroment), "%AreaName");
+		adds(AdventureNextDay);
 		addopt(MakeCamp);
-		make_party_move();
-		camp_move();
+		auto result = (actionn)choose_party_option(0);
+		switch(result) {
+		case MakeCamp: camp_move(); break;
+		default: break;
+		}
 		for_each_party(consume_food);
 		check_movement();
-		if(move_distance <= 0) {
+		if(move_distance <= 0)
 			break;
-		} else {
+		else
 			night_encounter();
-			addmsg(AdventureNextDay);
-		}
 	}
 }
 

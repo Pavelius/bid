@@ -146,6 +146,7 @@
     <ClCompile Include="area.cpp" />
     <ClCompile Include="bin_avatars.cpp" />
     <ClCompile Include="bin_images.cpp" />
+    <ClCompile Include="combat.cpp" />
     <ClCompile Include="creature.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="information.cpp" />

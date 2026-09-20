@@ -16,7 +16,7 @@
 
 #include "area.h"
 #include "answers.h"
-#include "bsdata.h"
+// #include "bsdata.h"
 #include "collection.h"
 #include "collectiona.h"
 #include "creature.h"
@@ -30,7 +30,6 @@
 #include "stringbuilder.h"
 #include "variant.h"
 
-static variant last_result;
 static bool need_break_actions;
 
 unsigned game_var[PartyCoins + 1];
@@ -43,7 +42,7 @@ reactionn last_reaction;
 extern collectiona creatures;
 
 template<> variant::variant(const settlement* p) : variant(Settlement, p - settlements) {}
-template<> variant::variant(const creature* p) : variant(CreatureRef, p - bsdata<creature>::elements) {}
+template<> variant::variant(const creature* p) : variant(Creature, p->index()) {}
 
 void pass_turn() {
 	game_var[Turns]++;
@@ -67,236 +66,10 @@ void make_reaction_roll(int bonus) {
 		last_reaction = Friendly;
 }
 
-void make_party_move(const char* cancel_text) {
-	last_result.u = (unsigned short)choose_answers(message_names[AskWhatToDo], cancel_text);
-}
-
-static void change_player() {
-	player = (creature*)current_avatar;
-	breakmodal(1);
-}
-
-long choose_party_option(const char* cancel_text) {
-	return choose_answers(message_names[AskWhatToDo], cancel_text);
-}
-
-long choose_player_option(const char* cancel_text) {
-	pushvalue push(atg_change_avatar, change_player);
-	current_avatar = (void*)player;
-	return choose_answers(what_to_do(), cancel_text);
-}
-
-void make_player_move(const char* cancel_text) {
-	last_result.u = (unsigned short)choose_answers(what_to_do(), cancel_text);
-}
-
-void make_any_player_move(const char* cancel_text) {
-	last_result.u = (unsigned short)choose_player_option(cancel_text);
-}
-
-static void select_creatures() {
-	creatures.clear();
-	for(auto& e : bsdata<creature>()) {
-		if(!e)
-			continue;
-		creatures.add(&e);
-	}
-}
-
-static creature* find_creature(fnvisible proc, bool keep) {
-	for(auto p : creatures.records<creature>()) {
-		if(proc(p) == keep)
-			return p;
-	}
-	return 0;
-}
-
-static creature* find_creature(featn v, bool keep, bool alive) {
-	for(auto p : creatures.records<creature>()) {
-		if(alive && !p->isready())
-			continue;
-		if(p->is(v) == keep)
-			return p;
-	}
-	return 0;
-}
-
-static creature* get_enemy() {
-	return find_creature(Enemy, !player->is(Enemy), true);
-}
-
-static bool enemy_present() {
-	return find_creature(Enemy, true, true);
-}
-
-static bool party_present() {
-	return find_creature(Enemy, false, true);
-}
-
-bool apply_combat(actionn v, bool run) {
-	switch(v) {
-	case MakeCharge:
-		if(player->is(MeleeFight))
-			return false;
-		if(run) {
-			player->act(PlayerCharged);
-			player->set(Charged);
-			player->set(MeleeFight);
-			opponent->set(MeleeFight);
-			make_attack(player, opponent, MeleeAttack, player->wears[MeleeWeapon], 2);
-		}
-		break;
-	case MakeMeleeAttack:
-		if(!player->is(MeleeFight))
-			return false;
-		if(run)
-			make_attack(player, opponent, MeleeAttack, player->wears[MeleeWeapon], 0);
-		break;
-	case MakeMissileAttack:
-		if(player->is(MeleeFight) || !player->wears[RangeWeapon] || !player->wears[Ammunition])
-			return false;
-		if(run) {
-			make_attack(player, opponent, MissileAttack, player->wears[RangeWeapon], 0);
-			player->useammo();
-		}
-		break;
-	case MakeThrownAttack:
-		if(player->is(MeleeFight) || !player->wears[MeleeWeapon].is(Thrown) || player->wears[MeleeWeapon].lost)
-			return false;
-		if(run) {
-			make_attack(player, opponent, ThrownAttack, player->wears[MeleeWeapon], 0);
-			player->wears[MeleeWeapon].lost = 1;
-		}
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
-
-bool apply_camp(actionn v, bool run) {
-	switch(v) {
-	case MemorizeSpells:
-		if(run)
-			make_prepare_spells(PlayerMemorizeSpells);
-		break;
-	case RestParty:
-		break;
-	case MakeCamp:
-		break;
-	default:
-		return false;
-	}
-	return true;
-}
-
-static void generate_loot(classn type, int count) {
-	treasure_generate(get_treasure(encounter_monsters), false, true, false);
-	for(auto i = 0; i < count; i++)
-		treasure_generate(get_treasure(encounter_monsters), false, false, true);
-}
-
-static int creature_count(bool is_dead, bool is_party) {
-	auto result = 0;
-	for(auto p : creatures.records<creature>()) {
-		if(p->isparty() != is_party)
-			continue;
-		if(p->isdead() != is_dead)
-			continue;
-		result++;
-	}
-	return result;
-}
-
-static void loot_enemies() {
-	if(!encounter_monsters)
-		return;
-	generate_loot(encounter_monsters, creature_count(true, false));
-	pause(message_names[SearchBodies]);
-	addmsn(NothingValuableHere);
-	pause();
-}
-
-static void combat_experience() {
-	auto player_count = creature_count(false, true);
-	if(!player_count)
-		return;
-	auto total = 0;
-	for(auto p : creatures.records<creature>()) {
-		if(p->isparty() || p->isdead())
-			continue;
-		total += p->award();
-	}
-	auto per_player = total / player_count;
-	for(auto p : creatures.records<creature>()) {
-		if(!p->isparty() || p->isdead())
-			continue;
-		p->addexp(per_player);
-	}
-}
-
-static void combat_encounter() {
-	pushvalue push_player(player);
-	select_creatures();
-	initiative_roll();
-	while(enemy_present()) {
-		for(auto p : creatures.records<creature>()) {
-			if(!p->isready())
-				continue;
-			player = p;
-			opponent = get_enemy();
-			if(!opponent)
-				continue;
-			sb.addsep('\n');
-			addopt(MakeCharge);
-			addopt(MakeMeleeAttack);
-			addopt(MakeThrownAttack);
-			addopt(MakeMissileAttack);
-			if(player->isparty()) {
-				addopt(MakeRunAway);
-				make_player_move();
-			} else
-				last_result.u = (unsigned short)an.random();
-			apply_result();
-		}
-		if(enemy_present())
-			pause();
-	}
-	if(party_present()) {
-		loot_enemies();
-		combat_experience();
-	}
-}
-
-//void area_move() {
-//	last_area->set(Known);
-//	last_area->set(Visited);
-//	while(true) {
-//		auto type = last_area->type;
-//		answer_picture = areasa[type].picture;
-//		answer_header = "%AreaNameFull";
-//		sb.clear();
-//		sb.addn(area_look[type]);
-//		add_area_visit(last_area->index());
-//		add_area_actions(type);
-//		const char* cancel_text = 0;
-//		if(areasa[type].leave)
-//			cancel_text = action_names[areasa[type].leave];
-//		make_any_player_move(cancel_text);
-//		if(!last_result)
-//			break;
-//		else if(last_result == Continue)
-//			continue;
-//		apply_result();
-//	}
-//}
-
-//////////////////////////////////////////////////////
-// WORK WITH SCENE
-
 picturen getimage(arean v) {
 	switch(v) {
-	case Village: case Hamlet: case SmallTown: case LargeTown: return ImagePlainVillage;
+	case Village: case Hamlet: case SmallTown: return ImageVillage;
+	case LargeTown: return ImageLargeCity;
 	case Market: return ImageVillageMarket;
 	case Inn: return ImageHotel;
 	case Tavern: return ImageTavern;
@@ -330,6 +103,21 @@ void clear_messages() {
 	sb.clear();
 }
 
+static void change_player() {
+	player = (creature*)current_avatar;
+	breakmodal(1);
+}
+
+long choose_party_option(const char* cancel_text) {
+	return choose_answers(message_names[AskWhatToDo], cancel_text);
+}
+
+long choose_player_option(const char* cancel_text) {
+	pushvalue push(atg_change_avatar, change_player);
+	current_avatar = (void*)player;
+	return choose_answers(what_to_do(), cancel_text);
+}
+
 void addhdr(picturen picture, const char* header) {
 	answer_picture = picture;
 	answer_header = header;
@@ -344,12 +132,12 @@ void add_look() {
 	sb.addn(area_look[enviroment]);
 }
 
-void addmsg(messagen n) {
+void adds(messagen n) {
 	sb.addsep(' ');
 	sb.addv(message_names[n], 0);
 }
 
-void addmsn(messagen id) {
+void addn(messagen id) {
 	sb.addsep('\n');
 	sb.addv(message_names[id], 0);
 }
@@ -425,7 +213,7 @@ static int get_hits(const void* object) {
 }
 
 static void paint_avatars() {
-	paint_avatars((void**)party, lenghtof(party), get_avatar, player, get_hits);
+	paint_avatars((void**)party, sizeof(party)/sizeof(party[0]), get_avatar, player, get_hits);
 }
 
 static void page_characters() {
@@ -478,7 +266,6 @@ static void test_game() {
 	create_creature(Cleric, Female);
 	raise_level(3);
 	join_party();
-	select_creatures();
 	// treasure_generate("A", true, false, false);
 	// add_magic_item(RandomMagicItem);
 	// make_player_move(take_items_options);

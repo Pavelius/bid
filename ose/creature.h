@@ -92,6 +92,7 @@ struct creature : npc, statable, wearable, spellable {
 	int getskill(abilityn v) const;
 	int getspells(int level) const;
 	int getspellsprepared(int level) const;
+	int index() const;
 	void act(messagen id) const;
 	void actv(char separator, const char* format, const char* format_param) const;
 	void addexp(int value) { experience += value; }
@@ -132,6 +133,7 @@ const char* what_to_do();
 bool is_diseased(const void* object);
 bool is_enemy(const void* object);
 bool is_wounded(const void* object);
+bool enemy_present();
 
 int appear_count(classn type, int index = 0);
 int party_average(abilityn v);
@@ -148,4 +150,5 @@ void make_attack(creature* attacker, creature* enemy, abilityn ability, item& we
 void make_prepare_spells(messagen id);
 void raise_level(int level, bool reroll_lowest = false);
 void sayone(classn type, messagen v1, messagen v2);
+void select_creatures();
 bool use_skill(actionn id, int bonus, bool run);

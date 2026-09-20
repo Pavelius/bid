@@ -18,6 +18,7 @@
     <ClCompile Include="bin_images.cpp" />
     <ClCompile Include="settlement.cpp" />
     <ClCompile Include="adventure.cpp" />
+    <ClCompile Include="combat.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="area.h" />

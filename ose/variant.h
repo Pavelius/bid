@@ -22,15 +22,13 @@ enum alignmentn : unsigned char;
 enum arean : unsigned char;
 enum classn : unsigned char;
 enum itemn : unsigned char;
-enum materialn : unsigned char;
 enum gendern : unsigned char;
 enum racen : unsigned char;
 enum spelln : unsigned char;
 
 enum variantn : unsigned char {
 	Variant,
-	Ability, Action, Alignment, Area, Class, Gender, Item, Material, Settlement, Spell,
-	CreatureRef,
+	Ability, Action, Alignment, Area, Class, Creature, Gender, Item, Settlement, Spell,
 };
 union variant {
 	struct {
@@ -45,7 +43,6 @@ union variant {
 	constexpr variant(arean v) : value(v), type(Area) {}
 	constexpr variant(classn v) : value(v), type(Class) {}
 	constexpr variant(itemn v) : value(v), type(Item) {}
-	constexpr variant(materialn v) : value(v), type(Material) {}
 	constexpr variant(gendern v) : value(v), type(Gender) {}
 	constexpr variant(spelln v) : value(v), type(Spell) {}
 	constexpr variant(variantn t, unsigned char v) : value(v), type(t) {}

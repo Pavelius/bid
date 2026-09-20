@@ -14,13 +14,12 @@
 	limitations under the License.77
 */
 
-#include "bsdata.h"
 #include "collection.h"
 #include "slice.h"
 #include "spell.h"
 #include "stringbuilder.h"
 
-BSDATAC(enchanti, 256)
+adat<enchanti, 256> enchants;
 
 extern stringbuilder sb;
 
