@@ -19,7 +19,6 @@
 #include "creature.h"
 #include "game.h"
 #include "item.h"
-#include "message.h"
 #include "spell.h"
 #include "stringbuilder.h"
 #include "stringset.h"
@@ -84,7 +83,8 @@ const char* action_names[LastAction + 1] = {
 	"Вернуться в центр поселения.",
 	"Купить товары на рынке.",
 	"Продать товары рыночным торговцам.",
-	"Постпрашивать у постояльцев про последние новости и слухи.",
+	"Поспрашивать у постояльцев про последние новости и слухи.",
+	"Снять номер на ночь.",
 	"Сделать привал.",
 };
 

@@ -25,7 +25,7 @@
 
 BSDATAC(area, 256)
 
-areai area_data[] = {
+areai areasa[LastArea + 1] = {
 	{}, // Plains
 	{}, // Sands
 	{}, // Wastes
@@ -44,11 +44,10 @@ areai area_data[] = {
 	{LeaveBack, {BuyTradeGoods, SellTradeGoods}, ImageVillageMarket}, // Market
 	{LeaveOutside}, // Garden
 	{LeaveOutside}, // Temple
-	{LeaveOutside, {}, ImageHotel}, // Inn
+	{LeaveOutside, {RentRoomOnNight}, ImageHotel}, // Inn
 	{LeaveOutside, {GatherInformation}, ImageTavern}, // Tavern
 	{}, // Palace
 };
-static_assert(sizeof(area_data)/ sizeof(area_data[0]) == LastArea + 1);
 
 area* last_area;
 area* next_area;

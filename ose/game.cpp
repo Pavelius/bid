@@ -23,7 +23,6 @@
 #include "draw.h"
 #include "draw_atg.h"
 #include "game.h"
-#include "message.h"
 #include "print.h"
 #include "pushvalue.h"
 #include "rand.h"
@@ -427,7 +426,7 @@ static void add_area_visit(short unsigned parent) {
 
 static void add_area_actions(arean type) {
 	for(auto n = (actionn)0; n < LastAction; n = (actionn)(n + 1)) {
-		if(area_data[type].actions.is(n))
+		if(areasa[type].actions.is(n))
 			addoptn(n);
 	}
 }
@@ -437,15 +436,15 @@ void area_move() {
 	last_area->set(Visited);
 	while(true) {
 		auto type = last_area->type;
-		answer_picture = area_data[type].picture;
+		answer_picture = areasa[type].picture;
 		answer_header = "%AreaNameFull";
 		sb.clear();
 		sb.addn(area_look[type]);
 		add_area_visit(last_area->index());
 		add_area_actions(type);
 		const char* cancel_text = 0;
-		if(area_data[type].leave)
-			cancel_text = action_names[area_data[type].leave];
+		if(areasa[type].leave)
+			cancel_text = action_names[areasa[type].leave];
 		make_any_player_move(cancel_text);
 		if(!last_result)
 			break;

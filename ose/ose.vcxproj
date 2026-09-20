@@ -165,7 +165,6 @@
     <ClInclude Include="creature.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="item.h" />
-    <ClInclude Include="message.h" />
     <ClInclude Include="spell.h" />
     <ClInclude Include="variant.h" />
   </ItemGroup>

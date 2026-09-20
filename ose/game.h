@@ -26,8 +26,32 @@ enum actionn : unsigned char {
 	MakeHunting, MakeTreatIllness, MakeTendingWounds, MakeGearRepairing, MakeForaging,
 	RestParty, MemorizeSpells, ChangeSpellsByLevel, ChangeSpellsByLevelAllowed,
 	LeaveSettlement, LeaveOutside, LeaveBack,
-	BuyTradeGoods, SellTradeGoods, GatherInformation, MakeCamp,
+	BuyTradeGoods, SellTradeGoods, GatherInformation, RentRoomOnNight, MakeCamp,
 	LastAction = MakeCamp
+};
+enum messagen : unsigned char {
+	GameTitle, Continue, Cancel, ClearAllList, Confirm,
+	PageCharacter, PageItems, PageCombatants,
+	MsgAnd,
+	CoinsPl, CoinsCP, CoinsSP, CoinsEP, CoinsGP, CoinsPP,
+	PlayerCharged,
+	PlayerCriticalMiss, PlayerMiss, PlayerHit, PlayerCriticalHit, MsgDamage, MsgDamageAndDead,
+	PlayerStunned, PlayerSufferStarvation,
+	PlayerTreatedIllness, PlayerTreatedWounds,
+	PlayerForageItem, PlayerHuntingGame,
+	PlayerRepairGear, WeaponBroken, WeaponDamage,
+	PlayerMemorizeSpells,
+	PlayerJumpFromBrush, PlayerJumpFromTree,
+	PartyMakeCamp,
+	MakeCampInSafeCave, MakeCampInOpenLand,
+	CampNightEnd, AdventureNextDay, PlayerHearNoiseOnWatch,
+	SearchBodies, NothingValuableHere,
+	StateWounded,
+	PlayerThink, PlayerSay, PlayerCry,
+	SayWhoIsHere,
+	BuyItemForCost, SellItemForCost, AvailableCount,
+	AskLeft, AskMemorizeSpells, AskWhatToDoPlayer, AskWhatToDo,
+	LastMessage = AskWhatToDo,
 };
 enum reactionn : unsigned char {
 	Hostile, Unfriendly, Neutral, Indifferent, Friendly,
@@ -41,6 +65,7 @@ enum picturen : unsigned char {
 };
 
 extern const char* action_names[LastAction + 1];
+extern const char* message_names[LastMessage + 1];
 
 struct gamei {
 	unsigned variables[PartyCoins + 1];

@@ -7,7 +7,6 @@
 #include "draw_atg.h"
 #include "game.h"
 #include "itema.h"
-#include "message.h"
 #include "rand.h"
 #include "pushvalue.h"
 
@@ -178,6 +177,7 @@ bool apply_settlement(actionn v, bool run) {
 	case GatherInformation: return gather_information(run);
 	case LeaveSettlement: return leave_settlement(run);
 	case LeaveOutside: return leave_outside(run);
+	case RentRoomOnNight: return true;
 	default: return false;
 	}
 	return true;

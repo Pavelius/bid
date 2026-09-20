@@ -45,7 +45,7 @@ struct areai {
 	actiona			actions;
 	picturen		picture;
 };
-extern areai area_data[LastArea + 1];
+extern areai areasa[LastArea + 1];
 
 struct arealink {
 	short unsigned	from, to;

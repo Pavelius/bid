@@ -23,7 +23,6 @@
 #include "game.h"
 #include "gender.h"
 #include "math.h"
-#include "message.h"
 #include "rand.h"
 #include "stringbuilder.h"
 #include "stringset.h"
