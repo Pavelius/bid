@@ -302,9 +302,9 @@ void game_run() {
 	srand(rseed());
 	// srand(1281);
 	initialize_resources();
+#ifdef _DEBUG
 	if(!pass_test())
 		return;
-#ifdef _DEBUG
 	main_util();
 #endif
 	test_game();

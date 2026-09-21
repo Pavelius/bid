@@ -13,13 +13,13 @@ enum directionn : unsigned char {
 	Center, North, East, South, West,
 };
 
+extern const char* area_names[];
 extern const char* direction_names[West + 1];
 extern const char* kindom_names[FrozenNorth + 1];
 extern const char* settlement_names[(FrozenNorth + 1) * 8];
 
 struct settlement {
-	arean		type;
-	arean		landscape;
+	arean		type, landscape;
 	kindomn		kindom;
 	directionn	side;
 	unsigned	buildings;
@@ -44,16 +44,28 @@ struct kindomi {
 extern kindomi kindoms[FrozenNorth + 1];
 
 struct sitei {
-	unsigned char	settlement_id;
-	arean			type;
+	arean			type, landscape;
+	unsigned char	settlement_id; // Site located near this settlement
+	unsigned char	miles; // Distance from settlement to site. Usually 0-40 miles. 0 - site in settlement.
+	unsigned char	name_part[2]; // Use for unique naming.
 	unsigned		flags;
+	constexpr explicit operator bool() const { return settlement_id != 0xFF; }
 	settlement*	target() const { return settlements + settlement_id; }
+	const char* name() const { return area_names[type]; }
+	const char* namefull() const;
+	void clear();
 	bool is(areafn v) const { return (flags & (1 << v)) != 0; }
 	void set(areafn v) { flags |= (1 << v); }
 };
+extern sitei sites[128];
+extern sitei* last_site;
 
 settlement* find_settlement(kindomn kindom, arean type);
 settlement* find_settlement(kindomn kindom, arean type, settlement* start);
+
+sitei* find_site(settlement* target, arean type);
+
+void create_site(arean type);
 
 void adventure_move(int miles);
 void settlement_move();

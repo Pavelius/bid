@@ -14,7 +14,6 @@
 	limitations under the License.77
 */
 
-#include "draw_atg.h"
 #include "item.h"
 #include "pushvalue.h"
 #include "stringset.h"

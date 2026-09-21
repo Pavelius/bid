@@ -10,6 +10,9 @@
 
 kindomi kindoms[FrozenNorth + 1];
 
+sitei sites[128];
+sitei* last_site;
+
 settlement settlements[32];
 settlement* last_settlement;
 settlement* next_settlement; // If none path is not choose
@@ -19,7 +22,11 @@ static itema market_items;
 static actionn market_actions[] = {BuyTradeGoods, SellTradeGoods};
 static actionn inn_actions[] = {RentRoomOnNight};
 static actionn tavern_actions[] = {GatherInformation};
+
 static arean small_settlements[] = {SmallTown, Village, Village, Hamlet};
+static arean normal_landscape[] = {Plains, Plains, Hills, Forest};
+static arean wet_landscapre[] = {Wastes, Sands, Jungle};
+
 static directionn random_direction[] = {North, South, West, East};
 static directionn opposite_direction[West+1] = {Center, South, West, North, East};
 static directionn kindom_sides[FrozenNorth + 1][5] = {
@@ -32,11 +39,18 @@ static directionn kindom_sides[FrozenNorth + 1][5] = {
 	{Center, West, East, South, North},
 	{Center, South, North, East, West},
 };
-static arean normal_landscape[] = {Plains, Plains, Hills, Forest};
-static arean wet_landscapre[] = {Wastes, Sands, Jungle};
 
 int settlement::index() const {
 	return this - settlements;
+}
+
+void sitei::clear() {
+	memset((void*)this, 0, sizeof(*this));
+	settlement_id = 0xFF;
+}
+
+const char* sitei::namefull() const {
+	return name();
 }
 
 static bool is_exist_name(unsigned char v) {
@@ -128,6 +142,8 @@ static void add_small_villages(int& index, kindomn type, int min, int max) {
 static void clear_world() {
 	memset(kindoms, 0, sizeof(kindoms));
 	memset(settlements, 0, sizeof(settlements));
+	for(auto& e : sites)
+		e.clear();
 }
 
 void generate_world() {
@@ -160,6 +176,17 @@ settlement* find_settlement(kindomn kindom, arean type, settlement* start) {
 	for(auto p = start; p < pe; p++) {
 		if(p->kindom == kindom && p->type == type)
 			return p;
+	}
+	return 0;
+}
+
+sitei* find_site(settlement* target, arean type) {
+	if(!target)
+		return 0;
+	auto index = target->index();
+	for(auto& e : sites) {
+		if(e.settlement_id==index && e.type==type)
+			return &e;
 	}
 	return 0;
 }
@@ -399,4 +426,15 @@ void settlement_move() {
 		else
 			kindom_adventure_move();
 	}
+}
+
+static sitei* new_site() {
+	for(auto& e : sites) {
+		if(!e)
+			return &e;
+	}
+	return 0;
+}
+
+void create_site(arean type) {
 }

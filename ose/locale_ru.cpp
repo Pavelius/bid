@@ -14,7 +14,6 @@
 	limitations under the License.77
 */
 
-#include "bsdata.h"
 #include "area.h"
 #include "creature.h"
 #include "game.h"
