@@ -31,7 +31,7 @@ enum areafn : unsigned char {
 	Visited, Known,
 	Dusked, Darkened, Fired, Icy,
 	Locked, Looted, Opened, Hidden,
-	Far, Near,
+	FoundSecret, FoundIllusion, FoundTrap,
 };
 enum arean : unsigned char {
 	Plains, Sands, Wastes, Swamps, Hills, Mountains, Jungle, Forest,
@@ -76,6 +76,7 @@ struct settlement : areafc, buildingc {
 	arean		type, landscape;
 	kindomn		kindom; // What kindom rule this settlement.
 	directionn	side;
+	char		reputation; // This one is how party loved in town. 0 - party is unknown to everybody.
 	unsigned char name_id;
 	constexpr explicit operator bool() const { return type != (arean)0; }
 	const char* name() const { return settlement_names[name_id]; }
@@ -115,6 +116,7 @@ extern sitei* last_site;
 // Stage is part of site.
 struct stagei : areafc {
 	unsigned char	site_id, level;
+	arean			type; // Room, Passage, Pits e.t.c.
 	sitei* parent() const { return sites + site_id; }
 	void clear();
 };
@@ -127,6 +129,8 @@ settlement* find_settlement(kindomn kindom, arean type, settlement* start);
 sitei* find_site(settlement* target, arean type);
 
 stagei* find_stage(sitei* target, unsigned char level);
+
+int party_reputation();
 
 void create_site(arean type, classn habbitants);
 void create_stage(arean type);

@@ -519,3 +519,10 @@ void create_site(arean type, classn habbitants) {
 	last_site->settlement_id = last_settlement->index();
 	last_site->habbitants = habbitants;
 }
+
+int party_reputation() {
+	auto result = 0;
+	if(last_settlement)
+		result += last_settlement->reputation;
+	return result;
+}
