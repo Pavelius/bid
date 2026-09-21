@@ -14,7 +14,6 @@
 	limitations under the License.77
 */
 
-#include "area.h"
 #include "answers.h"
 #include "collection.h"
 #include "collectiona.h"

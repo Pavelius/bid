@@ -1,7 +1,20 @@
-#pragma once
+/*
+	Copyright 2026 by Pavel Chistyakov
 
-enum arean : unsigned char;
-enum areafn : unsigned char;
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.77
+*/
+
+#pragma once
 
 const int settlement_maximum = 32;
 
@@ -12,11 +25,34 @@ enum kindomn : unsigned char {
 enum directionn : unsigned char {
 	Center, North, East, South, West,
 };
+enum areafn : unsigned char {
+	Visited, Known,
+	Dusked, Darkened, Fired, Icy,
+	Locked, Looted, Opened, Hidden,
+	Far, Near,
+};
+enum arean : unsigned char {
+	Plains, Sands, Wastes, Swamps, Hills, Mountains, Jungle, Forest,
+	Hamlet, Village, SmallTown, LargeTown,
+	Cave, Dungeon, Ruins,
+	Market, Garden, Temple, Inn, Tavern, Palace,
+	LastArea = Palace,
+};
 
-extern const char* area_names[];
+extern const char* area_look[LastArea + 1];
+extern const char* area_visit[LastArea + 1];
+extern const char* area_names[LastArea + 1];
+extern const char* area_names_of[LastArea + 1];
+extern const char* area_names_to[LastArea + 1];
 extern const char* direction_names[West + 1];
 extern const char* kindom_names[FrozenNorth + 1];
 extern const char* settlement_names[(FrozenNorth + 1) * 8];
+
+extern const char* LocationFemaleFirstName[];
+extern const char* LocationMaleFirstName[];
+extern const char* DayDistance[9];
+
+extern arean area;
 
 struct areafc {
 	unsigned	flags;
@@ -79,7 +115,13 @@ settlement* find_settlement(kindomn kindom, arean type, settlement* start);
 
 sitei* find_site(settlement* target, arean type);
 
-void create_site(arean type);
+const char* get_name(arean type, int p1, int p2);
+const char* get_range_name(int miles);
 
+void create_site(arean type);
 void adventure_move(int miles);
+bool is_outdoor(unsigned char v);
+bool is_settlement(unsigned char v);
 void settlement_move();
+void update_area_items();
+

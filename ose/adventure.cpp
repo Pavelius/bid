@@ -1,4 +1,3 @@
-#include "area.h"
 #include "creature.h"
 #include "game.h"
 #include "pushvalue.h"

@@ -14,7 +14,6 @@
 	limitations under the License.77
 */
 
-#include "area.h"
 #include "item.h"
 #include "rand.h"
 #include "settlement.h"

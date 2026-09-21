@@ -14,7 +14,6 @@
 	limitations under the License.77
 */
 
-#include "area.h"
 #include "collectiona.h"
 #include "creature.h"
 #include "dice.h"
