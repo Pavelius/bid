@@ -184,7 +184,17 @@ void addopt(arean v) {
 
 static void paint_value(abilityn id) {
 	char temp[260]; stringbuilder sb(temp);
-	sb.add("/x 120 text %2i\n%1", ability_names[id], player->abilities[id]);
+	sb.add("/x 140 text %2i\n%1", ability_names[id], player->abilities[id]);
+	paint_button(temp, 0, false);
+	if(button_hilited && tips_text[0] == 0) {
+		stringbuilder sb(tips_text);
+		sb.add("Test");
+	}
+}
+
+static void paint_save_thrown(abilityn id) {
+	char temp[260]; stringbuilder sb(temp);
+	sb.add("/x 140 text %2i%%\n%1", ability_names[id], player->getskill(id));
 	paint_button(temp, 0, false);
 	if(button_hilited && tips_text[0] == 0) {
 		stringbuilder sb(tips_text);
@@ -247,6 +257,11 @@ static void page_characters() {
 	paint_value(MeleeAttack);
 	paint_value(AC);
 	paint_separator();
+	paint_save_thrown(SaveParalysis);
+	paint_save_thrown(SaveDeath);
+	paint_save_thrown(SaveWand);
+	paint_save_thrown(SaveBreath);
+	paint_save_thrown(SaveSpells);
 }
 
 static void page_items() {

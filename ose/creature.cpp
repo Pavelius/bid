@@ -108,6 +108,19 @@ static char saving_thrown_theif[][5] = {
 	{8, 9, 7, 10, 8},
 	{8, 9, 7, 10, 8}, // 14
 };
+static char saving_thrown_elf[][5] = {
+	{12, 13, 13, 15, 15},
+	{12, 13, 13, 15, 15}, // 1
+	{12, 13, 13, 15, 15},
+	{12, 13, 13, 15, 15},
+	{10, 11, 11, 13, 12},
+	{10, 11, 11, 13, 12}, // 5
+	{10, 11, 11, 13, 12},
+	{8, 9, 9, 10, 10},
+	{8, 9, 9, 10, 10},
+	{8, 9, 9, 10, 10},
+	{6, 7, 8, 8, 8}, // 10
+};
 static char attack_bonuses[][15] = {
 	{0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 5, 5, 5, 5},
 	{0, 0, 0, 0, 0, 2, 2, 2, 2, 5, 5, 5, 5, 7, 7},
@@ -251,6 +264,7 @@ static void apply_wear(itemn v) {
 
 abilityn get_primary(classn v) {
 	switch(v) {
+	case Theif: return Dexterity;
 	case Cleric: return Wisdom;
 	case Elf: case MagicUser: return Intelligence;
 	default: return Strenght;
@@ -317,6 +331,7 @@ int creature::getskill(abilityn v) const {
 	switch(v) {
 	case Strenght: case Dexterity: case Constitution:
 	case Wisdom: case Charisma: case Intelligence:
+	case SaveBreath: case SaveDeath: case SaveParalysis: case SaveSpells: case SaveWand:
 		return abilities[v] * 5;
 	default:
 		return abilities[v];
@@ -472,14 +487,15 @@ static char* get_saving_throws(classn type, int level) {
 	case Halfling: return maptbl(saving_thrown_halfling, level);
 	case Monster: return maptbl(saving_thrown_monsters, level / 2);
 	case Theif: return maptbl(saving_thrown_theif, level);
+	case Elf: return maptbl(saving_thrown_elf, level);
 	default: return maptbl(saving_thrown_monsters, level);
 	}
 }
 
 static void update_saving_throws() {
-	auto pn = get_saving_throws(get_race(player->type), player->abilities[HD]);
+	auto pn = get_saving_throws(player->type, player->abilities[HD]);
 	for(auto i = SaveDeath; i <= SaveSpells; i = (abilityn)(i + 1))
-		player->abilities[i] += pn[i - SaveDeath];
+		player->abilities[i] += 20 - pn[i - SaveDeath] + 1;
 }
 
 static void copy_abilities(statable& dest, const statable& source) {

@@ -146,6 +146,7 @@ bool enemy_present();
 
 int appear_count(classn type, int index = 0);
 int party_average(abilityn v);
+int save_chance(int v);
 int skill_bonus(actionn v, classn type);
 
 void add_monster(classn type);
