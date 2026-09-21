@@ -252,13 +252,16 @@ static void apply_wear(itemn v) {
 abilityn get_primary(classn v) {
 	switch(v) {
 	case Cleric: return Wisdom;
-	case MagicUser: return Intelligence;
+	case Elf: case MagicUser: return Intelligence;
 	default: return Strenght;
 	}
 }
 
 static abilityn get_secondary(classn v) {
-	return Constitution;
+	switch(v) {
+	case Elf: return Strenght;
+	default: return Constitution;
+	}
 }
 
 static int get_experience_award(int hd, int bonus_hd, int additional_powers) {
@@ -548,6 +551,12 @@ static void start_equip(classn type) {
 	case Theif:
 		player->equip(LeatherArmor);
 		player->equip(Dagger);
+		player->equip(ShortBow);
+		player->equip(item(Arrow, xrand(2, 12)));
+		break;
+	case Elf:
+		player->equip(ShortSword);
+		player->equip(Shield);
 		player->equip(ShortBow);
 		player->equip(item(Arrow, xrand(2, 12)));
 		break;
