@@ -47,6 +47,11 @@ void pass_turn() {
 	variables[Turns]++;
 }
 
+void pass_time(int hours) {
+	if(hours > 0)
+		variables[Turns] += hours * 6;
+}
+
 bool chance(int v) {
 	return (rand() % 100) < v;
 }
@@ -71,6 +76,7 @@ picturen getimage(arean v) {
 	case LargeTown: return ImageLargeCity;
 	case Market: return ImageVillageMarket;
 	case Inn: return ImageHotel;
+	case Mountains: return ImageMountains;
 	case Tavern: return ImageTavern;
 	case Temple: return ImageTemple;
 	case Hills: return ImageHills;
@@ -85,8 +91,9 @@ picturen getimagenight(arean v) {
 	case Plains: return ImagePlainsNight;
 	case Forest: return ImageForestNight;
 	case Hills: return ImageHillsNight;
+	case Mountains: return ImageMountainsNight;
 	case Wastes: return ImageWastelandNight;
-	default: return ImagePlainsNight;
+	default: return getimage(v);
 	}
 }
 
@@ -224,7 +231,7 @@ static int get_hits(const void* object) {
 }
 
 static void paint_avatars() {
-	paint_avatars((void**)party, sizeof(party)/sizeof(party[0]), get_avatar, player, get_hits);
+	paint_avatars((void**)party, sizeof(party) / sizeof(party[0]), get_avatar, player, get_hits);
 }
 
 static void page_characters() {

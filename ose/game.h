@@ -67,6 +67,7 @@ enum variablen : unsigned char {
 enum picturen : unsigned char {
 	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight,
 	ImageForest, ImageForestNight, ImageHills, ImageHillsNight,
+	ImageMountains, ImageMountainsNight,
 	ImageVillage, ImageSmallCity, ImageLargeCity,
 	ImageVillageMarket, ImageTavern, ImageHotel, ImageTemple,
 };
@@ -103,6 +104,7 @@ void create_market_items();
 bool doactions();
 void make_any_player_move(const char* cancel_text = 0);
 void make_reaction_roll(int bonus);
+void pass_time(int hours = 1);
 void pass_turn();
 void pause();
 void pause(const char* format);

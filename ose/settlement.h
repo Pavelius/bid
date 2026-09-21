@@ -43,6 +43,15 @@ struct kindomi {
 };
 extern kindomi kindoms[FrozenNorth + 1];
 
+struct sitei {
+	unsigned char	settlement_id;
+	arean			type;
+	unsigned		flags;
+	settlement*	target() const { return settlements + settlement_id; }
+	bool is(areafn v) const { return (flags & (1 << v)) != 0; }
+	void set(areafn v) { flags |= (1 << v); }
+};
+
 settlement* find_settlement(kindomn kindom, arean type);
 settlement* find_settlement(kindomn kindom, arean type, settlement* start);
 
