@@ -15,7 +15,6 @@
 */
 
 #include "answers.h"
-#include "area.h"
 #include "creature.h"
 #include "collection.h"
 #include "collectiona.h"
@@ -25,6 +24,7 @@
 #include "math.h"
 #include "pushvalue.h"
 #include "rand.h"
+#include "settlement.h"
 #include "stringbuilder.h"
 
 creature* player;
@@ -607,7 +607,8 @@ void create_creature(classn type, gendern gender) {
 	player->clear();
 	player->type = type;
 	player->gender = gender;
-	player->portrait = random_portrait(get_race(type), gender, no_party_avatar);
+	if(type <= Elf)
+		player->portrait = random_portrait(type, gender, no_party_avatar);
 	player->customname = (namen)((1 + rand() % 50) * 2 + ((gender == Female) ? 1 : 0));
 	//	player->setname();
 	create_ability(type);

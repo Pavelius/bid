@@ -28,7 +28,7 @@ enum spelln : unsigned char;
 
 enum variantn : unsigned char {
 	Variant,
-	Ability, Action, Alignment, Area, Class, Creature, Gender, Item, Settlement, Spell,
+	Ability, Action, Alignment, Area, Class, Creature, Gender, Item, Settlement, Site, Spell,
 };
 union variant {
 	struct {

@@ -68,7 +68,7 @@ enum picturen : unsigned char {
 	ImageWasteland, ImageWastelandNight, ImagePlains, ImagePlainsNight,
 	ImageForest, ImageForestNight, ImageHills, ImageHillsNight,
 	ImageMountains, ImageMountainsNight,
-	ImageGlade,
+	ImageGlade, ImageCaveEntrance,
 	ImageVillage, ImageSmallCity, ImageLargeCity,
 	ImageVillageMarket, ImageTavern, ImageHotel, ImageTemple,
 };

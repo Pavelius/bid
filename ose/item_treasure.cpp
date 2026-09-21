@@ -319,7 +319,7 @@ static const magici* find_magic(const magici* p, int index) {
 static void add_item(item& it) {
 	if(!it)
 		return;
-	it.drop(variant(last_settlement), Market);
+	it.drop(variant(last_settlement), Market, 0);
 }
 
 static void add_magic_item(const magici* p, int result) {

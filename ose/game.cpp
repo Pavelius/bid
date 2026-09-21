@@ -40,6 +40,7 @@ reactionn last_reaction;
 extern collectiona creatures;
 
 template<> variant::variant(const settlement* p) : variant(Settlement, p - settlements) {}
+template<> variant::variant(const sitei* p) : variant(Site, p - sites) {}
 template<> variant::variant(const creature* p) : variant(Creature, p->index()) {}
 
 void pass_turn() {

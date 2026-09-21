@@ -18,6 +18,8 @@
 
 const int settlement_maximum = 32;
 
+enum classn : unsigned char;
+
 enum kindomn : unsigned char {
 	MiddleKindom, NothernKindom, SouthernKindom, WesternKindom, EasternKindom,
 	ElvishLand, DwarvenMountains, FrozenNorth,
@@ -52,6 +54,9 @@ extern const char* LocationFemaleFirstName[];
 extern const char* LocationMaleFirstName[];
 extern const char* DayDistance[9];
 
+const char* get_name(arean type, int p1, int p2);
+const char* get_range_name(int miles);
+
 extern arean area;
 
 struct areafc {
@@ -66,9 +71,10 @@ struct buildingc {
 	void set(arean v) { buildings |= (1 << v); }
 };
 
+// World settlement data. Count of settlements in world is definde by `settlement_maximum`. There is exacly this count exist.
 struct settlement : areafc, buildingc {
 	arean		type, landscape;
-	kindomn		kindom;
+	kindomn		kindom; // What kindom rule this settlement.
 	directionn	side;
 	unsigned char name_id;
 	constexpr explicit operator bool() const { return type != (arean)0; }
@@ -83,42 +89,47 @@ extern settlement settlements[settlement_maximum]; // All world settlements
 extern settlement* last_settlement;
 extern settlement* next_settlement; // If none path is not choose
 
+// World kindom data. Kindom is a political region. Each game have a several predefined kindoms.
 struct kindomi {
-	unsigned char capital_id;
-	settlement* capital() const { return settlements + capital_id; }
+	char reputation; // Party reputation from -100 to +100, 0 - is neutral status.
+	settlement* capital() const;
 };
 extern kindomi kindoms[FrozenNorth + 1];
 
+// Site is special place of adventure.
 struct sitei : areafc {
-	arean			type;
+	arean			type; // Ruins, Acient temple or Monster lair.
 	unsigned char	settlement_id; // Site located near this settlement
 	unsigned char	miles; // Distance from settlement to site. Usually 0-40 miles. 0 - site in settlement.
 	unsigned char	name_part[2]; // Use for unique naming.
+	classn			habbitants; // This creatures live in site and maybe have a lair here.
 	constexpr explicit operator bool() const { return settlement_id != 0xFF; }
 	settlement*	parent() const { return settlements + settlement_id; }
 	const char* name() const { return area_names[type]; }
-	const char* namefull() const;
+	const char* namefull() const { return get_name(type, name_part[0], name_part[1]); }
 	void clear();
 };
 extern sitei sites[128];
 extern sitei* last_site;
 
+// Stage is part of site.
 struct stagei : areafc {
 	unsigned char	site_id, level;
 	sitei* parent() const { return sites + site_id; }
 	void clear();
 };
 extern stagei stages[4096];
+extern stagei* last_stage;
 
 settlement* find_settlement(kindomn kindom, arean type);
 settlement* find_settlement(kindomn kindom, arean type, settlement* start);
 
 sitei* find_site(settlement* target, arean type);
 
-const char* get_name(arean type, int p1, int p2);
-const char* get_range_name(int miles);
+stagei* find_stage(sitei* target, unsigned char level);
 
-void create_site(arean type);
+void create_site(arean type, classn habbitants);
+void create_stage(arean type);
 void adventure_move(int miles);
 bool is_outdoor(unsigned char v);
 bool is_settlement(unsigned char v);

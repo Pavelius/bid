@@ -64,6 +64,12 @@ extern const char* name_names[];
 
 struct area;
 
+struct portraiti {
+	gendern		gender;
+	classn		type;
+};
+extern portraiti portraits[32 * 2];
+
 struct npc {
 	classn		type;
 	gendern		gender;
@@ -73,9 +79,11 @@ struct npc {
 	bool is(alignmentn v) const { return alignment == v; }
 	bool is(gendern v) const { return gender == v; }
 };
+
 struct statable {
 	char		abilities[LastAbility + 1];
 };
+
 struct creature : npc, statable, wearable, spellable {
 	statable	basic;
 	featf		feats;

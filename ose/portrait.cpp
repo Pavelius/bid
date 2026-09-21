@@ -20,58 +20,82 @@
 #include "rand.h"
 #include "slice.h"
 
-struct portraiti {
-	const char*	id;
-	gendern		gender;
-	classn		type;
+portraiti portraits[32 * 2] = {
+	{Male, Fighter},
+	{Female, Fighter},
+	{Male, Fighter},
+	{Female, Fighter},
+	{Male, Fighter},
+	{Female, Fighter},
+	{Male, Theif},
+	{Female, Theif},
+	{Male, Theif},
+	{Female, Theif},
+	{Male, Theif},
+	{Female, Theif},
+	{Male, Theif},
+	{Female, Theif},
+	{Male, Theif},
+	{Female, Theif},
+	{Male, MagicUser},
+	{Female, MagicUser},
+	{Male, MagicUser},
+	{Female, MagicUser},
+	{Male, MagicUser},
+	{Female, MagicUser},
+	{Male, Cleric},
+	{Female, Cleric},
+	{Male, Cleric},
+	{Female, Cleric},
+	{Male, Cleric},
+	{Female, Cleric},
+	{Male, MagicUser},
+	{Female, MagicUser},
+	{Male, Cleric},
+	{Female, Cleric},
+	{Male, Elf},
+	{Female, Elf},
+	{Male, Elf},
+	{Female, Elf},
+	{Male, Elf},
+	{Female, Elf},
+	{Male, Elf},
+	{Female, Elf},
+	{Male, Elf},
+	{Female, Elf},
+	{Male, Elf},
+	{Female, Elf},
+	{Male, Elf},
+	{Female, Elf},
+	{Male, Elf},
+	{Female, Elf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
+	{Male, Dwarf},
 };
-
-static portraiti portrait_data[] = {
-	{"fe1", Female, Elf},
-	{"fe2", Female, Elf},
-	{"fe3", Female, Elf},
-	{"fh1", Female, Human},
-	{"fh2", Female, Human},
-	{"fh3", Female, Human},
-	{"fh4", Female, Human},
-	{"fh5", Female, Human},
-	{"fh6", Female, Human},
-	{"fh7", Female, Human},
-	{"fh8", Female, Human},
-	{"fh9", Female, Human},
-	{"fo1", Female, Human},
-	{"ma1", Male, Human},
-	{"md1", Male, Dwarf},
-	{"md2", Male, Dwarf},
-	{"me1", Male, Elf},
-	{"mh1", Male, Human},
-	{"mh2", Male, Human},
-	{"mh3", Male, Human},
-	{"mh4", Male, Human},
-	{"mh5", Male, Human},
-	{"mh6", Male, Human},
-	{"mh7", Male, Human},
-	{"mh8", Male, Human},
-	{"mh9", Male, Human},
-	{"mh10", Male, Human},
-	{"mh11", Male, Human},
-	{"mh12", Male, Human},
-	{"mo1", Male, Human},
-	{"mo2", Male, Human},
-	{"mo3", Male, Human}
-};
-
-int portrait_count = sizeof(portrait_data) / sizeof(portrait_data[0]);
 
 typedef adat<portraitn> portraita;
 
 static void add_elements(portraita& result, gendern gender, classn type, fncfilter filter) {
-	for(auto& e : portrait_data) {
+	for(auto& e : portraits) {
 		if(e.gender != gender)
 			continue;
 		if(type && e.type != type)
 			continue;
-		auto i = (portraitn)(&e - portrait_data);
+		auto i = (portraitn)(&e - portraits);
 		if(filter && !filter(i))
 			continue;
 		result.add(i);
@@ -86,8 +110,4 @@ portraitn random_portrait(classn type, gendern gender, fncfilter filter) {
 	if(!source)
 		return (portraitn)0;
 	return source.data[rand() % source.count];
-}
-
-const char* portrait_name(int i) {
-	return portrait_data[i].id;
 }

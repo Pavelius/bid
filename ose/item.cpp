@@ -372,17 +372,18 @@ void item::act(messagen id) const {
 	sb.addv(message_names[id], 0);
 }
 
-void item::drop(short unsigned index, unsigned char level) {
+void item::drop(short unsigned index, unsigned char level, unsigned char part) {
 	for(auto& e : itemgrounds) {
 		if(!e) {
 			e.type = type;
 			e.count = count;
 			e.index = index;
-			e.index = level;
+			e.level = level;
+			e.part = part;
 			clear();
 			last_item = &e;
 			return;
-		} else if(e.index != index)
+		} else if(e.index != index || e.level != level || e.part != part)
 			continue;
 		e.join(*this);
 		if(!(*this))

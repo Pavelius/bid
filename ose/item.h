@@ -140,7 +140,7 @@ struct item {
 	void clear() { type = (itemn)0; count = 0; need_update_items = true; }
 	void consume(messagen crush = (messagen)0, messagen damaged = (messagen)0);
 	bool damaged() const { return broken > 0; }
-	void drop(short unsigned index, unsigned char level);
+	void drop(short unsigned index, unsigned char level, unsigned char part);
 	bool is(damagen v) const { return geti().is(v); }
 	bool is(itemn v) const { return type == v; }
 	bool is(wearn v) const { return wear() == v; }
@@ -151,7 +151,7 @@ extern item* last_item;
 
 struct itemground : item {
 	short unsigned	index;
-	unsigned char	level;
+	unsigned char	level, part;
 };
 
 struct wearable {

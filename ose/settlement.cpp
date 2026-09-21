@@ -34,6 +34,7 @@ settlement* last_settlement;
 settlement* next_settlement; // If none path is not choose
 
 stagei stages[4096];
+extern stagei* last_stage;
 
 arean area;
 
@@ -72,10 +73,6 @@ void sitei::clear() {
 void stagei::clear() {
 	memset((void*)this, 0, sizeof(*this));
 	site_id = 0xFF;
-}
-
-const char* sitei::namefull() const {
-	return name();
 }
 
 const char* get_name(arean type, int p1, int p2) {
@@ -252,6 +249,17 @@ sitei* find_site(settlement* target, arean type) {
 	auto index = target->index();
 	for(auto& e : sites) {
 		if(e.settlement_id==index && e.type==type)
+			return &e;
+	}
+	return 0;
+}
+
+stagei* find_stage(sitei* target, unsigned char level) {
+	if(!target)
+		return 0;
+	unsigned char index = target - sites;
+	for(auto& e : stages) {
+		if(e.site_id == index && e.level == level)
 			return &e;
 	}
 	return 0;
@@ -503,10 +511,11 @@ static sitei* new_site() {
 	return sites;
 }
 
-void create_site(arean type) {
+void create_site(arean type, classn habbitants) {
 	if(!last_settlement)
 		return;
 	last_site = new_site();
 	last_site->type = type;
 	last_site->settlement_id = last_settlement->index();
+	last_site->habbitants = habbitants;
 }
