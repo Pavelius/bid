@@ -436,6 +436,8 @@ static void treasure_generate(const treasurei& e) {
 
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual) {
 	treasure_clear();
+	if(!type)
+		return;
 	for(auto p = type; *p; p++) {
 		auto s = *p;
 		if(s >= 'A' && s <= 'O') {

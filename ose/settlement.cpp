@@ -17,6 +17,8 @@ settlement settlements[32];
 settlement* last_settlement;
 settlement* next_settlement; // If none path is not choose
 
+stagei stages[4096];
+
 static itema market_items;
 
 static actionn market_actions[] = {BuyTradeGoods, SellTradeGoods};
@@ -47,6 +49,11 @@ int settlement::index() const {
 void sitei::clear() {
 	memset((void*)this, 0, sizeof(*this));
 	settlement_id = 0xFF;
+}
+
+void stagei::clear() {
+	memset((void*)this, 0, sizeof(*this));
+	site_id = 0xFF;
 }
 
 const char* sitei::namefull() const {
@@ -143,6 +150,8 @@ static void clear_world() {
 	memset(kindoms, 0, sizeof(kindoms));
 	memset(settlements, 0, sizeof(settlements));
 	for(auto& e : sites)
+		e.clear();
+	for(auto& e : stages)
 		e.clear();
 }
 
@@ -402,6 +411,7 @@ static void kindom_adventure_move() {
 			break;
 		else {
 			auto miles = distance(last_settlement, next_settlement);
+			clear_messages();
 			adventure_move(miles);
 			last_settlement = next_settlement;
 		}
@@ -433,8 +443,13 @@ static sitei* new_site() {
 		if(!e)
 			return &e;
 	}
-	return 0;
+	return sites;
 }
 
 void create_site(arean type) {
+	if(!last_settlement)
+		return;
+	last_site = new_site();
+	last_site->type = type;
+	last_site->settlement_id = last_settlement->index();
 }
