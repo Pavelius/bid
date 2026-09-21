@@ -124,7 +124,6 @@ static void camp_move() {
 
 static void adventure_move() {
 	while(doactions()) {
-		pause();
 		addhdr(getimage(area), "%Area");
 		adds(AdventureNextDay);
 		addopt(MakeCamp);
