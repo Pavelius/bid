@@ -1,8 +1,11 @@
+#include "collection.h"
 #include "creature.h"
 #include "event.h"
 #include "game.h"
 #include "pushvalue.h"
 #include "stringbuilder.h"
+
+static collection event_deck;
 
 bool eventi::play() const {
 	if(!player)
