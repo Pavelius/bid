@@ -15,5 +15,7 @@ struct eventi {
 	char		bonus;
 	fnevent		success, fail;
 	int index() const;
+	bool play() const; // Extern function realization.
 };
 extern eventi events[];
+extern eventi* last_event;
