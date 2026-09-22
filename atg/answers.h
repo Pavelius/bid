@@ -56,7 +56,7 @@ struct answers {
 	void addv(fnevent proc, long value, void* object, const char* name, const char* format);
 	void clear();
 	long random() const;
-	void remove(int index) { elements.remove(index, 1); }
+	void remove(int index) { elements.remove(index); }
 	void sort();
 };
 extern answers an;

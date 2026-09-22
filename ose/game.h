@@ -109,5 +109,5 @@ void pass_time(int hours = 1);
 void pass_turn();
 void pause();
 void pause(const char* format);
-void play_event(unsigned char index);
+void play_event_card();
 void generate_world();

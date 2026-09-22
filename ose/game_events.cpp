@@ -5,7 +5,7 @@
 #include "pushvalue.h"
 #include "stringbuilder.h"
 
-static collection event_deck;
+static collection event_cards;
 
 bool eventi::play() const {
 	if(!player)
@@ -26,8 +26,25 @@ bool eventi::play() const {
 	}
 }
 
+void play_event_card() {
+	unsigned int skip_count = 0;
+	while(true) {
+		auto card = event_cards.pick();
+		if(!events[card].allow()) {
+			event_cards.add(card);
+			if(skip_count++ < event_cards.count)
+				continue;
+			break;
+		}
+		events[card].play();
+		if(events[card].is(InfiniteEvent))
+			event_cards.add(card);
+		break;
+	}
+}
+
 eventi events[] = {
-	{ImageCaveEntrance, PlayerCharged, 0, Strenght, -4},
-	{ImageCaveEntrance, PlayerCharged, 0, Dexterity, -2},
-	{ImageCaveEntrance, PlayerCharged, 0, Wisdom, 0},
+	{ImageCaveEntrance, PlayerCharged, 0, {StartEvent}, Strenght, -4},
+	{ImageCaveEntrance, PlayerCharged, 0, {StartEvent}, Dexterity, -2},
+	{ImageCaveEntrance, PlayerCharged, 0, {StartEvent}, Wisdom, 0},
 };
