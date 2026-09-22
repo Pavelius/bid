@@ -74,10 +74,11 @@ struct npc {
 	classn		type;
 	gendern		gender;
 	alignmentn	alignment;
-	namen		customname;
+	namen		name_id;
 	portraitn	portrait;
 	bool is(alignmentn v) const { return alignment == v; }
 	bool is(gendern v) const { return gender == v; }
+	const char* name() const { return (name_id == 0xFF) ? name_names[name_id] : class_names[type]; }
 };
 
 struct statable {
@@ -93,7 +94,6 @@ struct creature : npc, statable, wearable, spellable {
 	spellable	prepare;
 	int			experience;
 	constexpr explicit operator bool() const { return hp > 0; }
-	const char* name() const;
 	int award() const;
 	int get(abilityn v) const { return abilities[v]; }
 	int getbonus(abilityn v) const;
@@ -133,6 +133,7 @@ extern creature creaturesd[256];
 abilityn get_primary(classn v);
 portraitn random_portrait(classn type, gendern gender, fncfilter filter = 0);
 classn get_race(classn type);
+unsigned char random_name(classn type, gendern gender, fncfilter filter);
 
 classn random_animal(arean area);
 

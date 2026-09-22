@@ -87,9 +87,22 @@ portraiti portraits[32 * 2] = {
 	{Male, Dwarf},
 };
 
-typedef adat<portraitn> portraita;
+typedef adat<portraitn, 256> portraitc;
+typedef adat<unsigned char, 256> namec;
 
-static void add_elements(portraita& result, gendern gender, classn type, fncfilter filter) {
+static unsigned char human_names[2] = {0, 50};
+static unsigned char elf_names[2] = {50, 40};
+static unsigned char dwarf_names[2] = {90, 30};
+
+static unsigned char* get_names(classn type) {
+	switch(type) {
+	case Elf: return elf_names;
+	case Dwarf: return dwarf_names;
+	default: return human_names;
+	}
+}
+
+static void add_elements(portraitc& result, gendern gender, classn type, fncfilter filter) {
 	for(auto& e : portraits) {
 		if(e.gender != gender)
 			continue;
@@ -102,12 +115,41 @@ static void add_elements(portraita& result, gendern gender, classn type, fncfilt
 	}
 }
 
+static gendern get_name_gender(unsigned char v) {
+	switch(v % 2) {
+	case 1: return Female;
+	default: return Male;
+	}
+}
+
+static void add_elements(namec& result, gendern gender, classn type, fncfilter filter) {
+	auto names = get_names(type);
+	auto m = names[0] + names[1];
+	for(auto i = names[0]; i < m; i++) {
+		if(get_name_gender(i) != gender)
+			continue;
+		if(filter && !filter(i))
+			continue;
+		result.add(i);
+	}
+}
+
 portraitn random_portrait(classn type, gendern gender, fncfilter filter) {
-	portraita source;
+	portraitc source;
 	add_elements(source, gender, type, filter);
 	if(!source)
 		add_elements(source, gender, (classn)0, filter);
 	if(!source)
 		return (portraitn)0;
+	return source.data[rand() % source.count];
+}
+
+unsigned char random_name(classn type, gendern gender, fncfilter filter) {
+	namec source;
+	add_elements(source, gender, type, filter);
+	if(!source)
+		add_elements(source, gender, (classn)0, filter);
+	if(!source)
+		return 0;
 	return source.data[rand() % source.count];
 }

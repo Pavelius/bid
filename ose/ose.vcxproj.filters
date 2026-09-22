@@ -8,7 +8,7 @@
     <ClCompile Include="locale_ru.cpp" />
     <ClCompile Include="spell.cpp" />
     <ClCompile Include="main_util.cpp" />
-    <ClCompile Include="portrait.cpp" />
+    <ClCompile Include="appearance.cpp" />
     <ClCompile Include="monster.cpp" />
     <ClCompile Include="item_treasure.cpp" />
     <ClCompile Include="itema.cpp" />

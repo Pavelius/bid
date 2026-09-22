@@ -454,6 +454,17 @@ bool is_item_food(const void* object) {
 	return p->is(Edible);
 }
 
+bool allow(itemn v, classn type) {
+	switch(v) {
+	case ChainArmor: case PlateArmor: case Helm: case Shield:
+		return type != MagicUser && type != Theif;
+	case TwohandedSword:
+		return type != MagicUser && type != Dwarf;
+	default:
+		return true;
+	}
+}
+
 const char* test_item() {
 	if(itemsa[WarHammer].parent != WarHammer)
 		return "Not valid item for warhammer";

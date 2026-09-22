@@ -287,6 +287,7 @@ static int get_experience_award(int hd, int bonus_hd, int additional_powers) {
 
 void creature::clear() {
 	memset((void*)this, 0, sizeof(*this));
+	name_id = (namen)0xFF;
 }
 
 int creature::award() const {
@@ -311,12 +312,6 @@ bool creature::iscaster() const {
 int creature::getbonus(abilityn v) const {
 	auto m = player->abilities[v];
 	return maptbl(ability_bonus, m);
-}
-
-const char* creature::name() const {
-	if(customname)
-		return name_names[customname];
-	return class_names[type];
 }
 
 int creature::getspells(int level) const {
@@ -619,6 +614,14 @@ static bool no_party_avatar(unsigned char i) {
 	return true;
 }
 
+static bool no_party_name(unsigned char i) {
+	for(auto p : party) {
+		if(p && p->portrait == i)
+			return false;
+	}
+	return true;
+}
+
 static creature* new_creature() {
 	for(auto& e : creaturesd) {
 		if(!e)
@@ -634,7 +637,7 @@ void create_creature(classn type, gendern gender) {
 	player->gender = gender;
 	if(type <= Elf)
 		player->portrait = random_portrait(type, gender, no_party_avatar);
-	player->customname = (namen)((1 + rand() % 50) * 2 + ((gender == Female) ? 1 : 0));
+	player->name_id = (namen)random_name(type, gender, no_party_name);
 	//	player->setname();
 	create_ability(type);
 	start_equip(type);

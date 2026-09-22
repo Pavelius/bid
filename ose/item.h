@@ -21,6 +21,7 @@
 
 struct creature;
 
+enum classn : unsigned char;
 enum messagen : unsigned char;
 
 enum damagen : unsigned char {
@@ -187,6 +188,7 @@ item some(itemn type, int count = 8);
 
 void add_magic_item(itemn type);
 void add_items(short unsigned index, unsigned char level);
+bool allow(itemn v, classn type);
 void clear_items();
 void clear_items(short unsigned index, unsigned char level);
 void treasure_generate(const char* type, bool use_lair, bool use_group, bool use_individual);
