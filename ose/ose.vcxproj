@@ -147,6 +147,7 @@
     <ClCompile Include="bin_images.cpp" />
     <ClCompile Include="combat.cpp" />
     <ClCompile Include="creature.cpp" />
+    <ClCompile Include="event.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="information.cpp" />
     <ClCompile Include="item.cpp" />
@@ -161,6 +162,7 @@
     <ClCompile Include="testing.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="event.h" />
     <ClInclude Include="itema.h" />
     <ClInclude Include="creature.h" />
     <ClInclude Include="game.h" />

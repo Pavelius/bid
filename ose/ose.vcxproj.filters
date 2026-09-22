@@ -18,6 +18,7 @@
     <ClCompile Include="settlement.cpp" />
     <ClCompile Include="adventure.cpp" />
     <ClCompile Include="combat.cpp" />
+    <ClCompile Include="event.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="creature.h" />
@@ -27,5 +28,6 @@
     <ClInclude Include="variant.h" />
     <ClInclude Include="itema.h" />
     <ClInclude Include="settlement.h" />
+    <ClInclude Include="event.h" />
   </ItemGroup>
 </Project>
